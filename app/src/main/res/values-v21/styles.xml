@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="JoinButton">
+        <item name="android:text">JOIN</item>
+        <item name="android:background">#C62828</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+</resources>
