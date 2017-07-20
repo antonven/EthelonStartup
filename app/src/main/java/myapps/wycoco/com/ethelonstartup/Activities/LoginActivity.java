@@ -21,12 +21,19 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -62,43 +69,44 @@ public class LoginActivity extends AppCompatActivity {
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
-        buttonGoogle = (Button)findViewById(R.id.buttonGoogle);
+//        buttonGoogle = (Button)findViewById(R.id.buttonGoogle);
 
+        buttonFacebook.setReadPermissions(Arrays.asList("user_status"));
 
-
-        buttonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-                loginResult.getAccessToken().getUserId();
-                loginResult.getAccessToken().getToken();
-                Profile profile = Profile.getCurrentProfile();
-                String name = profile.getName();
-                String imageUrl = profile.getProfilePictureUri(200, 200).toString();
-                String id = profile.getId();
-                Toast.makeText(LoginActivity.this, "" + name
-                        , Toast.LENGTH_SHORT).show();
-
-                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                i.putExtra("profileName", name);
-                i.putExtra("profilePicture", imageUrl);
-                i.putExtra("profileId", id);
-                startActivity(i);
-
-
-//                startActivity(new Intent(LoginActivity.this, HomeActivity.class), args);
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
+//        buttonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//
+//                loginResult.getAccessToken().getUserId();
+//                loginResult.getAccessToken().getToken();
+//                Profile profile = Profile.getCurrentProfile();
+//                String name = profile.getName();
+//                String imageUrl = profile.getProfilePictureUri(200, 200).toString();
+//                String id = profile.getId();
+//                Toast.makeText(LoginActivity.this, "" + name
+//                        , Toast.LENGTH_SHORT).show();
+//                Log.e("HI!", imageUrl + id);
+//
+//                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+//                i.putExtra("profileName", name);
+//                i.putExtra("profilePicture", imageUrl);
+//                i.putExtra("profileId", id);
+//                startActivity(i);
+//
+//
+////                startActivity(new Intent(LoginActivity.this, HomeActivity.class), args);
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//
+//            }
+//        });
 
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -116,25 +124,46 @@ public class LoginActivity extends AppCompatActivity {
         accessTokenTracker.startTracking();
         profileTracker.startTracking();
 
-//        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//
-//            }
-//        });
+       FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+           @Override
+           public void onSuccess(LoginResult loginResult) {
+               Profile profile = Profile.getCurrentProfile();
+               nextActivity(profile);
 
-//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
+               new GraphRequest(
+                       AccessToken.getCurrentAccessToken(), "/{user-id}/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
+                   @Override
+                   public void onCompleted(GraphResponse response) {
+
+
+//                           try {
+//
+//                               String shit = response.getJSONArray("data");
+//                               Log.e("SHET", shit);
+//                           } catch (JSONException e) {
+//                               e.printStackTrace();
+//                           }
+
+                   }
+               }
+               ).executeAsync();
+
+
+           }
+
+           @Override
+           public void onCancel() {
+
+           }
+
+           @Override
+           public void onError(FacebookException error) {
+
+           }
+       };
+        buttonFacebook.setReadPermissions("user_friends");
+        buttonFacebook.registerCallback(callbackManager, callback);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,12 +174,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        buttonGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        buttonGoogle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +199,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Profile profile = Profile.getCurrentProfile();
-
+//        startActivity(new Intent(this, HomeActivity.class));
+        nextActivity(profile);
     }
 
     @Override
@@ -183,5 +213,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onStop();
         accessTokenTracker.stopTracking();
         profileTracker.stopTracking();
+    }
+
+    private void nextActivity(Profile profile){
+        if(profile!= null){
+            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+            i.putExtra("profileName", profile.getName());
+            i.putExtra("profilePicture", profile.getProfilePictureUri(200,200).toString());
+            i.putExtra("profileId", profile.getId());
+            startActivity(i);
+        }
     }
 }

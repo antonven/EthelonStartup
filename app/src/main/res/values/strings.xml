@@ -26,4 +26,5 @@
     <string name="portfolio">Portfolio</string>
     <string name="profile_name">Profile name</string>
     <string name="address">address</string>
+    <string name="log_out">Log out</string>
 </resources>

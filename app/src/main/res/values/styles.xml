@@ -28,4 +28,13 @@
         <item name="android:textColor">#fff</item>
     </style>
 
+    <style name="FacebookButton">
+        <item name="android:text">Login with Facebook</item>
+
+        <item name="android:background">@drawable/com_facebook_button_icon_blue</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
 </resources>

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 
 import myapps.wycoco.com.ethelonstartup.Fragments.ProfileFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
@@ -33,7 +34,8 @@ public class HomeActivity extends AppCompatActivity
 
     TextView profileName;
     ImageView profilePicture;
-    String profName, image;
+    String profName, image, profileId;
+    LoginManager loginManager;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -70,11 +72,13 @@ public class HomeActivity extends AppCompatActivity
         Intent n = getIntent();
         profName = n.getStringExtra("profileName");
         image = n.getStringExtra("profilePicture");
+        profileId = n.getStringExtra("profileId");
+
         View view = navigationView.getHeaderView(0);
         profileName = (TextView)view.findViewById(R.id.profileName);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
         profileName.setText(profName);
-        Glide.with(getApplicationContext()).load(image).centerCrop().crossFade().into(profilePicture);
+        Glide.with(getApplicationContext()).load("https://graph.facebook.com/"+ profileId +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D").centerCrop().crossFade().into(profilePicture);
 
     }
 
@@ -119,7 +123,7 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_first_layout) {
             fm.beginTransaction()
-                    .replace(R.id.frame1, ProfileFragment.newInstance(image, profName))
+                    .replace(R.id.frame1, ProfileFragment.newInstance(image, profName, profileId))
                     .commit();
         }else if (id == R.id.nav_second_layout) {
             fm.beginTransaction()
@@ -130,7 +134,9 @@ public class HomeActivity extends AppCompatActivity
             fm.beginTransaction()
                     .replace(R.id.frame1, new ThirdFragment())
                     .commit();
-
+        }else if (id == R.id.logOutButton){
+            LoginManager.getInstance().logOut();
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

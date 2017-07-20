@@ -20,7 +20,7 @@ import myapps.wycoco.com.ethelonstartup.R;
 
 public class ProfileFragment extends Fragment {
 
-    String imageUrl, profName;
+    String imageUrl, profName, id;
     ImageView profilePicture;
     TextView profileName;
 
@@ -37,17 +37,18 @@ public class ProfileFragment extends Fragment {
 
         readBundle(getArguments());
 
-        Glide.with(getContext()).load(imageUrl).centerCrop().crossFade().into(profilePicture);
+        Glide.with(getContext()).load("https://graph.facebook.com/"+ id +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D1877377522288783").centerCrop().crossFade().into(profilePicture);
         profileName.setText(profName);
 
         return v;
     }
 
-    public static ProfileFragment newInstance(String imageUrl, String name) {
+    public static ProfileFragment newInstance(String imageUrl, String name, String id) {
         
         Bundle args = new Bundle();
         args.putString("image", imageUrl);
         args.putString("name", name);
+        args.putString("id", id);
         ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(args);
         return fragment;
@@ -57,6 +58,7 @@ public class ProfileFragment extends Fragment {
         if(bundle != null){
             imageUrl = bundle.getString("image");
             profName = bundle.getString("name");
+            id = bundle.getString("id");
         }
     }
 }
