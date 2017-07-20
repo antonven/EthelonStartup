@@ -219,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
         if(profile!= null){
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             i.putExtra("profileName", profile.getName());
-            i.putExtra("profilePicture", profile.getProfilePictureUri(200,200).toString());
+            i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
             i.putExtra("profileId", profile.getId());
             startActivity(i);
         }

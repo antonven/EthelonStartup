@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 
@@ -31,6 +32,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.profile_layout, container, false);
+        
 
         profilePicture = (ImageView)v.findViewById(R.id.profilePictureProfile);
         profileName = (TextView)v.findViewById(R.id.profileNameProfile);

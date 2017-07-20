@@ -15,8 +15,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePictureProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:src="@drawable/account"
                 android:layout_gravity="center_horizontal"/>
 
@@ -33,10 +33,49 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/address"
+                android:text="@string/skills_interests"
                 android:layout_gravity="center_horizontal"/>
 
 
+            <LinearLayout
+                android:paddingTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/rectangle_container"
+                    android:layout_weight="1"
+                    android:layout_margin="20dp"
+                    android:text="1000"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:text="10"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@drawable/rectangle_container" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem lorem lorem lorem lorem lorem lorem lorem"
+                android:layout_gravity="center_horizontal"
+                style="@style/TextAppearance.AppCompat.Body1"/>
 
         </LinearLayout>
 
