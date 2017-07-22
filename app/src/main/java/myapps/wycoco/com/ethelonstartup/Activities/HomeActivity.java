@@ -44,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("");
         toolbar.setBackgroundColor(this.getResources().getColor(R.color.signature2Color));
 
         Window window = this.getWindow();
@@ -122,9 +123,16 @@ public class HomeActivity extends AppCompatActivity
         FragmentManager fm = getSupportFragmentManager();
 
         if (id == R.id.nav_first_layout) {
-            fm.beginTransaction()
-                    .replace(R.id.frame1, ProfileFragment.newInstance(image, profName, profileId))
-                    .commit();
+//            fm.beginTransaction()
+//                    .replace(R.id.frame1, ProfileFragment.newInstance(image, profName, profileId))
+//                    .commit();
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra("image", image);
+            intent.putExtra("profName", profName);
+            intent.putExtra("profileId", profileId);
+
+            startActivity(intent);
+
         }else if (id == R.id.nav_second_layout) {
             fm.beginTransaction()
                     .replace(R.id.frame1, new SecondFragment())

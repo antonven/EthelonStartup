@@ -46,6 +46,7 @@
                 android:weightSum="2">
 
                 <TextView
+                    android:id="@+id/volunteerPoints"
                     android:layout_width="120dp"
                     android:layout_height="70dp"
                     android:background="@drawable/rectangle_container"
@@ -57,7 +58,7 @@
                     android:gravity="center"/>
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/activitiesJoined"
                     android:layout_width="120dp"
                     android:layout_height="70dp"
                     android:layout_margin="20dp"

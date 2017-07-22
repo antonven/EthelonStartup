@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <!-- content header line -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgContentTop"
+        android:paddingBottom="7dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="7dp">
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="ACTIVITY TITLE"
+            android:maxLength="22"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_menu_share"
+            android:layout_alignParentLeft="true" />
+
+    </RelativeLayout>
+
+    <!-- content header image -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/head_image"
+            android:layout_width="match_parent"
+            android:layout_height="300px"
+            android:scaleType="centerCrop"
+            android:src="@drawable/feed1" />
+
+        <TextView
+            android:id="@+id/head_image_left_text"
+            style="@style/ContentImageBadgeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/head_image"
+            android:layout_alignStart="@id/head_image"
+            android:paddingBottom="10dp"
+            android:paddingStart="20dp"
+            android:text="@string/requests_count_mock"
+            android:layout_alignLeft="@id/head_image"
+            android:paddingLeft="20dp" />
+
+        <TextView
+            style="@style/ContentImageBadgeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/head_image_left_text"
+            android:layout_alignStart="@id/head_image_left_text"
+            android:paddingStart="20dp"
+            android:text="@string/volunteers_count_badge"
+            android:paddingLeft="20dp"
+            android:layout_alignLeft="@id/head_image_left_text" />
+
+
+        <TextView
+            android:id="@+id/head_image_center_text"
+            style="@style/ContentImageBadgeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/head_image"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="10dp"
+            android:text="50" />
+
+        <TextView
+            style="@style/ContentImageBadgeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/head_image_center_text"
+            android:layout_alignStart="@id/head_image_center_text"
+            android:text="@string/points_badge"
+            android:layout_alignLeft="@id/head_image_center_text" />
+
+
+    </RelativeLayout>
+
+    <!-- content body layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgContent"
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="9dp">
+
+        <!-- avatar and name part -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/content_avatar_title"
+                style="@style/ContentMainBadgeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="5dp"
+                android:text="@string/host_badge"
+                android:layout_alignParentLeft="true" />
+
+            <ImageView
+                android:id="@+id/content_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/content_avatar_title"
+                android:scaleType="centerCrop"
+                android:src="@drawable/account" />
+
+            <TextView
+                android:id="@+id/content_name_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/content_avatar"
+                android:layout_marginBottom="2dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/content_avatar"
+                android:text="Rise Above Foundation"
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/content_avatar" />
+
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:src="@drawable/arrow"-->
+                <!--android:layout_alignParentRight="true" />-->
+
+        </RelativeLayout>
+
+        <!-- divider line -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@color/contentDividerLine" />
+
+        <!-- addresses part -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/content_from_badge"
+                    style="@style/ContentMainBadgeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/from_badge"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/content_from_address_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/content_from_badge"
+                    android:layout_below="@id/content_from_badge"
+                    android:text="Feb. 27, 2017"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_alignLeft="@id/content_from_badge" />
+
+                <TextView
+                    android:id="@+id/content_from_address_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/content_from_address_1"
+                    android:layout_below="@id/content_from_address_1"
+                    android:text="11:00 am"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_alignLeft="@id/content_from_address_1" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/content_to_badge"
+                    style="@style/ContentMainBadgeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/to_badge"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/content_to_address_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/content_to_badge"
+                    android:layout_below="@id/content_to_badge"
+                    android:text="Basak, Pardo"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_alignLeft="@id/content_to_badge" />
+
+                <TextView
+                    android:id="@+id/content_to_address_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/content_to_address_1"
+                    android:layout_below="@id/content_to_address_1"
+                    android:text="Cebu City"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_alignLeft="@id/content_to_address_1" />
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@drawable/arrow"-->
+                    <!--android:layout_alignParentRight="true" />-->
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- divider line -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="7dp"
+            android:src="@color/contentDividerLine" />
+
+        <!-- dates part -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/content_delivery_date_badge"
+                    style="@style/ContentMainBadgeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/delivery_date_badge"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/content_delivery_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/content_delivery_date_badge"
+                    android:layout_below="@id/content_delivery_date_badge"
+                    android:text="Anton Wycoco"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_alignLeft="@id/content_delivery_date_badge" />
+
+                <TextView
+                    android:id="@+id/content_delivery_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/content_delivery_time"
+                    android:layout_below="@id/content_delivery_time"
+                    android:text="09257772302"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_alignLeft="@id/content_delivery_time" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/content_deadline_badge"
+                    style="@style/ContentMainBadgeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/deadline_badge"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/content_deadline_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/content_deadline_badge"
+                    android:layout_below="@id/content_deadline_badge"
+                    android:text="Free for all"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_alignLeft="@id/content_deadline_badge" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- request button -->
+        <TextView
+            android:id="@+id/content_request_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/btnRequest"
+            android:padding="10dp"
+            android:text="ATTEND"
+            android:textAlignment="center"
+            android:textColor="@color/mainTextColor"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="20 people have attended"
+            android:textAlignment="center"
+            android:textColor="@color/contentBadgeTitle"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

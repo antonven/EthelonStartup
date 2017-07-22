@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
+        setTitle("");
 
 
         Window window = this.getWindow();
@@ -73,40 +74,6 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonFacebook.setReadPermissions(Arrays.asList("user_status"));
 
-//        buttonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//
-//                loginResult.getAccessToken().getUserId();
-//                loginResult.getAccessToken().getToken();
-//                Profile profile = Profile.getCurrentProfile();
-//                String name = profile.getName();
-//                String imageUrl = profile.getProfilePictureUri(200, 200).toString();
-//                String id = profile.getId();
-//                Toast.makeText(LoginActivity.this, "" + name
-//                        , Toast.LENGTH_SHORT).show();
-//                Log.e("HI!", imageUrl + id);
-//
-//                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-//                i.putExtra("profileName", name);
-//                i.putExtra("profilePicture", imageUrl);
-//                i.putExtra("profileId", id);
-//                startActivity(i);
-//
-//
-////                startActivity(new Intent(LoginActivity.this, HomeActivity.class), args);
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//
-//            }
-//        });
 
         accessTokenTracker = new AccessTokenTracker() {
             @Override
