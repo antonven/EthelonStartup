@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -23,8 +24,9 @@ public class PortfolioActivity extends AppCompatActivity {
 
     FoldingCell fc;
     RecyclerView recView;
-    ArrayList<ActivityModel> activities;
+    ArrayList<ActivityModel> activities = new ArrayList<>();
     PortfolioAdapter portfolioAdapter;
+    ActivityModel activityModel;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -39,12 +41,16 @@ public class PortfolioActivity extends AppCompatActivity {
 
         fc = (FoldingCell)findViewById(R.id.foldingCell);
         recView = (RecyclerView)findViewById(R.id.recyclerView1);
-        activities = new ArrayList<>();
 
+
+        activityModel = new ActivityModel(1,1,"ICTO Feeding Program","","123","This is to help the victims of the barangay labangon's devastating fire" ,
+                "Barangay Labangon, Cebu City","1","10:00 a.m.","1:00 p.m.","Free for all ICTO members","I.C.T.O.","100");
+        activities.add(activityModel);
+        portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recView.setLayoutManager(layoutManager);
-        portfolioAdapter = new PortfolioAdapter();
+        recView.setItemAnimator(new DefaultItemAnimator());
         recView.setAdapter(portfolioAdapter);
 
 

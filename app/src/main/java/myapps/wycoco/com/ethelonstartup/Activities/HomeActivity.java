@@ -27,6 +27,7 @@ import com.facebook.login.LoginManager;
 import myapps.wycoco.com.ethelonstartup.Fragments.ProfileFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class HomeActivity extends AppCompatActivity
@@ -35,6 +36,7 @@ public class HomeActivity extends AppCompatActivity
     TextView profileName;
     ImageView profilePicture;
     String profName, image, profileId;
+    ActivityModel activityModel;
     LoginManager loginManager;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -126,6 +128,7 @@ public class HomeActivity extends AppCompatActivity
 //            fm.beginTransaction()
 //                    .replace(R.id.frame1, ProfileFragment.newInstance(image, profName, profileId))
 //                    .commit();
+
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("image", image);
             intent.putExtra("profName", profName);

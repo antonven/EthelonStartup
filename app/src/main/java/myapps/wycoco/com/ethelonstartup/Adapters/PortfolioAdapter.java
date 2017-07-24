@@ -47,12 +47,19 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     @Override
     public void onBindViewHolder(PortfolioAdapter.ViewHolder holder, int position) {
-
+        holder.eventName.setText(activities.get(position).getActivityName());
+        holder.time.setText(activities.get(position).getActivityStart());
+        holder.eventHost.setText(activities.get(position).getActivityAddress());
+        holder.points.setText(activities.get(position).getActivityPoints());
+        holder.eventName.setText(activities.get(position).getActivityName());
+        holder.eventName.setText(activities.get(position).getActivityName());
+        holder.eventName.setText(activities.get(position).getActivityName());
+        holder.eventName.setText(activities.get(position).getActivityName());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return activities.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +89,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         public ViewHolder(View itemView) {
             super(itemView);
 
-            fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);]
+            fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
             date = (TextView)itemView.findViewById(R.id.title_date_label);
             time = (TextView)itemView.findViewById(R.id.title_time_label);
             eventName = (TextView)itemView.findViewById(R.id.title_event);
@@ -92,6 +99,9 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             contentRequestBtn = (TextView)itemView.findViewById(R.id.content_request_btn);
             status = (ImageView) itemView.findViewById(R.id.status);
             im = (ImageView) itemView.findViewById(R.id.title);
+            clickedActivityTitle = (TextView)itemView.findViewById(R.id.activityTitle);
+            clickedActivityHost = (TextView)itemView.findViewById(R.id.content_name_view);
+            clickedActivityTime = (TextView)itemView.findViewById(R.id.content_from_address_2);
 
 
             fc.setOnClickListener(new View.OnClickListener() {

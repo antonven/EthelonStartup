@@ -1,0 +1,70 @@
+User
+-user_id
+ email
+ password
+ role
+
+VolunteerDetails
+-user_id
+  name
+  image_url
+  points  
+    	  
+FoundationDetails
+-user_id
+ name
+ image_url
+ description
+ location_name
+ address_long
+ address_lat
+
+ActivityDetails 
+-activity_id
+ foundation_id
+ name
+ image_url
+ imageQr_url
+ description
+ location_name
+ contact_id
+ startTime
+ contactName
+ endTime 
+ byGroup// pwde pani blangko
+ address_long
+ address_lat
+ points_equivalent
+ activity_status 
+  
+VolunteerActivityAfter
+ volunteer_id
+ foundation_id
+
+VolunteerActivityBefore
+ volunteer_id
+ foundation_id
+
+VolunteerSkills
+ name
+ volunteer_id
+
+ActivitySkillsNeeded
+ activity_id
+ name
+
+Skills
+-name
+ 
+Contacts
+-contactName
+ number
+ email
+  
+ 
+
+
+
+
+
+ 

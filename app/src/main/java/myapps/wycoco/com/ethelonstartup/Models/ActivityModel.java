@@ -20,7 +20,10 @@ public class ActivityModel {
     private String activityPoints;
 
 
-    public ActivityModel(int activityId, int foundationId, String activityName, String activityImage, String activityQr, String activityDes, String activityLocation, String contactId, String activityStart, String activityEnd, String activitySkill, String activityAddress, String activityPoints) {
+    public ActivityModel(int activityId, int foundationId, String activityName, String activityImage,
+                         String activityQr, String activityDes, String activityLocation, String contactId,
+                         String activityStart, String activityEnd, String activitySkill, String activityAddress,
+                         String activityPoints) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
