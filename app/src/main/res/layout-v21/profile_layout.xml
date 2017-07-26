@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#fff" android:layout_height="match_parent">
+    android:background="#fff"
+    android:layout_height="match_parent">
+
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        >
+
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            >
+            android:clipToPadding="false">
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:elevation="20dp">
+                android:clipToPadding="false"
+                >
+
 
             <ImageView
                 android:background="#800000"
                 android:id="@+id/coverPhoto"
                 android:layout_width="match_parent"
+                android:scaleType="centerCrop"
                 android:layout_height="280dp" />
+
+                <include
+                    layout="@layout/toolbar_custom_layout"
+                    android:id="@+id/nav_toolbar"
+                    />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePictureProfile"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/account"
+                android:scaleType="centerCrop"
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="50dp"
+                android:elevation="30dp"/>
 
             <TextView
                 android:id="@+id/profileNameProfile"

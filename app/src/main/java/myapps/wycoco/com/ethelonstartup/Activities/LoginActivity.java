@@ -14,7 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -36,18 +44,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     CallbackManager callbackManager;
     TextView signUp;
     EditText inputEmail, inputPassword;
-    Button buttonLogin, buttonGoogle ;
+    Button buttonLogin, buttonFacebook, buttonSignup ;
     AccessTokenTracker accessTokenTracker;
     ProfileTracker profileTracker;
     FragmentManager fm;
+    VideoView vidView;
+    RequestQueue requestQueue;
+    String databaseUrl = "http://172.17.3.11/EthelonStartupWeb/public/register";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -64,16 +77,12 @@ public class LoginActivity extends AppCompatActivity {
         window.setStatusBarColor(this.getResources().getColor(R.color.signature2Color));
 
         callbackManager = CallbackManager.Factory.create();
-        LoginButton buttonFacebook = (LoginButton) findViewById(R.id.buttonFacebook);
 
-        signUp = (TextView)findViewById(R.id.buttonSignup);
+        buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
-//        buttonGoogle = (Button)findViewById(R.id.buttonGoogle);
-
-        buttonFacebook.setReadPermissions(Arrays.asList("user_status"));
-
+        buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
 
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -91,69 +100,12 @@ public class LoginActivity extends AppCompatActivity {
         accessTokenTracker.startTracking();
         profileTracker.startTracking();
 
-       FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
-           @Override
-           public void onSuccess(LoginResult loginResult) {
-               Profile profile = Profile.getCurrentProfile();
-               nextActivity(profile);
-
-
-               new GraphRequest(
-                       AccessToken.getCurrentAccessToken(), "/{user-id}/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
-                   @Override
-                   public void onCompleted(GraphResponse response) {
-
-
-//                           try {
-//
-//                               String shit = response.getJSONArray("data");
-//                               Log.e("SHET", shit);
-//                           } catch (JSONException e) {
-//                               e.printStackTrace();
-//                           }
-
-                   }
-               }
-               ).executeAsync();
-
-
-           }
-
-           @Override
-           public void onCancel() {
-
-           }
-
-           @Override
-           public void onError(FacebookException error) {
-
-           }
-       };
-        buttonFacebook.setReadPermissions("user_friends");
-        buttonFacebook.registerCallback(callbackManager, callback);
-
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-            }
-        });
 
 
 
-//        buttonGoogle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
+        buttonLogin.setOnClickListener(this);
+        buttonSignup.setOnClickListener(this);
+        buttonFacebook.setOnClickListener(this);
     }
 
     @Override
@@ -166,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Profile profile = Profile.getCurrentProfile();
-//        startActivity(new Intent(this, HomeActivity.class));
         nextActivity(profile);
     }
 
@@ -190,5 +141,61 @@ public class LoginActivity extends AppCompatActivity {
             i.putExtra("profileId", profile.getId());
             startActivity(i);
         }
+    }
+
+
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+
+        switch (view.getId()){
+            case R.id.buttonEthelonSignUp:
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                break;
+
+            case R.id.buttonFacebook:
+                LoginManager.getInstance().logInWithReadPermissions(this,
+                        Arrays.asList("user_photos", "email", "user_birthday", "user_friends", "public_profile"));
+                LoginFacebook();
+
+
+                break;
+
+            case R.id.buttonLogin:
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                break;
+        }
+    }
+
+    public void LoginFacebook(){
+        FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Profile profile = Profile.getCurrentProfile();
+
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                nextActivity(profile);
+
+                new GraphRequest(
+                        AccessToken.getCurrentAccessToken(), "/{user-id}/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+
+
+                    }
+                }
+                ).executeAsync();
+            }
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        };
     }
 }

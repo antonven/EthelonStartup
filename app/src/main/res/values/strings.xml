@@ -68,4 +68,9 @@
 
     <string name="delivery_time_mock" translatable="false">6:30 pm</string>
     <string name="delivery_date_mock" translatable="false">May 16, 2016</string>
+    <string name="android_adding_tabs_using_tablayout_tablayout_android_material_design_support_library_tutorial">Android: Adding Tabs using TabLayout. TabLayout Android Material Design Support Library Tutorial</string>
+    <string name="android_tabs_tablayout_tutorial">Android Tabs/TabLayout Tutorial</string>
+    <string name="material_design_example_using_tablayout">Material Design Example Using TabLayout</string>
+    <string name="Ethelon" />
+    <string name="first_layout">first layout</string>
 </resources>
