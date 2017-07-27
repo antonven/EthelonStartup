@@ -90,12 +90,12 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             super(itemView);
 
             fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
-            date = (TextView)itemView.findViewById(R.id.title_date_label);
-            time = (TextView)itemView.findViewById(R.id.title_time_label);
-            eventName = (TextView)itemView.findViewById(R.id.title_event);
-            eventHost = (TextView)itemView.findViewById(R.id.title_host);
+            date = (TextView)itemView.findViewById(R.id.eventDate);
+            time = (TextView)itemView.findViewById(R.id.eventTimeStart);
+            eventName = (TextView)itemView.findViewById(R.id.eventName);
+            eventHost = (TextView)itemView.findViewById(R.id.eventHost);
             volunteersCount = (TextView)itemView.findViewById(R.id.title_volunteers_count);
-            points = (TextView)itemView.findViewById(R.id.title_points);
+            points = (TextView)itemView.findViewById(R.id.eventPoints);
             contentRequestBtn = (TextView)itemView.findViewById(R.id.content_request_btn);
             status = (ImageView) itemView.findViewById(R.id.status);
             im = (ImageView) itemView.findViewById(R.id.title);

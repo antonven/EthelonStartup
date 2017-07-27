@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.signature2Color));
+        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         profilePicture = (ImageView)findViewById(R.id.profilePictureProfile);
         profileName = (TextView)findViewById(R.id.profileNameProfile);

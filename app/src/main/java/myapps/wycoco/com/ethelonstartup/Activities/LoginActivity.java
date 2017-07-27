@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
@@ -59,6 +60,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProfileTracker profileTracker;
     FragmentManager fm;
     VideoView vidView;
+    Profile profile;
+    Uri uri;
     RequestQueue requestQueue;
     String databaseUrl = "http://172.17.3.11/EthelonStartupWeb/public/register";
 
@@ -74,15 +77,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.signature2Color));
+        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         callbackManager = CallbackManager.Factory.create();
 
+        vidView = (VideoView)findViewById(R.id.videoView);
         buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
+
+        uri = Uri.parse("android.resources://" + getPackageName()+ "/" + R.raw.vid);
+        vidView.setVideoURI(uri);
+        vidView.start();
+
+        buttonLogin.setOnClickListener(this);
+        buttonSignup.setOnClickListener(this);
+        buttonFacebook.setOnClickListener(this);
 
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -99,13 +111,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
         accessTokenTracker.startTracking();
         profileTracker.startTracking();
-
-
-
-
-        buttonLogin.setOnClickListener(this);
-        buttonSignup.setOnClickListener(this);
-        buttonFacebook.setOnClickListener(this);
     }
 
     @Override
@@ -117,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        Profile profile = Profile.getCurrentProfile();
+        profile = Profile.getCurrentProfile();
         nextActivity(profile);
     }
 
@@ -169,10 +174,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void LoginFacebook(){
+
+
+        LoginManager.getInstance().logOut();
         FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
+                profile = Profile.getCurrentProfile();
 
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
                 nextActivity(profile);

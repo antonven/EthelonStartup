@@ -14,6 +14,21 @@
         android:paddingLeft="24dp"
         android:paddingTop="56dp">
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/inputEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+
+                android:hint="@string/e_mail"
+                />
+        </android.support.design.widget.TextInputLayout>
+
 
         <android.support.design.widget.TextInputLayout
             android:layout_height="wrap_content"
@@ -26,9 +41,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="Username"
-                android:drawablePadding="16dp"
-                android:drawableLeft="@drawable/account"
-                android:drawableTint="@color/red_focused"
+
                 />
 
         </android.support.design.widget.TextInputLayout>
@@ -44,9 +57,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/password"
-                android:drawablePadding="16dp"
-                android:drawableLeft="@drawable/ic_vpn_key_black_18dp"
-                android:drawableTint="@color/red_focused"
+
 
                 />
         </android.support.design.widget.TextInputLayout>
@@ -62,40 +73,18 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/confirm_password"
-
-                android:drawablePadding="16dp"
-                android:drawableLeft="@drawable/ic_vpn_key_black_18dp"
-                android:drawableTint="@color/red_focused"
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
-                android:id="@+id/inputEmail"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/e_mail"
-                android:drawablePadding="16dp"
-                android:drawableLeft="@drawable/ic_mail_outline_black_18dp"
-                android:drawableTint="@color/red_focused"
-                />
-
-            <Button
-                android:id="@+id/registerButton"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="REGISTER"/>
-        </android.support.design.widget.TextInputLayout>
-
-
-
+            android:textColor="#fff"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_ethelon_bg_button"
+            android:text="REGISTER"/>
 
     </LinearLayout>
 

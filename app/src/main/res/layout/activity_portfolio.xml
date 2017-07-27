@@ -6,15 +6,26 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.PortfolioActivity">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar_custom_layout"
+            android:id="@+id/toolbar"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recyclerView1">
-
+            android:layout_height="510dp"
+            android:id="@+id/recyclerView1"
+            android:layout_below="@+id/toolbar"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
         </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
 
 </FrameLayout>

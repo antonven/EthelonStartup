@@ -7,8 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.view.View;
+import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -27,6 +26,7 @@ public class PortfolioActivity extends AppCompatActivity {
     ArrayList<ActivityModel> activities = new ArrayList<>();
     PortfolioAdapter portfolioAdapter;
     ActivityModel activityModel;
+    Toolbar toolbar;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -37,14 +37,18 @@ public class PortfolioActivity extends AppCompatActivity {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.signature2Color));
+        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("Portfolio");
 
         fc = (FoldingCell)findViewById(R.id.foldingCell);
         recView = (RecyclerView)findViewById(R.id.recyclerView1);
 
 
         activityModel = new ActivityModel(1,1,"ICTO Feeding Program","","123","This is to help the victims of the barangay labangon's devastating fire" ,
-                "Barangay Labangon, Cebu City","1","10:00 a.m.","1:00 p.m.","Free for all ICTO members","I.C.T.O.","100");
+                "12/25/17", "Barangay Labangon, Cebu City","1","10:00 a.m.","1:00 p.m.","Free for all ICTO members","I.C.T.O.","100");
         activities.add(activityModel);
         portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
 

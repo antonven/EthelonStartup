@@ -11,6 +11,7 @@ public class ActivityModel {
     private String activityImage;
     private String activityQr;
     private String activityDes;
+    private String activityDate;
     private String activityLocation;
     private String contactId;
     private String activityStart;
@@ -21,7 +22,7 @@ public class ActivityModel {
 
 
     public ActivityModel(int activityId, int foundationId, String activityName, String activityImage,
-                         String activityQr, String activityDes, String activityLocation, String contactId,
+                         String activityQr, String activityDes, String activityDate, String activityLocation, String contactId,
                          String activityStart, String activityEnd, String activitySkill, String activityAddress,
                          String activityPoints) {
         this.activityId = activityId;
@@ -30,6 +31,7 @@ public class ActivityModel {
         this.activityImage = activityImage;
         this.activityQr = activityQr;
         this.activityDes = activityDes;
+        this.activityDate = activityDate;
         this.activityLocation = activityLocation;
         this.contactId = contactId;
         this.activityStart = activityStart;
@@ -96,6 +98,14 @@ public class ActivityModel {
 
     public void setActivityLocation(String activityLocation) {
         this.activityLocation = activityLocation;
+    }
+
+    public String getActivityDate() {
+        return activityDate;
+    }
+
+    public void setActivityDate(String activityDate) {
+        this.activityDate = activityDate;
     }
 
     public String getContactId() {
