@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/frame1"
-    android:background="@drawable/ethback"
+    android:background="#f8f8f8"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.HomeActivity"
     tools:showIn="@layout/app_bar_home">

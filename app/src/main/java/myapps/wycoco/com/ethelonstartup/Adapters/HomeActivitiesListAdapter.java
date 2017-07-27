@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,11 +54,11 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         return activities.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         FoldingCell fc;
         TextView eventName, eventHost, eventAddress, eventDate, eventTimeStart, eventVolunteers, eventPoints;
-        TextView clickedName, clickedHost, clickedAddress, clickedDate, clickTimeStart, clickVolunteers, clickedPoints;
+        TextView clickedName, clickedHost, clickedAddress, clickedDate, clickTimeStart, clickVolunteers, clickedPoints, viewActivity;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -70,6 +71,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             eventTimeStart = (TextView)itemView.findViewById(R.id.eventTimeStart);
             eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
             eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
+            viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
 
             fc.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,6 +80,13 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
                 }
             });
 
+            viewActivity.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+//            mContext.startActivity(new Intent(mContext, ));
         }
     }
 }

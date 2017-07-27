@@ -28,7 +28,8 @@
 
         <activity
             android:name=".Activities.PortfolioActivity"
-            android:label="@string/title_activity_portfolio"></activity>
+            android:label="@string/title_activity_portfolio" />
+        <activity android:name=".Activities.EventDetailsActivity"></activity>
     </application>
 
 </manifest>

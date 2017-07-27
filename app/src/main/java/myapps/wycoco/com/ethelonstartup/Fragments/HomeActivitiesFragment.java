@@ -46,16 +46,18 @@ public class HomeActivitiesFragment extends Fragment {
 
         recView = (RecyclerView)v.findViewById(R.id.recView);
 
-        activityModel = new ActivityModel(1,1,"ICTO Feeding Program","","123","This is to help the victims of the barangay labangon's devastating fire" ,
-                "12/25/17", "Barangay Labangon, Cebu City","1","10:00 a.m.","1:00 p.m.","Free for all ICTO members","I.C.T.O.","100");
-        activities.add(activityModel);
-        HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
+        for(int i = 0; i < 5; i++) {
+            activityModel = new ActivityModel(1, 1, "ICTO Feeding Program", "", "123", "This is to help the victims of the barangay labangon's devastating fire",
+                    "12/25/17", "Barangay Labangon, Cebu City", "1", "10:00 a.m.", "1:00 p.m.", "Free for all ICTO members", "I.C.T.O.", "100");
+            activities.add(activityModel);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recView.setLayoutManager(layoutManager);
-        recView.setItemAnimator(new DefaultItemAnimator());
-        recView.setAdapter(homeActivitiesListAdapter);
+            HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
 
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            recView.setLayoutManager(layoutManager);
+            recView.setItemAnimator(new DefaultItemAnimator());
+            recView.setAdapter(homeActivitiesListAdapter);
+        }
         return v;
 
     }
