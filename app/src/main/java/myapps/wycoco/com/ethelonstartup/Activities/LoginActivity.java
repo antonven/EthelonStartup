@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,7 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -31,7 +37,14 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -49,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Profile profile;
     Uri uri;
     RequestQueue requestQueue;
-    String databaseUrl = "http://172.17.3.11/EthelonStartupWeb/public/register";
+    private String URL = "http://172.17.0.138/EthelonStartupWeb/public/api/register";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -167,19 +180,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onSuccess(LoginResult loginResult) {
                 profile = Profile.getCurrentProfile();
-
-                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                String accesToken = loginResult.getAccessToken().getToken();
                 nextActivity(profile);
 
-                new GraphRequest(
-                        AccessToken.getCurrentAccessToken(), "/{user-id}/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.i("LoginActivity", response.toString());
+                        // Get facebook data from login
+                        try {
+                            String email = object.getString("email");
+                            String facebook_id = object.getString("id");
+                            String name = profile.getName();
+
+                            requestRegisterPost(email, facebook_id, name);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
-                }
-                ).executeAsync();
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+
             }
             @Override
             public void onCancel() {
@@ -191,5 +219,80 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         };
+    }
+
+    public void requestRegisterPost(final String email, final String facebook_id, final String name) {
+        StringRequest string = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("RESPONSE", "äbcasdasdsadasd");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("RESPONSE", "NA BOGOO!!!!");
+                    }
+                }) {
+
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                params.put("facebook_id", facebook_id);
+                params.put("name", name);
+
+
+                return params;
+            }
+        };
+        RequestQueue request = Volley.newRequestQueue(this);
+        request.add(string);
+
+    }
+
+    private Bundle getFacebookData(JSONObject object) {
+
+        try {
+            Bundle bundle = new Bundle();
+            String id = null;
+            try {
+                id = object.getString("id");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=200&height=150");
+                Log.i("profile_pic", profile_pic + "");
+                bundle.putString("profile_pic", profile_pic.toString());
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            bundle.putString("idFacebook", id);
+            if (object.has("first_name"))
+                bundle.putString("first_name", object.getString("first_name"));
+            if (object.has("last_name"))
+                bundle.putString("last_name", object.getString("last_name"));
+            if (object.has("email"))
+                bundle.putString("email", object.getString("email"));
+            if (object.has("gender"))
+                bundle.putString("gender", object.getString("gender"));
+            if (object.has("birthday"))
+                bundle.putString("birthday", object.getString("birthday"));
+            if (object.has("location"))
+                bundle.putString("location", object.getJSONObject("location").getString("name"));
+
+            return bundle;
+        }
+        catch(JSONException e) {
+            Log.d("shet","Error parsing JSON");
+        }
+        return null;
     }
 }

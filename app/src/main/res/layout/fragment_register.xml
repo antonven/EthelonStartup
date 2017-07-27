@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@id/frame1"
+    android:background="#f8f8f8"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity">
 
@@ -14,67 +15,34 @@
         android:paddingLeft="24dp"
         android:paddingTop="56dp">
 
-        <android.support.design.widget.TextInputLayout
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+
+            android:text="CREATE ACCOUNT"/>
+
             <EditText
                 android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:inputType="textEmailAddress"
-
-                android:hint="@string/e_mail"
-                />
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
-                android:id="@+id/inputUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="Username"
+                android:background="@drawable/edit_text_custom_bg"
 
                 />
 
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
             <EditText
                 android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:inputType="textPassword"
-                android:hint="@string/password"
+
+                android:background="@drawable/edit_text_custom_bg"
 
 
                 />
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
-                android:id="@+id/inputConfirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/confirm_password"
-                />
-        </android.support.design.widget.TextInputLayout>
+
+
 
 
         <Button
