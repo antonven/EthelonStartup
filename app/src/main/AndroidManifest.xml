@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.HomeActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.Register.RegisterActivity" />
         <activity android:name=".Activities.ProfileActivity" />
 
         <meta-data
@@ -29,7 +29,8 @@
         <activity
             android:name=".Activities.PortfolioActivity"
             android:label="@string/title_activity_portfolio" />
-        <activity android:name=".Activities.EventDetailsActivity"></activity>
+        <activity android:name=".Activities.EventDetailsActivity" />
+        <activity android:name=".Activities.Register.RegisterStep2Activity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
-package myapps.wycoco.com.ethelonstartup.Activities;
+package myapps.wycoco.com.ethelonstartup.Activities.Register;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -35,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText userName, passWord, conPass, eMail;
     FrameLayout frame;
-    Button register;
+    Button nextStepBtn;
     RequestQueue requestQueue;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -54,31 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
         passWord = (EditText)findViewById(R.id.inputPassword);
         conPass = (EditText)findViewById(R.id.inputConfirmPassword);
         eMail = (EditText)findViewById(R.id.inputEmail);
-        register = (Button)findViewById(R.id.registerButton);
+        nextStepBtn = (Button)findViewById(R.id.nextStepBtn);
         requestQueue = Volley.newRequestQueue(this);
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            requestRegisterPost();
-            }
-        });
-
-        }
-    public void requestRegisterPost() {
-        StringRequest string = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
+        nextStepBtn.setOnClickListener(new View.OnClickListener() {
 
             String email = eMail.getText().toString();
             String password = passWord.getText().toString();
@@ -86,20 +66,20 @@ public class RegisterActivity extends AppCompatActivity {
             String role = conPass.getText().toString();
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("password", password);
-                params.put("name", name);
-                params.put("role", role);
-
-                return params;
+            public void onClick(View view) {
+//            requestRegisterPost();
+                Intent n = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
+                n.putExtra("email", email);
+                n.putExtra("password", password);
+                n.putExtra("name", name);
+                n.putExtra("role", role);
+                startActivity(n);
+                overridePendingTransition(R.anim.slide_right_animation, R.anim.slide_out_left_animation);
             }
-        };
-        RequestQueue request = Volley.newRequestQueue(this);
-        request.add(string);
+        });
 
-    }
+        }
+
 
 
 

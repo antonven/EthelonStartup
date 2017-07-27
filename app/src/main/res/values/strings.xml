@@ -73,4 +73,7 @@
     <string name="material_design_example_using_tablayout">Material Design Example Using TabLayout</string>
     <string name="Ethelon" />
     <string name="first_layout">first layout</string>
+    <string name="next_step">Next Step</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
 </resources>

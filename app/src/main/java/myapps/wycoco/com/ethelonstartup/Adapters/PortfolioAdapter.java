@@ -96,7 +96,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             eventHost = (TextView)itemView.findViewById(R.id.eventHost);
             volunteersCount = (TextView)itemView.findViewById(R.id.title_volunteers_count);
             points = (TextView)itemView.findViewById(R.id.eventPoints);
-            contentRequestBtn = (TextView)itemView.findViewById(R.id.content_request_btn);
+            contentRequestBtn = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             status = (ImageView) itemView.findViewById(R.id.status);
             im = (ImageView) itemView.findViewById(R.id.title);
             clickedActivityTitle = (TextView)itemView.findViewById(R.id.activityTitle);
