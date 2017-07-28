@@ -14,6 +14,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -41,11 +42,11 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
     @Override
     public void onBindViewHolder(HomeActivitiesListAdapter.ViewHolder holder, int position) {
         holder.eventName.setText(activities.get(position).getActivityName());
-        holder.eventAddress.setText(activities.get(position).getActivityAddress());
+        holder.eventAddress.setText(activities.get(position).getActivityLocation());
         holder.eventHost.setText(activities.get(position).getActivityLocation());
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
-        holder.eventVolunteers.setText(activities.get(position).getContactId());
+        holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
         holder.eventPoints.setText(activities.get(position).getActivityPoints());
     }
 
@@ -86,7 +87,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
         @Override
         public void onClick(View view) {
-//            mContext.startActivity(new Intent(mContext, ));
+            mContext.startActivity(new Intent(mContext, EventDetailsActivity.class));
         }
     }
 }

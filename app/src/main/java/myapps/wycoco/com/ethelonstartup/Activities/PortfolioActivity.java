@@ -47,8 +47,8 @@ public class PortfolioActivity extends AppCompatActivity {
         recView = (RecyclerView)findViewById(R.id.recyclerView1);
 
 
-        activityModel = new ActivityModel(1,1,"ICTO Feeding Program","","123","This is to help the victims of the barangay labangon's devastating fire" ,
-                "12/25/17", "Barangay Labangon, Cebu City","1","10:00 a.m.","1:00 p.m.","Free for all ICTO members","I.C.T.O.","100");
+//        activityModel = new ActivityModel(1,1,"ICTO Feeding Program","","123","This is to help the victims of the barangay labangon's devastating fire" ,
+//                "12/25/17", "Barangay Labangon, Cebu City","1","10:00 a.m.","1:00 p.m.","Free for all ICTO members","I.C.T.O.","100");
         activities.add(activityModel);
         portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
 

@@ -76,4 +76,6 @@
     <string name="next_step">Next Step</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
+    <string name="EthelnStartup">Ethelon Startup</string>
+    <string name="EthelonStartup">Ethelon Startup</string>
 </resources>

@@ -50,10 +50,10 @@ public class RegisterActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
-        frame = (FrameLayout)findViewById(R.id.frame1);
-        userName = (EditText)findViewById(R.id.inputUsername);
+//        frame = (FrameLayout)findViewById(R.id.frame1);
+//        userName = (EditText)findViewById(R.id.inputUsername);
         passWord = (EditText)findViewById(R.id.inputPassword);
-        conPass = (EditText)findViewById(R.id.inputConfirmPassword);
+//        conPass = (EditText)findViewById(R.id.inputConfirmPassword);
         eMail = (EditText)findViewById(R.id.inputEmail);
         nextStepBtn = (Button)findViewById(R.id.nextStepBtn);
         requestQueue = Volley.newRequestQueue(this);
@@ -62,8 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             String email = eMail.getText().toString();
             String password = passWord.getText().toString();
-            String name = userName.getText().toString();
-            String role = conPass.getText().toString();
+//            String name = userName.getText().toString();
+//            String role = conPass.getText().toString();
 
             @Override
             public void onClick(View view) {
@@ -71,8 +71,8 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent n = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
                 n.putExtra("email", email);
                 n.putExtra("password", password);
-                n.putExtra("name", name);
-                n.putExtra("role", role);
+//                n.putExtra("name", name);
+//                n.putExtra("role", role);
                 startActivity(n);
                 overridePendingTransition(R.anim.slide_right_animation, R.anim.slide_out_left_animation);
             }

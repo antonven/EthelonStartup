@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Profile profile;
     Uri uri;
     RequestQueue requestQueue;
-    private String URL = "http://172.17.0.138/EthelonStartupWeb/public/api/register";
+    private String URL = "http://172.17.2.30/EthelonStartupWeb/public/api/loginwithfb";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -161,9 +161,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.buttonFacebook:
                 LoginManager.getInstance().logInWithReadPermissions(this,
                         Arrays.asList("user_photos", "email", "user_birthday", "user_friends", "public_profile"));
-                LoginFacebook();
+                LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+
+                        pushFacebookCred(loginResult.getAccessToken());
 
 
+                        }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+
+                    }
+                });
+
+                Log.e("SHET", "yawa ning IT PROJECT!!!!!!");
                 break;
 
             case R.id.buttonLogin:
@@ -172,127 +191,61 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void LoginFacebook(){
 
 
-        LoginManager.getInstance().logOut();
-        FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+
+    public void pushFacebookCred(AccessToken accessToken){
+        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                profile = Profile.getCurrentProfile();
-                String accesToken = loginResult.getAccessToken().getToken();
-                nextActivity(profile);
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                Log.i("LoginActivity", response.toString());
+                // Get facebook data from login
+                try {
+                    final String email = object.getString("email");
+                    final String facebook_id = object.getString("id");
+                    final String name = profile.getName();
+                    Log.e("SASDASDASD", "" + email + facebook_id + name);
+                    StringRequest string = new StringRequest(Request.Method.POST, URL,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
 
-                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("RESPONSE", error.getMessage());
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("email", email);
+                            params.put("facebook_id", facebook_id);
+                            params.put("name", name);
+                            params.put("role", "volunteer");
+                            Log.e("ASDASD", email);
 
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.i("LoginActivity", response.toString());
-                        // Get facebook data from login
-                        try {
-                            String email = object.getString("email");
-                            String facebook_id = object.getString("id");
-                            String name = profile.getName();
-
-                            requestRegisterPost(email, facebook_id, name);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            return params;
                         }
+                    };
+                    RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                    request.add(string);
 
-                    }
-                });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
-                request.setParameters(parameters);
-                request.executeAsync();
+                    nextActivity(profile);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
             }
-            @Override
-            public void onCancel() {
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
+        request.setParameters(parameters);
+        request.executeAsync();
 
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        };
-    }
-
-    public void requestRegisterPost(final String email, final String facebook_id, final String name) {
-        StringRequest string = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("RESPONSE", "äbcasdasdsadasd");
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("RESPONSE", "NA BOGOO!!!!");
-                    }
-                }) {
-
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("facebook_id", facebook_id);
-                params.put("name", name);
-
-
-                return params;
-            }
-        };
-        RequestQueue request = Volley.newRequestQueue(this);
-        request.add(string);
-
-    }
-
-    private Bundle getFacebookData(JSONObject object) {
-
-        try {
-            Bundle bundle = new Bundle();
-            String id = null;
-            try {
-                id = object.getString("id");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=200&height=150");
-                Log.i("profile_pic", profile_pic + "");
-                bundle.putString("profile_pic", profile_pic.toString());
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return null;
-            }
-
-            bundle.putString("idFacebook", id);
-            if (object.has("first_name"))
-                bundle.putString("first_name", object.getString("first_name"));
-            if (object.has("last_name"))
-                bundle.putString("last_name", object.getString("last_name"));
-            if (object.has("email"))
-                bundle.putString("email", object.getString("email"));
-            if (object.has("gender"))
-                bundle.putString("gender", object.getString("gender"));
-            if (object.has("birthday"))
-                bundle.putString("birthday", object.getString("birthday"));
-            if (object.has("location"))
-                bundle.putString("location", object.getJSONObject("location").getString("name"));
-
-            return bundle;
-        }
-        catch(JSONException e) {
-            Log.d("shet","Error parsing JSON");
-        }
-        return null;
     }
 }

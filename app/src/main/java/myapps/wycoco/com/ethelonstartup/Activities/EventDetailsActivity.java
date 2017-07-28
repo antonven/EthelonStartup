@@ -13,5 +13,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_details);
 
 
+
     }
 }

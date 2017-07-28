@@ -5,26 +5,30 @@ package myapps.wycoco.com.ethelonstartup.Models;
  */
 
 public class ActivityModel {
-    private int activityId;
-    private int foundationId;
+    private String activityId;
+    private String foundationId;
     private String activityName;
     private String activityImage;
     private String activityQr;
     private String activityDes;
     private String activityDate;
     private String activityLocation;
-    private String contactId;
     private String activityStart;
     private String activityEnd;
-    private String activitySkill;
-    private String activityAddress;
+    private String activityGroup;
+    private String activityLong;
+    private String activityLat;
     private String activityPoints;
+    private String activityStatus;
+    private String activityCreated;
+    private String activityUpdated;
 
 
-    public ActivityModel(int activityId, int foundationId, String activityName, String activityImage,
-                         String activityQr, String activityDes, String activityDate, String activityLocation, String contactId,
-                         String activityStart, String activityEnd, String activitySkill, String activityAddress,
-                         String activityPoints) {
+    public ActivityModel(String activityId, String foundationId, String activityName, String activityImage,
+                         String activityQr, String activityDes,  String activityLocation,
+                         String activityStart, String activityEnd, String activityDate, String activityGroup, String activityLong,
+                         String activityLat,
+                         String activityPoints ,String activityStatus, String activityCreated, String activityUpdated) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -33,30 +37,33 @@ public class ActivityModel {
         this.activityDes = activityDes;
         this.activityDate = activityDate;
         this.activityLocation = activityLocation;
-        this.contactId = contactId;
         this.activityStart = activityStart;
         this.activityEnd = activityEnd;
-        this.activitySkill = activitySkill;
-        this.activityAddress = activityAddress;
+        this.activityGroup = activityGroup;
+        this.activityLong = activityLong;
+        this.activityLat = activityLat;
         this.activityPoints = activityPoints;
+        this.activityStatus = activityStatus;
+        this.activityCreated = activityCreated;
+        this.activityUpdated = activityUpdated;
     }
 
     public ActivityModel() {
     }
 
-    public int getActivityId() {
+    public String getActivityId() {
         return activityId;
     }
 
-    public void setActvitiyId(int activityId) {
+    public void setActvitiyId(String activityId) {
         this.activityId = activityId;
     }
 
-    public int getFoundationId() {
+    public String getFoundationId() {
         return foundationId;
     }
 
-    public void setFoundationId(int foundationId) {
+    public void setFoundationId(String foundationId) {
         this.foundationId = foundationId;
     }
 
@@ -108,13 +115,6 @@ public class ActivityModel {
         this.activityDate = activityDate;
     }
 
-    public String getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(String contactId) {
-        this.contactId = contactId;
-    }
 
     public String getActivityStart() {
         return activityStart;
@@ -132,21 +132,15 @@ public class ActivityModel {
         this.activityEnd = activityEnd;
     }
 
-    public String getActivitySkill() {
-        return activitySkill;
+    public String getActivityGroup() {
+        return activityGroup;
     }
 
-    public void setActivitySkill(String activitySkill) {
-        this.activitySkill = activitySkill;
+    public void setActivityGroup(String activitySkill) {
+        this.activityGroup = activitySkill;
     }
 
-    public String getActivityAddress() {
-        return activityAddress;
-    }
 
-    public void setActivityAddress(String activityAddress) {
-        this.activityAddress = activityAddress;
-    }
 
     public String getActivityPoints() {
         return activityPoints;
@@ -154,5 +148,45 @@ public class ActivityModel {
 
     public void setActivityPoints(String activityPoints) {
         this.activityPoints = activityPoints;
+    }
+
+    public String getActivityLong() {
+        return activityLong;
+    }
+
+    public void setActivityLong(String activityLong) {
+        this.activityLong = activityLong;
+    }
+
+    public String getActivityLat() {
+        return activityLat;
+    }
+
+    public void setActivityLat(String activityLat) {
+        this.activityLat = activityLat;
+    }
+
+    public String getActivityStatus() {
+        return activityStatus;
+    }
+
+    public void setActivityStatus(String activityStatus) {
+        this.activityStatus = activityStatus;
+    }
+
+    public String getActivityCreated() {
+        return activityCreated;
+    }
+
+    public void setActivityCreated(String activityCreated) {
+        this.activityCreated = activityCreated;
+    }
+
+    public String getActivityUpdated() {
+        return activityUpdated;
+    }
+
+    public void setActivityUpdated(String activityUpdated) {
+        this.activityUpdated = activityUpdated;
     }
 }

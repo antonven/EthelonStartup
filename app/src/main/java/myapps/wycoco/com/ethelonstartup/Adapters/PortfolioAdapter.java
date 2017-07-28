@@ -49,7 +49,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     public void onBindViewHolder(PortfolioAdapter.ViewHolder holder, int position) {
         holder.eventName.setText(activities.get(position).getActivityName());
         holder.time.setText(activities.get(position).getActivityStart());
-        holder.eventHost.setText(activities.get(position).getActivityAddress());
+        holder.eventHost.setText(activities.get(position).getFoundationId());
         holder.points.setText(activities.get(position).getActivityPoints());
         holder.eventName.setText(activities.get(position).getActivityName());
         holder.eventName.setText(activities.get(position).getActivityName());
