@@ -9,134 +9,7 @@
 
 
 
-    <!--<ScrollView-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent">-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingTop="48dp"-->
-            <!--android:paddingLeft="24dp"-->
-            <!--android:paddingRight="24dp">-->
-            <!--<LinearLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_gravity="center_horizontal">-->
 
-            <!--<ImageView-->
-                <!--android:id="@+id/login_dotleft"-->
-                <!--android:layout_width="40dp"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:scaleX="1"-->
-                <!--android:scaleY="1"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:layout_marginRight="30dp"-->
-                <!--android:src="@drawable/dotleft" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/login_dotright"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:scaleX="1"-->
-                <!--android:scaleY="1"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:src="@drawable/dotleft" />-->
-            <!--</LinearLayout>-->
-
-
-            <!--<ImageView-->
-                <!--android:padding="3dp"-->
-                <!--android:id="@+id/logo"-->
-                <!--android:src="@drawable/e"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="72dp"-->
-                <!--android:layout_marginBottom="24dp"-->
-                <!--android:layout_gravity="center_horizontal"/>-->
-
-            <!--<android.support.design.widget.TextInputLayout-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_marginTop="14dp"-->
-                <!--android:layout_marginBottom="8dp">-->
-                <!--<EditText-->
-                    <!--android:id="@+id/inputEmail"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:inputType="textEmailAddress"-->
-                    <!--android:hint="@string/email"/>-->
-            <!--</android.support.design.widget.TextInputLayout>-->
-
-            <!--<android.support.design.widget.TextInputLayout-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_marginBottom="8dp">-->
-                <!--<EditText-->
-                    <!--android:id="@+id/inputPassword"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:inputType="textPassword"-->
-                    <!--android:hint="@string/password"/>-->
-
-            <!--</android.support.design.widget.TextInputLayout>-->
-
-            <!--<android.support.v7.widget.AppCompatButton-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="40dp"-->
-                <!--style="@style/TextViewWhite"-->
-                <!--android:id="@+id/buttonLogin"-->
-                <!--android:layout_marginTop="24dp"-->
-                <!--android:layout_marginBottom="6dp"-->
-                <!--android:padding="12dp"-->
-                <!--android:background="@color/signature2Color"-->
-                <!--android:text="@string/login" />-->
-
-
-                <!--<com.facebook.login.widget.LoginButton-->
-                    <!--android:id="@+id/buttonFacebook"-->
-                    <!--android:layout_height="40dp"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:paddingTop="12dp"-->
-                    <!--android:paddingBottom="12dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--/>-->
-
-                <!--&lt;!&ndash;<com.facebook.login.widget.LoginButton&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:id="@+id/buttonFaceob"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_gravity="center_horizontal"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_marginTop="30dp"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_marginBottom="30dp" />&ndash;&gt;-->
-
-                <!--&lt;!&ndash;<android.support.v7.widget.AppCompatButton&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:id="@+id/buttonGoogle"&ndash;&gt;-->
-                    <!--&lt;!&ndash;style="@style/TextViewWhite"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:text="login with google"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:background="#d34836"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:textSize="12sp"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="160dp"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="40dp"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_weight="1"/>&ndash;&gt;-->
-
-
-
-
-            <!--<TextView-->
-                <!--android:id="@+id/buttonSignup"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="24dp"-->
-                <!--android:layout_marginTop="40dp"-->
-                <!--android:text="@string/no_account_yet_sign_up"-->
-                <!--android:gravity="center"-->
-                <!--android:textSize="16sp"/>-->
-
-        <!--</LinearLayout>-->
-    <!--</ScrollView>-->
 
     <VideoView
         android:id="@+id/videoView"
@@ -150,15 +23,31 @@
         android:layout_marginTop="0dp"
         android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:layout_marginTop="8dp">
+
+    </android.support.v4.view.ViewPager>
 
     <Button
         android:background="@drawable/login_facebook_bg_button"
         android:textColor="#fff"
         android:id="@+id/buttonFacebook"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="CONTINUE WITH FACEBOOK"
@@ -171,7 +60,7 @@
     <Button
         android:id="@+id/buttonEthelonSignUp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -201,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline3"
-        app:layout_constraintGuide_begin="323dp"
+        app:layout_constraintGuide_begin="355dp"
         android:orientation="horizontal" />
 
     <TextView
@@ -222,7 +111,7 @@
         android:background="@drawable/login_ethelon_bg_button_user"
         android:id="@+id/buttonLogin"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -231,5 +120,12 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/alreadAUserLabel" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline4"
+        app:layout_constraintGuide_begin="251dp"
+        android:orientation="horizontal" />
 
 </android.support.constraint.ConstraintLayout>

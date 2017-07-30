@@ -1,6 +1,10 @@
 package myapps.wycoco.com.ethelonstartup.Activities.Register;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +59,8 @@ public class RegisterStep2Activity extends AppCompatActivity implements View.OnC
         charity.setOnClickListener(this);
         sports.setOnClickListener(this);
 
+
+
         nextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,12 +71,14 @@ public class RegisterStep2Activity extends AppCompatActivity implements View.OnC
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
         switch (view.getId()){
 
             case R.id.backStep:
                 finish();
+                overridePendingTransition(R.anim.slide_left_animation, R.anim.slide_out_right_animation);
                 break;
 
             case R.id.environmental:

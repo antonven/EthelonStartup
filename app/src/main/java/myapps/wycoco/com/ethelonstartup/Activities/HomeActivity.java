@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity
 
     TextView profileName, tabOne;
     ImageView profilePicture;
-    String profName, image, profileId;
+    String profName, image, profileId, cov_photo;
     ActivityModel activityModel;
     LoginManager loginManager;
     ViewPager viewPager;
@@ -71,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
         profName = n.getStringExtra("profileName");
         image = n.getStringExtra("profilePicture");
         profileId = n.getStringExtra("profileId");
+        cov_photo = n.getStringExtra("cover_photo");
 
         View view = navigationView.getHeaderView(0);
         profileName = (TextView)view.findViewById(R.id.profileName);

@@ -101,11 +101,10 @@ public class HomeActivitiesFragment extends Fragment {
                                         activityGroup,
                                         activityLong,
                                         activityLat,
-                                        activityPoints, activityStatus, activityCreated, activityUpdated);
-
-//                                activityModel.setActivityName(activityName);
-//                                activityModel.setActivityAddress(foundationId);
-//                                activityModel.setActivityDate(activityId);
+                                        activityPoints,
+                                        activityStatus,
+                                        activityCreated,
+                                        activityUpdated);
 
                                 activities.add(activityModel1);
                                 HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
@@ -128,12 +127,12 @@ public class HomeActivitiesFragment extends Fragment {
 
 //        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 //        requestQueue.add(jsonArrayRequest);
-        VolleySingleton.getInstance().addToRequestQueue(jsonArrayRequest);
-        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
-                5000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
+//        VolleySingleton.getInstance().addToRequestQueue(jsonArrayRequest);
+//        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                5000,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+//        ));
 
         return v;
 

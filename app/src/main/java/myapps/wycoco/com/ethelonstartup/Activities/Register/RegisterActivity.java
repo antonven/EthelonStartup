@@ -73,8 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
                 n.putExtra("password", password);
 //                n.putExtra("name", name);
 //                n.putExtra("role", role);
-                startActivity(n);
                 overridePendingTransition(R.anim.slide_right_animation, R.anim.slide_out_left_animation);
+                startActivity(n);
+
             }
         });
 

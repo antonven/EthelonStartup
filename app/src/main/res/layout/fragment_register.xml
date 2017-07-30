@@ -33,11 +33,12 @@
 
             <EditText
                 android:id="@+id/inputEmail"
+                android:padding="5dp"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:inputType="textEmailAddress"
                 android:background="@drawable/edit_text_custom_bg"
-
+                android:textCursorDrawable="@null"
                 app:layout_constraintTop_toTopOf="@+id/guideline10"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
