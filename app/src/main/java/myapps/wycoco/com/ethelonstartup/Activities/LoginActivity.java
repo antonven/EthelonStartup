@@ -225,6 +225,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Arrays.asList("user_photos", "email", "user_birthday", "user_friends", "public_profile"));
                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
+                    Profile profile1 = Profile.getCurrentProfile();
                     @Override
                     public void onSuccess(LoginResult loginResult) {
 
@@ -257,19 +258,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void pushFacebookCred(AccessToken accessToken){
+
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
 
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 Log.i("LoginActivity", response.toString());
-                Profile profile = Profile.getCurrentProfile();
+
                 // Get facebook data from login
                 try {
                     final String email = object.getString("email");
                     final String facebook_id = object.getString("id");
-                    final String name = profile.getName();
+                    final String fname = object.getString("first_name");
+                    final String lname = object.getString("last_name");
+                    final String name = fname +" "+ lname;
 
                     Log.e("SASDASDASD", "" + email + facebook_id + name);
+                    Log.e("OBJECT JSON", object + "");
                     StringRequest string = new StringRequest(Request.Method.POST, URL,
                             new Response.Listener<String>() {
                                 @Override
