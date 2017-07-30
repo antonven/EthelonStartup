@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivitiesFragment extends Fragment {
 
-    private String URL = "http://172.17.2.30/EthelonStartupWeb/public/api/getallactivities";
+    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/getallactivities";
     FoldingCell fc;
     RecyclerView recView;
     ArrayList<ActivityModel> activities = new ArrayList<>();
@@ -124,6 +125,9 @@ public class HomeActivitiesFragment extends Fragment {
 
                     }
                 });
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonArrayRequest);
 
 //        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 //        requestQueue.add(jsonArrayRequest);

@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        //window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
 //        frame = (FrameLayout)findViewById(R.id.frame1);
 //        userName = (EditText)findViewById(R.id.inputUsername);

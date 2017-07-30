@@ -34,7 +34,7 @@ public class RegisterStep2Activity extends AppCompatActivity implements View.OnC
     GridView gridView;
     ImageView environmental, livelihood, educational, culinary, charity, sports, medical;
     ArrayList<String> skillSet = new ArrayList<>();
-    private String URL = "http://172.17.0.138/EthelonStartupWeb/public/api/register";
+    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/register";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

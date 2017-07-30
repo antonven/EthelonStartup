@@ -74,9 +74,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ViewPager vp;
     MediaController mediaController;
     LoginViewPagerAdapter viewPager;
+    String name, facebook_id, emaail;
 
     RequestQueue requestQueue;
-    private String URL = "http://172.17.2.30/EthelonStartupWeb/public/api/loginwithfb";
+    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/loginwithfb";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -90,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -146,13 +147,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+            return;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         profile = Profile.getCurrentProfile();
+
+        StringRequest string = new StringRequest(Request.Method.POST, "http://192.168.1.5/EthelonStartupWeb/public/api/session",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("kobe",response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                                    Log.e("kobe", error.getMessage());
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("facebook_id", facebook_id);
+                return params;
+            }
+        };
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(string);
         nextActivity(profile);
     }
 
@@ -226,9 +252,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
                     @Override
-                    public void onSuccess(LoginResult loginResult) {
+                    public void onSuccess(final LoginResult loginResult) {
+                        if(Profile.getCurrentProfile() == null){
+                            profileTracker = new ProfileTracker() {
+                                @Override
+                                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                                    Log.e("kobe",currentProfile.getFirstName());
 
-                        pushFacebookCred(loginResult.getAccessToken());
+                                    name = currentProfile.getFirstName() +" "+ currentProfile.getMiddleName() + " " + currentProfile.getLastName();
+                                    profileTracker.stopTracking();
+                                    pushFacebookCred(loginResult.getAccessToken(),currentProfile);
+                                }
+                            };
+                        } else{
+                            profile = Profile.getCurrentProfile();
+                            name = profile.getName();
+                            Log.e("kobe","else"+name);
+
+                            pushFacebookCred(loginResult.getAccessToken(),profile);
+                        }
+
+                       // pushFacebookCred(loginResult.getAccessToken());
 
 
                         }
@@ -254,33 +298,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-
-    public void pushFacebookCred(AccessToken accessToken){
+    public void pushFacebookCred(AccessToken accessToken, final Profile profile){
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
 
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 Log.i("LoginActivity", response.toString());
-                Profile profile = Profile.getCurrentProfile();
+
+
                 // Get facebook data from login
+
                 try {
                     final String email = object.getString("email");
                     final String facebook_id = object.getString("id");
-                    final String name = profile.getName();
+
 
                     Log.e("SASDASDASD", "" + email + facebook_id + name);
                     StringRequest string = new StringRequest(Request.Method.POST, URL,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-
+                                Log.e("kobePiste",response.toString());
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-//                                    Log.e("RESPONSE", error.getMessage());
+//                                    Log.e("kobe", error.getMessage());
                                 }
                             }) {
                         @Override
@@ -299,10 +343,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     request.add(string);
 
                     nextActivity(profile);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
             }
         });
