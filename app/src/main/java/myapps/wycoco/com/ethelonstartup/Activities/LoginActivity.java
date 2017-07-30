@@ -74,9 +74,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ViewPager vp;
     MediaController mediaController;
     LoginViewPagerAdapter viewPager;
+    String name, facebook_id, email;
+    String volunteer_id;
 
     RequestQueue requestQueue;
-    private String URL = "http://172.17.2.30/EthelonStartupWeb/public/api/loginwithfb";
+    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/loginwithfb";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -90,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -146,15 +148,50 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+            return;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         profile = Profile.getCurrentProfile();
-        nextActivity(profile);
+        if(profile!=null) {
+
+        StringRequest string = new StringRequest(Request.Method.POST, "http://192.168.1.5/EthelonStartupWeb/public/api/session",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        volunteer_id = response;
+                        Log.e("kobe","vol d ="+volunteer_id);
+                        nextActivity(profile);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Log.e("kobe", error.getMessage().toString());
+                        error.printStackTrace();
+                        Log.e("kobe","naas error");
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("facebook_id", profile.getId());
+                Log.e("kobe","id "+profile.getId());
+                return params;
+            }
+        };
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(string);
+
+        }
+
+
     }
+
 
     @Override
     protected void onPause() {
@@ -204,7 +241,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("profileName", profile.getName());
             i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
             i.putExtra("profileId", profile.getId());
-
+            i.putExtra("volunteer_id",volunteer_id);
             startActivity(i);
         }
     }
@@ -225,11 +262,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Arrays.asList("user_photos", "email", "user_birthday", "user_friends", "public_profile"));
                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
-                    Profile profile1 = Profile.getCurrentProfile();
                     @Override
-                    public void onSuccess(LoginResult loginResult) {
+                    public void onSuccess(final LoginResult loginResult) {
+                        if(Profile.getCurrentProfile() == null){
+                            profileTracker = new ProfileTracker() {
+                                @Override
+                                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                                    Log.e("kobe",currentProfile.getFirstName());
 
-                        pushFacebookCred(loginResult.getAccessToken());
+                                    name = currentProfile.getFirstName() +" "+ currentProfile.getMiddleName() + " " + currentProfile.getLastName();
+                                    profileTracker.stopTracking();
+                                    pushFacebookCred(loginResult.getAccessToken(),currentProfile);
+                                }
+                            };
+                        } else{
+                            profile = Profile.getCurrentProfile();
+                            name = profile.getName();
+                            Log.e("kobe","else"+name);
+
+                            pushFacebookCred(loginResult.getAccessToken(),profile);
+                        }
+
+                       // pushFacebookCred(loginResult.getAccessToken());
 
 
                         }
@@ -255,37 +309,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-
-    public void pushFacebookCred(AccessToken accessToken){
-
+    public void pushFacebookCred(AccessToken accessToken, final Profile profile){
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
 
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 Log.i("LoginActivity", response.toString());
-
                 // Get facebook data from login
+                Log.e("kobe","json ob = "+object);
                 try {
-                    final String email = object.getString("email");
-                    final String facebook_id = object.getString("id");
-                    final String fname = object.getString("first_name");
-                    final String lname = object.getString("last_name");
-                    final String name = fname +" "+ lname;
+                    facebook_id = object.getString("id");
+                     email = " ";
+                    if(object.getString("email")!= null){
+                        email = object.getString("email");
+                    }
+
 
                     Log.e("SASDASDASD", "" + email + facebook_id + name);
-                    Log.e("OBJECT JSON", object + "");
+
                     StringRequest string = new StringRequest(Request.Method.POST, URL,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-
+                                Log.e("kobePiste",response.toString());
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-//                                    Log.e("RESPONSE", error.getMessage());
+//                                    Log.e("kobe", error.getMessage());
                                 }
                             }) {
                         @Override
@@ -295,7 +347,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             params.put("facebook_id", facebook_id);
                             params.put("name", name);
                             params.put("role", "volunteer");
-                            Log.e("ASDASD", email);
 
                             return params;
                         }
@@ -304,10 +355,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     request.add(string);
 
                     nextActivity(profile);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                    Log.e("kobe","jsonexception sa catch"+e.toString());
 
+                    if(e.toString().equals("org.json.JSONException: No value for email")){
+
+                        Log.e("SASDASDASD", "" +facebook_id +name);
+
+                        StringRequest string = new StringRequest(Request.Method.POST, URL,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Log.e("kobePiste",response.toString());
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                    Log.e("kobe", error.toString());
+                                        error.printStackTrace();
+                                    }
+                                }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("email", "email not available");
+                                params.put("facebook_id", facebook_id);
+                                params.put("name", name);
+                                params.put("role", "volunteer");
+
+                                Log.e("kobe","fb name = "+facebook_id + name);
+                                return params;
+                            }
+                        };
+                        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                        request.add(string);
+
+                        nextActivity(profile);
+                    }
+                }
 
             }
         });
