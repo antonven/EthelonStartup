@@ -35,6 +35,7 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     TextView profileName, tabOne;
     ImageView profilePicture;
     String profName, image, profileId, cov_photo, volunteer_id;
@@ -54,7 +55,7 @@ public class HomeActivity extends AppCompatActivity
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         initInstancesDrawer();
 

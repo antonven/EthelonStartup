@@ -8,7 +8,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/EthelonStartup"
-
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -31,7 +30,8 @@
             android:name=".Activities.PortfolioActivity"
             android:label="@string/title_activity_portfolio" />
         <activity android:name=".Activities.EventDetailsActivity" />
-        <activity android:name=".Activities.Register.RegisterStep2Activity"></activity>
+        <activity android:name=".Activities.Register.RegisterStep2Activity" />
+        <activity android:name=".Activities.SkillsActivity"></activity>
     </application>
 
 </manifest>

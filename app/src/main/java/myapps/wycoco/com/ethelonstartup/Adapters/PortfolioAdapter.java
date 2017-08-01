@@ -99,9 +99,9 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             contentRequestBtn = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             status = (ImageView) itemView.findViewById(R.id.status);
             im = (ImageView) itemView.findViewById(R.id.title);
-            clickedActivityTitle = (TextView)itemView.findViewById(R.id.activityTitle);
-            clickedActivityHost = (TextView)itemView.findViewById(R.id.content_name_view);
-            clickedActivityTime = (TextView)itemView.findViewById(R.id.content_from_address_2);
+            clickedActivityTitle = (TextView)itemView.findViewById(R.id.clickedEventName);
+            clickedActivityHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
+            clickedActivityTime = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
 
 
             fc.setOnClickListener(new View.OnClickListener() {

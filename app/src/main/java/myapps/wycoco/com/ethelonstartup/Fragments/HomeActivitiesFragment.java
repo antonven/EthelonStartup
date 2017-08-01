@@ -44,7 +44,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivitiesFragment extends Fragment {
 
-    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/getallactivities";
+    private String URL = "http://172.17.1.127/EthelonStartupWeb/public/api/getallactivities";
     FoldingCell fc;
     RecyclerView recView;
     ArrayList<ActivityModel> activities = new ArrayList<>();
@@ -63,6 +63,28 @@ public class HomeActivitiesFragment extends Fragment {
 
         recView = (RecyclerView)v.findViewById(R.id.recView);
 
+
+        ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
+                "",
+                "This event is to help the victims of marawi regain the the city that they have always lived.",
+                "Marawi City, Zamboanga del Norte",
+                "7:00",
+                "5:00",
+                "Dec 25, 2017",
+                "5",
+                "38",
+                "40",
+                "100",
+                "",
+                "",
+                "");
+
+        activities.add(activityModel2);
+        HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recView.setLayoutManager(layoutManager);
+        recView.setItemAnimator(new DefaultItemAnimator());
+        recView.setAdapter(homeActivitiesListAdapter);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL,
                 new Response.Listener<JSONArray>() {
@@ -92,22 +114,37 @@ public class HomeActivitiesFragment extends Fragment {
                                 String activityUpdated = activityObject.getString("updated_at");
 
 
-                                ActivityModel activityModel1 = new ActivityModel(activityId, foundationId, activityName ,activityImage,
-                                        activityQr,
-                                        activityDes,
-                                        activityLocation,
-                                        activityStart,
-                                        activityEnd,
-                                        activityDate,
-                                        activityGroup,
-                                        activityLong,
-                                        activityLat,
-                                        activityPoints,
-                                        activityStatus,
-                                        activityCreated,
-                                        activityUpdated);
+//                                ActivityModel activityModel1 = new ActivityModel(activityId, foundationId, activityName ,activityImage,
+//                                        activityQr,
+//                                        activityDes,
+//                                        activityLocation,
+//                                        activityStart,
+//                                        activityEnd,
+//                                        activityDate,
+//                                        activityGroup,
+//                                        activityLong,
+//                                        activityLat,
+//                                        activityPoints,
+//                                        activityStatus,
+//                                        activityCreated,
+//                                        activityUpdated);
 
-                                activities.add(activityModel1);
+                                ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
+                                        "",
+                                        "This event is to help the victims of marawi regain the the city that they have always lived.",
+                                        "Marawi City, Zamboanga del Norte",
+                                        "7:00 am",
+                                        "5:00 pm",
+                                        "Dec 25, 2017",
+                                        "5",
+                                        "38",
+                                        "40",
+                                        "100",
+                                        "",
+                                        "",
+                                        "");
+
+                                activities.add(activityModel2);
                                 HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                                 recView.setLayoutManager(layoutManager);
@@ -126,17 +163,17 @@ public class HomeActivitiesFragment extends Fragment {
                     }
                 });
 
-        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-        request.add(jsonArrayRequest);
-
+//        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+//        request.add(jsonArrayRequest);
+//
 //        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 //        requestQueue.add(jsonArrayRequest);
 //        VolleySingleton.getInstance().addToRequestQueue(jsonArrayRequest);
-//        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                5000,
-//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-//        ));
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
 
         return v;
 

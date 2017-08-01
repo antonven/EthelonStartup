@@ -1,8 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Activities.Register;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -38,10 +36,10 @@ public class RegisterStep2Activity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_step2);
+        setContentView(R.layout.skills_interests_choice);
 
-        backStep = (Button)findViewById(R.id.backStep);
-        nextStep = (Button)findViewById(R.id.nextStep);
+
+
         gridView = (GridView)findViewById(R.id.gridView);
 
         environmental = (ImageView)findViewById(R.id.environmental);
@@ -76,10 +74,6 @@ public class RegisterStep2Activity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
 
-            case R.id.backStep:
-                finish();
-                overridePendingTransition(R.anim.slide_left_animation, R.anim.slide_out_right_animation);
-                break;
 
             case R.id.environmental:
                 skillSet.add("environmental");

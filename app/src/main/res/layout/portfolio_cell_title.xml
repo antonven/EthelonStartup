@@ -68,7 +68,7 @@
                 />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
@@ -76,12 +76,12 @@
                 android:weightSum="4">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="1dp"
                 android:layout_weight="1"
-                android:scaleType="centerCrop"
-                android:layout_height="20dp"
-                app:srcCompat="@android:drawable/ic_menu_my_calendar"
+                android:id="@+id/imageView"
+                android:layout_width="34dp"
+                android:scaleType="centerInside"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_calendar"
                  />
 
             <TextView
@@ -89,22 +89,27 @@
                 android:id="@+id/eventDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="12/25/2017" />
 
             <ImageView
+                android:tint="#000"
+                android:layout_weight="1"
                 android:id="@+id/clockImage"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
+                android:layout_width="34dp"
+                android:layout_height="21dp"
                 android:src="@android:drawable/ic_lock_idle_alarm"
 
                 />
 
             <TextView
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="8:00 am"
                 android:id="@+id/eventTimeStart"
-                android:layout_marginLeft="5dp"/>
+                />
 
                 </LinearLayout>
 
@@ -158,9 +163,6 @@
                      />
             </LinearLayout>
         </LinearLayout>
-
-
-
 
     </RelativeLayout>
 </LinearLayout>

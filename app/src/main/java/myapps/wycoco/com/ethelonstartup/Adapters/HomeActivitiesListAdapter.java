@@ -43,11 +43,18 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
     public void onBindViewHolder(HomeActivitiesListAdapter.ViewHolder holder, int position) {
         holder.eventName.setText(activities.get(position).getActivityName());
         holder.eventAddress.setText(activities.get(position).getActivityLocation());
-        holder.eventHost.setText(activities.get(position).getActivityLocation());
+        holder.eventHost.setText(activities.get(position).getFoundationId());
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
         holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
         holder.eventPoints.setText(activities.get(position).getActivityPoints());
+        holder.clickedEventName.setText(activities.get(position).getActivityName());
+        holder.clickedEventHost.setText(activities.get(position).getFoundationId());
+        holder.clickedEventDate.setText(activities.get(position).getActivityDate());
+        holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
+        holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
+        holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
+        holder.clickedPoints.setText(activities.get(position).getActivityPoints());
     }
 
     @Override
@@ -59,7 +66,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
         FoldingCell fc;
         TextView eventName, eventHost, eventAddress, eventDate, eventTimeStart, eventVolunteers, eventPoints;
-        TextView clickedName, clickedHost, clickedAddress, clickedDate, clickTimeStart, clickVolunteers, clickedPoints, viewActivity;
+        TextView clickedEventName, clickedEventHost, clickedEventLocation, clickedEventDate, clickedEventTimeStart,
+                clickedEventVolunteers, clickedPoints, viewActivity;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -73,6 +81,13 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
             eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
             viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
+            clickedEventName = (TextView)itemView.findViewById(R.id.clickedEventName);
+            clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
+            clickedEventLocation = (TextView)itemView.findViewById(R.id.clickedEventLocation);
+            clickedEventDate = (TextView)itemView.findViewById(R.id.clickedEventDate);
+            clickedEventTimeStart = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
+            clickedEventVolunteers = (TextView)itemView.findViewById(R.id.clickedEventVolunteerCount);
+            clickedPoints = (TextView)itemView.findViewById(R.id.clickedEventPoints);
 
             fc.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,7 +102,9 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
         @Override
         public void onClick(View view) {
-            mContext.startActivity(new Intent(mContext, EventDetailsActivity.class));
+            Intent in = new Intent(mContext, EventDetailsActivity.class);
+            in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(in);
         }
     }
 }
