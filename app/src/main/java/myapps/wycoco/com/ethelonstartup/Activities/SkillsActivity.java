@@ -22,7 +22,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     ImageView environmental, livelihood, educational, culinary, charity, sports, medical;
     String []interests = {};
     ArrayList<String> skillSet = new ArrayList<>();
-    int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, index = 0;
+    int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0;
     private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/register";
 
     @Override
@@ -63,34 +63,40 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()){
 
             case R.id.environmental:
-                int pos1 = index;
+
                 if(count1%2==0) {
                     environmentCheck.setVisibility(View.VISIBLE);
                     skillSet.add("environment");
-                    index++;
                     count1++;
                 }
                 else if (count1%2!=0) {
                     environmentCheck.setVisibility(View.GONE);
-                    skillSet.remove(pos1 -1);
-                    index--;
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("environment")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
                     count1++;
                 }
-                Log.e("shet", "" + skillSet + skillSet.size() + index);
+                Log.e("shet", "" + skillSet + skillSet.size());
                 break;
 
             case R.id.livelihood:
-                int pos2 = index;
+
                 if(count2%2==0) {
                     livelihoodCheck.setVisibility(View.VISIBLE);
                     skillSet.add("livelihood");
-                    index++;
                     count2++;
                 }
                 else if (count2%2!=0) {
                     livelihoodCheck.setVisibility(View.GONE);
-                    skillSet.remove(pos2 - 1);
-                    index--;
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("livelihood")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
                     count2++;
                 }
                 Log.e("shet", "" + skillSet);
@@ -100,13 +106,17 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 if(count3%2==0) {
                     educationalCheck.setVisibility(View.VISIBLE);
                     skillSet.add("education");
-                    index++;
                     count3++;
                 }
                 else if (count3%2!=0) {
                     educationalCheck.setVisibility(View.GONE);
-                    index--;
-                    skillSet.remove(index);
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("education")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
+
                     count3++;
                 }
                 break;
@@ -115,13 +125,16 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 if(count4%2==0) {
                     charityCheck.setVisibility(View.VISIBLE);
                     skillSet.add("charity");
-                    index++;
                     count4++;
                 }
                 else if (count4%2!=0) {
                     charityCheck.setVisibility(View.GONE);
-                    index--;
-                    skillSet.remove(index);
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("charity")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
                     count4++;
                 }
                 break;
@@ -130,13 +143,16 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 if(count5%2==0) {
                     sportsCheck.setVisibility(View.VISIBLE);
                     skillSet.add("sports");
-                    index++;
                     count5++;
                 }
                 else if (count5%2!=0) {
                     sportsCheck.setVisibility(View.GONE);
-                    index--;
-                    skillSet.remove(index);
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("sports")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
                     count5++;
                 }
                 break;
@@ -145,13 +161,16 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 if(count6%2==0) {
                     culinaryCheck.setVisibility(View.VISIBLE);
                     skillSet.add("culinary");
-                    index++;
                     count6++;
                 }
                 else if (count6%2!=0) {
                     culinaryCheck.setVisibility(View.GONE);
-                    index--;
-                    skillSet.remove(index);
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("culinary")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
                     count6++;
                 }
                 break;
