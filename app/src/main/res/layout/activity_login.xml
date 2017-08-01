@@ -31,7 +31,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="1.0"
         app:layout_constraintHorizontal_bias="0.458"
@@ -43,7 +43,7 @@
         android:src="@drawable/dotright"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/imageView4"
@@ -54,7 +54,7 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="75dp"
+        android:layout_width="60dp"
         android:layout_height="75dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
@@ -161,16 +161,15 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.5">
+        android:layout_marginTop="8dp">
 
     </android.support.v4.view.ViewPager>
 

@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(String response) {
                         volunteer_id = response;
                         if(response.equals("FirstTime")){
-                            //skills
+                            startActivity(new Intent(LoginActivity.this, SkillsActivity.class));
                         }
                         Log.e("kobe","vol d ="+volunteer_id);
                         nextActivity(profile);
@@ -194,7 +194,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
-
 
     @Override
     protected void onPause() {

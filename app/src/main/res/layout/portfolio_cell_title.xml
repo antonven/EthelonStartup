@@ -22,18 +22,18 @@
     <!-- RIGHT TITLE PART -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         android:background="#ffffff"
         android:paddingEnd="20dp"
         android:paddingStart="15dp"
-        android:paddingTop="15dp"
         android:paddingRight="20dp"
         android:paddingLeft="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
         <TextView

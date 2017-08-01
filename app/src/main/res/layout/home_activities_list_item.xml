@@ -10,7 +10,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/foldingCell"
     android:layout_marginBottom="14dp"
-    folding-cell:cameraHeight="50"
+    folding-cell:cameraHeight="30"
     >
 
 
