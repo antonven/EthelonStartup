@@ -18,9 +18,15 @@ import android.widget.RelativeLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,10 +41,10 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     ImageView environmentCheck, livelihoodCheck, culinaryCheck, charityCheck, sportsCheck, educationalCheck, medicineCheck, artsCheck;
     GridView gridView;
     ImageView environmental, livelihood, educational, culinary, charity, sports, medicine, arts;
-
+    String volunteer_id;
     ArrayList<String> skillSet = new ArrayList<>();
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
-    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/register";
+    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/volunteerskills";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -48,10 +54,12 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         Snackbar.make(findViewById(R.id.skillsRelative) , "PLEASE CHOOSE ONE OR MORE SKILLS AND INTERESTS", Snackbar.LENGTH_LONG).show();
 
+        Intent n = getIntent();
+        volunteer_id = n.getStringExtra("id");
 
         environmentCheck = (ImageView)findViewById(R.id.environmentCheck);
         livelihoodCheck = (ImageView)findViewById(R.id.livelihoodCheck);
@@ -249,28 +257,44 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-
+                                if(response.equals("Success")){
+                                    startActivity(new Intent(SkillsActivity.this, HomeActivity.class));
+                                }else{
+                                    Log.e("kobe","pisteee" +response.toString());
+                                }
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
+                            Log.e("kobe",error.toString());
                             }
                         }){
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
-                        for(int i = 0; i < skillSet.size(); i++) {
-                            params.put("skills", skillSet.get(i));
+                        params.put("volunteer_id",volunteer_id);
+
+                        //JSONObject jsonObject=new JSONObject();
+                        for(int i =0; i<skillSet.size(); i++) {
+                            params.put("params" + i, skillSet.get(i));
                         }
-                        Log.e("SKILLS",""+ skillSet);
+
+                        params.put("count",String.valueOf(skillSet.size()));
+
+
+
+
+
                         return params;
                     }
                 };
-                  startActivity(new Intent(this, HomeActivity.class));
-//                VolleySingleton.getInstance().addToRequestQueue(stringRequest);
+
+                RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                request.add(stringRequest);
+
+
                 break;
         }
     }

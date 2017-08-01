@@ -78,10 +78,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     LoginViewPagerAdapter viewPager;
     String name, facebook_id, email;
     String volunteer_id;
-
+    String id;
 
     RequestQueue requestQueue;
-    private String URL = "http://172.17.1.127/EthelonStartupWeb/public/api/loginwithfb";
+    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/loginwithfb";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -93,12 +93,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 
+
+
         int rawId = getResources().getIdentifier("vid",  "raw", getPackageName());
 
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+       // window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -165,16 +167,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.1.127/EthelonStartupWeb/public/api/session",
+        StringRequest string = new StringRequest(Request.Method.POST, "http://192.168.1.5/EthelonStartupWeb/public/api/session",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        volunteer_id = response;
-                        if(response.equals("FirstTime")){
-                            startActivity(new Intent(LoginActivity.this, SkillsActivity.class));
-                        }
-                        Log.e("kobe","vol d ="+volunteer_id);
-                        nextActivity(profile);
+                       id = response;
+                        Log.e("kobe",id);
+                        Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
+                        intent.putExtra("id",id);
+                        startActivity(intent);
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -330,7 +332,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                Log.e("kobePiste",response.toString());
+                                    volunteer_id = response;
+                                    Log.e("kobe","SHIT" +response);
+                                    if(response.equals("First Time")){
+                                        Log.e("kobe","sud sa if");
+                                        startActivity(new Intent(LoginActivity.this, SkillsActivity.class));
+                                        Log.e("kobe","kayata");
+                                    }else{
+                                        nextActivity(profile);
+                                    }
                                 }
                             },
                             new Response.ErrorListener() {
@@ -353,7 +363,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                     request.add(string);
 
-                    nextActivity(profile);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -367,20 +376,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Log.e("kobePiste",response.toString());
+                                        if(response.equals("First Time")){
+                                            startActivity(new Intent(LoginActivity.this, SkillsActivity.class));
+                                        }else{
+                                            nextActivity(profile);
+                                        }
                                     }
                                 },
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                    Log.e("kobe", error.toString());
+                                    Log.e("kobe Error", error.toString());
                                         error.printStackTrace();
                                     }
                                 }) {
                             @Override
                             protected Map<String, String> getParams() throws AuthFailureError {
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put("email", "email not available");
+                                params.put("email", "email not available "+facebook_id );
                                 params.put("facebook_id", facebook_id);
                                 params.put("name", name);
                                 params.put("role", "volunteer");
@@ -392,7 +405,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                         request.add(string);
 
-                        nextActivity(profile);
+
                     }
                 }
 
