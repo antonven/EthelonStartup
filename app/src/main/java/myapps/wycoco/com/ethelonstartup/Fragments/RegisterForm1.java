@@ -1,7 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,10 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity;
-import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterStep2Activity;
 import myapps.wycoco.com.ethelonstartup.R;
 
 /**
@@ -36,12 +32,10 @@ public class RegisterForm1 extends Fragment {
 
         passWord = (EditText)v.findViewById(R.id.inputPassword);
         eMail = (EditText)v.findViewById(R.id.inputEmail);
-
-
-
         nextStepBtn = (Button)v.findViewById(R.id.nextStepBtn);
-        nextStepBtn.setOnClickListener(new View.OnClickListener() {
 
+
+        nextStepBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fm = getFragmentManager();

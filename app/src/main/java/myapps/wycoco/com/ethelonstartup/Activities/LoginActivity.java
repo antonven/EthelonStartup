@@ -13,9 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MediaController;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -45,6 +47,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,20 +65,20 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     CallbackManager callbackManager;
-    TextView signUp;
     EditText inputEmail, inputPassword;
     Button buttonLogin, buttonFacebook, buttonSignup ;
     AccessTokenTracker accessTokenTracker;
     ProfileTracker profileTracker;
-    FragmentManager fm;
     VideoView vidView;
     Profile profile;
     Uri uri;
+    Spinner inputRole;
     ViewPager vp;
     MediaController mediaController;
     LoginViewPagerAdapter viewPager;
     String name, facebook_id, email;
     String volunteer_id;
+
 
     RequestQueue requestQueue;
     private String URL = "http://172.17.1.127/EthelonStartupWeb/public/api/loginwithfb";
@@ -87,6 +90,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         setTitle("");
+
+
+
         int rawId = getResources().getIdentifier("vid",  "raw", getPackageName());
 
         Window window = this.getWindow();
@@ -102,11 +108,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
+
         uri = Uri.parse("android.resources://" + getPackageName()+ "/" + R.raw.bg_vid);
 
+
         vidView.setVideoURI(uri);
-
-
         vidView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
@@ -117,10 +123,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         vp = (ViewPager)findViewById(R.id.viewPagerText);
-
         viewPager = new LoginViewPagerAdapter(this);
         vp.setAdapter(viewPager);
-
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new AutomaticSlide(), 2000, 4000);
 
@@ -128,13 +132,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonSignup.setOnClickListener(this);
         buttonFacebook.setOnClickListener(this);
 
+
+
+
         accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 
             }
         };
-
         profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
@@ -189,10 +195,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
         request.add(string);
-
         }
-
-
     }
 
     @Override
@@ -235,8 +238,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-
     private void nextActivity(Profile profile){
         if(profile!= null){
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
@@ -247,7 +248,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(i);
         }
     }
-
 
 
     @Override
@@ -284,10 +284,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             pushFacebookCred(loginResult.getAccessToken(),profile);
                         }
-
                        // pushFacebookCred(loginResult.getAccessToken());
-
-
                         }
 
                     @Override

@@ -44,6 +44,8 @@
     <EditText
         android:id="@+id/inputPassword"
         android:layout_width="match_parent"
+        android:textCursorDrawable="@null"
+        android:padding="5dp"
         android:layout_height="50dp"
         android:inputType="textPassword"
         android:background="@drawable/edit_text_custom_bg"

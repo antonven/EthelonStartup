@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/skillsRelative"
+    tools:context="myapps.wycoco.com.ethelonstartup.Activities.SkillsActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterStep2Activity">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,8 +21,8 @@
         android:weightSum="2">
 
         <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_weight="1">
 
             <ImageView
@@ -43,8 +50,8 @@
 
 
     <RelativeLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_weight="1">
 
             <ImageView
@@ -78,8 +85,8 @@
         android:weightSum="2">
 
         <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_weight="1">
 
             <ImageView
@@ -105,8 +112,8 @@
 
 
         <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_weight="1">
 
             <ImageView
@@ -135,13 +142,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
         <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_weight="1">
 
             <ImageView
@@ -166,8 +172,8 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_weight="1">
 
             <ImageView
@@ -194,12 +200,80 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/medicine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/medical_volunteer"
+                android:scaleType="centerInside"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                />
+            <ImageView
+                app:srcCompat="@drawable/ic_check_black_24dp"
+                android:id="@+id/medicineCheck"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80000000"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/arts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/arts_volunteer" />
+
+            <ImageView
+                android:id="@+id/artsCheck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:background="#80000000"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_check_black_24dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
 
     <Button
-        android:id="@+id/skillsDoneBtn"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:text="@string/done"
+        android:layout_width="120dp"
+        android:text="DONE"
+        android:background="@drawable/login_ethelon_bg_button"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
         android:layout_height="40dp"
-        android:background="@color/btnRequest"/>
-</LinearLayout>
+        android:layout_marginBottom="20dp"
+        android:id="@+id/doneButton"
+        android:layout_alignParentBottom="true"
+
+
+        />
+</RelativeLayout>

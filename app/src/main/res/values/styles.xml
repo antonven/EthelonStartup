@@ -11,6 +11,7 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+        <item name="android:windowBackground">@color/transparent</item>
         <item name="windowNoTitle">true</item>
     </style>
 

@@ -1,34 +1,57 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.content.Intent;
 import android.media.Image;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class SkillsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button backStep, nextStep;
-    ImageView environmentCheck, livelihoodCheck, culinaryCheck, charityCheck, sportsCheck, educationalCheck;
+    Button doneButton;
+    ImageView environmentCheck, livelihoodCheck, culinaryCheck, charityCheck, sportsCheck, educationalCheck, medicineCheck, artsCheck;
     GridView gridView;
-    ImageView environmental, livelihood, educational, culinary, charity, sports, medical;
-    String []interests = {};
+    ImageView environmental, livelihood, educational, culinary, charity, sports, medicine, arts;
+
     ArrayList<String> skillSet = new ArrayList<>();
-    int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0;
+    int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
     private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/register";
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skills_interests_choice);
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+
+        Snackbar.make(findViewById(R.id.skillsRelative) , "PLEASE CHOOSE ONE OR MORE SKILLS AND INTERESTS", Snackbar.LENGTH_LONG).show();
+
 
         environmentCheck = (ImageView)findViewById(R.id.environmentCheck);
         livelihoodCheck = (ImageView)findViewById(R.id.livelihoodCheck);
@@ -36,15 +59,18 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         charityCheck = (ImageView)findViewById(R.id.charityCheck);
         sportsCheck = (ImageView)findViewById(R.id.sportsCheck);
         educationalCheck = (ImageView)findViewById(R.id.educationalCheck);
-
+        medicineCheck = (ImageView)findViewById(R.id.medicineCheck);
+        artsCheck = (ImageView)findViewById(R.id.artsCheck);
+        doneButton = (Button)findViewById(R.id.doneButton);
         gridView = (GridView)findViewById(R.id.gridView);
-
         environmental = (ImageView)findViewById(R.id.environmental);
         livelihood = (ImageView)findViewById(R.id.livelihood);
         educational = (ImageView)findViewById(R.id.educational);
         culinary = (ImageView)findViewById(R.id.culinary);
         charity = (ImageView)findViewById(R.id.charity);
         sports = (ImageView)findViewById(R.id.sports);
+        medicine = (ImageView)findViewById(R.id.medicine);
+        arts = (ImageView)findViewById(R.id.arts);
 
         environmental.setOnClickListener(this);
         livelihood.setOnClickListener(this);
@@ -52,8 +78,10 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         educational.setOnClickListener(this);
         charity.setOnClickListener(this);
         sports.setOnClickListener(this);
+        medicine.setOnClickListener(this);
+        arts.setOnClickListener(this);
 
-
+        doneButton.setOnClickListener(this);
 
     }
 
@@ -173,6 +201,76 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                     }
                     count6++;
                 }
+                break;
+
+            case R.id.medicine:
+
+                if(count7%2==0) {
+                    medicineCheck.setVisibility(View.VISIBLE);
+                    skillSet.add("medicine");
+                    count7++;
+                }
+                else if (count7%2!=0) {
+                    medicineCheck.setVisibility(View.GONE);
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("medicine")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
+                    count7++;
+                }
+                Log.e("shet", "" + skillSet + skillSet.size());
+                break;
+
+            case R.id.arts:
+
+                if(count8%2==0) {
+                    artsCheck.setVisibility(View.VISIBLE);
+                    skillSet.add("arts");
+                    count8++;
+                }
+                else if (count8%2!=0) {
+                    artsCheck.setVisibility(View.GONE);
+                    for(int i = 0; i < skillSet.size(); i++){
+                        if(skillSet.get(i).equals("arts")) {
+                            skillSet.remove(i);
+                            break;
+                        }
+                    }
+                    count8++;
+                }
+                Log.e("shet", "" + skillSet + skillSet.size());
+                break;
+
+            case R.id.doneButton:
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }){
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        for(int i = 0; i < skillSet.size(); i++) {
+                            params.put("skills", skillSet.get(i));
+                        }
+                        Log.e("SKILLS",""+ skillSet);
+                        return params;
+                    }
+                };
+                  startActivity(new Intent(this, HomeActivity.class));
+//                VolleySingleton.getInstance().addToRequestQueue(stringRequest);
                 break;
         }
     }
