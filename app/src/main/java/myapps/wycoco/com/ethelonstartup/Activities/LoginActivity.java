@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String id;
 
     RequestQueue requestQueue;
-    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/loginwithfb";
+    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -90,9 +90,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         setTitle("");
-
-
-
 
 
         int rawId = getResources().getIdentifier("vid",  "raw", getPackageName());
@@ -167,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-        StringRequest string = new StringRequest(Request.Method.POST, "http://192.168.1.5/EthelonStartupWeb/public/api/session",
+        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -183,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onErrorResponse(VolleyError error) {
                         //Log.e("kobe", error.getMessage().toString());
                         error.printStackTrace();
-                        Log.e("kobe","naas error");
+                        Log.e("kobe","naas error sa on resume wtf");
                     }
                 }) {
             @Override
@@ -334,7 +331,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     volunteer_id = response;
                                     Log.e("kobe","SHIT" +response);
                                     if(response.equals("First Time")){
-                                        StringRequest string = new StringRequest(Request.Method.POST, "http://192.168.1.5/EthelonStartupWeb/public/api/session",
+                                        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
@@ -350,7 +347,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     public void onErrorResponse(VolleyError error) {
                                                         //Log.e("kobe", error.getMessage().toString());
                                                         error.printStackTrace();
-                                                        Log.e("kobe","naas error");
+                                                        Log.e("kobe","naas error FIrst time");
                                                     }
                                                 }) {
                                             @Override
@@ -403,7 +400,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     @Override
                                     public void onResponse(String response) {
                                         if(response.equals("First Time")){
-                                            StringRequest string = new StringRequest(Request.Method.POST, "http://192.168.1.5/EthelonStartupWeb/public/api/session",
+                                            StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
                                                     new Response.Listener<String>() {
                                                         @Override
                                                         public void onResponse(String response) {
@@ -419,7 +416,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                         public void onErrorResponse(VolleyError error) {
                                                             //Log.e("kobe", error.getMessage().toString());
                                                             error.printStackTrace();
-                                                            Log.e("kobe","naas error");
+                                                            Log.e("kobe","naas error no email");
                                                         }
                                                     }) {
                                                 @Override

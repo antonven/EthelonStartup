@@ -44,7 +44,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivitiesFragment extends Fragment {
 
-    private String URL = "http://172.17.1.127/EthelonStartupWeb/public/api/getallactivities";
+    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/getallactivities";
     FoldingCell fc;
     RecyclerView recView;
     ArrayList<ActivityModel> activities = new ArrayList<>();

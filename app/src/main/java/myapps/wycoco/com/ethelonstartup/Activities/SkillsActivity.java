@@ -44,7 +44,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     String volunteer_id;
     ArrayList<String> skillSet = new ArrayList<>();
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
-    private String URL = "http://192.168.1.5/EthelonStartupWeb/public/api/volunteerskills";
+    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/volunteerskills";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
