@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         initInstancesDrawer();
 
@@ -177,7 +177,14 @@ public class HomeActivity extends AppCompatActivity
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFrag(new HomeActivitiesFragment(), "Home");
+            Bundle bundle = new Bundle();
+            bundle.putString("id",volunteer_id);
+
+            HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
+
+            homeActivitiesFragment.setArguments(bundle);
+
+        adapter.addFrag(homeActivitiesFragment,"Home");
         adapter.addFrag(new SecondFragment(), "Notifications");
         adapter.addFrag(new ThirdFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);

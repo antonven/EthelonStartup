@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -62,6 +63,7 @@ public class HomeActivitiesFragment extends Fragment {
 
 
         recView = (RecyclerView)v.findViewById(R.id.recView);
+        String id = getArguments().getString("id");
 
 
         ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
@@ -78,6 +80,10 @@ public class HomeActivitiesFragment extends Fragment {
                 "",
                 "",
                 "");
+
+
+//
+
 
         activities.add(activityModel2);
         HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
@@ -114,37 +120,37 @@ public class HomeActivitiesFragment extends Fragment {
                                 String activityUpdated = activityObject.getString("updated_at");
 
 
-//                                ActivityModel activityModel1 = new ActivityModel(activityId, foundationId, activityName ,activityImage,
-//                                        activityQr,
-//                                        activityDes,
-//                                        activityLocation,
-//                                        activityStart,
-//                                        activityEnd,
-//                                        activityDate,
-//                                        activityGroup,
-//                                        activityLong,
-//                                        activityLat,
-//                                        activityPoints,
-//                                        activityStatus,
-//                                        activityCreated,
-//                                        activityUpdated);
+                                ActivityModel activityModel1 = new ActivityModel(activityId, foundationId, activityName ,activityImage,
+                                        activityQr,
+                                        activityDes,
+                                        activityLocation,
+                                        activityStart,
+                                        activityEnd,
+                                        activityDate,
+                                        activityGroup,
+                                        activityLong,
+                                        activityLat,
+                                        activityPoints,
+                                        activityStatus,
+                                        activityCreated,
+                                        activityUpdated);
 
-                                ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
-                                        "",
-                                        "This event is to help the victims of marawi regain the the city that they have always lived.",
-                                        "Marawi City, Zamboanga del Norte",
-                                        "7:00 am",
-                                        "5:00 pm",
-                                        "Dec 25, 2017",
-                                        "5",
-                                        "38",
-                                        "40",
-                                        "100",
-                                        "",
-                                        "",
-                                        "");
+//                                ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
+//                                        "",
+//                                        "This event is to help the victims of marawi regain the the city that they have always lived.",
+//                                        "Marawi City, Zamboanga del Norte",
+//                                        "7:00 am",
+//                                        "5:00 pm",
+//                                        "Dec 25, 2017",
+//                                        "5",
+//                                        "38",
+//                                        "40",
+//                                        "100",
+//                                        "",
+//                                        "",
+//                                        "");
 
-                                activities.add(activityModel2);
+                                activities.add(activityModel1);
                                 HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                                 recView.setLayoutManager(layoutManager);
@@ -163,8 +169,8 @@ public class HomeActivitiesFragment extends Fragment {
                     }
                 });
 
-//        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-//        request.add(jsonArrayRequest);
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonArrayRequest);
 //
 //        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 //        requestQueue.add(jsonArrayRequest);

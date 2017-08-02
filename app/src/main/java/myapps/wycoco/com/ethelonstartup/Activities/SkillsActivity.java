@@ -54,7 +54,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         Snackbar.make(findViewById(R.id.skillsRelative) , "PLEASE CHOOSE ONE OR MORE SKILLS AND INTERESTS", Snackbar.LENGTH_LONG).show();
 
@@ -258,7 +258,9 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                             @Override
                             public void onResponse(String response) {
                                 if(response.equals("Success")){
-                                    startActivity(new Intent(SkillsActivity.this, HomeActivity.class));
+                                    Intent intent = new Intent(SkillsActivity.this,HomeActivity.class);
+                                    intent.putExtra("id",volunteer_id);
+                                    startActivity(intent);
                                 }else{
                                     Log.e("kobe","pisteee" +response.toString());
                                 }
