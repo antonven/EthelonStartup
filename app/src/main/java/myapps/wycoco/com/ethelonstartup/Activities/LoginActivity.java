@@ -60,10 +60,11 @@ import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
+    Localhost localhost = new Localhost();
     CallbackManager callbackManager;
     EditText inputEmail, inputPassword;
     Button buttonLogin, buttonFacebook, buttonSignup ;
@@ -81,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String id;
 
     RequestQueue requestQueue;
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
+    private String URL;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -91,13 +92,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         setTitle("");
 
+        URL = "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb";
+
 
         int rawId = getResources().getIdentifier("vid",  "raw", getPackageName());
 
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -164,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+        StringRequest string = new StringRequest(Request.Method.POST, "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/session",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -322,7 +325,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
 
 
-                    Log.e("SASDASDASD", "" + email + facebook_id + name);
+                    Log.e("SASDASDASD", "push facebook id " + email + facebook_id + name);
+                    Log.e("kobe","potang ina");
 
                     StringRequest string = new StringRequest(Request.Method.POST, URL,
                             new Response.Listener<String>() {
@@ -331,7 +335,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     volunteer_id = response;
                                     Log.e("kobe","SHIT" +response);
                                     if(response.equals("First Time")){
-                                        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+                                        Log.e("kobe","sud sa if first time");
+                                        StringRequest string = new StringRequest(Request.Method.POST, "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/session",
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
@@ -362,6 +367,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         request.add(string);
 
                                     }else{
+                                        Log.e("kobe","sud sa else firs time");
                                         nextActivity(profile);
                                     }
                                 }
@@ -370,6 +376,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
 //                                    Log.e("kobe", error.getMessage());
+                                    Log.e("kobe",error.toString());
                                 }
                             }) {
                         @Override
@@ -380,6 +387,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             params.put("name", name);
                             params.put("role", "volunteer");
 
+                            Log.e("kobe","sud sa map"+email+name+facebook_id);
                             return params;
                         }
                     };
@@ -400,7 +408,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     @Override
                                     public void onResponse(String response) {
                                         if(response.equals("First Time")){
-                                            StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+                                            Log.e("kobe","sud sa first time");
+                                            StringRequest string = new StringRequest(Request.Method.POST, "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/session",
                                                     new Response.Listener<String>() {
                                                         @Override
                                                         public void onResponse(String response) {
@@ -416,20 +425,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                         public void onErrorResponse(VolleyError error) {
                                                             //Log.e("kobe", error.getMessage().toString());
                                                             error.printStackTrace();
-                                                            Log.e("kobe","naas error no email");
+                                                            Log.e("kobe","naas error no email sud sa if");
                                                         }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
                                                     Map<String, String> params = new HashMap<String, String>();
                                                     params.put("facebook_id", profile.getId());
-                                                    Log.e("kobe","id "+profile.getId());
+                                                    Log.e("kobe","id sud sa if"+profile.getId());
                                                     return params;
                                                 }
                                             };
                                             RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                                             request.add(string);
                                         }else{
+                                            Log.e("kobe","else siya");
                                             nextActivity(profile);
                                         }
                                     }

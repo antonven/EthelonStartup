@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class SkillsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -44,7 +45,9 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     String volunteer_id;
     ArrayList<String> skillSet = new ArrayList<>();
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/volunteerskills";
+
+    Localhost localhost = new Localhost();
+    private String URL = "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/volunteerskills";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toolbar;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,11 +31,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.PortfolioAdapter;
 import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -45,13 +49,16 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivitiesFragment extends Fragment {
 
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/getallactivities";
+    Localhost localhost = new Localhost();
+
+    private String URL = "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/getallactivities";
     FoldingCell fc;
     RecyclerView recView;
     ArrayList<ActivityModel> activities = new ArrayList<>();
     HomeActivitiesListAdapter homeActivitiesListAdapter;
     ActivityModel activityModel;
     Toolbar toolbar;
+    String id;
 
     public HomeActivitiesFragment() {
         // Required empty public constructor
@@ -63,7 +70,9 @@ public class HomeActivitiesFragment extends Fragment {
 
 
         recView = (RecyclerView)v.findViewById(R.id.recView);
-        String id = getArguments().getString("id");
+
+        if(getArguments() != null)
+         id = getArguments().getString("id");
 
 
         ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
@@ -165,9 +174,19 @@ public class HomeActivitiesFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                            Log.e("kobe","animal Error ang Piste");
                     }
-                });
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("volunteer_id",id);
+                Log.e("id",id);
+
+                return params;
+            }
+        };
 
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
         request.add(jsonArrayRequest);
