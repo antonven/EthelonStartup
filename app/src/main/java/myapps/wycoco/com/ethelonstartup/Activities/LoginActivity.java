@@ -55,11 +55,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity;
+import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.LoginViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -79,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String name, facebook_id, email;
     String volunteer_id;
     String id;
-
+    ArrayList<UserModel> users = new ArrayList<>();
     RequestQueue requestQueue;
     private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
 
@@ -240,11 +242,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void nextActivity(Profile profile){
         if(profile!= null){
+
+//            UserModel user = new UserModel();
+//            user.setUserImage(profile.getProfilePictureUri(500,500).toString());
+//            user.setUserFirstName(profile.getFirstName());
+//
+//            users.add(user);
+
+
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             i.putExtra("profileName", profile.getName());
             i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
             i.putExtra("profileId", profile.getId());
             i.putExtra("volunteer_id",volunteer_id);
+            Log.e("ProfPic", "" + profile.getProfilePictureUri(500,500).toString());
             startActivity(i);
         }
     }

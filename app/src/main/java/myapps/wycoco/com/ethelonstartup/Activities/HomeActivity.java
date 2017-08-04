@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.view.animation.AlphaAnimation;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
-
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
@@ -37,22 +36,11 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
-    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
-    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
-
-    private boolean mIsTheTitleVisible          = false;
-    private boolean mIsTheTitleContainerVisible = true;
-
-
-    TextView profileName, tabOne;
+    TextView profileName;
     ImageView profilePicture;
     String profName, image, profileId, cov_photo, volunteer_id;
-    ActivityModel activityModel;
-    LoginManager loginManager;
     ViewPager viewPager;
     Toolbar toolbar;
-    CollapsingToolbarLayout collapsingToolbarLayout = null;
     TabLayout tabLayout;
     AppBarLayout appBarLayout;
 
@@ -71,7 +59,6 @@ public class HomeActivity extends AppCompatActivity
         initInstancesDrawer();
 
         appBarLayout = (AppBarLayout)findViewById(R.id.appBarHome);
-//        appBarLayout.addOnOffsetChangedListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -118,14 +105,11 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_first_layout) {
 
-
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("image", image);
             intent.putExtra("profName", profName);
             intent.putExtra("profileId", profileId);
             intent.putExtra("volunteer_id",volunteer_id);
-
-
             startActivity(intent);
 
         }else if (id == R.id.nav_second_layout) {
@@ -150,12 +134,10 @@ public class HomeActivity extends AppCompatActivity
 
     private void initInstancesDrawer() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Ethelon");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.adminhamburger);
 
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -163,11 +145,6 @@ public class HomeActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-
-//        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapse);
-//        collapsingToolbarLayout.setTitle("Ethelon");
-
-
 
     }
 
@@ -197,9 +174,7 @@ public class HomeActivity extends AppCompatActivity
 
             Bundle bundle = new Bundle();
             bundle.putString("id",volunteer_id);
-
             HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
-
             homeActivitiesFragment.setArguments(bundle);
 
         adapter.addFrag(homeActivitiesFragment,"Home");
@@ -208,62 +183,4 @@ public class HomeActivity extends AppCompatActivity
         viewPager.setAdapter(adapter);
     }
 
-//    @Override
-//    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//
-//
-//    }
-//
-//
-//    @Override
-//    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
-//        int maxScroll = appBarLayout.getTotalScrollRange();
-//        float percentage = (float) Math.abs(offset) / (float) maxScroll;
-//
-//        handleAlphaOnTitle(percentage);
-//        handleToolbarTitleVisibility(percentage);
-//    }
-//
-//    private void handleToolbarTitleVisibility(float percentage) {
-//        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
-//
-//            if(!mIsTheTitleVisible) {
-//                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-//                mIsTheTitleVisible = true;
-//            }
-//
-//        } else {
-//
-//            if (mIsTheTitleVisible) {
-//                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-//                mIsTheTitleVisible = false;
-//            }
-//        }
-//    }
-//
-//    private void handleAlphaOnTitle(float percentage) {
-//        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-//            if(mIsTheTitleContainerVisible) {
-//                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-//                mIsTheTitleContainerVisible = false;
-//            }
-//
-//        } else {
-//
-//            if (!mIsTheTitleContainerVisible) {
-//                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-//                mIsTheTitleContainerVisible = true;
-//            }
-//        }
-//    }
-//
-//    public static void startAlphaAnimation (View v, long duration, int visibility) {
-//        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
-//                ? new AlphaAnimation(0f, 1f)
-//                : new AlphaAnimation(1f, 0f);
-//
-//        alphaAnimation.setDuration(duration);
-//        alphaAnimation.setFillAfter(true);
-//        v.startAnimation(alphaAnimation);
-//    }
 }

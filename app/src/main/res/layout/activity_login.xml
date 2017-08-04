@@ -9,15 +9,11 @@
 
     <VideoView
         android:id="@+id/videoView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="0dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.0" />
@@ -29,14 +25,13 @@
         app:layout_constraintTop_toTopOf="@+id/viewPagerText"
         android:layout_marginTop="8dp"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
-        android:layout_marginRight="0dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="1.0"
         app:layout_constraintHorizontal_bias="0.458"
-        android:id="@+id/imageView4" />
+        android:id="@+id/imageView4"
+        android:layout_marginStart="8dp" />
 
     <ImageView
         android:layout_width="30dp"
@@ -44,14 +39,13 @@
         android:src="@drawable/dotright"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/imageView4"
-        android:layout_marginLeft="0dp"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginEnd="8dp" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -66,10 +60,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.506" />
-
-
-
+        app:layout_constraintVertical_bias="0.506"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 
 
@@ -78,7 +71,7 @@
         android:textColor="#fff"
         android:id="@+id/buttonFacebook"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="CONTINUE WITH FACEBOOK"
@@ -86,12 +79,14 @@
         app:layout_constraintRight_toLeftOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEthelonSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonEthelonSignUp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/buttonEthelonSignUp"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -101,28 +96,36 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="38dp" />
+        app:layout_constraintGuide_end="38dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="346dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline2"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="38dp" />
+        app:layout_constraintGuide_begin="38dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="38dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline3"
         app:layout_constraintGuide_begin="355dp"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="355dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/alreadAUserLabel"
@@ -136,13 +139,15 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.502" />
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:background="@drawable/login_ethelon_bg_button_user"
         android:id="@+id/buttonLogin"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -150,14 +155,22 @@
         android:textColor="#fff"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/alreadAUserLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/alreadAUserLabel"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline4"
         app:layout_constraintGuide_begin="251dp"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="251dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerText"
@@ -170,7 +183,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintVertical_bias="0.0">
 
     </android.support.v4.view.ViewPager>
 

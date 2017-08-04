@@ -21,6 +21,7 @@ import com.phelat.fun.Widget.FunnyButton;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
@@ -98,7 +99,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
         tabOne.setText("Details");
-
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
         tabLayout.getTabAt(0).setText("Details");
         tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
@@ -115,7 +115,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
         tabThree.setText("Reviews");
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.getTabAt(0).setText("Reviews");
+        tabLayout.getTabAt(2).setText("Reviews");
         tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
 //        tabLayout.getTabAt(2).setCustomView(tabThree);
     }
@@ -124,7 +124,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFrag(new EventDetailsFragment(), "Details");
-        adapter.addFrag(new SecondFragment(), "Volunteers");
+        adapter.addFrag(new GoingVolunteersFragment(), "Volunteers");
         adapter.addFrag(new ThirdFragment(), "Reviews");
         viewPager.setAdapter(adapter);
     }
