@@ -83,6 +83,12 @@
     <style name="customTabDetails" parent="android:Widget">
         <item name="tabBackground">@drawable/tab_background</item>
         <item name="tabIndicatorColor">#c62828</item>
+        <item name="tabIndicatorHeight">0dp</item>
+    </style>
+
+    <style name="customTabVolunteers" parent="android:Widget">
+        <item name="tabBackground">@drawable/tab_background</item>
+        <item name="tabIndicatorColor">#c62828</item>
         <item name="tabIndicatorHeight">35dp</item>
     </style>
 

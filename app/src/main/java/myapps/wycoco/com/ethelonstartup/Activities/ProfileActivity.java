@@ -69,7 +69,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         id = n.getStringExtra("profileId");
         imageUrl = n.getStringExtra("image");
 
-        Glide.with(this).load("https://graph.facebook.com/"+ id +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D1877377522288783").centerCrop().crossFade().into(profilePicture);
+        Glide.with(this).load("https://graph.facebook.com/"+ id
+                +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D1877377522288783")
+                .centerCrop().crossFade().into(profilePicture);
         profileName.setText(profName);
 
 

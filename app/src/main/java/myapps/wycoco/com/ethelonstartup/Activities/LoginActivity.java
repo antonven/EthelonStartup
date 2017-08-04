@@ -163,6 +163,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onResume();
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
+            //EXAMPLE RANI KAY D KA LOGIN KONG WAY TARONG NA HOST.
+            nextActivity(profile);
+
+
 
         StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
                 new Response.Listener<String>() {
@@ -171,8 +175,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                        volunteer_id = response;
 //                        Log.e("kobe",id);
                         nextActivity(profile);
-
-
                     }
                 },
                 new Response.ErrorListener() {

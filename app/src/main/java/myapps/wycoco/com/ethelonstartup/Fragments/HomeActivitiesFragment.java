@@ -63,35 +63,36 @@ public class HomeActivitiesFragment extends Fragment {
 
 
         recView = (RecyclerView)v.findViewById(R.id.recView);
-        String id = getArguments().getString("id");
+//        String id = getArguments().getString("id");
 
 
-        ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
-                "",
-                "This event is to help the victims of marawi regain the the city that they have always lived.",
-                "Marawi City, Zamboanga del Norte",
-                "7:00",
-                "5:00",
-                "Dec 25, 2017",
-                "5",
-                "38",
-                "40",
-                "100",
-                "",
-                "",
-                "");
+        for (int i = 0; i < 10; i++) {
+            ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi", "",
+                    "",
+                    "This event is to help the victims of marawi regain the the city that they have always lived.",
+                    "Marawi City, Zamboanga del Norte",
+                    "7:00",
+                    "5:00",
+                    "Dec 25, 2017",
+                    "5",
+                    "38",
+                    "40",
+                    "100",
+                    "",
+                    "",
+                    "");
 
 
 //
 
 
-        activities.add(activityModel2);
-        HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recView.setLayoutManager(layoutManager);
-        recView.setItemAnimator(new DefaultItemAnimator());
-        recView.setAdapter(homeActivitiesListAdapter);
-
+            activities.add(activityModel2);
+            HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            recView.setLayoutManager(layoutManager);
+            recView.setItemAnimator(new DefaultItemAnimator());
+            recView.setAdapter(homeActivitiesListAdapter);
+        }
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -134,21 +135,6 @@ public class HomeActivitiesFragment extends Fragment {
                                         activityStatus,
                                         activityCreated,
                                         activityUpdated);
-
-//                                ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
-//                                        "",
-//                                        "This event is to help the victims of marawi regain the the city that they have always lived.",
-//                                        "Marawi City, Zamboanga del Norte",
-//                                        "7:00 am",
-//                                        "5:00 pm",
-//                                        "Dec 25, 2017",
-//                                        "5",
-//                                        "38",
-//                                        "40",
-//                                        "100",
-//                                        "",
-//                                        "",
-//                                        "");
 
                                 activities.add(activityModel1);
                                 HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);

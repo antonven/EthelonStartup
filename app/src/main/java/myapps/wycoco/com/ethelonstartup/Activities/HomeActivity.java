@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -21,7 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.view.animation.AlphaAnimation;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 
@@ -35,6 +37,13 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
+    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
+    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
+
+    private boolean mIsTheTitleVisible          = false;
+    private boolean mIsTheTitleContainerVisible = true;
+
 
     TextView profileName, tabOne;
     ImageView profilePicture;
@@ -43,7 +52,9 @@ public class HomeActivity extends AppCompatActivity
     LoginManager loginManager;
     ViewPager viewPager;
     Toolbar toolbar;
+    CollapsingToolbarLayout collapsingToolbarLayout = null;
     TabLayout tabLayout;
+    AppBarLayout appBarLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -58,6 +69,9 @@ public class HomeActivity extends AppCompatActivity
         window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         initInstancesDrawer();
+
+        appBarLayout = (AppBarLayout)findViewById(R.id.appBarHome);
+//        appBarLayout.addOnOffsetChangedListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -136,6 +150,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void initInstancesDrawer() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Ethelon");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -148,6 +163,9 @@ public class HomeActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+
+//        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapse);
+//        collapsingToolbarLayout.setTitle("Ethelon");
 
 
 
@@ -189,4 +207,63 @@ public class HomeActivity extends AppCompatActivity
         adapter.addFrag(new ThirdFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
     }
+
+//    @Override
+//    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//
+//
+//    }
+//
+//
+//    @Override
+//    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+//        int maxScroll = appBarLayout.getTotalScrollRange();
+//        float percentage = (float) Math.abs(offset) / (float) maxScroll;
+//
+//        handleAlphaOnTitle(percentage);
+//        handleToolbarTitleVisibility(percentage);
+//    }
+//
+//    private void handleToolbarTitleVisibility(float percentage) {
+//        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
+//
+//            if(!mIsTheTitleVisible) {
+//                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+//                mIsTheTitleVisible = true;
+//            }
+//
+//        } else {
+//
+//            if (mIsTheTitleVisible) {
+//                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+//                mIsTheTitleVisible = false;
+//            }
+//        }
+//    }
+//
+//    private void handleAlphaOnTitle(float percentage) {
+//        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
+//            if(mIsTheTitleContainerVisible) {
+//                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+//                mIsTheTitleContainerVisible = false;
+//            }
+//
+//        } else {
+//
+//            if (!mIsTheTitleContainerVisible) {
+//                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+//                mIsTheTitleContainerVisible = true;
+//            }
+//        }
+//    }
+//
+//    public static void startAlphaAnimation (View v, long duration, int visibility) {
+//        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
+//                ? new AlphaAnimation(0f, 1f)
+//                : new AlphaAnimation(1f, 0f);
+//
+//        alphaAnimation.setDuration(duration);
+//        alphaAnimation.setFillAfter(true);
+//        v.startAnimation(alphaAnimation);
+//    }
 }

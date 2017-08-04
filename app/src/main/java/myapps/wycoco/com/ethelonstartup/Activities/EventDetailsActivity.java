@@ -20,6 +20,7 @@ import com.phelat.fun.Layouts.Funny;
 import com.phelat.fun.Widget.FunnyButton;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
+import myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
@@ -97,24 +98,32 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
         tabOne.setText("Details");
+
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.getTabAt(0).setCustomView(tabOne);
+        tabLayout.getTabAt(0).setText("Details");
+        tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
+
+//        tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
         tabTwo.setText("Volunteers");
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.getTabAt(1).setCustomView(tabTwo);
+        tabLayout.getTabAt(1).setText("Volunteers");
+        tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
+//        tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
         tabThree.setText("Reviews");
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.getTabAt(2).setCustomView(tabThree);
+        tabLayout.getTabAt(0).setText("Reviews");
+        tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
+//        tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFrag(new HomeActivitiesFragment(), "Details");
+        adapter.addFrag(new EventDetailsFragment(), "Details");
         adapter.addFrag(new SecondFragment(), "Volunteers");
         adapter.addFrag(new ThirdFragment(), "Reviews");
         viewPager.setAdapter(adapter);

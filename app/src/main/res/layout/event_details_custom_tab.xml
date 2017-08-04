@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/tab"
     android:textAlignment="center"
-    android:textColor="#c62828"
+
     android:drawablePadding="2dp"
     android:textSize="@dimen/tab_label"
     android:fontFamily="@string/font_fontFamily_medium"/>
