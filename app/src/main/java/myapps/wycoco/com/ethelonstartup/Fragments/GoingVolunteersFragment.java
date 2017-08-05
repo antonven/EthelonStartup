@@ -54,6 +54,7 @@ public class GoingVolunteersFragment extends Fragment {
         recyclerView.setAdapter(goingVolunteersAdapter);
 
 
+
         return view;
     }
 

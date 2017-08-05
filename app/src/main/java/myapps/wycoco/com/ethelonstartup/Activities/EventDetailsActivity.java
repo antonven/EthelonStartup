@@ -1,12 +1,17 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,12 +34,12 @@ import myapps.wycoco.com.ethelonstartup.R;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
-    Funny funny;
-    FunnyButton funnyButton;
-    LinearLayout funnyContainer;
-    FunControl funControl;
     TabLayout tabLayout;
     ViewPager viewPager;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    String eventName, eventHost, eventLocation, eventDate, eventTimeStart;
+    TextView eventName1, eventHost1;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -46,49 +51,30 @@ public class EventDetailsActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
-//        funny = (Funny) findViewById(R.id.funny2);
+        eventName1 = (TextView)findViewById(R.id.eventName);
+        eventHost1 = (TextView)findViewById(R.id.eventHost);
+
+        Intent n = getIntent();
+        eventName = n.getStringExtra("eventName");
+        eventHost = n.getStringExtra("eventHost");
+        eventDate = n.getStringExtra("eventDate");
+        eventTimeStart = n.getStringExtra("eventTimeStart");
+        eventLocation = n.getStringExtra("eventLocation");
+
+
+        eventName1.setText(eventName);
+        eventHost1.setText(eventHost);
+
 
         insTabs();
 
-//        funnyButton = (FunnyButton) findViewById(R.id.viewDetailsBtn);
-//
-//        funnyContainer = (LinearLayout) findViewById(R.id.funnyContainer);
-//
-//        funControl = new FunControl.Builder()
-//                .setFunnyLayout(funny)
-//                .setFunnyButton(funnyButton)
-//                .setContainer(funnyContainer)
-//                .setAnimationDuration(400)
-//                .setGravityToExpand(Gravity.NO_GRAVITY)
-//                .build();
-
-
-//        funnyButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if(!funControl.isExpanded())
-//                    funControl.expand();
-//                else if(funControl.isExpanded())
-//                    funControl.collapse();
-//            }
-//        });
-
     }
-//    @Override
-//    public void onBackPressed() {
-//        if (funControl.isExpanded()){
-//            funControl.collapse();
-//        }else{
-//            super.onBackPressed();
-//        }
-//    }
-
     private void insTabs(){
 
         viewPager = (ViewPager)findViewById(R.id.viePagerDetails);
         setupViewPager(viewPager);
 
+//        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapse);
 
         tabLayout = (TabLayout) findViewById(R.id.detailsTabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -123,11 +109,25 @@ public class EventDetailsActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFrag(new EventDetailsFragment(), "Details");
+
+
+
+        EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
+
+        Bundle in = new Bundle();
+
+        in.putString("eventDate", eventDate);
+        in.putString("eventTimeStart", eventTimeStart);
+        in.putString("eventLocation", eventLocation);
+
+        eventDetailsFragment.setArguments(in);
+
+        adapter.addFrag(eventDetailsFragment, "Details");
         adapter.addFrag(new GoingVolunteersFragment(), "Volunteers");
         adapter.addFrag(new ThirdFragment(), "Reviews");
         viewPager.setAdapter(adapter);
     }
+
 
 
 }

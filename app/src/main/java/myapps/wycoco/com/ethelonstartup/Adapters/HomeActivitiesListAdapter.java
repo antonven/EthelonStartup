@@ -102,8 +102,20 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
         @Override
         public void onClick(View view) {
+            String eventName = activities.get(getAdapterPosition()).getActivityName();
+            String eventHost = activities.get(getAdapterPosition()).getFoundationId();
+            String eventDate = activities.get(getAdapterPosition()).getActivityDate();
+            String eventTimeStart = activities.get(getAdapterPosition()).getActivityStart();
+            String eventLocation = activities.get(getAdapterPosition()).getActivityLocation();
+
             Intent in = new Intent(mContext, EventDetailsActivity.class);
             in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            in.putExtra("eventName", eventName);
+            in.putExtra("eventHost", eventHost);
+            in.putExtra("eventDate", eventDate);
+            in.putExtra("eventTimeStart", eventTimeStart);
+            in.putExtra("eventLocation", eventLocation);
+
             mContext.startActivity(in);
         }
     }
