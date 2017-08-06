@@ -15,19 +15,15 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Third Layout" />
 
+        <item
+            android:id="@+id/logOutButton"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/log_out" />
+
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/logOutButton"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/log_out" />
-        </menu>
-    </item>
+
+
+
 
 </menu>

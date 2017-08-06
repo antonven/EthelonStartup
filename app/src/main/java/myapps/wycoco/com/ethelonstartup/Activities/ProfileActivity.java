@@ -1,13 +1,18 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,13 +30,15 @@ import myapps.wycoco.com.ethelonstartup.R;
  * Created by dell on 7/22/2017.
  */
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileActivity extends AppCompatActivity {
 
-
+    CollapsingToolbarLayout collapsingToolbarLayout = null;
     String imageUrl, profName, id;
     ImageView profilePicture;
     TextView profileName, volunteerPoints, activitiesJoined;
     Toolbar toolbar;
+    AppBarLayout appBarLayout;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -39,19 +46,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_layout);
 
-        toolbar = (Toolbar) findViewById(R.id.nav_toolbar);
-        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setBackground(null);
 
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -60,8 +55,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         profilePicture = (ImageView)findViewById(R.id.profilePictureProfile);
         profileName = (TextView)findViewById(R.id.profileNameProfile);
-        volunteerPoints = (TextView)findViewById(R.id.volunteerPoints);
-        activitiesJoined = (TextView)findViewById(R.id.activitiesJoined);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
 
         Intent n = getIntent();
         n.getExtras();
@@ -75,32 +69,57 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         profileName.setText(profName);
 
 
-        volunteerPoints.setOnClickListener(this);
-        activitiesJoined.setOnClickListener(this);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.nav_toolbar);
+        setSupportActionBar(toolbar);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        toolbar.setBackground(null);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapse1);
 
 
+
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    dynamicToolbarColor();
+                    collapsingToolbarLayout.setTitle(profileName.getText());
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    isShow = false;
+                }
+            }
+        });
+
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.volunteerPoints:
 
-                break;
 
-            case R.id.activitiesJoined:
-                    startActivity(new Intent(this, PortfolioActivity.class));
-                break;
-        }
+
+    private void dynamicToolbarColor(){
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ethback);
+            collapsingToolbarLayout.setContentScrimColor((getResources().getColor(R.color.colorPrimary)));
+            collapsingToolbarLayout.setStatusBarScrimColor((getResources().getColor(R.color.colorPrimary)));
+
     }
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
 }

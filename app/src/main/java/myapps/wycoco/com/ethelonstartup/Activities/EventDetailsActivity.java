@@ -1,8 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -11,25 +9,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.graphics.Palette;
-import android.view.Gravity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.phelat.fun.Control.FunControl;
-import com.phelat.fun.Layouts.Funny;
-import com.phelat.fun.Widget.FunnyButton;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class EventDetailsActivity extends AppCompatActivity {
@@ -37,7 +27,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     CollapsingToolbarLayout collapsingToolbarLayout;
-
+    Toolbar toolbar;
     String eventName, eventHost, eventLocation, eventDate, eventTimeStart;
     TextView eventName1, eventHost1;
 
@@ -70,6 +60,20 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     }
     private void insTabs(){
+
+        toolbar = (Toolbar) findViewById(R.id.nav_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setBackground(null);
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         viewPager = (ViewPager)findViewById(R.id.viePagerDetails);
         setupViewPager(viewPager);
@@ -124,7 +128,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         adapter.addFrag(eventDetailsFragment, "Details");
         adapter.addFrag(new GoingVolunteersFragment(), "Volunteers");
-        adapter.addFrag(new ThirdFragment(), "Reviews");
+        adapter.addFrag(new LeaderBoardFragment(), "Reviews");
         viewPager.setAdapter(adapter);
     }
 

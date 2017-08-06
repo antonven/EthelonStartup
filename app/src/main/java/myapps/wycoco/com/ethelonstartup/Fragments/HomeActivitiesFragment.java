@@ -78,7 +78,7 @@ public class HomeActivitiesFragment extends Fragment {
                     "38",
                     "40",
                     "100",
-                    "",
+                    "Done",
                     "",
                     "");
 

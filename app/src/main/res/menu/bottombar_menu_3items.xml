@@ -9,17 +9,17 @@
     <item
         android:id="@+id/bbn_item1"
         android:icon="@drawable/bottombar_home"
-        android:title="Home"
+        android:title=""
         android:enabled="true"/>
     <item
         android:id="@+id/bbn_item2"
         android:icon="@drawable/bottombar_notification"
-        android:title="Notifications"
+        android:title=""
         android:enabled="true"/>
     <item
         android:id="@+id/bbn_item3"
         android:icon="@drawable/bottombar_podium"
-        android:title="Leaderboard"
+        android:title=""
         android:enabled="true"/>
 
 </menu>

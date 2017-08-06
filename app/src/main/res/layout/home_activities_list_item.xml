@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="8dp"
+
+    android:layout_marginBottom="14dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <com.ramotion.foldingcell.FoldingCell
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:folding-cell="http://schemas.android.com/apk/res-auto"
@@ -9,7 +17,6 @@
     android:background="@drawable/folding_cell_background"
     android:layout_height="wrap_content"
     android:id="@+id/foldingCell"
-    android:layout_marginBottom="14dp"
     folding-cell:cameraHeight="30"
     >
 
@@ -19,3 +26,4 @@
 
 
 </com.ramotion.foldingcell.FoldingCell>
+</android.support.v7.widget.CardView>

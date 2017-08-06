@@ -5,7 +5,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,12 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.android.volley.AuthFailureError;
@@ -36,7 +33,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -45,8 +41,6 @@ import com.facebook.login.LoginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -55,12 +49,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity;
-import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.LoginViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -217,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         adapter.addFrag(new HomeActivitiesFragment(), "Home");
         adapter.addFrag(new SecondFragment(), "Notifications");
-        adapter.addFrag(new ThirdFragment(), "Leaderboard");
+        adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
     }
 

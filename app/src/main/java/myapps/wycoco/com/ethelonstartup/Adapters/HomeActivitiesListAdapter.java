@@ -2,10 +2,12 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ramotion.foldingcell.FoldingCell;
@@ -55,6 +57,10 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
         holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
+
+//        if(activities.get(position).getActivityStatus().equals("Done")){
+//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFFF00"));
+//        }
     }
 
     @Override
@@ -68,10 +74,12 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         TextView eventName, eventHost, eventAddress, eventDate, eventTimeStart, eventVolunteers, eventPoints;
         TextView clickedEventName, clickedEventHost, clickedEventLocation, clickedEventDate, clickedEventTimeStart,
                 clickedEventVolunteers, clickedPoints, viewActivity;
+        RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.indicatorLine);
             fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
             eventName = (TextView)itemView.findViewById(R.id.eventName);
             eventHost = (TextView)itemView.findViewById(R.id.eventHost);
