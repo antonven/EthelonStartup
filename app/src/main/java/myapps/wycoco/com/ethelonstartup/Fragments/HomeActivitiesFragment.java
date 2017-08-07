@@ -72,7 +72,7 @@ public class HomeActivitiesFragment extends Fragment {
         recView = (RecyclerView)v.findViewById(R.id.recView);
 
         if(getArguments() != null)
-         id = getArguments().getString("id");
+         id = getArguments().getString("volunteer_id");
 
 
         ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
@@ -105,12 +105,15 @@ public class HomeActivitiesFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        Log.e("shit","sud sa response   "+response.length());
+
 
                         for(int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject activityObject = response.getJSONObject(i);
 
                                 String activityName = activityObject.getString("name");
+                                Log.e("shit"," name = "+activityName);
                                 String foundationId = activityObject.getString("foundation_id");
                                 String activityId = activityObject.getString("activity_id");
                                 String activityImage = activityObject.getString("image_url");
@@ -182,7 +185,7 @@ public class HomeActivitiesFragment extends Fragment {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("volunteer_id",id);
-                Log.e("id",id);
+                Log.e("id","Map "+id);
 
                 return params;
             }

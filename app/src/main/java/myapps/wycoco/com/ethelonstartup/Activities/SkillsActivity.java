@@ -49,6 +49,8 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     Localhost localhost = new Localhost();
     private String URL = "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/volunteerskills";
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         Snackbar.make(findViewById(R.id.skillsRelative) , "PLEASE CHOOSE ONE OR MORE SKILLS AND INTERESTS", Snackbar.LENGTH_LONG).show();
 
@@ -265,14 +267,14 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                     intent.putExtra("id",volunteer_id);
                                     startActivity(intent);
                                 }else{
-                                    Log.e("kobe","pisteee" +response.toString());
+                                    //Log.e("kobe","pisteee" +response.toString());
                                 }
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                            Log.e("kobe",error.toString());
+                           // Log.e("kobe",error.toString());
                             }
                         }){
 

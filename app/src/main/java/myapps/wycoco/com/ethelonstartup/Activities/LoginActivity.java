@@ -332,18 +332,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    volunteer_id = response;
+                                    //volunteer_id = response;
                                     Log.e("kobe","SHIT" +response);
+
                                     if(response.equals("First Time")){
                                         Log.e("kobe","sud sa if first time");
                                         StringRequest string = new StringRequest(Request.Method.POST, "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/session",
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
-                                                        id = response;
-                                                        Log.e("kobe",id);
+                                                        volunteer_id = response;
+//                                                        Log.e("kobe",id);
                                                           Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
-                                                           intent.putExtra("id",id);
+                                                           intent.putExtra("volunteer_id",volunteer_id);
                                                            startActivity(intent);
                                                     }
                                                 },
@@ -359,7 +360,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<String, String>();
                                                 params.put("facebook_id", profile.getId());
-                                                Log.e("kobe","id "+profile.getId());
+                                                Log.e("kobe","id sa session giatay "+profile.getId());
                                                 return params;
                                             }
                                         };
@@ -368,7 +369,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                     }else{
                                         Log.e("kobe","sud sa else firs time");
-                                        nextActivity(profile);
+
+                                        StringRequest string = new StringRequest(Request.Method.POST, "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/session",
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+
+                                                        volunteer_id = response;
+                                                        nextActivity(profile);
+
+
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        //Log.e("kobe", error.getMessage().toString());
+                                                        error.printStackTrace();
+                                                        Log.e("kobe","naas error sa on resume wtf");
+                                                    }
+                                                }) {
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> params = new HashMap<String, String>();
+                                                params.put("facebook_id", profile.getId());
+                                                Log.e("kobe","id "+profile.getId());
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                                        request.add(string);
+
+
                                     }
                                 }
                             },
@@ -376,7 +408,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
 //                                    Log.e("kobe", error.getMessage());
-                                    Log.e("kobe",error.toString());
+                                    Log.e("kobe","Error sa mo sud og data para users"+error.toString());
                                 }
                             }) {
                         @Override
@@ -440,6 +472,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             request.add(string);
                                         }else{
                                             Log.e("kobe","else siya");
+
+
                                             nextActivity(profile);
                                         }
                                     }
