@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class SkillsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -44,7 +45,11 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     String volunteer_id;
     ArrayList<String> skillSet = new ArrayList<>();
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/volunteerskills";
+
+    Localhost localhost = new Localhost();
+    private String URL = "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/volunteerskills";
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -54,7 +59,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         Snackbar.make(findViewById(R.id.skillsRelative) , "PLEASE CHOOSE ONE OR MORE SKILLS AND INTERESTS", Snackbar.LENGTH_LONG).show();
 
@@ -262,14 +267,14 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                     intent.putExtra("id",volunteer_id);
                                     startActivity(intent);
                                 }else{
-                                    Log.e("kobe","pisteee" +response.toString());
+                                    //Log.e("kobe","pisteee" +response.toString());
                                 }
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                            Log.e("kobe",error.toString());
+                           // Log.e("kobe",error.toString());
                             }
                         }){
 
