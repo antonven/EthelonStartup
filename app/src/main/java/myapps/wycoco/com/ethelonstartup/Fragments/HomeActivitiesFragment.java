@@ -35,6 +35,7 @@ import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.PortfolioAdapter;
 import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -45,7 +46,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivitiesFragment extends Fragment {
 
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/getallactivities";
+    private String URL = "http://"+ new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/getallactivities";
     FoldingCell fc;
     RecyclerView recView;
     ArrayList<ActivityModel> activities = new ArrayList<>();

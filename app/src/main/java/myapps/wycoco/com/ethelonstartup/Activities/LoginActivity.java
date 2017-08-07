@@ -59,7 +59,8 @@ import myapps.wycoco.com.ethelonstartup.Adapters.LoginViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+//import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -81,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String id;
 
     RequestQueue requestQueue;
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
+    private String URL = "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+//        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -164,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+        StringRequest string = new StringRequest(Request.Method.POST, "http://"+ new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/session",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -213,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         adapter.addFrag(new HomeActivitiesFragment(), "Home");
         adapter.addFrag(new SecondFragment(), "Notifications");
-        adapter.addFrag(new ThirdFragment(), "Leaderboard");
+        //adapter.addFrag(new ThirdFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
     }
 
@@ -282,7 +283,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             pushFacebookCred(loginResult.getAccessToken(),profile);
                         }
-                       // pushFacebookCred(loginResult.getAccessToken());
+                        //pushFacebookCred(loginResult.getAccessToken());
                         }
 
                     @Override
@@ -331,7 +332,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     volunteer_id = response;
                                     Log.e("kobe","SHIT" +response);
                                     if(response.equals("First Time")){
-                                        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+                                        StringRequest string = new StringRequest(Request.Method.POST, "http://"+ new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/session",
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
@@ -379,6 +380,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             params.put("facebook_id", facebook_id);
                             params.put("name", name);
                             params.put("role", "volunteer");
+                            params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
 
                             return params;
                         }
@@ -400,7 +402,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     @Override
                                     public void onResponse(String response) {
                                         if(response.equals("First Time")){
-                                            StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+                                            StringRequest string = new StringRequest(Request.Method.POST, "http://"+ new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/session",
                                                     new Response.Listener<String>() {
                                                         @Override
                                                         public void onResponse(String response) {
