@@ -20,7 +20,6 @@ import android.widget.MediaController;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.VideoView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,25 +40,19 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity;
 import myapps.wycoco.com.ethelonstartup.Adapters.LoginViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.ThirdFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -83,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     RequestQueue requestQueue;
     private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +90,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        }
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -212,8 +207,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFrag(new HomeActivitiesFragment(), "Home");
-        adapter.addFrag(new SecondFragment(), "Notifications");
-        adapter.addFrag(new ThirdFragment(), "Leaderboard");
+        adapter.addFrag(new NotificationsFragment(), "Notifications");
+        adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
     }
 
@@ -300,7 +295,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.buttonLogin:
-                startActivity(new Intent(LoginActivity.this, SkillsActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 break;
         }
     }
