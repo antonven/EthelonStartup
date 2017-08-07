@@ -162,7 +162,7 @@ public class HomeActivity extends AppCompatActivity
 
             TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //        tabTwo.setText("Notifications");
-            tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_none_black_24dp, 0, 0);
+            tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
             tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
             tabLayout.getTabAt(1).setCustomView(tabTwo);
 
