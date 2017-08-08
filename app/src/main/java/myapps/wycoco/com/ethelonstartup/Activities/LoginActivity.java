@@ -25,6 +25,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
@@ -40,6 +42,8 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
@@ -53,6 +57,8 @@ import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
+import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -72,9 +78,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String name, facebook_id, email;
     String volunteer_id;
     String id;
+    Localhost localURL = new Localhost();
+    String URL = localURL.getLocalhost();
+
+    String message, volunteerId, api_token;
 
     RequestQueue requestQueue;
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
+//    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
 
 
     @Override
@@ -83,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         setTitle("");
+
+
 
 
         int rawId = getResources().getIdentifier("vid",  "raw", getPackageName());
@@ -159,33 +171,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
-                new Response.Listener<String>() {
+        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://" + URL + "/EthelonStartupWeb/public/api/session",
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                       volunteer_id = response;
-//                        Log.e("kobe",id);
-                        nextActivity(profile);
+                    public void onResponse(JSONObject response) {
+                        try {
+                            message = response.getString("message");
+                            volunteerId = response.getString("volunteer_id");
+                            api_token = response.getString("api_token");
 
+                            UserModel user = new UserModel();
+                            user.setUser_id(volunteerId);
+                            user.setUser_token(api_token);
+
+                            nextActivity(profile);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //Log.e("kobe", error.getMessage().toString());
-                        error.printStackTrace();
-                        Log.e("kobe","naas error sa on resume wtf");
+
                     }
                 }) {
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("facebook_id", profile.getId());
-                Log.e("kobe","id "+profile.getId());
+                params.put("volunteer_id", volunteerId);
+                params.put("api_token", api_token);
+
                 return params;
             }
         };
+
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
         request.add(string);
         }
@@ -319,42 +343,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     Log.e("SASDASDASD", "" + email + facebook_id + name);
 
-                    StringRequest string = new StringRequest(Request.Method.POST, URL,
+                    StringRequest string = new StringRequest(Request.Method.POST, "http://"+URL+"/EthelonStartupWeb/public/api/loginwithfb",
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
                                     volunteer_id = response;
                                     Log.e("kobe","SHIT" +response);
                                     if(response.equals("First Time")){
-                                        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        id = response;
-                                                        Log.e("kobe",id);
-                                                          Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
-                                                           intent.putExtra("id",id);
-                                                           startActivity(intent);
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        //Log.e("kobe", error.getMessage().toString());
-                                                        error.printStackTrace();
-                                                        Log.e("kobe","naas error FIrst time");
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<String, String>();
-                                                params.put("facebook_id", profile.getId());
-                                                Log.e("kobe","id "+profile.getId());
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-                                        request.add(string);
+//                                        StringRequest string = new StringRequest(Request.Method.POST, "http://"+URL+"/EthelonStartupWeb/public/api/session",
+//                                                new Response.Listener<String>() {
+//                                                    @Override
+//                                                    public void onResponse(String response) {
+//                                                        id = response;
+//                                                        Log.e("kobe",id);
+//                                                          Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
+//                                                           intent.putExtra("id",id);
+//                                                           startActivity(intent);
+//                                                    }
+//                                                },
+//                                                new Response.ErrorListener() {
+//                                                    @Override
+//                                                    public void onErrorResponse(VolleyError error) {
+//                                                        //Log.e("kobe", error.getMessage().toString());
+//                                                        error.printStackTrace();
+//                                                        Log.e("kobe","naas error FIrst time");
+//                                                    }
+//                                                }) {
+//                                            @Override
+//                                            protected Map<String, String> getParams() throws AuthFailureError {
+//                                                Map<String, String> params = new HashMap<String, String>();
+//                                                params.put("facebook_id", profile.getId());
+//                                                Log.e("kobe","id "+profile.getId());
+//                                                return params;
+//                                            }
+//                                        };
+//                                        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+//                                        request.add(string);
 
                                     }else{
                                         nextActivity(profile);
@@ -390,12 +414,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         Log.e("SASDASDASD", "" +facebook_id +name);
 
-                        StringRequest string = new StringRequest(Request.Method.POST, URL,
+                        StringRequest string = new StringRequest(Request.Method.POST, "http://"+URL+"/EthelonStartupWeb/public/api/loginwithfb",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         if(response.equals("First Time")){
-                                            StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+                                            StringRequest string = new StringRequest(Request.Method.POST, "http://"+URL+"/EthelonStartupWeb/public/api/session",
                                                     new Response.Listener<String>() {
                                                         @Override
                                                         public void onResponse(String response) {

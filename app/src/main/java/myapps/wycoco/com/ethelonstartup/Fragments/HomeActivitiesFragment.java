@@ -35,6 +35,7 @@ import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.PortfolioAdapter;
 import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -45,12 +46,14 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivitiesFragment extends Fragment {
 
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/getallactivities";
+//    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/getallactivities";
+    Localhost local = new Localhost();
+    String URL = local.getLocalhost();
     FoldingCell fc;
     RecyclerView recView;
     ArrayList<ActivityModel> activities = new ArrayList<>();
-    HomeActivitiesListAdapter homeActivitiesListAdapter;
     ActivityModel activityModel;
+    HomeActivitiesListAdapter homeActivitiesListAdapter;
     Toolbar toolbar;
 
     public HomeActivitiesFragment() {
@@ -65,34 +68,14 @@ public class HomeActivitiesFragment extends Fragment {
         recView = (RecyclerView)v.findViewById(R.id.recView);
         String id = getArguments().getString("id");
 
-
-        ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
-                "",
-                "This event is to help the victims of marawi regain the the city that they have always lived.",
-                "Marawi City, Zamboanga del Norte",
-                "7:00",
-                "5:00",
-                "Dec 25, 2017",
-                "5",
-                "38",
-                "40",
-                "100",
-                "",
-                "",
-                "");
+        homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
 
 
-//
 
 
-        activities.add(activityModel2);
-        HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recView.setLayoutManager(layoutManager);
-        recView.setItemAnimator(new DefaultItemAnimator());
-        recView.setAdapter(homeActivitiesListAdapter);
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL,
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, "http://"+ URL+"/EthelonStartupWeb/public/api/getallactivities",
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -111,13 +94,15 @@ public class HomeActivitiesFragment extends Fragment {
                                 String activityStart = activityObject.getString("start_time");
                                 String activityEnd = activityObject.getString("end_time");
                                 String activityDate = activityObject.getString("date");
-                                String activityGroup = activityObject.getString("description");
+                                String activityGroup = activityObject.getString("group");
                                 String activityLong = activityObject.getString("long");
                                 String activityLat = activityObject.getString("lat");
                                 String activityPoints = activityObject.getString("points_equivalent");
                                 String activityStatus = activityObject.getString("status");
                                 String activityCreated = activityObject.getString("created_at");
                                 String activityUpdated = activityObject.getString("updated_at");
+                                String contactPerson = activityObject.getString("contactperson");
+                                String activityContact = activityObject.getString("contact");
 
 
                                 ActivityModel activityModel1 = new ActivityModel(activityId, foundationId, activityName ,activityImage,
@@ -133,7 +118,11 @@ public class HomeActivitiesFragment extends Fragment {
                                         activityPoints,
                                         activityStatus,
                                         activityCreated,
-                                        activityUpdated);
+                                        activityUpdated,
+                                        contactPerson,
+                                        activityContact);
+
+                                Log.e("asdsadasdads", response.toString());
 
 //                                ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
 //                                        "",
@@ -150,12 +139,15 @@ public class HomeActivitiesFragment extends Fragment {
 //                                        "",
 //                                        "");
 
+
                                 activities.add(activityModel1);
-                                HomeActivitiesListAdapter homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
+
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                                 recView.setLayoutManager(layoutManager);
                                 recView.setItemAnimator(new DefaultItemAnimator());
                                 recView.setAdapter(homeActivitiesListAdapter);
+                                Log.e("PISTE KOBE ", activities.size() + "");
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -165,7 +157,7 @@ public class HomeActivitiesFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        error.printStackTrace();
                     }
                 });
 

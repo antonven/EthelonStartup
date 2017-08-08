@@ -30,6 +30,7 @@ import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class HomeActivity extends AppCompatActivity
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity
     Toolbar toolbar;
     TabLayout tabLayout;
     AppBarLayout appBarLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

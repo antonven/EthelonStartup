@@ -281,7 +281,7 @@
                     android:layout_alignParentLeft="true" />
 
                 <TextView
-                    android:id="@+id/content_delivery_time"
+                    android:id="@+id/contactPerson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@id/content_delivery_date_badge"
@@ -293,15 +293,15 @@
                     android:layout_alignLeft="@id/content_delivery_date_badge" />
 
                 <TextView
-                    android:id="@+id/content_delivery_date"
+                    android:id="@+id/activityContact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/content_delivery_time"
-                    android:layout_below="@id/content_delivery_time"
+                    android:layout_alignStart="@id/contactPerson"
+                    android:layout_below="@id/contactPerson"
                     android:text="09257772302"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
-                    android:layout_alignLeft="@id/content_delivery_time" />
+                    android:layout_alignLeft="@id/contactPerson" />
 
             </RelativeLayout>
 

@@ -40,7 +40,6 @@ public class ProfileActivity extends AppCompatActivity {
     AppBarLayout appBarLayout;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +50,9 @@ public class ProfileActivity extends AppCompatActivity {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
+        }
 
         profilePicture = (ImageView)findViewById(R.id.profilePictureProfile);
         profileName = (TextView)findViewById(R.id.profileNameProfile);
@@ -71,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.nav_toolbar);
         setSupportActionBar(toolbar);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         toolbar.setBackground(null);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
