@@ -54,6 +54,7 @@ import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -75,7 +76,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String id;
     String message, volunteerId, api_token;
     RequestQueue requestQueue;
-    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
+
+    private String URL = "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb";
 
 
     @Override
@@ -160,38 +162,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+
+
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("facebook_id", profile.getId());
+
+                Log.e("kobe","id "+profile.getId());
+
+
+
+        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb",
+                new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         try {
+                            Log.e("kyle",response + " FUCKKKKKDSd");
                             message = response.getString("message");
                             volunteerId = response.getString("volunteer_id");
                             api_token = response.getString("api_token");
+                            //Log.e("message",message + volunteerIdid + api_token);
+                            nextActivity(profile);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("sud sa catch","sud sa catch");
                         }
 
                     }
                 }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    Log.e("kobe","error sa onreusme"+error.toString());
                 }
-            }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("message", message);
-                params.put("volunteer_id", volunteerId);
-                params.put("api_token", api_token);
-
-                Log.e("kobe","id "+profile.getId());
-                return params;
-            }
-        };
+            }) ;
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
         request.add(string);
         }
@@ -243,7 +249,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("profileName", profile.getName());
             i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
             i.putExtra("profileId", profile.getId());
-            i.putExtra("volunteer_id",volunteer_id);
+            i.putExtra("volunteer_id",volunteerId);
+            i.putExtra("api_token",api_token);
+
+            Log.e("kobe","next act" + api_token + volunteerId);
+
             startActivity(i);
         }
     }
@@ -312,7 +322,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
-                Log.i("LoginActivity", response.toString());
+                Log.i("LoginActivity", response + " ");
                 // Get facebook data from login
                 Log.e("kobe","json ob = "+object);
                 try {
@@ -325,68 +335,56 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     Log.e("SASDASDASD", "" + email + facebook_id + name);
 
-                    StringRequest string = new StringRequest(Request.Method.POST, URL,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    volunteer_id = response;
-                                    Log.e("kobe","SHIT" +response);
-                                    if(response.equals("First Time")){
-                                        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        id = response;
-                                                        Log.e("kobe",id);
-                                                          Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
-                                                           intent.putExtra("id",id);
-                                                           startActivity(intent);
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        //Log.e("kobe", error.getMessage().toString());
-                                                        error.printStackTrace();
-                                                        Log.e("kobe","naas error FIrst time");
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<String, String>();
-                                                params.put("facebook_id", profile.getId());
-                                                Log.e("kobe","id "+profile.getId());
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-                                        request.add(string);
 
-                                    }else{
-                                        nextActivity(profile);
+
+                    Map<String, String> params = new HashMap<String, String>();
+                    Log.e("nelson"," FUCk!");
+                    params.put("email", email);
+                    params.put("facebook_id", facebook_id);
+                    params.put("name", name);
+                    params.put("role", "volunteer");
+                    params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
+
+
+                    Log.e("kyle","id "+profile.getId());
+                    JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb",
+                            new JSONObject(params),
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.e("kyle",response + "piste ");
+                                    try {
+                                        message = response.getString("message");
+                                        volunteer_id = response.getString("volunteer_id");
+                                        api_token = response.getString("api_token");
+
+                                        if(message.equals("First Time")){
+                                            Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
+                                            intent.putExtra("id",volunteer_id);
+                                            intent.putExtra("api_token",api_token);
+                                            startActivity(intent);
+
+                                        }else{
+                                            nextActivity(profile);
+                                        }
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Log.e("kyle",e.toString() + " naay email piste ");
+                                        }
+
                                     }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-//                                    Log.e("kobe", error.getMessage());
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("email", email);
-                            params.put("facebook_id", facebook_id);
-                            params.put("name", name);
-                            params.put("role", "volunteer");
 
-                            return params;
+
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("kyle",error.toString()+ " Ari gyud siya piste");
                         }
-                    };
+                    }) ;
                     RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                     request.add(string);
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -394,74 +392,57 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if(e.toString().equals("org.json.JSONException: No value for email")){
 
-                        Log.e("SASDASDASD", "" +facebook_id +name);
+                            JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb",
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
 
-                        StringRequest string = new StringRequest(Request.Method.POST, URL,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        if(response.equals("First Time")){
-                                            StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            id = response;
-                                                            Log.e("kobe",id);
-                                                            Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
-                                                            intent.putExtra("id",id);
-                                                            startActivity(intent);
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            //Log.e("kobe", error.getMessage().toString());
-                                                            error.printStackTrace();
-                                                            Log.e("kobe","naas error no email");
-                                                        }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<String, String>();
-                                                    params.put("facebook_id", profile.getId());
-                                                    Log.e("kobe","id "+profile.getId());
-                                                    return params;
+                                            try {
+                                                message = response.getString("message");
+                                                volunteer_id = response.getString("volunteer_id");
+                                                api_token = response.getString("api_token");
+
+                                                if(message.equals("First Time")){
+                                                    Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
+                                                    intent.putExtra("id",volunteer_id);
+                                                    intent.putExtra("api_token",api_token);
+                                                    startActivity(intent);
+                                                }else{
+                                                    nextActivity(profile);
                                                 }
-                                            };
-                                            RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-                                            request.add(string);
-                                        }else{
-                                            nextActivity(profile);
+
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
                                         }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                    Log.e("kobe Error", error.toString());
-                                        error.printStackTrace();
-                                    }
-                                }) {
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("email", "email not available "+facebook_id );
-                                params.put("facebook_id", facebook_id);
-                                params.put("name", name);
-                                params.put("role", "volunteer");
+                                    }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 
-                                Log.e("kobe","fb name = "+facebook_id + name);
-                                return params;
-                            }
-                        };
-                        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-                        request.add(string);
+                                }
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("email", "Email Not Available"+facebook_id);
+                                    params.put("facebook_id", facebook_id);
+                                    params.put("name", name);
+                                    params.put("role", "volunteer");
+                                    params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
 
+                                    Log.e("kobe","id "+profile.getId());
+                                    return params;
+                                }
+                            };
+                            RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                            request.add(string);
 
                     }
                 }
 
-            }
+            }//on completed
         });
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");

@@ -43,6 +43,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     GridView gridView;
     ImageView environmental, livelihood, educational, culinary, charity, sports, medicine, arts;
     String volunteer_id;
+    String api_token;
     ArrayList<String> skillSet = new ArrayList<>();
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
 
@@ -66,6 +67,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
 
         Intent n = getIntent();
         volunteer_id = n.getStringExtra("id");
+        api_token = n.getStringExtra("api_token");
 
         environmentCheck = (ImageView)findViewById(R.id.environmentCheck);
         livelihoodCheck = (ImageView)findViewById(R.id.livelihoodCheck);
@@ -266,6 +268,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                 if(response.equals("Success")){
                                     Intent intent = new Intent(SkillsActivity.this,HomeActivity.class);
                                     intent.putExtra("id",volunteer_id);
+                                    intent.putExtra("api_token",api_token);
                                     startActivity(intent);
                                 }else{
                                     //Log.e("kobe","pisteee" +response.toString());
@@ -283,6 +286,9 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("volunteer_id",volunteer_id);
+                        params.put("api_token",api_token);
+
+                        Log.e("kobe",volunteer_id + api_token);
 
                         //JSONObject jsonObject=new JSONObject();
                         for(int i =0; i<skillSet.size(); i++) {

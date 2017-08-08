@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -43,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
     Toolbar toolbar;
     TabLayout tabLayout;
     AppBarLayout appBarLayout;
+    String api_token;
 
 
     @Override
@@ -76,8 +78,12 @@ public class HomeActivity extends AppCompatActivity
         image = n.getStringExtra("profilePicture");
         profileId = n.getStringExtra("profileId");
         cov_photo = n.getStringExtra("cover_photo");
-        volunteer_id = n.getStringExtra("volunteer_id");
 
+        volunteer_id = n.getStringExtra("volunteer_id");
+        api_token = n.getStringExtra("api_token");
+
+
+         Log.e("kobe","HOME act"+api_token + volunteer_id);
 
         View view = navigationView.getHeaderView(0);
         profileName = (TextView)view.findViewById(R.id.profileName);
@@ -105,6 +111,8 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fm = getSupportFragmentManager();
 
+
+
         if (id == R.id.nav_first_layout) {
 
             Intent intent = new Intent(this, ProfileActivity.class);
@@ -112,6 +120,7 @@ public class HomeActivity extends AppCompatActivity
             intent.putExtra("profName", profName);
             intent.putExtra("profileId", profileId);
             intent.putExtra("volunteer_id",volunteer_id);
+
             startActivity(intent);
 
         }else if (id == R.id.nav_second_layout) {
@@ -120,8 +129,17 @@ public class HomeActivity extends AppCompatActivity
                     .commit();
 
         }else if (id == R.id.nav_third_layout) {
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString("id",volunteer_id);
+            bundle.putString("api_token",api_token);
+
+            HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
+            homeActivitiesFragment.setArguments(bundle);
+
             fm.beginTransaction()
-                    .replace(R.id.frame1, new HomeActivitiesFragment())
+                    .replace(R.id.frame1, homeActivitiesFragment)
                     .commit();
         }else if (id == R.id.logOutButton){
             LoginManager.getInstance().logOut();
@@ -156,7 +174,7 @@ public class HomeActivity extends AppCompatActivity
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //        tabOne.setText("Home");
-        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
+      //  tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
 
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
         tabLayout.getTabAt(0).setCustomView(tabOne);
@@ -164,7 +182,7 @@ public class HomeActivity extends AppCompatActivity
 
             TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //        tabTwo.setText("Notifications");
-            tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
+            //tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
             tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
             tabLayout.getTabAt(1).setCustomView(tabTwo);
 
@@ -172,17 +190,25 @@ public class HomeActivity extends AppCompatActivity
 
             TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //        tabThree.setText("Leaderboard");
-            tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
+            //tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
             tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
             tabLayout.getTabAt(2).setCustomView(tabThree);
 
     }
 
     private void setupViewPager(ViewPager viewPager){
+
+        Intent n = getIntent();
+        volunteer_id = n.getStringExtra("volunteer_id");
+        api_token = n.getStringExtra("api_token");
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
             Bundle bundle = new Bundle();
             bundle.putString("id",volunteer_id);
+            bundle.putString("api_token",api_token);
+        Log.e("fzz",api_token + volunteer_id);
+
             HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
             homeActivitiesFragment.setArguments(bundle);
 
