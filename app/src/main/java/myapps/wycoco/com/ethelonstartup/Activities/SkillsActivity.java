@@ -292,9 +292,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                         params.put("count",String.valueOf(skillSet.size()));
 
 
-
-
-
                         return params;
                     }
                 };
