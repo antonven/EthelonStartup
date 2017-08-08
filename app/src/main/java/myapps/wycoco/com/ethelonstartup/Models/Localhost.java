@@ -5,7 +5,7 @@ package myapps.wycoco.com.ethelonstartup.Models;
  */
 
 public class Localhost {
-    String localhost = "172.17.3.5";
+    String localhost = "172.17.0.163";
 
     public String getLocalhost() {
         return localhost;

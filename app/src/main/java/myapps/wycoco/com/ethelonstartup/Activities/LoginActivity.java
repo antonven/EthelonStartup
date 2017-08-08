@@ -25,6 +25,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String name, facebook_id, email;
     String volunteer_id;
     String id;
-
+    String message, volunteerId, api_token;
     RequestQueue requestQueue;
     private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/loginwithfb";
 
@@ -159,29 +160,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-        StringRequest string = new StringRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
-                new Response.Listener<String>() {
+        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://172.17.3.2/EthelonStartupWeb/public/api/session",
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                       volunteer_id = response;
-//                        Log.e("kobe",id);
-                        nextActivity(profile);
+                    public void onResponse(JSONObject response) {
 
+                        try {
+                            message = response.getString("message");
+                            volunteerId = response.getString("volunteer_id");
+                            api_token = response.getString("api_token");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Log.e("kobe", error.getMessage().toString());
-                        error.printStackTrace();
-                        Log.e("kobe","naas error sa on resume wtf");
-                    }
-                }) {
+                }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("facebook_id", profile.getId());
+                params.put("message", message);
+                params.put("volunteer_id", volunteerId);
+                params.put("api_token", api_token);
+
                 Log.e("kobe","id "+profile.getId());
                 return params;
             }
