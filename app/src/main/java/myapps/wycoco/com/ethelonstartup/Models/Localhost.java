@@ -10,4 +10,6 @@ public class Localhost {
     public String getLocalhost() {
         return localhost;
     }
+
+
 }

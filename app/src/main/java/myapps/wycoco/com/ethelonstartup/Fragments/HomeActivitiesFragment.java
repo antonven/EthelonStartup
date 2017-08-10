@@ -90,7 +90,7 @@ public class HomeActivitiesFragment extends Fragment {
             //params.put("count",String.valueOf(skillSet.size()));
 
 
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, "http://192.168.1.6/EthelonStartupWeb/public/api/getallactivities",
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/getallactivities",
                     new JSONObject(params),
                     new Response.Listener<JSONArray>() {
                         @Override
@@ -138,7 +138,7 @@ public class HomeActivitiesFragment extends Fragment {
                                             contactPerson,
                                             activityContact);
 
-                                    Log.e("asdsadasdads", response.toString());
+                                        Log.e("asdsadasdads", response.toString());
 
 //                                ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
 //                                        "",

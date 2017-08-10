@@ -44,6 +44,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     ImageView environmental, livelihood, educational, culinary, charity, sports, medicine, arts;
     String volunteer_id;
     String api_token;
+    String name;
     ArrayList<String> skillSet = new ArrayList<>();
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
 
@@ -68,6 +69,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         Intent n = getIntent();
         volunteer_id = n.getStringExtra("id");
         api_token = n.getStringExtra("api_token");
+        name = n.getStringExtra("profileName");
 
         environmentCheck = (ImageView)findViewById(R.id.environmentCheck);
         livelihoodCheck = (ImageView)findViewById(R.id.livelihoodCheck);
@@ -269,6 +271,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                     Intent intent = new Intent(SkillsActivity.this,HomeActivity.class);
                                     intent.putExtra("id",volunteer_id);
                                     intent.putExtra("api_token",api_token);
+                                    intent.putExtra("profileName",name);
                                     startActivity(intent);
                                 }else{
                                     //Log.e("kobe","pisteee" +response.toString());

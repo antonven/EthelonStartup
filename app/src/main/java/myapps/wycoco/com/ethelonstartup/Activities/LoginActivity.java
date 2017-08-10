@@ -195,6 +195,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+
                     Log.e("kobe","error sa onreusme"+error.toString());
                 }
             }) ;
@@ -311,7 +312,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.buttonLogin:
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+               // startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 break;
         }
     }

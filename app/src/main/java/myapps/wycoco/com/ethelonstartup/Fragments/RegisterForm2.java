@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -19,15 +20,23 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import myapps.wycoco.com.ethelonstartup.Activities.SkillsActivity;
 import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 /**
@@ -39,7 +48,7 @@ public class RegisterForm2 extends Fragment {
     Spinner inputRole;
     EditText inputName;
     Button doneBtn;
-    private String URL = "http://172.17.1.127/EthelonStartupWeb/public/api/loginwithfb";
+    private String URL = "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/register";
     String role;
 
     public RegisterForm2() {
@@ -85,7 +94,7 @@ public class RegisterForm2 extends Fragment {
                 final String name = inputName.getText().toString();
                 Log.e("kobe","id "+ email + password + name + role);
                 Toast.makeText(getContext(), "" + name, Toast.LENGTH_SHORT).show();
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+               /* StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -109,8 +118,49 @@ public class RegisterForm2 extends Fragment {
                         Toast.makeText(getContext(), "NI PISLIT!" , Toast.LENGTH_SHORT).show();
                         return params;
                     }
-                };
-//                VolleySingleton.getInstance().addToRequestQueue(stringRequest);
+                };*/
+
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                params.put("password", password);
+                params.put("name", name);
+                params.put("role", "Volunteer");
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String message = response.getString("message");
+                            if(message.equals("email already exists")){
+                                Toast.makeText(getContext(), "Email already exists", Toast.LENGTH_SHORT).show();
+                            }else{
+                                String api_token = response.getString("api_token");
+                                String volunteer_id = response.getString("volunteer_id");
+                                String name = response.getString("name");
+
+                                Intent intent = new Intent(getContext(), SkillsActivity.class);
+                                intent.putExtra("api_token",api_token);
+                                intent.putExtra("id",volunteer_id);
+                                intent.putExtra("profileName",name);
+
+                                startActivity(intent);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+                );
+
+                RequestQueue request = Volley.newRequestQueue(getContext());
+                request.add(jsonObjectRequest);
             }
         });
 
