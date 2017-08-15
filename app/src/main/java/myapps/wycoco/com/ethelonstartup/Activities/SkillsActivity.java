@@ -49,7 +49,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
 
     Localhost localhost = new Localhost();
-    private String URL = "http://"+localhost.getLocalhost()+"/EthelonStartupWeb/public/api/volunteerskills";
+    private String URL = "http://"+localhost.getLocalhost()+"volunteerskills";
 
 
 
@@ -271,7 +271,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                     Intent intent = new Intent(SkillsActivity.this,HomeActivity.class);
                                     intent.putExtra("id",volunteer_id);
                                     intent.putExtra("api_token",api_token);
-                                    intent.putExtra("profileName",name);
+                                    intent.putExtra("newSignUpUsername",name);
                                     startActivity(intent);
                                 }else{
                                     //Log.e("kobe","pisteee" +response.toString());

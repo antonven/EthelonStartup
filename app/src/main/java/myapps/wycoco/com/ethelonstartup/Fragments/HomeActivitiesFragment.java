@@ -75,11 +75,7 @@ public class HomeActivitiesFragment extends Fragment {
         id = getArguments().getString("id");
         api_token = getArguments().getString("api_token");
 
-        homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities);
-
-
-
-
+        homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token);
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("volunteer_id", id);
@@ -87,10 +83,14 @@ public class HomeActivitiesFragment extends Fragment {
 
             Log.e("kobe", "sa home" + id + api_token);
 
-            //params.put("count",String.valueOf(skillSet.size()));
+
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        recView.setLayoutManager(layoutManager);
+//        recView.setItemAnimator(new DefaultItemAnimator());
+//        recView.setAdapter(homeActivitiesListAdapter);
 
 
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/getallactivities",
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"getallactivities",
                     new JSONObject(params),
                     new Response.Listener<JSONArray>() {
                         @Override
@@ -153,7 +153,7 @@ public class HomeActivitiesFragment extends Fragment {
 //                                        "100",
 //                                        "",
 //                                        "",
-//                                        "");
+//                                        "","Anton Ven Wycoco", "09420170888");
 
 
                                     activities.add(activityModel1);

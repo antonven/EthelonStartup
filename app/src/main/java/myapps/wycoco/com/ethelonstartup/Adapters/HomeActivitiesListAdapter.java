@@ -29,10 +29,14 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
     Context mContext;
     ArrayList<ActivityModel> activities = new ArrayList<>();
+    String id, api_token;
 
-    public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities) {
+    public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities, String id, String api_token) {
         this.mContext = mContext;
         this.activities = activities;
+        this.id = id;
+        this.api_token = api_token;
+        Log.e("asdasdasdasd", "" + id);
     }
 
     @Override
@@ -121,6 +125,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             String eventDate = activities.get(getAdapterPosition()).getActivityDate();
             String eventTimeStart = activities.get(getAdapterPosition()).getActivityStart();
             String eventLocation = activities.get(getAdapterPosition()).getActivityLocation();
+            String eventId = activities.get(getAdapterPosition()).getActivityId();
 
             Intent in = new Intent(mContext, EventDetailsActivity.class);
             in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -129,6 +134,9 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             in.putExtra("eventDate", eventDate);
             in.putExtra("eventTimeStart", eventTimeStart);
             in.putExtra("eventLocation", eventLocation);
+            in.putExtra("id", id);
+            in.putExtra("activity_id", eventId);
+            in.putExtra("api_token", api_token);
 
             mContext.startActivity(in);
         }

@@ -38,12 +38,12 @@ public class GoingVolunteersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_going_volunteers, container, false);
 
-      /*  for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 10; i++) {
             UserModel user = new UserModel("https://graph.facebook.com/1877377522288783/picture?height=500&width=500&migration_overrides=%7Boctober_2012%3Atrue%7D"
-                    , "Anton Ven", "Wycoco", "Volunteer");
+                    , "Anton Ven", "Wycoco", "Volunteer", "123", "asdasd123123");
 
             users.add(user);
-        }*/
+        }
 
         goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
         recyclerView = (RecyclerView)view.findViewById(R.id.recViewVolunteers);

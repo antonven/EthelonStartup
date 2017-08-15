@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String message, volunteerId, api_token;
     RequestQueue requestQueue;
 
-    private String URL = "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb";
+    private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
 
 
     @Override
@@ -106,8 +107,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
 
-        uri = Uri.parse("android.resources://" + getPackageName()+ "/" + R.raw.bg_vid);
-
+        uri = Uri.parse("android.resources://" + getPackageName()+ "/" + R.raw.piste);
+        MediaController mediaController = new MediaController(this);
+        mediaController.setAnchorView(vidView);
+        vidView.setMediaController(mediaController);
 
         vidView.setVideoURI(uri);
         vidView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -162,29 +165,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
 
-
-
-
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("facebook_id", profile.getId());
-
                 Log.e("kobe","id "+profile.getId());
 
-
-
-        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb",
-                new JSONObject(params),
+        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         try {
+
                             Log.e("kyle",response + " FUCKKKKKDSd");
                             message = response.getString("message");
-                            volunteerId = response.getString("volunteer_id");
-                            api_token = response.getString("api_token");
-                            //Log.e("message",message + volunteerIdid + api_token);
-                            nextActivity(profile);
+
+                            if(message.equals("First Time")) {
+                                volunteer_id = response.getString("volunteer_id");
+                                api_token = response.getString("api_token");
+                                Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
+                                intent.putExtra("id", volunteer_id);
+                                intent.putExtra("api_token", api_token);
+                                startActivity(intent);
+                            }else if(message.equals("Email already exists")){
+                                Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
+                            }else{
+                                volunteer_id = response.getString("volunteer_id");
+
+                                Log.e("asd", "" + volunteer_id);
+                                api_token = response.getString("api_token");
+                                nextActivity(profile);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -202,6 +212,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
         request.add(string);
         }
+
+
     }
 
     @Override
@@ -250,10 +262,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("profileName", profile.getName());
             i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
             i.putExtra("profileId", profile.getId());
-            i.putExtra("volunteer_id",volunteerId);
+            i.putExtra("volunteer_id",volunteer_id);
             i.putExtra("api_token",api_token);
 
-            Log.e("kobe","next act" + api_token + volunteerId);
+            Log.e("kobe","next act" + api_token + volunteer_id);
 
             startActivity(i);
         }
@@ -291,7 +303,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             profile = Profile.getCurrentProfile();
                             name = profile.getName();
                             Log.e("kobe","else"+name);
-
                             pushFacebookCred(loginResult.getAccessToken(),profile);
                         }
                        // pushFacebookCred(loginResult.getAccessToken());
@@ -312,34 +323,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.buttonLogin:
-               // startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, LoginWithEthelonActivity.class));
                 break;
         }
     }
 
 
     public void pushFacebookCred(AccessToken accessToken, final Profile profile){
-        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
 
+        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
+
                 Log.i("LoginActivity", response + " ");
-                // Get facebook data from login
                 Log.e("kobe","json ob = "+object);
+
                 try {
                     facebook_id = object.getString("id");
-                     email = " ";
+                    email = " ";
+
                     if(object.getString("email")!= null){
                         email = object.getString("email");
                     }
 
-
                     Log.e("SASDASDASD", "" + email + facebook_id + name);
 
-
-
                     Map<String, String> params = new HashMap<String, String>();
-                    Log.e("nelson"," FUCk!");
                     params.put("email", email);
                     params.put("facebook_id", facebook_id);
                     params.put("name", name);
@@ -348,27 +357,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                     Log.e("kyle","id "+profile.getId());
-                    JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb",
-                            new JSONObject(params),
+                    JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     Log.e("kyle",response + "piste ");
                                     try {
                                         message = response.getString("message");
-                                        volunteer_id = response.getString("volunteer_id");
-                                        api_token = response.getString("api_token");
 
-                                        if(message.equals("First Time")){
-                                            Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
-                                            intent.putExtra("id",volunteer_id);
-                                            intent.putExtra("api_token",api_token);
+
+                                        if(message.equals("First Time")) {
+                                            Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
+                                            volunteer_id = response.getString("volunteer_id");
+                                            api_token = response.getString("api_token");
+                                            intent.putExtra("id", volunteer_id);
+                                            intent.putExtra("api_token", api_token);
                                             startActivity(intent);
-
+                                        }else if(message.equals("Email already exists")){
+                                            Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
                                         }else{
+                                            volunteer_id = response.getString("volunteer_id");
+                                            api_token = response.getString("api_token");
                                             nextActivity(profile);
                                         }
-
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -376,8 +387,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         }
 
                                     }
-
-
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
@@ -393,21 +402,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if(e.toString().equals("org.json.JSONException: No value for email")){
 
-                            JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/loginwithfb",
+                            JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL,
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
 
                                             try {
                                                 message = response.getString("message");
-                                                volunteer_id = response.getString("volunteer_id");
-                                                api_token = response.getString("api_token");
 
-                                                if(message.equals("First Time")){
-                                                    Intent intent = new Intent(LoginActivity.this,SkillsActivity.class);
-                                                    intent.putExtra("id",volunteer_id);
-                                                    intent.putExtra("api_token",api_token);
+
+                                                if(message.equals("First Time")) {
+                                                    Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
+                                                    volunteer_id = response.getString("volunteer_id");
+                                                    api_token = response.getString("api_token");
+                                                    intent.putExtra("id", volunteer_id);
+                                                    intent.putExtra("api_token", api_token);
                                                     startActivity(intent);
+                                                }else if(message.equals("Email already exists")){
+                                                    Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
+
                                                 }else{
                                                     nextActivity(profile);
                                                 }

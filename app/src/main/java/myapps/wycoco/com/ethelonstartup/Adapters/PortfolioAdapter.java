@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
+import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
 /**
@@ -28,12 +30,12 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
 
     Context mContext;
-    ArrayList<ActivityModel> activities;
+    ArrayList<PortfolioModel> activities;
 
     public PortfolioAdapter() {
     }
 
-    public PortfolioAdapter(Context mContext, ArrayList<ActivityModel> activities) {
+    public PortfolioAdapter(Context mContext, ArrayList<PortfolioModel> activities) {
         this.mContext = mContext;
         this.activities = activities;
     }
@@ -47,14 +49,28 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     @Override
     public void onBindViewHolder(PortfolioAdapter.ViewHolder holder, int position) {
+//        holder.eventName.setText(activities.get(position).getActivityName());
+//        holder.time.setText(activities.get(position).getActivityStart());
+//        holder.eventHost.setText(activities.get(position).getFoundationId());
+//        holder.points.setText(activities.get(position).getActivityPoints());
+//        holder.eventName.setText(activities.get(position).getActivityName());
+//        holder.eventName.setText(activities.get(position).getActivityName());
+//        holder.eventName.setText(activities.get(position).getActivityName());
+//        holder.eventName.setText(activities.get(position).getActivityName());
         holder.eventName.setText(activities.get(position).getActivityName());
-        holder.time.setText(activities.get(position).getActivityStart());
+        holder.eventAddress.setText(activities.get(position).getActivityLocation());
         holder.eventHost.setText(activities.get(position).getFoundationId());
-        holder.points.setText(activities.get(position).getActivityPoints());
-        holder.eventName.setText(activities.get(position).getActivityName());
-        holder.eventName.setText(activities.get(position).getActivityName());
-        holder.eventName.setText(activities.get(position).getActivityName());
-        holder.eventName.setText(activities.get(position).getActivityName());
+        holder.eventDate.setText(activities.get(position).getActivityDate());
+        holder.eventTimeStart.setText(activities.get(position).getActivityStart());
+        holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
+        holder.eventPoints.setText(activities.get(position).getActivityPoints());
+
+        if(activities.get(position).getVolunteerStatus().equals("true")){
+            holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
+        }else
+            holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
+
+
     }
 
     @Override
@@ -65,11 +81,13 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView price;
-        TextView date;
-        TextView time;
+        TextView eventDate;
+        TextView eventTimeStart;
         TextView eventName;
+        TextView eventAddress;
         TextView eventHost;
-        TextView volunteersCount;
+        TextView eventVolunteers;
+        TextView eventPoints;
         TextView points;
         TextView contentRequestBtn;
         ImageView status;
@@ -89,13 +107,14 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         public ViewHolder(View itemView) {
             super(itemView);
 
-            fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
-            date = (TextView)itemView.findViewById(R.id.eventDate);
-            time = (TextView)itemView.findViewById(R.id.eventTimeStart);
             eventName = (TextView)itemView.findViewById(R.id.eventName);
             eventHost = (TextView)itemView.findViewById(R.id.eventHost);
-            volunteersCount = (TextView)itemView.findViewById(R.id.title_volunteers_count);
-            points = (TextView)itemView.findViewById(R.id.eventPoints);
+            eventAddress = (TextView)itemView.findViewById(R.id.eventAddress);
+            eventDate = (TextView)itemView.findViewById(R.id.eventDate);
+            eventTimeStart = (TextView)itemView.findViewById(R.id.eventTimeStart);
+            eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
+            eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
+
             contentRequestBtn = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             status = (ImageView) itemView.findViewById(R.id.status);
             im = (ImageView) itemView.findViewById(R.id.title);
@@ -104,12 +123,12 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             clickedActivityTime = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
 
 
-            fc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    fc.toggle(false);
-                }
-            });
+//            fc.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    fc.toggle(false);
+//                }
+//            });
         }
     }
 }

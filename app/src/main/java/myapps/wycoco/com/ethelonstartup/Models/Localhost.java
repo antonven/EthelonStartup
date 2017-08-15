@@ -5,7 +5,7 @@ package myapps.wycoco.com.ethelonstartup.Models;
  */
 
 public class Localhost {
-    String localhost = "192.168.1.6";
+    String localhost = "whispering-meadow-65471.herokuapp.com/api/";
 
     public String getLocalhost() {
         return localhost;

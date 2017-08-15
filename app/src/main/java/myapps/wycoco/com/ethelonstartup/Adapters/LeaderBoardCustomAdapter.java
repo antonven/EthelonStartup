@@ -1,8 +1,10 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +28,9 @@ import shivam.developer.featuredrecyclerview.FeaturedRecyclerView;
 
 public class LeaderBoardCustomAdapter extends FeatureRecyclerViewAdapter<LeaderBoardCustomAdapter.CustomRecyclerViewHolder> {
 
-    Context mContext;
-    ArrayList<UserModel> userLeader = new ArrayList<>();
+    private Context mContext;
+    private ArrayList<UserModel> userLeader = new ArrayList<>();
+    private Activity activity;
 
     public LeaderBoardCustomAdapter(Context mContext, ArrayList<UserModel> userLeader) {
         this.mContext = mContext;
@@ -68,11 +71,27 @@ public class LeaderBoardCustomAdapter extends FeatureRecyclerViewAdapter<LeaderB
         ImageView leaderImage;
         TextView leaderName;
 
-        public CustomRecyclerViewHolder(View itemView) {
+        public CustomRecyclerViewHolder(final View itemView) {
             super(itemView);
 
             leaderImage = (ImageView)itemView.findViewById(R.id.leaderImage);
             leaderName = (TextView) itemView.findViewById(R.id.leaderName);
+
+            leaderImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Explode explode = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        explode = new Explode();
+                        activity.getWindow().setExitTransition(explode);
+                    }
+
+
+
+                }
+            });
         }
     }
+
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -49,14 +50,15 @@ public class RegisterForm1 extends Fragment {
                 n.putString("password", password);
                 reg2.setArguments(n);
 
-                fm.beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_animation, R.anim.slide_out_left_animation)
-                        .replace(R.id.frameRegisterForm, reg2)
-                        .commit();
-
-//                n.putExtra("name", name);
-//                n.putExtra("role", role);
-
+                if(email.equals("") || password.equals("")){
+                    Toast.makeText(getContext(), "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+                }else {
+                    fm.beginTransaction()
+                            .setCustomAnimations(R.anim.slide_right_animation, R.anim.slide_out_left_animation)
+                            .replace(R.id.frameRegisterForm, reg2)
+                            .addToBackStack("reg2")
+                            .commit();
+                }
 
             }
         });

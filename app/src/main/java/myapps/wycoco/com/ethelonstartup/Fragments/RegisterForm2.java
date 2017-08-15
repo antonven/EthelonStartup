@@ -48,7 +48,7 @@ public class RegisterForm2 extends Fragment {
     Spinner inputRole;
     EditText inputName;
     Button doneBtn;
-    private String URL = "http://"+new Localhost().getLocalhost()+"/EthelonStartupWeb/public/api/register";
+    private String URL = "http://"+new Localhost().getLocalhost()+"register";
     String role;
 
     public RegisterForm2() {
@@ -94,31 +94,6 @@ public class RegisterForm2 extends Fragment {
                 final String name = inputName.getText().toString();
                 Log.e("kobe","id "+ email + password + name + role);
                 Toast.makeText(getContext(), "" + name, Toast.LENGTH_SHORT).show();
-               /* StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("email", email);
-                        params.put("password", password);
-                        params.put("name", name);
-                        params.put("role", role);
-                        Log.e("kobe","id "+email + password + name + role);
-                        Toast.makeText(getContext(), "NI PISLIT!" , Toast.LENGTH_SHORT).show();
-                        return params;
-                    }
-                };*/
 
 
                 Map<String, String> params = new HashMap<String, String>();
@@ -127,7 +102,8 @@ public class RegisterForm2 extends Fragment {
                 params.put("name", name);
                 params.put("role", "Volunteer");
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -154,7 +130,7 @@ public class RegisterForm2 extends Fragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.e("ERROR", error.toString());
                     }
                 }
                 );
@@ -168,6 +144,8 @@ public class RegisterForm2 extends Fragment {
 
         return v;
     }
+
+
 
 
 

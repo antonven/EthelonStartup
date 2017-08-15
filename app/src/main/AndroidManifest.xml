@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:replace="allowBackup, label"
+    package="myapps.wycoco.com.ethelonstartup"
     android:allowBackup="false"
     android:label="@string/Ethelon"
-    package="myapps.wycoco.com.ethelonstartup">
+    tools:replace="allowBackup, label">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -33,7 +33,9 @@
             android:name=".Activities.PortfolioActivity"
             android:label="@string/title_activity_portfolio" />
         <activity android:name=".Activities.EventDetailsActivity" />
-        <activity android:name=".Activities.SkillsActivity"></activity>
+        <activity android:name=".Activities.SkillsActivity" />
+        <activity android:name=".Activities.LoginWithEthelonActivity" />
+        <activity android:name=".Activities.SuccessActivity"></activity>
     </application>
 
 </manifest>

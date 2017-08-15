@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
@@ -39,13 +40,11 @@ public class HomeActivity extends AppCompatActivity
 
     TextView profileName;
     ImageView profilePicture;
-    String profName, image, profileId, cov_photo, volunteer_id;
+    String profName, image, newSignUpUsername, profileId, cov_photo, volunteer_id, api_token, ethelonUserName, ethelonUserImage;
     ViewPager viewPager;
     Toolbar toolbar;
     TabLayout tabLayout;
     AppBarLayout appBarLayout;
-    String api_token;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,22 +73,34 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent n = getIntent();
+
         profName = n.getStringExtra("profileName");
         image = n.getStringExtra("profilePicture");
         profileId = n.getStringExtra("profileId");
         cov_photo = n.getStringExtra("cover_photo");
-
+        ethelonUserName = n.getStringExtra("userName");
+        ethelonUserImage = n.getStringExtra("image_url");
+        newSignUpUsername = n.getStringExtra("newSignUpUsername");
         volunteer_id = n.getStringExtra("volunteer_id");
         api_token = n.getStringExtra("api_token");
-
 
          Log.e("kobe","HOME act"+api_token + volunteer_id);
 
         View view = navigationView.getHeaderView(0);
-        profileName = (TextView)view.findViewById(R.id.profileName);
-        profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
-        profileName.setText(profName);
-        Glide.with(getApplicationContext()).load("https://graph.facebook.com/"+ profileId +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D").centerCrop().crossFade().into(profilePicture);
+        profileName = (TextView) view.findViewById(R.id.profileName);
+        profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
+
+        if(profName != null && image != null && profileId != null) {
+            profileName.setText(profName);
+            Glide.with(getApplicationContext()).load("https://graph.facebook.com/" + profileId + "/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D").centerCrop().crossFade().into(profilePicture);
+        }else if(newSignUpUsername != null){
+            profileName.setText(newSignUpUsername);
+        }
+        else{
+            profileName.setText(ethelonUserName);
+            Glide.with(getApplicationContext()).load(ethelonUserImage).centerCrop().crossFade().into(profilePicture);
+        }
+
 
     }
 
@@ -124,9 +135,10 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }else if (id == R.id.nav_second_layout) {
-            fm.beginTransaction()
-                    .replace(R.id.frame1, new SecondFragment())
-                    .commit();
+            Intent intent = new Intent(this, PortfolioActivity.class);
+            intent.putExtra("volunteer_id", volunteer_id);
+            intent.putExtra("api_token", api_token);
+            startActivity(intent);
 
         }else if (id == R.id.nav_third_layout) {
 
@@ -174,15 +186,14 @@ public class HomeActivity extends AppCompatActivity
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //        tabOne.setText("Home");
-      //  tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
-
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
 
             TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //        tabTwo.setText("Notifications");
-            //tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
+            tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
             tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
             tabLayout.getTabAt(1).setCustomView(tabTwo);
 
@@ -190,9 +201,10 @@ public class HomeActivity extends AppCompatActivity
 
             TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //        tabThree.setText("Leaderboard");
-            //tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
+            tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
             tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
             tabLayout.getTabAt(2).setCustomView(tabThree);
+
 
     }
 
@@ -217,5 +229,6 @@ public class HomeActivity extends AppCompatActivity
         adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
     }
+
 
 }
