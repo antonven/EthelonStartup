@@ -75,7 +75,6 @@ public class HomeActivitiesFragment extends Fragment {
         id = getArguments().getString("id");
         api_token = getArguments().getString("api_token");
 
-        homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token);
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("volunteer_id", id);
@@ -84,10 +83,7 @@ public class HomeActivitiesFragment extends Fragment {
             Log.e("kobe", "sa home" + id + api_token);
 
 
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//        recView.setLayoutManager(layoutManager);
-//        recView.setItemAnimator(new DefaultItemAnimator());
-//        recView.setAdapter(homeActivitiesListAdapter);
+
 
 
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"getallactivities",
@@ -98,6 +94,7 @@ public class HomeActivitiesFragment extends Fragment {
                             Log.e("kyle", response + "");
                             for (int i = 0; i < response.length(); i++) {
                                 try {
+                                    Log.e("RESPONsE", response.toString());
 
                                     JSONObject activityObject = response.getJSONObject(i);
                                     String activityName = activityObject.getString("name");
@@ -109,7 +106,7 @@ public class HomeActivitiesFragment extends Fragment {
                                     String activityLocation = activityObject.getString("location");
                                     String activityStart = activityObject.getString("start_time");
                                     String activityEnd = activityObject.getString("end_time");
-                                    String activityDate = activityObject.getString("date");
+                                    String activityDate = activityObject.getString("startDate");
                                     String activityGroup = activityObject.getString("group");
                                     String activityLong = activityObject.getString("long");
                                     String activityLat = activityObject.getString("lat");
@@ -157,17 +154,18 @@ public class HomeActivitiesFragment extends Fragment {
 
 
                                     activities.add(activityModel1);
-
-                                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                                    recView.setLayoutManager(layoutManager);
-                                    recView.setItemAnimator(new DefaultItemAnimator());
-                                    recView.setAdapter(homeActivitiesListAdapter);
                                     Log.e("PISTE KOBE ", activities.size() + "");
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+                                    Log.e("piste ni", "aaslkdjalsdkjadlaksjdaldkj");
                                 }
                             }
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            recView.setLayoutManager(layoutManager);
+                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token);
+                            recView.setItemAnimator(new DefaultItemAnimator());
+                            recView.setAdapter(homeActivitiesListAdapter);
                         }
                     },
                     new Response.ErrorListener() {

@@ -103,7 +103,7 @@ public class PortfolioActivity extends AppCompatActivity {
                                 String activityLocation = activityObject.getString("location");
                                 String activityStart = activityObject.getString("start_time");
                                 String activityEnd = activityObject.getString("end_time");
-                                String activityDate = activityObject.getString("date");
+                                String activityDate = activityObject.getString("startDate");
                                 String activityGroup = activityObject.getString("group");
                                 String activityLong = activityObject.getString("long");
                                 String activityLat = activityObject.getString("lat");
@@ -113,14 +113,14 @@ public class PortfolioActivity extends AppCompatActivity {
                                 String activityUpdated = activityObject.getString("updated_at");
                                 String contactPerson = activityObject.getString("contactperson");
                                 String activityContact = activityObject.getString("contact");
-                                String volunteerStatus = activityObject.getString("status");
+                                String volunteerStatus = activityObject.getString("joined");
 
                                 PortfolioModel portfolioModel = new PortfolioModel(activityId, foundationId, activityName, activityImage,
                                         activityQr,
                                         activityDes,
                                         activityLocation,
                                         activityStart,
-                                        activityEnd,
+                                          activityEnd,
                                         activityDate,
                                         activityGroup,
                                         activityLong,
@@ -134,19 +134,21 @@ public class PortfolioActivity extends AppCompatActivity {
                                         volunteerStatus);
 
                                 Log.e("asdsadasdads", response.toString());
+                                Log.e("ANton", volunteerStatus);
 
                                 activities.add(portfolioModel);
-                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                                recView.setLayoutManager(layoutManager);
-                                portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
-                                recView.setItemAnimator(new DefaultItemAnimator());
-                                recView.setAdapter(portfolioAdapter);
-                                Log.e("PISTE KOBE ", activities.size() + "");
+
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                        recView.setLayoutManager(layoutManager);
+                        portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
+                        recView.setItemAnimator(new DefaultItemAnimator());
+                        recView.setAdapter(portfolioAdapter);
+                        Log.e("PISTE KOBE ", activities.size() + "");
                     }
                 }, new Response.ErrorListener() {
             @Override

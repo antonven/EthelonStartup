@@ -36,7 +36,9 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         this.activities = activities;
         this.id = id;
         this.api_token = api_token;
-        Log.e("asdasdasdasd", "" + id);
+        Log.e("asdasdasdasd", "" + id + activities.size());
+
+
     }
 
     @Override

@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
         holder.eventPoints.setText(activities.get(position).getActivityPoints());
 
-        if(activities.get(position).getVolunteerStatus().equals("true")){
+        if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
         }else
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
@@ -107,6 +108,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         public ViewHolder(View itemView) {
             super(itemView);
 
+            fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
             eventName = (TextView)itemView.findViewById(R.id.eventName);
             eventHost = (TextView)itemView.findViewById(R.id.eventHost);
             eventAddress = (TextView)itemView.findViewById(R.id.eventAddress);
@@ -123,12 +125,20 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             clickedActivityTime = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
 
 
-//            fc.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    fc.toggle(false);
-//                }
-//            });
+
+
+            fc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Log.e("RIBBON", "" + activities.get(getAdapterPosition()).getVolunteerStatus());
+//                    if(activities.get(getAdapterPosition() - 1).getVolunteerStatus().equals("true")){
+//                        status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
+//                    }else
+//                        status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
+                    fc.toggle(false);
+                }
+            });
         }
     }
 }

@@ -49,6 +49,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.security.auth.login.LoginException;
+
 import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity;
 import myapps.wycoco.com.ethelonstartup.Adapters.LoginViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
@@ -402,7 +405,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if(e.toString().equals("org.json.JSONException: No value for email")){
 
-                            JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL,
+                        Log.e("asasdadasdsadadasdd", "han");
+
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("email", "Email Not Available"+facebook_id);
+                        params.put("facebook_id", facebook_id);
+                        params.put("name", name);
+                        params.put("role", "volunteer");
+                        params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
+
+
+
+                        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
@@ -415,6 +429,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
+                                                    Log.e("andalan", " " + volunteer_id + api_token);
                                                     intent.putExtra("id", volunteer_id);
                                                     intent.putExtra("api_token", api_token);
                                                     startActivity(intent);
@@ -422,6 +437,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
 
                                                 }else{
+                                                    volunteer_id = response.getString("volunteer_id");
+                                                    api_token = response.getString("api_token");
+                                                    Log.e("VA", "" + volunteer_id  + api_token);
                                                     nextActivity(profile);
                                                 }
 
@@ -436,20 +454,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 public void onErrorResponse(VolleyError error) {
 
                                 }
-                            }) {
-                                @Override
-                                protected Map<String, String> getParams() throws AuthFailureError {
-                                    Map<String, String> params = new HashMap<String, String>();
-                                    params.put("email", "Email Not Available"+facebook_id);
-                                    params.put("facebook_id", facebook_id);
-                                    params.put("name", name);
-                                    params.put("role", "volunteer");
-                                    params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
-
-                                    Log.e("kobe","id "+profile.getId());
-                                    return params;
-                                }
-                            };
+                            });
                             RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                             request.add(string);
 
