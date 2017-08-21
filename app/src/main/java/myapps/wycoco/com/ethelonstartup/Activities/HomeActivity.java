@@ -27,12 +27,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
+import com.squareup.otto.Subscribe;
+
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
+import myapps.wycoco.com.ethelonstartup.Models.BusStation;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
+import myapps.wycoco.com.ethelonstartup.Models.UserCredentials;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class HomeActivity extends AppCompatActivity
@@ -40,11 +44,14 @@ public class HomeActivity extends AppCompatActivity
 
     TextView profileName;
     ImageView profilePicture;
-    String profName, image, newSignUpUsername, profileId, cov_photo, volunteer_id, api_token, ethelonUserName, ethelonUserImage;
+    String profName, image, newSignUpUsername, profileId, cov_photo,  ethelonUserName, ethelonUserImage;
     ViewPager viewPager;
     Toolbar toolbar;
     TabLayout tabLayout;
     AppBarLayout appBarLayout;
+    String api_token = new UserCredentials().getApi_token();
+    String volunteer_id = new UserCredentials().getVolunteer_id();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +88,8 @@ public class HomeActivity extends AppCompatActivity
         ethelonUserName = n.getStringExtra("userName");
         ethelonUserImage = n.getStringExtra("image_url");
         newSignUpUsername = n.getStringExtra("newSignUpUsername");
-        volunteer_id = n.getStringExtra("volunteer_id");
-        api_token = n.getStringExtra("api_token");
+//        volunteer_id = n.getStringExtra("volunteer_id");
+//        api_token = n.getStringExtra("api_token");
 
          Log.e("kobe","HOME act"+api_token + volunteer_id);
 
@@ -92,7 +99,9 @@ public class HomeActivity extends AppCompatActivity
 
         if(profName != null && image != null && profileId != null) {
             profileName.setText(profName);
-            Glide.with(getApplicationContext()).load("https://graph.facebook.com/" + profileId + "/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D").centerCrop().crossFade().into(profilePicture);
+            Glide.with(getApplicationContext()).load("https://graph.facebook.com/" + profileId
+                    + "/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D1877377522288783")
+                    .centerCrop().crossFade().into(profilePicture);
         }else if(newSignUpUsername != null){
             profileName.setText(newSignUpUsername);
         }
@@ -184,15 +193,15 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-//        tabOne.setText("Home");
-        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
-        tabLayout.getTabAt(0).setCustomView(tabOne);
+            TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+    //        tabOne.setText("Home");
+            tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
+            tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
+            tabLayout.getTabAt(0).setCustomView(tabOne);
 
 
             TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-//        tabTwo.setText("Notifications");
+//           tabTwo.setText("Notifications");
             tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
             tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
             tabLayout.getTabAt(1).setCustomView(tabTwo);
@@ -200,7 +209,7 @@ public class HomeActivity extends AppCompatActivity
 
 
             TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-//        tabThree.setText("Leaderboard");
+//           tabThree.setText("Leaderboard");
             tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
             tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
             tabLayout.getTabAt(2).setCustomView(tabThree);
@@ -218,8 +227,8 @@ public class HomeActivity extends AppCompatActivity
 
             Bundle bundle = new Bundle();
             bundle.putString("id",volunteer_id);
-            bundle.putString("api_token",api_token);
-        Log.e("fzz",api_token + volunteer_id);
+            bundle.putString("api_token", api_token);
+            Log.e("fzz",api_token + volunteer_id);
 
             HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
             homeActivitiesFragment.setArguments(bundle);
@@ -228,6 +237,18 @@ public class HomeActivity extends AppCompatActivity
         adapter.addFrag(new NotificationsFragment(), "Notifications");
         adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BusStation.getBus().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BusStation.getBus().unregister(this);
     }
 
 

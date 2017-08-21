@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 
 import org.w3c.dom.Text;
@@ -66,6 +68,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
         holder.contactPerson.setText(activities.get(position).getContactPerson());
         holder.activityContact.setText(activities.get(position).getActivityContact());
+        Glide.with(mContext).load(activities.get(position).getActivityImage())
+                .centerCrop().crossFade().into(holder.clickedActivityImage);
 
         Log.e("kobe","fuck"+ activities.get(position).getActivityGroup());
 //        if(activities.get(position).getActivityStatus().equals("Done")){
@@ -85,6 +89,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         TextView clickedEventName, clickedEventHost, clickedEventLocation, clickedEventDate, clickedEventTimeStart,
                 clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact;
         RelativeLayout relativeLayout;
+        ImageView clickedActivityImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -106,6 +111,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             clickedEventTimeStart = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
             clickedEventVolunteers = (TextView)itemView.findViewById(R.id.clickedEventVolunteerCount);
             clickedPoints = (TextView)itemView.findViewById(R.id.clickedEventPoints);
+            clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);
             contactPerson = (TextView)itemView.findViewById(R.id.contactPerson);
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
 
@@ -128,9 +134,11 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             String eventTimeStart = activities.get(getAdapterPosition()).getActivityStart();
             String eventLocation = activities.get(getAdapterPosition()).getActivityLocation();
             String eventId = activities.get(getAdapterPosition()).getActivityId();
+            String eventImage = activities.get(getAdapterPosition()).getActivityImage();
 
             Intent in = new Intent(mContext, EventDetailsActivity.class);
             in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            in.putExtra("eventImage", eventImage);
             in.putExtra("eventName", eventName);
             in.putExtra("eventHost", eventHost);
             in.putExtra("eventDate", eventDate);

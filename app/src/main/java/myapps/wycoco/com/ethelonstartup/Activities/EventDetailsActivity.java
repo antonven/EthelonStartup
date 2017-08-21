@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.varunest.sparkbutton.SparkButton;
 
 import org.json.JSONException;
@@ -50,9 +52,10 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     ViewPager viewPager;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
-    String eventName, eventHost, eventLocation, eventDate, eventTimeStart;
+    String eventName, eventHost, eventLocation, eventDate, eventTimeStart, eventImage;
     TextView eventName1, eventHost1;
     Button joinActivityBtn;
+    ImageView eventDetailsImage;
     Intent n;
     private static final String URL = "http://"+new Localhost().getLocalhost()+"joinactivity";
 
@@ -70,6 +73,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         eventName1 = (TextView)findViewById(R.id.eventName);
         eventHost1 = (TextView)findViewById(R.id.eventHost);
         joinActivityBtn = (Button)findViewById(R.id.joinActivityBtn);
+        eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
 
         n = getIntent();
         eventName = n.getStringExtra("eventName");
@@ -77,6 +81,11 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         eventDate = n.getStringExtra("eventDate");
         eventTimeStart = n.getStringExtra("eventTimeStart");
         eventLocation = n.getStringExtra("eventLocation");
+        eventImage = n.getStringExtra("eventImage");
+
+        Glide.with(this).load(eventImage)
+                .centerCrop().crossFade().into(eventDetailsImage);
+
 
 
         eventName1.setText(eventName);

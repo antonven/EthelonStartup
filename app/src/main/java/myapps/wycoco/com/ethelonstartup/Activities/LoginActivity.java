@@ -58,7 +58,9 @@ import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
+import myapps.wycoco.com.ethelonstartup.Models.BusStation;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
+import myapps.wycoco.com.ethelonstartup.Models.UserCredentials;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -178,24 +180,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(JSONObject response) {
 
                         try {
-
-                            Log.e("kyle",response + " FUCKKKKKDSd");
                             message = response.getString("message");
 
                             if(message.equals("First Time")) {
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
+
                                 Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
-                                intent.putExtra("id", volunteer_id);
-                                intent.putExtra("api_token", api_token);
+//                                intent.putExtra("id", volunteer_id);
+//                                intent.putExtra("api_token", api_token);
+                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+
                                 startActivity(intent);
                             }else if(message.equals("Email already exists")){
+
                                 Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
+
                             }else{
                                 volunteer_id = response.getString("volunteer_id");
-
-                                Log.e("asd", "" + volunteer_id);
                                 api_token = response.getString("api_token");
+                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+                                Log.e("BUSSTATION", "CREDENTAILS" + BusStation.getBus());
                                 nextActivity(profile);
                             }
 
@@ -208,8 +213,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
-                    Log.e("kobe","error sa onreusme"+error.toString());
+                    Log.e("OnResumeError",""+error.toString());
                 }
             }) ;
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
@@ -261,6 +265,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void nextActivity(Profile profile){
         if(profile!= null){
+            BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             i.putExtra("profileName", profile.getName());
             i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
@@ -373,16 +378,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                             volunteer_id = response.getString("volunteer_id");
                                             api_token = response.getString("api_token");
-                                            intent.putExtra("id", volunteer_id);
-                                            intent.putExtra("api_token", api_token);
+//                                            intent.putExtra("id", volunteer_id);
+//                                            intent.putExtra("api_token", api_token);
+                                            BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                             startActivity(intent);
+
                                         }else if(message.equals("Email already exists")){
                                             Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
+
                                         }else{
                                             volunteer_id = response.getString("volunteer_id");
                                             api_token = response.getString("api_token");
+                                            BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                             nextActivity(profile);
                                         }
+
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -429,9 +439,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
-                                                    Log.e("andalan", " " + volunteer_id + api_token);
-                                                    intent.putExtra("id", volunteer_id);
-                                                    intent.putExtra("api_token", api_token);
+                                                    Log.e("CredentialfacebookLogin", " " + volunteer_id + api_token);
+//                                                    intent.putExtra("id", volunteer_id);
+//                                                    intent.putExtra("api_token", api_token);
+                                                    BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                                     startActivity(intent);
                                                 }else if(message.equals("Email already exists")){
                                                     Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
@@ -439,7 +450,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 }else{
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
-                                                    Log.e("VA", "" + volunteer_id  + api_token);
+                                                    Log.e("credentials sa FbLogin", "" + volunteer_id  + api_token);
+                                                    BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                                     nextActivity(profile);
                                                 }
 
