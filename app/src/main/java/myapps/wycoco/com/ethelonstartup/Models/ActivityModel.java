@@ -24,6 +24,7 @@ public class ActivityModel {
     private String activityUpdated;
     private String contactPerson;
     private String activityContact;
+    private String foundationName;
 
 
     public ActivityModel(String activityId, String foundationId, String activityName, String activityImage,
@@ -31,7 +32,7 @@ public class ActivityModel {
                          String activityStart, String activityEnd, String activityStartDate, String activityGroup, String activityLong,
                          String activityLat,
                          String activityPoints ,String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
-                         String activityContact) {
+                         String activityContact, String foundationName) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -51,6 +52,7 @@ public class ActivityModel {
         this.activityUpdated = activityUpdated;
         this.contactPerson = contactPerson;
         this.activityContact = activityContact;
+        this.foundationName = foundationName;
     }
 
 
@@ -207,5 +209,13 @@ public class ActivityModel {
 
     public void setActivityContact(String activityContact) {
         this.activityContact = activityContact;
+    }
+
+    public String getFoundationName() {
+        return foundationName;
+    }
+
+    public void setFoundationName(String foundationName) {
+        this.foundationName = foundationName;
     }
 }

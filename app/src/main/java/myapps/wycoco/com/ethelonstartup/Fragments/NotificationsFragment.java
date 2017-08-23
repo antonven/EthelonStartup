@@ -42,7 +42,7 @@ public class NotificationsFragment extends Fragment {
 
         for(int i = 0; i<10; i++) {
 
-            notificationsModel = new NotificationsModel("1", "Kirsten Repunte", " ", "New", "has invited you to join this activity.",
+            notificationsModel = new NotificationsModel("1", "Kirsten Repunte", "", "New", "has invited you to join this activity.",
                     "invite", "4 hours ago.");
 
 

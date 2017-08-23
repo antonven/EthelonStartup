@@ -80,8 +80,6 @@ public class ProfileActivity extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapse1);
 
 
-
-
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -112,9 +110,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
-
-
-
 
     private void dynamicToolbarColor(){
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ethback);

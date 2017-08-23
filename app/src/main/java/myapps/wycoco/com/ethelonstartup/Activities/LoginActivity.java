@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ViewPager vp;
     MediaController mediaController;
     LoginViewPagerAdapter viewPager;
-    String name, facebook_id, email;
+    String name, facebook_id, email, first_name, last_name;
     String volunteer_id;
     String id;
     String message, volunteerId, api_token;
@@ -105,26 +105,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         callbackManager = CallbackManager.Factory.create();
 
-        vidView = (VideoView)findViewById(R.id.videoView);
+//        vidView = (VideoView)findViewById(R.id.videoView);
         buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
 
-        uri = Uri.parse("android.resources://" + getPackageName()+ "/" + R.raw.piste);
-        MediaController mediaController = new MediaController(this);
-        mediaController.setAnchorView(vidView);
-        vidView.setMediaController(mediaController);
-
-        vidView.setVideoURI(uri);
-        vidView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                vidView.start();
-                mediaPlayer.setLooping(true);
-            }
-        });
+//        uri = Uri.parse("android.resources://" + getPackageName()+ "/" + R.raw.piste);
+//        MediaController mediaController = new MediaController(this);
+//        mediaController.setAnchorView(vidView);
+//        vidView.setMediaController(mediaController);
+//
+//        vidView.setVideoURI(uri);
+//        vidView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mediaPlayer) {
+//                vidView.start();
+//                mediaPlayer.setLooping(true);
+//            }
+//        });
 
 
         vp = (ViewPager)findViewById(R.id.viewPagerText);
@@ -270,6 +270,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("profileName", profile.getName());
             i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
             i.putExtra("profileId", profile.getId());
+            i.putExtra("first_name", profile.getFirstName());
+            i.putExtra("last_name", profile.getLastName());
             i.putExtra("volunteer_id",volunteer_id);
             i.putExtra("api_token",api_token);
 

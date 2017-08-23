@@ -9,10 +9,12 @@
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.LoginActivity">
 
 
-    <VideoView
-        android:id="@+id/videoView"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:src="@drawable/ethelonloginbackground"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="0dp"
         android:layout_marginLeft="0dp"
@@ -22,7 +24,7 @@
         android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:layout_width="30dp"
@@ -92,7 +94,7 @@
         android:layout_height="48dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="31dp"
         android:background="@drawable/login_ethelon_bg_button"
         android:text="SIGN UP"
         android:textColor="@android:color/white"
@@ -125,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline3"
-        app:layout_constraintGuide_begin="283dp"
+        app:layout_constraintGuide_begin="296dp"
         android:orientation="horizontal" />
 
     <TextView
@@ -168,7 +170,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline4"
-        app:layout_constraintGuide_begin="165dp"
+        app:layout_constraintGuide_begin="208dp"
         android:orientation="horizontal" />
 
     <android.support.v4.view.ViewPager

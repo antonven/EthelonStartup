@@ -1,5 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -65,6 +66,7 @@ public class PortfolioActivity extends AppCompatActivity {
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("Portfolio");
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         fc = (FoldingCell)findViewById(R.id.foldingCell);
         recView = (RecyclerView)findViewById(R.id.recyclerView1);
@@ -114,13 +116,14 @@ public class PortfolioActivity extends AppCompatActivity {
                                 String contactPerson = activityObject.getString("contactperson");
                                 String activityContact = activityObject.getString("contact");
                                 String volunteerStatus = activityObject.getString("joined");
+                                String foundationName = activityObject.getString("foundation_name");
 
                                 PortfolioModel portfolioModel = new PortfolioModel(activityId, foundationId, activityName, activityImage,
                                         activityQr,
                                         activityDes,
                                         activityLocation,
                                         activityStart,
-                                          activityEnd,
+                                        activityEnd,
                                         activityDate,
                                         activityGroup,
                                         activityLong,
@@ -131,10 +134,10 @@ public class PortfolioActivity extends AppCompatActivity {
                                         activityUpdated,
                                         contactPerson,
                                         activityContact,
-                                        volunteerStatus);
+                                        volunteerStatus,
+                                        foundationName);
 
-                                Log.e("asdsadasdads", response.toString());
-                                Log.e("ANton", volunteerStatus);
+                                Log.e("KirstenMay", response.toString());
 
                                 activities.add(portfolioModel);
 
@@ -154,6 +157,7 @@ public class PortfolioActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Log.e("AntonWycoco", "" + error.toString());
             }
         });
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());

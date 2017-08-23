@@ -15,7 +15,7 @@
         android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:background="#EE2A1B"
+        android:background="#C53F46"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
@@ -31,9 +31,9 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:paddingEnd="20dp"
-        android:paddingStart="15dp"
+        android:paddingStart="5dp"
         android:paddingRight="20dp"
-        android:paddingLeft="15dp">
+        android:paddingLeft="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +49,8 @@
 
         <TextView
             android:id="@+id/eventHost"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CICCT ICT Org"
@@ -85,7 +86,7 @@
                 android:layout_width="34dp"
                 android:scaleType="centerInside"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_calendar"
+                android:src="@drawable/calendar_icon"
                  />
 
             <TextView
@@ -97,13 +98,12 @@
                 android:text="12/25/2017" />
 
             <ImageView
-                android:tint="#000"
                 android:layout_weight="1"
-                android:scaleType="center"
+                android:scaleType="centerInside"
                 android:id="@+id/clockImage"
                 android:layout_width="34dp"
                 android:layout_height="match_parent"
-                android:src="@android:drawable/ic_lock_idle_alarm"
+                android:src="@drawable/clock_icon"
 
                 />
 
@@ -119,14 +119,13 @@
                 </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
                 android:weightSum="2">
                 <TextView
                     android:layout_weight="1"
-                    style="@style/TitleBadgeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/volunteers_count_badge"
@@ -134,7 +133,6 @@
 
                 <TextView
                     android:layout_weight="1"
-                    style="@style/TitleBadgeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/points_badge"
@@ -143,7 +141,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -151,7 +149,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:id="@+id/title_volunteers_count"
-                    style="@style/TitleBadgeText"
+                    style="@style/TextViewRedBig"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="24"
@@ -162,7 +160,7 @@
                     android:text="100"
                     android:layout_weight="1"
                     android:id="@+id/eventPoints"
-                    style="@style/TitleBadgeText"
+                    style="@style/TextViewRedBig"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      />

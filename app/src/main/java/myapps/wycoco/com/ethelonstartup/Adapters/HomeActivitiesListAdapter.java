@@ -31,13 +31,14 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
     Context mContext;
     ArrayList<ActivityModel> activities = new ArrayList<>();
-    String id, api_token;
+    String id, api_token, activity_id;
 
-    public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities, String id, String api_token) {
+    public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities, String id, String api_token, String activity_id) {
         this.mContext = mContext;
         this.activities = activities;
         this.id = id;
         this.api_token = api_token;
+        this.activity_id = activity_id;
         Log.e("asdasdasdasd", "" + id + activities.size());
 
 
@@ -54,13 +55,13 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
     public void onBindViewHolder(HomeActivitiesListAdapter.ViewHolder holder, int position) {
         holder.eventName.setText(activities.get(position).getActivityName());
         holder.eventAddress.setText(activities.get(position).getActivityLocation());
-        holder.eventHost.setText(activities.get(position).getFoundationId());
+        holder.eventHost.setText(activities.get(position).getFoundationName());
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
         holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
         holder.eventPoints.setText(activities.get(position).getActivityPoints());
         holder.clickedEventName.setText(activities.get(position).getActivityName());
-        holder.clickedEventHost.setText(activities.get(position).getFoundationId());
+        holder.clickedEventHost.setText(activities.get(position).getFoundationName());
         holder.clickedEventDate.setText(activities.get(position).getActivityDate());
         holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
         holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
@@ -129,7 +130,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         @Override
         public void onClick(View view) {
             String eventName = activities.get(getAdapterPosition()).getActivityName();
-            String eventHost = activities.get(getAdapterPosition()).getFoundationId();
+            String eventHost = activities.get(getAdapterPosition()).getFoundationName();
             String eventDate = activities.get(getAdapterPosition()).getActivityDate();
             String eventTimeStart = activities.get(getAdapterPosition()).getActivityStart();
             String eventLocation = activities.get(getAdapterPosition()).getActivityLocation();
@@ -145,9 +146,9 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             in.putExtra("eventTimeStart", eventTimeStart);
             in.putExtra("eventLocation", eventLocation);
             in.putExtra("id", id);
-            in.putExtra("activity_id", eventId);
+            in.putExtra("activity_id", activity_id);
             in.putExtra("api_token", api_token);
-
+            Log.e("Anton Gwapo", "" + api_token + activity_id);
             mContext.startActivity(in);
         }
     }

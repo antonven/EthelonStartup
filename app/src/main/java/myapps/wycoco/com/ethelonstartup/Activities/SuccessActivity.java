@@ -13,13 +13,14 @@ public class SuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
 
-        finish();
+
         String api_token = getIntent().getStringExtra("api_token");
         String volunteer_id = getIntent().getStringExtra("volunteer_id");
 
         Intent n = new Intent(SuccessActivity.this, PortfolioActivity.class);
         n.putExtra("api_token", api_token);
         n.putExtra("volunteer_id", volunteer_id);
+        finish();
         startActivity(n);
     }
 }

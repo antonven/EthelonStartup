@@ -26,6 +26,7 @@ public class PortfolioModel {
     private String contactPerson;
     private String activityContact;
     private String volunteerStatus;
+    private String foundationName;
 
 
     public PortfolioModel(String activityId, String foundationId, String activityName, String activityImage,
@@ -33,7 +34,7 @@ public class PortfolioModel {
                          String activityStart, String activityEnd, String activityDate, String activityGroup, String activityLong,
                          String activityLat,
                          String activityPoints ,String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
-                         String activityContact, String volunteerStatus) {
+                         String activityContact, String volunteerStatus, String foundationName) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -54,6 +55,7 @@ public class PortfolioModel {
         this.contactPerson = contactPerson;
         this.activityContact = activityContact;
         this.volunteerStatus = volunteerStatus;
+        this.foundationName = foundationName;
     }
 
 
@@ -222,5 +224,13 @@ public class PortfolioModel {
 
     public void setVolunteerStatus(String volunteerStatus) {
         this.volunteerStatus = volunteerStatus;
+    }
+
+    public String getFoundationName() {
+        return foundationName;
+    }
+
+    public void setFoundationName(String foundationName) {
+        this.foundationName = foundationName;
     }
 }

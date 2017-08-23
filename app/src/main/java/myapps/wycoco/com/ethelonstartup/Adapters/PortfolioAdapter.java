@@ -1,7 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
-
 import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -50,21 +47,26 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     @Override
     public void onBindViewHolder(PortfolioAdapter.ViewHolder holder, int position) {
-//        holder.eventName.setText(activities.get(position).getActivityName());
-//        holder.time.setText(activities.get(position).getActivityStart());
-//        holder.eventHost.setText(activities.get(position).getFoundationId());
-//        holder.points.setText(activities.get(position).getActivityPoints());
-//        holder.eventName.setText(activities.get(position).getActivityName());
-//        holder.eventName.setText(activities.get(position).getActivityName());
-//        holder.eventName.setText(activities.get(position).getActivityName());
-//        holder.eventName.setText(activities.get(position).getActivityName());
+        holder.clickedEventName.setText(activities.get(position).getActivityName());
+        holder.clickedEventHost.setText(activities.get(position).getFoundationName());
+        holder.clickedEventDate.setText(activities.get(position).getActivityDate());
+        holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
+        holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
+        holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
+        holder.clickedPoints.setText(activities.get(position).getActivityPoints());
+        holder.contactPerson.setText(activities.get(position).getContactPerson());
+        holder.activityContact.setText(activities.get(position).getActivityContact());
         holder.eventName.setText(activities.get(position).getActivityName());
         holder.eventAddress.setText(activities.get(position).getActivityLocation());
-        holder.eventHost.setText(activities.get(position).getFoundationId());
+        holder.eventHost.setText(activities.get(position).getFoundationName());
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
         holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
         holder.eventPoints.setText(activities.get(position).getActivityPoints());
+        Glide.with(mContext).load(activities.get(position).getActivityImage())
+                .centerCrop().crossFade().into(holder.clickedActivityImage);
+
+        Log.e("Paran", "" + activities.get(position).getActivityImage());
 
         if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
@@ -81,28 +83,11 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView price;
-        TextView eventDate;
-        TextView eventTimeStart;
-        TextView eventName;
-        TextView eventAddress;
-        TextView eventHost;
-        TextView eventVolunteers;
-        TextView eventPoints;
-        TextView points;
-        TextView contentRequestBtn;
-        ImageView status;
+        TextView eventDate, eventTimeStart, eventName, eventAddress, eventHost, eventVolunteers, eventPoints, contentRequestBtn,
+        clickedEventHost, clickedEventDate, clickedEventTimeStart, clickedEventVolunteers, clickedEventLocation, clickedPoints,
+        contactPerson, activityContact, clickedEventName;
+        ImageView status, clickedActivityImage;
         ImageView im;
-        TextView clickedActivityTitle;
-        TextView clickedActivityHost;
-        TextView clickedActivityDate;
-        TextView clickedActivityTime;
-        TextView clickedActivityCity;
-        TextView clickedActivityStreet;
-        TextView clickedActivityContactPerson;
-        TextView clickedActvitiyContactNumber;
-        TextView getClickedActivityType;
-
         FoldingCell fc;
 
         public ViewHolder(View itemView) {
@@ -116,26 +101,24 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             eventTimeStart = (TextView)itemView.findViewById(R.id.eventTimeStart);
             eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
             eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
-
             contentRequestBtn = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             status = (ImageView) itemView.findViewById(R.id.status);
-            im = (ImageView) itemView.findViewById(R.id.title);
-            clickedActivityTitle = (TextView)itemView.findViewById(R.id.clickedEventName);
-            clickedActivityHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
-            clickedActivityTime = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
-
-
+            clickedEventName= (TextView)itemView.findViewById(R.id.clickedEventName);
+            clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
+            clickedEventTimeStart = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
+            clickedEventDate = (TextView)itemView.findViewById(R.id.clickedEventDate);
+            clickedEventVolunteers = (TextView)itemView.findViewById(R.id.clickedEventVolunteerCount);
+            clickedEventLocation = (TextView)itemView.findViewById(R.id.clickedEventLocation);
+            clickedPoints = (TextView)itemView.findViewById(R.id.clickedEventPoints);
+            contactPerson = (TextView)itemView.findViewById(R.id.contactPerson);
+            activityContact = (TextView)itemView.findViewById(R.id.activityContact);
+            clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);
 
 
             fc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     Log.e("RIBBON", "" + activities.get(getAdapterPosition()).getVolunteerStatus());
-//                    if(activities.get(getAdapterPosition() - 1).getVolunteerStatus().equals("true")){
-//                        status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
-//                    }else
-//                        status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
                     fc.toggle(false);
                 }
             });

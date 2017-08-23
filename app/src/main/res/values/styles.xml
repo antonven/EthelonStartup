@@ -27,6 +27,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextViewBlue">
+        <item name="android:textColor">#2196F3</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextViewRedBig">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">22sp</item>

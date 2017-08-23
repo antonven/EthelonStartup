@@ -58,7 +58,7 @@ public class HomeActivitiesFragment extends Fragment {
     ActivityModel activityModel;
     HomeActivitiesListAdapter homeActivitiesListAdapter;
     Toolbar toolbar;
-    String id, api_token;
+    String id, api_token, activity_id;
 
     public HomeActivitiesFragment() {
         // Required empty public constructor
@@ -68,23 +68,16 @@ public class HomeActivitiesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_activities_fragment, container, false);
-
-
         recView = (RecyclerView) v.findViewById(R.id.recView);
 
         id = getArguments().getString("id");
         api_token = getArguments().getString("api_token");
-
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("volunteer_id", id);
             params.put("api_token", api_token);
 
             Log.e("kobe", "sa home" + id + api_token);
-
-
-
-
 
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"getallactivities",
                     new JSONObject(params),
@@ -99,7 +92,7 @@ public class HomeActivitiesFragment extends Fragment {
                                     JSONObject activityObject = response.getJSONObject(i);
                                     String activityName = activityObject.getString("name");
                                     String foundationId = activityObject.getString("foundation_id");
-                                    String activityId = activityObject.getString("activity_id");
+                                    activity_id = activityObject.getString("activity_id");
                                     String activityImage = activityObject.getString("image_url");
                                     String activityQr = activityObject.getString("imageQr_url");
                                     String activityDes = activityObject.getString("description");
@@ -116,9 +109,10 @@ public class HomeActivitiesFragment extends Fragment {
                                     String activityUpdated = activityObject.getString("updated_at");
                                     String contactPerson = activityObject.getString("contactperson");
                                     String activityContact = activityObject.getString("contact");
+                                    String foundationName = activityObject.getString("foundtion_name");
 
 
-                                    ActivityModel activityModel1 = new ActivityModel(activityId, foundationId, activityName, activityImage,
+                                    ActivityModel activityModel1 = new ActivityModel(activity_id, foundationId, activityName, activityImage,
                                             activityQr,
                                             activityDes,
                                             activityLocation,
@@ -133,25 +127,10 @@ public class HomeActivitiesFragment extends Fragment {
                                             activityCreated,
                                             activityUpdated,
                                             contactPerson,
-                                            activityContact);
+                                            activityContact,
+                                            foundationName);
 
                                         Log.e("asdsadasdads", response.toString());
-
-//                                ActivityModel activityModel2 = new ActivityModel("2", "Philippine Red Cross", "Relief Operations Marawi" ,"",
-//                                        "",
-//                                        "This event is to help the victims of marawi regain the the city that they have always lived.",
-//                                        "Marawi City, Zamboanga del Norte",
-//                                        "7:00 am",
-//                                        "5:00 pm",
-//                                        "Dec 25, 2017",
-//                                        "5",
-//                                        "38",
-//                                        "40",
-//                                        "100",
-//                                        "",
-//                                        "",
-//                                        "","Anton Ven Wycoco", "09420170888");
-
 
                                     activities.add(activityModel1);
                                     Log.e("PISTE KOBE ", activities.size() + "");
@@ -163,7 +142,7 @@ public class HomeActivitiesFragment extends Fragment {
                             }
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
-                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token);
+                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token, activity_id);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(homeActivitiesListAdapter);
                         }
@@ -181,19 +160,14 @@ public class HomeActivitiesFragment extends Fragment {
                     params.put("volunteer_id",id);
                     params.put("api_token",api_token);
 
-                    Log.e("kobe","piste null daw" + id + api_token);
-
-                    //params.put("count",String.valueOf(skillSet.size()));
+                    Log.e("kobe","piste null daw" + id + api_token + activity_id);
                     return params;
                 }
             };
 
             RequestQueue request = Volley.newRequestQueue(getApplicationContext());
             request.add(jsonArrayRequest);
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-//        requestQueue.add(jsonArrayRequest);
-//        VolleySingleton.getInstance().addToRequestQueue(jsonArrayRequest);
+
             jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                     5000,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

@@ -9,13 +9,16 @@
         android:layout_width="match_parent"
         android:background="#fff"
         android:id="@+id/appBarLayout"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:id="@+id/collapse1"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            >
+
 
 
         <LinearLayout
@@ -25,6 +28,7 @@
             android:background="#fff"
             android:paddingBottom="8dp"
             app:layout_collapseMode="parallax"
+            app:layout_collapseParallaxMultiplier="0.9"
             android:layout_marginBottom="15dp"
             android:clipToPadding="false">
 
@@ -39,7 +43,7 @@
                     android:id="@+id/coverPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
-                    android:src="@drawable/feed1"
+                    android:src="@drawable/ethback"
                     app:layout_collapseMode="parallax"
                     android:scaleType="centerCrop" />
 
@@ -55,6 +59,7 @@
                     android:src="@drawable/account"
                     app:civ_border_color="#fff"
                     app:civ_border_width="3dp"
+                    app:layout_behavior="saulmm.myapplication.AvatarImageBehavior"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
@@ -93,47 +98,18 @@
                 android:textColor="#000"
                 android:layout_marginLeft="24dp"
                 android:text="@string/skills_interests"
-                android:paddingBottom="10dp"
                 android:layout_below="@+id/profileNameProfile"
                 android:id="@+id/textView6" />
 
-
-
-            <!--<LinearLayout-->
-                <!--android:paddingTop="18dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:weightSum="2">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/volunteerPoints"-->
-                    <!--android:layout_width="120dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:background="@drawable/rectangle_container"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_margin="20dp"-->
-                    <!--android:text="1000"-->
-                    <!--android:textSize="28sp"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:gravity="center"/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/activitiesJoined"-->
-                    <!--android:layout_width="120dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:layout_margin="20dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:text="10"-->
-                    <!--android:textSize="28sp"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:gravity="center"-->
-                    <!--android:background="@drawable/rectangle_container" />-->
-
-            <!--</LinearLayout>-->
-
-
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:text="Cebu City, Central Visayas"
+                android:paddingBottom="10dp"
+                android:layout_below="@+id/textView6"
+                android:id="@+id/tex" />
 
         </LinearLayout>
             <include
@@ -141,5 +117,19 @@
                 layout="@layout/toolbar_custom_layout" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:behavior_overlapTop="30dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
 
 </android.support.design.widget.CoordinatorLayout>
