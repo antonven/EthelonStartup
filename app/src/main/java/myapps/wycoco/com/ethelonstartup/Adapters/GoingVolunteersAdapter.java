@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteers
     public GoingVolunteersAdapter(Context mContext, ArrayList<UserModel> users) {
         this.mContext = mContext;
         this.users = users;
+        Log.e("USERS ADAPTER", "" + users.size());
     }
 
     @Override

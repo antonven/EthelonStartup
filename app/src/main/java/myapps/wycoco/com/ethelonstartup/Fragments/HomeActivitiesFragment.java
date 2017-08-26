@@ -168,7 +168,8 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                             }
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
-                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token, activity_id);
+                            Log.e("ACTIVITY ID ", "HOME FRAGMENT" + activity_id );
+                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(homeActivitiesListAdapter);
 

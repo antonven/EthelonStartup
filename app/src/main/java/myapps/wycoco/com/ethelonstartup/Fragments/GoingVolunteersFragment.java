@@ -54,13 +54,16 @@ public class GoingVolunteersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_going_volunteers, container, false);
 
+        recyclerView = (RecyclerView)view.findViewById(R.id.recViewVolunteers);
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
+
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("activity_id", activity_id);
         params.put("api_token", api_token);
-        Log.e("Wycoco", "" + api_token + activity_id);
+        Log.e("Wycoco", "GOINGVOLUNTEERSFRAGMENT " + api_token + activity_id + users.size());
+
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
@@ -68,11 +71,13 @@ public class GoingVolunteersFragment extends Fragment {
                     public void onResponse(JSONArray response) {
                         for(int i = 0; i < response.length(); i++){
                             try {
+                                Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
                                 JSONObject usersObject = response.getJSONObject(i);
                                 String user_image = usersObject.getString("image_url");
                                 String user_name = usersObject.getString("name");
 
                                 UserModel user = new UserModel();
+
                                 user.setUserFirstName(user_name);
                                 user.setUserImage(user_image);
                                 users.add(user);
@@ -81,6 +86,14 @@ public class GoingVolunteersFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
+
+                        goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
+
+                        linearLayoutManager = new GridLayoutManager(getContext(), 3);
+                        recyclerView.setLayoutManager(linearLayoutManager);
+                        goingVolunteersAdapter.notifyDataSetChanged();
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(goingVolunteersAdapter);
                     }
                 },
                 new Response.ErrorListener() {
@@ -92,15 +105,6 @@ public class GoingVolunteersFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(jsonArrayRequest);
 
-
-
-        goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recViewVolunteers);
-        linearLayoutManager = new GridLayoutManager(getContext(), 3);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        goingVolunteersAdapter.notifyDataSetChanged();
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(goingVolunteersAdapter);
 
 
 

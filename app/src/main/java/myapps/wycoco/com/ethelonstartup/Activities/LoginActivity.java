@@ -161,11 +161,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             if(message.equals("First Time")) {
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
+                                String profileId = profile.getId();
                                 Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                 intent.putExtra("id", volunteer_id);
                                 intent.putExtra("api_token", api_token);
-                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-
+                                intent.putExtra("profileId", profileId);
                                 startActivity(intent);
 
                             }else if(message.equals("Email already exists")){
@@ -402,6 +402,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                                                 if(message.equals("First Time")) {
+
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
@@ -410,8 +411,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     intent.putExtra("id", volunteer_id);
                                                     intent.putExtra("api_token", api_token);
                                                     intent.putExtra("profileId", profileId);
-                                                    BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                                     startActivity(intent);
+
                                                 }else if(message.equals("Email already exists")){
                                                     Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
 

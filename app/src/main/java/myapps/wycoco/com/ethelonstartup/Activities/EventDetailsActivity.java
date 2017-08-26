@@ -162,7 +162,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         Bundle going = new Bundle();
         going.putString("activity_id", activity_id);
         going.putString("api_token", api_token);
-        Log.e("BRUNO MARS", "" + activity_id + api_token);
+        Log.e("BRUNO MARS", "" + activity_id +"anton" + api_token);
         goingVolunteersFragment.setArguments(going);
 
         adapter.addFrag(eventDetailsFragment, "Details");
