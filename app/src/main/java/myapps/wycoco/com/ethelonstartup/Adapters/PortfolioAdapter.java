@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -87,12 +88,13 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         clickedEventHost, clickedEventDate, clickedEventTimeStart, clickedEventVolunteers, clickedEventLocation, clickedPoints,
         contactPerson, activityContact, clickedEventName;
         ImageView status, clickedActivityImage;
-        ImageView im;
+        Button attendBtn;
         FoldingCell fc;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            attendBtn = (Button)itemView.findViewById(R.id.attendBtn);
             fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
             eventName = (TextView)itemView.findViewById(R.id.eventName);
             eventHost = (TextView)itemView.findViewById(R.id.eventHost);
@@ -120,6 +122,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                 public void onClick(View view) {
                     Log.e("RIBBON", "" + activities.get(getAdapterPosition()).getVolunteerStatus());
                     fc.toggle(false);
+                    attendBtn.setVisibility(View.GONE);
                 }
             });
         }
