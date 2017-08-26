@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -68,8 +69,15 @@ public class PortfolioActivity extends AppCompatActivity {
         toolbar.setTitle("Portfolio");
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         fc = (FoldingCell)findViewById(R.id.foldingCell);
-        recView = (RecyclerView)findViewById(R.id.recyclerView1);
+        recView = (RecyclerView)findViewById(R.id.recView);
 
         RequestPortfolio();
 

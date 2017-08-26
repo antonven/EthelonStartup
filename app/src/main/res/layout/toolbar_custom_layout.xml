@@ -6,8 +6,9 @@
     android:background="@color/colorPrimary"
     android:popupTheme="@style/Theme.AppCompat.NoActionBar"
     app:layout_collapseMode="pin"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-    app:navigationIcon="@drawable/ic_navigation_back"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:navigationIcon="@drawable/navigation_icon_background"
     >
 
 </android.support.v7.widget.Toolbar>

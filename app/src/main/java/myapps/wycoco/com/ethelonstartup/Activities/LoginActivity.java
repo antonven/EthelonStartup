@@ -42,6 +42,10 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+import com.squareup.otto.ThreadEnforcer;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
@@ -70,19 +74,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button buttonLogin, buttonFacebook, buttonSignup ;
     AccessTokenTracker accessTokenTracker;
     ProfileTracker profileTracker;
-    VideoView vidView;
     Profile profile;
-    Uri uri;
-    Spinner inputRole;
     ViewPager vp;
-    MediaController mediaController;
     LoginViewPagerAdapter viewPager;
     String name, facebook_id, email, first_name, last_name;
     String volunteer_id;
-    String id;
-    String message, volunteerId, api_token;
-    RequestQueue requestQueue;
-
+    String message, api_token;
+    private Bus bus;
     private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
 
 
@@ -92,10 +90,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         setTitle("");
-
-
-        int rawId = getResources().getIdentifier("vid",  "raw", getPackageName());
-
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -104,30 +98,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         callbackManager = CallbackManager.Factory.create();
-
-//        vidView = (VideoView)findViewById(R.id.videoView);
         buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
-
-//        uri = Uri.parse("android.resources://" + getPackageName()+ "/" + R.raw.piste);
-//        MediaController mediaController = new MediaController(this);
-//        mediaController.setAnchorView(vidView);
-//        vidView.setMediaController(mediaController);
-//
-//        vidView.setVideoURI(uri);
-//        vidView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mediaPlayer) {
-//                vidView.start();
-//                mediaPlayer.setLooping(true);
-//            }
-//        });
-
-
         vp = (ViewPager)findViewById(R.id.viewPagerText);
+        bus = new Bus(ThreadEnforcer.MAIN);
+        bus.register(this);
+
         viewPager = new LoginViewPagerAdapter(this);
         vp.setAdapter(viewPager);
         Timer timer = new Timer();
@@ -137,9 +116,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonSignup.setOnClickListener(this);
         buttonFacebook.setOnClickListener(this);
 
+        accestToken();
+    }
 
 
-
+    public void accestToken(){
         accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
@@ -167,14 +148,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+
+
         profile = Profile.getCurrentProfile();
         if(profile!=null) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("facebook_id", profile.getId());
+            Log.e("kobe","id "+profile.getId());
 
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("facebook_id", profile.getId());
-                Log.e("kobe","id "+profile.getId());
-
-        JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
+            JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -185,42 +167,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             if(message.equals("First Time")) {
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
-
                                 Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
-//                                intent.putExtra("id", volunteer_id);
-//                                intent.putExtra("api_token", api_token);
-                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-
+//                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+                                bus.post(new UserCredentials(api_token, volunteer_id));
                                 startActivity(intent);
-                            }else if(message.equals("Email already exists")){
 
+                            }else if(message.equals("Email already exists")){
                                 Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
 
                             }else{
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
-                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-                                Log.e("BUSSTATION", "CREDENTAILS" + BusStation.getBus());
+                                bus.post(new UserCredentials(api_token, volunteer_id));
+                                Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
                                 nextActivity(profile);
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.e("sud sa catch","sud sa catch");
+                        }catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("sud sa catch","sud sa catch");
                         }
+                        bus.register(this);
+                    }},
 
-                    }
-                }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("OnResumeError",""+error.toString());
-                }
-            }) ;
-        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-        request.add(string);
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("OnResumeError",""+error.toString());
+                        }
+                    });
+
+            RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+            request.add(string);
         }
+    }
 
-
+    @Subscribe
+    public void getMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -235,17 +219,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profileTracker.stopTracking();
     }
 
-    private void setupViewPager(ViewPager viewPager){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addFrag(new HomeActivitiesFragment(), "Home");
-        adapter.addFrag(new NotificationsFragment(), "Notifications");
-        adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
-        viewPager.setAdapter(adapter);
-    }
 
     public class AutomaticSlide extends TimerTask{
-
         @Override
         public void run() {
             LoginActivity.this.runOnUiThread(new Runnable() {
@@ -265,6 +240,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void nextActivity(Profile profile){
         if(profile!= null){
+
             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             i.putExtra("profileName", profile.getName());
@@ -276,7 +252,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("api_token",api_token);
 
             Log.e("kobe","next act" + api_token + volunteer_id);
-
             startActivity(i);
         }
     }
@@ -284,7 +259,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        Intent intent;
 
         switch (view.getId()){
             case R.id.buttonEthelonSignUp:
@@ -309,14 +283,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     pushFacebookCred(loginResult.getAccessToken(),currentProfile);
                                 }
                             };
-                        } else{
+                        }else{
                             profile = Profile.getCurrentProfile();
                             name = profile.getName();
                             Log.e("kobe","else"+name);
                             pushFacebookCred(loginResult.getAccessToken(),profile);
                         }
-                       // pushFacebookCred(loginResult.getAccessToken());
-                        }
+                    }
 
                     @Override
                     public void onCancel() {
@@ -328,8 +301,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }
                 });
-
-                Log.e("SHET", "yawa ning IT PROJECT!!!!!!");
                 break;
 
             case R.id.buttonLogin:

@@ -20,7 +20,6 @@ public class SuccessActivity extends AppCompatActivity {
         Intent n = new Intent(SuccessActivity.this, PortfolioActivity.class);
         n.putExtra("api_token", api_token);
         n.putExtra("volunteer_id", volunteer_id);
-        finish();
         startActivity(n);
     }
 }

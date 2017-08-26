@@ -8,6 +8,9 @@
     android:fitsSystemWindows="true"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.HomeActivity">
 
+
+    <include layout="@layout/content_home"/>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarHome"
         android:layout_width="match_parent"
@@ -21,45 +24,40 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ethelon"
-                    android:textColor="#fff"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-            <RelativeLayout
-                android:layout_marginRight="10dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ethelon"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_height="wrap_content">
+                android:layout_marginRight="10dp">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    app:srcCompat="@drawable/ic_searc"
-                    />
+                    app:srcCompat="@drawable/ic_searc" />
             </RelativeLayout>
 
 
         </android.support.v7.widget.Toolbar>
 
 
-
-
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
-            android:background="#fff"
             android:layout_width="match_parent"
             android:layout_height="@dimen/custom_tab_layout_height"
-            app:tabMode="fixed"
+            android:background="#fff"
             app:tabGravity="fill"
-            />
+            app:tabMode="fixed" />
 
     </android.support.design.widget.AppBarLayout>
-
-
-    <include layout="@layout/content_home"/>
 
 </android.support.design.widget.CoordinatorLayout>

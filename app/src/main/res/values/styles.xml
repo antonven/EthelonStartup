@@ -21,6 +21,14 @@
         <item name="android:textColor">#fff</item>
     </style>
 
+    <style name="TextViewWhiteBig">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+
+
+    </style>
+
     <style name="TextViewBlackBig">
         <item name="android:textColor">#000</item>
         <item name="android:textSize">22sp</item>
@@ -29,6 +37,12 @@
 
     <style name="TextViewBlue">
         <item name="android:textColor">#2196F3</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextViewIndigo">
+        <item name="android:textColor">#F44336</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -98,6 +112,7 @@
         <item name="tabBackground">@drawable/tab_background</item>
         <item name="tabIndicatorColor">#c62828</item>
         <item name="tabIndicatorHeight">0dp</item>
+        <item name="android:layout_height">45dp</item>
     </style>
 
     <style name="customTabVolunteers" parent="android:Widget">

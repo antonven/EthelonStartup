@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.ramotion.foldingcell.FoldingCell;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,18 +50,17 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by dell on 7/15/2017.
  */
 
-public class HomeActivitiesFragment extends Fragment {
+public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    //    private String URL = "http://172.17.3.2/EthelonStartupWeb/public/api/getallactivities";
+
     Localhost local = new Localhost();
-    String URL = local.getLocalhost();
-    FoldingCell fc;
+    private static final String URL = "http://"+new Localhost().getLocalhost()+"getallactivities";
     RecyclerView recView;
-    ArrayList<ActivityModel> activities = new ArrayList<>();
-    ActivityModel activityModel;
+    ArrayList<ActivityModel> activities;
     HomeActivitiesListAdapter homeActivitiesListAdapter;
-    Toolbar toolbar;
     String id, api_token, activity_id;
+    SwipeRefreshLayout swipeRefreshLayout;
+    private int offset = 0;
 
     public HomeActivitiesFragment() {
         // Required empty public constructor
@@ -67,23 +69,50 @@ public class HomeActivitiesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.home_activities_fragment, container, false);
         recView = (RecyclerView) v.findViewById(R.id.recView);
+        swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
+        swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(true);
+                    fetchActivities();
+                }
+            }
+        );
+
+        return v;
+        }
+
+
+    @Override
+    public void onRefresh() {
+        fetchActivities();
+    }
+
+    public void fetchActivities(){
+
+        swipeRefreshLayout.setRefreshing(true);
+
+        activities = new ArrayList<>();
         id = getArguments().getString("id");
         api_token = getArguments().getString("api_token");
 
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("volunteer_id", id);
-            params.put("api_token", api_token);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id", id);
+        params.put("api_token", api_token);
 
-            Log.e("kobe", "sa home" + id + api_token);
+        Log.e("kobe", "sa home" + id + api_token);
 
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, "http://"+new Localhost().getLocalhost()+"getallactivities",
-                    new JSONObject(params),
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        if(response.length() > 0) {
                             Log.e("kyle", response + "");
                             for (int i = 0; i < response.length(); i++) {
                                 try {
@@ -130,14 +159,11 @@ public class HomeActivitiesFragment extends Fragment {
                                             activityContact,
                                             foundationName);
 
-                                        Log.e("asdsadasdads", response.toString());
-
+                                    Log.e("ACTIVITIES", response.toString());
                                     activities.add(activityModel1);
-                                    Log.e("PISTE KOBE ", activities.size() + "");
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    Log.e("piste ni", "aaslkdjalsdkjadlaksjdaldkj");
                                 }
                             }
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -145,39 +171,36 @@ public class HomeActivitiesFragment extends Fragment {
                             homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token, activity_id);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(homeActivitiesListAdapter);
+
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                        }
-                    }){
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }){
 
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("volunteer_id",id);
-                    params.put("api_token",api_token);
+        };
 
-                    Log.e("kobe","piste null daw" + id + api_token + activity_id);
-                    return params;
-                }
-            };
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonArrayRequest);
 
-            RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-            request.add(jsonArrayRequest);
-
-            jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    5000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-            ));
-
-            return v;
-
-        }
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
 
 
     }
+    @Subscribe
+    public void getMessage(String message){
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+}
 

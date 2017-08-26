@@ -180,6 +180,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         final String api_token = n.getStringExtra("api_token");
         final String activity_id = n.getStringExtra("activity_id");
         Log.e("ALLIASK", "" + api_token + activity_id);
+
         final Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id", volunteer_id);
         params.put("activity_id", activity_id);
@@ -219,9 +220,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
         requestQueue.add(jsonObjectRequest);
 
-        Intent n = new Intent(EventDetailsActivity.this, SuccessActivity.class);
-        n.putExtra("api_token", api_token);
-        n.putExtra("volunteer_id", volunteer_id);
-        startActivity(n);
+//        Intent n = new Intent(EventDetailsActivity.this, SuccessActivity.class);
+//        n.putExtra("api_token", api_token);
+//        n.putExtra("volunteer_id", volunteer_id);
+//        startActivity(n);
     }
 }
