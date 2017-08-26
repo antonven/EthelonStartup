@@ -328,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
 
 
-                    Log.e("kyle","id "+profile.getId());
+                    Log.e("PROFILE ID","id "+profile.getId());
                     JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -342,8 +342,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                             volunteer_id = response.getString("volunteer_id");
                                             api_token = response.getString("api_token");
+                                            String profileId = profile.getId();
                                             intent.putExtra("id", volunteer_id);
                                             intent.putExtra("api_token", api_token);
+                                            intent.putExtra("profileId", profileId);
 //                                            BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                             startActivity(intent);
 
@@ -403,9 +405,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
+                                                    String profileId = profile.getId();
                                                     Log.e("CredentialfacebookLogin", " " + volunteer_id + api_token);
                                                     intent.putExtra("id", volunteer_id);
                                                     intent.putExtra("api_token", api_token);
+                                                    intent.putExtra("profileId", profileId);
                                                     BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                                     startActivity(intent);
                                                 }else if(message.equals("Email already exists")){

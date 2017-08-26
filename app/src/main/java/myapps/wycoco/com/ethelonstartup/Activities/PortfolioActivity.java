@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +37,7 @@ import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.PortfolioAdapter;
+import myapps.wycoco.com.ethelonstartup.Fragments.PortfolioFragment;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
@@ -64,6 +67,22 @@ public class PortfolioActivity extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
         }
 
+        String volunteer_id = getIntent().getStringExtra("volunteer_id");
+        String api_token = getIntent().getStringExtra("api_token");
+
+        Bundle b = new Bundle();
+        b.putString("volunteer_id", volunteer_id);
+        b.putString("api_token", api_token);
+
+        Fragment portFrag = new PortfolioFragment();
+        portFrag.setArguments(b);
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.framePortfolio, portFrag)
+                .addToBackStack("Portfolio")
+                .commit();
+
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("Portfolio");
@@ -76,101 +95,16 @@ public class PortfolioActivity extends AppCompatActivity {
             }
         });
 
-        fc = (FoldingCell)findViewById(R.id.foldingCell);
-        recView = (RecyclerView)findViewById(R.id.recView);
 
-        RequestPortfolio();
+
+
+//        RequestPortfolio();
 
 
 
     }
 
-    public void RequestPortfolio(){
 
-        String volunteer_id = getIntent().getStringExtra("volunteer_id");
-        String api_token = getIntent().getStringExtra("api_token");
-
-        Log.e("VOLUNTEERID", "" + volunteer_id + api_token);
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("volunteer_id", volunteer_id);
-        params.put("api_token", api_token);
-
-
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        for(int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject activityObject = response.getJSONObject(i);
-                                String activityName = activityObject.getString("name");
-                                String foundationId = activityObject.getString("foundation_id");
-                                String activityId = activityObject.getString("activity_id");
-                                String activityImage = activityObject.getString("image_url");
-                                String activityQr = activityObject.getString("imageQr_url");
-                                String activityDes = activityObject.getString("description");
-                                String activityLocation = activityObject.getString("location");
-                                String activityStart = activityObject.getString("start_time");
-                                String activityEnd = activityObject.getString("end_time");
-                                String activityDate = activityObject.getString("startDate");
-                                String activityGroup = activityObject.getString("group");
-                                String activityLong = activityObject.getString("long");
-                                String activityLat = activityObject.getString("lat");
-                                String activityPoints = activityObject.getString("points_equivalent");
-                                String activityStatus = activityObject.getString("status");
-                                String activityCreated = activityObject.getString("created_at");
-                                String activityUpdated = activityObject.getString("updated_at");
-                                String contactPerson = activityObject.getString("contactperson");
-                                String activityContact = activityObject.getString("contact");
-                                String volunteerStatus = activityObject.getString("joined");
-                                String foundationName = activityObject.getString("foundation_name");
-
-                                PortfolioModel portfolioModel = new PortfolioModel(activityId, foundationId, activityName, activityImage,
-                                        activityQr,
-                                        activityDes,
-                                        activityLocation,
-                                        activityStart,
-                                        activityEnd,
-                                        activityDate,
-                                        activityGroup,
-                                        activityLong,
-                                        activityLat,
-                                        activityPoints,
-                                        activityStatus,
-                                        activityCreated,
-                                        activityUpdated,
-                                        contactPerson,
-                                        activityContact,
-                                        volunteerStatus,
-                                        foundationName);
-
-                                Log.e("KirstenMay", response.toString());
-
-                                activities.add(portfolioModel);
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                        recView.setLayoutManager(layoutManager);
-                        portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
-                        recView.setItemAnimator(new DefaultItemAnimator());
-                        recView.setAdapter(portfolioAdapter);
-                        Log.e("PISTE KOBE ", activities.size() + "");
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Log.e("AntonWycoco", "" + error.toString());
-            }
-        });
-        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-        request.add(jsonObjectRequest);
-    }
 
 
 

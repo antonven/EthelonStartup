@@ -30,6 +30,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     Context mContext;
     ArrayList<PortfolioModel> activities;
+    int count = 0;
 
     public PortfolioAdapter() {
     }
@@ -120,9 +121,14 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             fc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    count++;
                     Log.e("RIBBON", "" + activities.get(getAdapterPosition()).getVolunteerStatus());
                     fc.toggle(false);
-                    attendBtn.setVisibility(View.GONE);
+                    if(count %2 == 0){
+                        attendBtn.setVisibility(View.VISIBLE);
+                    }else {
+                        attendBtn.setVisibility(View.GONE);
+                    }
                 }
             });
         }

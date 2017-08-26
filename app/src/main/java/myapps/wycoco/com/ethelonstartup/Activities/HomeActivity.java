@@ -91,7 +91,8 @@ public class HomeActivity extends AppCompatActivity
 //        volunteer_id = n.getStringExtra("volunteer_id");
 //        api_token = n.getStringExtra("api_token");
 
-         Log.e("kobe","HOME act"+api_token + volunteer_id);
+         Log.e("kobe","HOME act"+api_token + volunteer_id + profileId);
+
 
         View view = navigationView.getHeaderView(0);
         profileName = (TextView) view.findViewById(R.id.profileName);
