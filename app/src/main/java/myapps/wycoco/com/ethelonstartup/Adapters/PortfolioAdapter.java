@@ -1,5 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,8 @@ import com.ramotion.foldingcell.FoldingCell;
 import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -117,18 +120,30 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
             clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);
 
+            attendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent n = new Intent(mContext, AttendanceScanner.class);
+                    n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(n);
+                }
+            });
+
 
             fc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     count++;
-                    Log.e("RIBBON", "" + activities.get(getAdapterPosition()).getVolunteerStatus());
+
                     fc.toggle(false);
                     if(count %2 == 0){
                         attendBtn.setVisibility(View.VISIBLE);
                     }else {
                         attendBtn.setVisibility(View.GONE);
                     }
+
+
                 }
             });
         }

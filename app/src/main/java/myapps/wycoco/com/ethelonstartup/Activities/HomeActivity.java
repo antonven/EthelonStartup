@@ -49,8 +49,8 @@ public class HomeActivity extends AppCompatActivity
     Toolbar toolbar;
     TabLayout tabLayout;
     AppBarLayout appBarLayout;
-    String api_token = new UserCredentials().getApi_token();
-    String volunteer_id = new UserCredentials().getVolunteer_id();
+    String api_token;
+    String volunteer_id;
 
 
     @Override
@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent n = getIntent();
-
+        volunteer_id = n.getStringExtra("volunteer_id");
         profName = n.getStringExtra("profileName");
         image = n.getStringExtra("profilePicture");
         profileId = n.getStringExtra("profileId");
@@ -88,11 +88,8 @@ public class HomeActivity extends AppCompatActivity
         ethelonUserName = n.getStringExtra("userName");
         ethelonUserImage = n.getStringExtra("image_url");
         newSignUpUsername = n.getStringExtra("newSignUpUsername");
-//        volunteer_id = n.getStringExtra("volunteer_id");
-//        api_token = n.getStringExtra("api_token");
 
-         Log.e("kobe","HOME act"+api_token + volunteer_id + profileId);
-
+        Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName);
 
         View view = navigationView.getHeaderView(0);
         profileName = (TextView) view.findViewById(R.id.profileName);
@@ -100,13 +97,14 @@ public class HomeActivity extends AppCompatActivity
 
         if(profName != null && image != null && profileId != null) {
             profileName.setText(profName);
-            Glide.with(getApplicationContext()).load("https://graph.facebook.com/" + profileId
-                    + "/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D1877377522288783")
+            Glide.with(getApplicationContext()).load(image)
                     .centerCrop().crossFade().into(profilePicture);
+
         }else if(newSignUpUsername != null){
             profileName.setText(newSignUpUsername);
         }
         else{
+            //If user signups with Ethelon register
             profileName.setText(ethelonUserName);
             Glide.with(getApplicationContext()).load(ethelonUserImage).centerCrop().crossFade().into(profilePicture);
         }
@@ -175,6 +173,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void initInstancesDrawer() {
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -187,35 +186,27 @@ public class HomeActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-
     }
 
     private void setupTabIcons() {
 
+    TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+//        tabOne.setText("Home");
+    tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
+    tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
+    tabLayout.getTabAt(0).setCustomView(tabOne);
 
-
-            TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-    //        tabOne.setText("Home");
-            tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
-            tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
-            tabLayout.getTabAt(0).setCustomView(tabOne);
-
-
-            TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+    TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //           tabTwo.setText("Notifications");
-            tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
-            tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
-            tabLayout.getTabAt(1).setCustomView(tabTwo);
+    tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
+    tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
+    tabLayout.getTabAt(1).setCustomView(tabTwo);
 
-
-
-            TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+    TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
 //           tabThree.setText("Leaderboard");
-            tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
-            tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
-            tabLayout.getTabAt(2).setCustomView(tabThree);
-
-
+    tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
+    tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
+    tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -223,16 +214,18 @@ public class HomeActivity extends AppCompatActivity
         Intent n = getIntent();
         volunteer_id = n.getStringExtra("volunteer_id");
         api_token = n.getStringExtra("api_token");
+        profileId = n.getStringExtra("profileId");
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-            Bundle bundle = new Bundle();
-            bundle.putString("id",volunteer_id);
-            bundle.putString("api_token", api_token);
-            Log.e("fzz",api_token + volunteer_id);
+        Bundle bundle = new Bundle();
+        bundle.putString("id",volunteer_id);
+        bundle.putString("api_token", api_token);
+        bundle.putString("profileId", profileId);
+        Log.e("fzz",api_token + volunteer_id);
 
-            HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
-            homeActivitiesFragment.setArguments(bundle);
+        HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
+        homeActivitiesFragment.setArguments(bundle);
 
         adapter.addFrag(homeActivitiesFragment,"Home");
         adapter.addFrag(new NotificationsFragment(), "Notifications");
@@ -240,17 +233,17 @@ public class HomeActivity extends AppCompatActivity
         viewPager.setAdapter(adapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        BusStation.getBus().register(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        BusStation.getBus().unregister(this);
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        BusStation.getBus().register(this);
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        BusStation.getBus().unregister(this);
+//    }
 
 
 }

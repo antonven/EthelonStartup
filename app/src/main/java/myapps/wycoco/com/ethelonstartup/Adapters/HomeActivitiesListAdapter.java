@@ -1,5 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -31,17 +32,14 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
     Context mContext;
     ArrayList<ActivityModel> activities = new ArrayList<>();
-    String id, api_token;
+    String id, api_token, profile_id;
 
-    public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities, String id, String api_token) {
+    public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities, String id, String api_token, String profile_id) {
         this.mContext = mContext;
         this.activities = activities;
         this.id = id;
         this.api_token = api_token;
-//        this.activity_id = activity_id;
-        Log.e("HOME ADAPTER", "act_id" + id + activities.size());
-
-
+        this.profile_id = profile_id;
     }
 
     @Override
@@ -72,10 +70,6 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         Glide.with(mContext).load(activities.get(position).getActivityImage())
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
 
-        Log.e("kobe","fuck"+ activities.get(position).getActivityGroup());
-//        if(activities.get(position).getActivityStatus().equals("Done")){
-//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFFF00"));
-//        }
     }
 
     @Override
@@ -148,7 +142,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             in.putExtra("id", id);
             in.putExtra("activity_id", activity_id);
             in.putExtra("api_token", api_token);
-            Log.e("Anton Gwapo", "" + api_token + activity_id);
+            in.putExtra("profileId", profile_id);
+
             mContext.startActivity(in);
         }
     }

@@ -64,8 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         id = n.getStringExtra("profileId");
         imageUrl = n.getStringExtra("image");
 
-        Glide.with(this).load("https://graph.facebook.com/"+ id
-                +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D1877377522288783")
+        Glide.with(this).load("https://graph.facebook.com/"+id+"/picture?height=500&width=500&migration_overrides=%7Boctober_2012%3Atrue%7D")
                 .centerCrop().crossFade().into(profilePicture);
         profileName.setText(profName);
 

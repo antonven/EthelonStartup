@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Profile profile;
     ViewPager vp;
     LoginViewPagerAdapter viewPager;
-    String name, facebook_id, email, first_name, last_name;
+    String name, facebook_id, email, profile_id, profileName, first_name, last_name, profilePicture;
     String volunteer_id;
     String message, api_token;
 
@@ -143,12 +143,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
 
-
         profile = Profile.getCurrentProfile();
+
         if(profile!=null) {
+
             Map<String, String> params = new HashMap<String, String>();
             params.put("facebook_id", profile.getId());
-            Log.e("kobe","id "+profile.getId());
+            Log.e("LOGIN ACTIVITY","facebook_id "+profile.getId());
 
             JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
@@ -157,15 +158,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         try {
                             message = response.getString("message");
+                            Log.e("onResume LOGIN", "facebook_id & message " + profile.getId() + response.getString("message"));
 
                             if(message.equals("First Time")) {
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
-                                String profileId = profile.getId();
+                                profilePicture = profile.getProfilePictureUri(500,500).toString();
                                 Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
-                                intent.putExtra("id", volunteer_id);
+                                intent.putExtra("volunteer_id", volunteer_id);
                                 intent.putExtra("api_token", api_token);
-                                intent.putExtra("profileId", profileId);
+                                intent.putExtra("profileId", profile_id);
+                                intent.putExtra("image_url", profilePicture);
+                                Log.e("LOGIN ACTIVITY","facebook_id "+profile_id + "proPIC"+ profilePicture);
                                 startActivity(intent);
 
                             }else if(message.equals("Email already exists")){
@@ -307,46 +311,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
 
-                Log.i("LoginActivity", response + " ");
-                Log.e("kobe","json ob = "+object);
-
                 try {
                     facebook_id = object.getString("id");
                     email = " ";
+                    profilePicture = profile.getProfilePictureUri(500,500).toString();
 
                     if(object.getString("email")!= null){
                         email = object.getString("email");
                     }
-
-                    Log.e("SASDASDASD", "" + email + facebook_id + name);
 
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("email", email);
                     params.put("facebook_id", facebook_id);
                     params.put("name", name);
                     params.put("role", "volunteer");
-                    params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
+                    params.put("image_url",profilePicture);
 
-
-                    Log.e("PROFILE ID","id "+profile.getId());
                     JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    Log.e("kyle",response + "piste ");
+
                                     try {
                                         message = response.getString("message");
 
-
                                         if(message.equals("First Time")) {
+                                            profilePicture = profile.getProfilePictureUri(500,500).toString();
+                                            profile_id = profile.getId();
+                                            profileName = profile.getName();
                                             Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                             volunteer_id = response.getString("volunteer_id");
                                             api_token = response.getString("api_token");
-                                            String profileId = profile.getId();
-                                            intent.putExtra("id", volunteer_id);
+                                            intent.putExtra("volunteer_id", volunteer_id);
                                             intent.putExtra("api_token", api_token);
-                                            intent.putExtra("profileId", profileId);
-//                                            BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+                                            intent.putExtra("profileId", profile_id);
+                                            intent.putExtra("image_url", profilePicture);
+                                            intent.putExtra("profilePicture", profilePicture);
+                                            intent.putExtra("profileName", profileName);
                                             startActivity(intent);
 
                                         }else if(message.equals("Email already exists")){
@@ -358,39 +359,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                             nextActivity(profile);
                                         }
-
-
-                                    } catch (JSONException e) {
+                                    }catch (JSONException e) {
                                         e.printStackTrace();
-                                        Log.e("kyle",e.toString() + " naay email piste ");
-                                        }
-
                                     }
+
+                                }
+
                             }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.e("kyle",error.toString()+ " Ari gyud siya piste");
-                        }
-                    }) ;
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("kyle",error.toString()+ " Ari gyud siya piste");
+                                }
+                            });
                     RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                     request.add(string);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("kobe","jsonexception sa catch"+e.toString());
 
                     if(e.toString().equals("org.json.JSONException: No value for email")){
-
-                        Log.e("asasdadasdsadadasdd", "han");
-
+                        profilePicture = profile.getProfilePictureUri(500,500).toString();
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("email", "Email Not Available"+facebook_id);
                         params.put("facebook_id", facebook_id);
                         params.put("name", name);
                         params.put("role", "volunteer");
-                        params.put("image_url","https://graph.facebook.com/"+ profile.getId() +"/picture?height=200&width=200&migration_overrides=%7Boctober_2012%3Atrue%7D");
-
-
+                        params.put("image_url",profilePicture);
 
                         JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                                     new Response.Listener<JSONObject>() {
@@ -400,17 +394,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             try {
                                                 message = response.getString("message");
 
-
                                                 if(message.equals("First Time")) {
-
+                                                    profilePicture = profile.getProfilePictureUri(500,500).toString();
+                                                    profileName = profile.getName();
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
-                                                    String profileId = profile.getId();
-                                                    Log.e("CredentialfacebookLogin", " " + volunteer_id + api_token);
-                                                    intent.putExtra("id", volunteer_id);
+                                                    intent.putExtra("volunteer_id", volunteer_id);
                                                     intent.putExtra("api_token", api_token);
-                                                    intent.putExtra("profileId", profileId);
+                                                    intent.putExtra("profileId", profile_id);
+                                                    intent.putExtra("image_url", profilePicture);
+                                                    intent.putExtra("profilePicture", profilePicture);
+                                                    intent.putExtra("profileName", profileName);
                                                     startActivity(intent);
 
                                                 }else if(message.equals("Email already exists")){
@@ -419,7 +414,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 }else{
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
-                                                    Log.e("credentials sa FbLogin", "" + volunteer_id  + api_token);
                                                     BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                                     nextActivity(profile);
                                                 }
@@ -448,6 +442,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
         request.setParameters(parameters);
         request.executeAsync();
-
     }
 }

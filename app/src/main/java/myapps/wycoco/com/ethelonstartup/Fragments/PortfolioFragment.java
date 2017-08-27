@@ -49,7 +49,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
     SwipeRefreshLayout swipeRefreshLayout;
     FoldingCell fc;
     RecyclerView recView;
-    ArrayList<PortfolioModel> activities = new ArrayList<>();
+    ArrayList<PortfolioModel> activities;
     PortfolioAdapter portfolioAdapter;
     Toolbar toolbar;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "portfolio";
@@ -83,6 +83,9 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
 
     public void RequestPortfolio(){
 
+        swipeRefreshLayout.setRefreshing(true);
+
+        activities = new ArrayList<>();
         String volunteer_id = getArguments().getString("volunteer_id");
         String api_token = getArguments().getString("api_token");
         Log.e("VOLUNTEERID", "" + volunteer_id + api_token);
@@ -96,71 +99,76 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        if(response.length() > 0) {
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    JSONObject activityObject = response.getJSONObject(i);
+                                    String activityName = activityObject.getString("name");
+                                    String foundationId = activityObject.getString("foundation_id");
+                                    String activityId = activityObject.getString("activity_id");
+                                    String activityImage = activityObject.getString("image_url");
+                                    String activityQr = activityObject.getString("imageQr_url");
+                                    String activityDes = activityObject.getString("description");
+                                    String activityLocation = activityObject.getString("location");
+                                    String activityStart = activityObject.getString("start_time");
+                                    String activityEnd = activityObject.getString("end_time");
+                                    String activityDate = activityObject.getString("startDate");
+                                    String activityGroup = activityObject.getString("group");
+                                    String activityLong = activityObject.getString("long");
+                                    String activityLat = activityObject.getString("lat");
+                                    String activityPoints = activityObject.getString("points_equivalent");
+                                    String activityStatus = activityObject.getString("status");
+                                    String activityCreated = activityObject.getString("created_at");
+                                    String activityUpdated = activityObject.getString("updated_at");
+                                    String contactPerson = activityObject.getString("contactperson");
+                                    String activityContact = activityObject.getString("contact");
+                                    String volunteerStatus = activityObject.getString("joined");
+                                    String foundationName = activityObject.getString("foundation_name");
 
-                        for(int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject activityObject = response.getJSONObject(i);
-                                String activityName = activityObject.getString("name");
-                                String foundationId = activityObject.getString("foundation_id");
-                                String activityId = activityObject.getString("activity_id");
-                                String activityImage = activityObject.getString("image_url");
-                                String activityQr = activityObject.getString("imageQr_url");
-                                String activityDes = activityObject.getString("description");
-                                String activityLocation = activityObject.getString("location");
-                                String activityStart = activityObject.getString("start_time");
-                                String activityEnd = activityObject.getString("end_time");
-                                String activityDate = activityObject.getString("startDate");
-                                String activityGroup = activityObject.getString("group");
-                                String activityLong = activityObject.getString("long");
-                                String activityLat = activityObject.getString("lat");
-                                String activityPoints = activityObject.getString("points_equivalent");
-                                String activityStatus = activityObject.getString("status");
-                                String activityCreated = activityObject.getString("created_at");
-                                String activityUpdated = activityObject.getString("updated_at");
-                                String contactPerson = activityObject.getString("contactperson");
-                                String activityContact = activityObject.getString("contact");
-                                String volunteerStatus = activityObject.getString("joined");
-                                String foundationName = activityObject.getString("foundation_name");
+                                    PortfolioModel portfolioModel = new PortfolioModel(activityId, foundationId, activityName, activityImage,
+                                            activityQr,
+                                            activityDes,
+                                            activityLocation,
+                                            activityStart,
+                                            activityEnd,
+                                            activityDate,
+                                            activityGroup,
+                                            activityLong,
+                                            activityLat,
+                                            activityPoints,
+                                            activityStatus,
+                                            activityCreated,
+                                            activityUpdated,
+                                            contactPerson,
+                                            activityContact,
+                                            volunteerStatus,
+                                            foundationName);
 
-                                PortfolioModel portfolioModel = new PortfolioModel(activityId, foundationId, activityName, activityImage,
-                                        activityQr,
-                                        activityDes,
-                                        activityLocation,
-                                        activityStart,
-                                        activityEnd,
-                                        activityDate,
-                                        activityGroup,
-                                        activityLong,
-                                        activityLat,
-                                        activityPoints,
-                                        activityStatus,
-                                        activityCreated,
-                                        activityUpdated,
-                                        contactPerson,
-                                        activityContact,
-                                        volunteerStatus,
-                                        foundationName);
+                                    Log.e("KirstenMay", response.toString());
 
-                                Log.e("KirstenMay", response.toString());
-
-                                activities.add(portfolioModel);
+                                    activities.add(portfolioModel);
 
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
+
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            recView.setLayoutManager(layoutManager);
+                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
+                            recView.setItemAnimator(new DefaultItemAnimator());
+                            recView.setAdapter(portfolioAdapter);
+                            Log.e("PISTE KOBE ", activities.size() + "");
                         }
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                        recView.setLayoutManager(layoutManager);
-                        portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
-                        recView.setItemAnimator(new DefaultItemAnimator());
-                        recView.setAdapter(portfolioAdapter);
-                        Log.e("PISTE KOBE ", activities.size() + "");
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                swipeRefreshLayout.setRefreshing(false);
+
                 Log.e("AntonWycoco", "" + error.toString());
             }
         });

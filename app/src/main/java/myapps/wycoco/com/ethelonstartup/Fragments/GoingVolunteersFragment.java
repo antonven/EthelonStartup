@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,14 +37,14 @@ import myapps.wycoco.com.ethelonstartup.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GoingVolunteersFragment extends Fragment {
+public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String URL = "http://" + new Localhost().getLocalhost() + "activitygetvolunteersbefore";
     RecyclerView recyclerView;
     GridLayoutManager linearLayoutManager;
-    ArrayList<UserModel> users = new ArrayList<>();
+    ArrayList<UserModel> users;
     GoingVolunteersAdapter goingVolunteersAdapter;
-
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public GoingVolunteersFragment() {
         // Required empty public constructor
@@ -54,10 +55,44 @@ public class GoingVolunteersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_going_volunteers, container, false);
 
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayoutGoingVolunteers);
         recyclerView = (RecyclerView)view.findViewById(R.id.recViewVolunteers);
+
+
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        fetchGoingVolunteers();
+//        swipeRefreshLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                swipeRefreshLayout.setRefreshing(true);
+//                fetchGoingVolunteers();
+//            }
+//        }
+//        );
+
+
+        return view;
+    }
+
+    @Override
+    public void onRefresh() {
+        fetchGoingVolunteers();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchGoingVolunteers();
+    }
+
+    public void fetchGoingVolunteers(){
+
+        swipeRefreshLayout.setRefreshing(true);
+
+        users  = new ArrayList<>();
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
-
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("activity_id", activity_id);
@@ -69,46 +104,48 @@ public class GoingVolunteersFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        for(int i = 0; i < response.length(); i++){
-                            try {
-                                Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
-                                JSONObject usersObject = response.getJSONObject(i);
-                                String user_image = usersObject.getString("image_url");
-                                String user_name = usersObject.getString("name");
 
-                                UserModel user = new UserModel();
+                        if (response.length() > 0) {
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
+                                    JSONObject usersObject = response.getJSONObject(i);
+                                    String user_image = usersObject.getString("image_url");
+                                    String user_name = usersObject.getString("name");
+                                    String profile_id = getArguments().getString("profileId");
 
-                                user.setUserFirstName(user_name);
-                                user.setUserImage(user_image);
-                                users.add(user);
+                                    Log.e("GOINGVOLUNTEERS", "PICTURES" + user_image);
+                                    UserModel user = new UserModel();
+                                    user.setUser_id(profile_id);
+                                    user.setUserFirstName(user_name);
+                                    user.setUserImage(user_image);
+                                    users.add(user);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
+
+                            goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
+
+                            linearLayoutManager = new GridLayoutManager(getContext(), 3);
+                            recyclerView.setLayoutManager(linearLayoutManager);
+                            goingVolunteersAdapter.notifyDataSetChanged();
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                            recyclerView.setAdapter(goingVolunteersAdapter);
                         }
-
-                        goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
-
-                        linearLayoutManager = new GridLayoutManager(getContext(), 3);
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                        goingVolunteersAdapter.notifyDataSetChanged();
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(goingVolunteersAdapter);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        swipeRefreshLayout.setRefreshing(false);
+
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(jsonArrayRequest);
-
-
-
-
-        return view;
     }
-
 }

@@ -26,6 +26,7 @@ public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteers
     Context mContext;
     ArrayList<UserModel> users = new ArrayList<>();
 
+
     public GoingVolunteersAdapter() {
     }
 

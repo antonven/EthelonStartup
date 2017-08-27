@@ -58,7 +58,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
     RecyclerView recView;
     ArrayList<ActivityModel> activities;
     HomeActivitiesListAdapter homeActivitiesListAdapter;
-    String id, api_token, activity_id;
+    String id, api_token, activity_id, profileId;
     SwipeRefreshLayout swipeRefreshLayout;
     private int offset = 0;
 
@@ -100,6 +100,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
         activities = new ArrayList<>();
         id = getArguments().getString("id");
         api_token = getArguments().getString("api_token");
+        profileId = getArguments().getString("profileId");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id", id);
@@ -169,7 +170,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
                             Log.e("ACTIVITY ID ", "HOME FRAGMENT" + activity_id );
-                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token);
+                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token, profileId);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(homeActivitiesListAdapter);
 

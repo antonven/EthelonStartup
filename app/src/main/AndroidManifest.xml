@@ -7,6 +7,7 @@
     tools:replace="allowBackup, label">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -36,6 +37,7 @@
         <activity android:name=".Activities.SkillsActivity" />
         <activity android:name=".Activities.LoginWithEthelonActivity" />
         <activity android:name=".Activities.SuccessActivity"></activity>
+        <activity android:name=".Activities.AttendanceScanner"></activity>
     </application>
 
 </manifest>

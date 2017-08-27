@@ -83,13 +83,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         eventLocation = n.getStringExtra("eventLocation");
         eventImage = n.getStringExtra("eventImage");
         activity_id = n.getStringExtra("activity_id");
-        Log.e("truste", "" + activity_id);
+        Log.e("EVENTDETAILSACT", "activity_id " + activity_id);
 
-        Glide.with(this).load(eventImage)
-                .centerCrop().crossFade().into(eventDetailsImage);
-
-
-
+        Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
         eventHost1.setText(eventHost);
 
@@ -149,6 +145,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         String api_token = n.getStringExtra("api_token");
         String activity_id = n.getStringExtra("activity_id");
+        String profile_id = n.getStringExtra("profileId");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
@@ -160,9 +157,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         GoingVolunteersFragment goingVolunteersFragment = new GoingVolunteersFragment();
         Bundle going = new Bundle();
+        going.putString("profileId", profile_id);
         going.putString("activity_id", activity_id);
         going.putString("api_token", api_token);
-        Log.e("BRUNO MARS", "" + activity_id +"anton" + api_token);
         goingVolunteersFragment.setArguments(going);
 
         adapter.addFrag(eventDetailsFragment, "Details");
@@ -179,13 +176,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         final String volunteer_id = n.getStringExtra("id");
         final String api_token = n.getStringExtra("api_token");
         final String activity_id = n.getStringExtra("activity_id");
-        Log.e("ALLIASK", "" + api_token + activity_id);
+
 
         final Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id", volunteer_id);
         params.put("activity_id", activity_id);
         params.put("api_token", api_token);
-        Log.e("piste ni yawa", volunteer_id + activity_id + api_token + "");
+
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
@@ -220,9 +217,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
         requestQueue.add(jsonObjectRequest);
 
-//        Intent n = new Intent(EventDetailsActivity.this, SuccessActivity.class);
-//        n.putExtra("api_token", api_token);
-//        n.putExtra("volunteer_id", volunteer_id);
-//        startActivity(n);
+
     }
 }
