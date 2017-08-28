@@ -34,13 +34,16 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     Context mContext;
     ArrayList<PortfolioModel> activities;
     int count = 0;
+    String api_token, activity_id;
 
     public PortfolioAdapter() {
     }
 
-    public PortfolioAdapter(Context mContext, ArrayList<PortfolioModel> activities) {
+    public PortfolioAdapter(Context mContext, ArrayList<PortfolioModel> activities, String api_token, String activity_id) {
         this.mContext = mContext;
         this.activities = activities;
+        this.api_token = api_token;
+        this.activity_id = activity_id;
     }
 
     @Override
@@ -125,6 +128,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                 public void onClick(View view) {
 
                     Intent n = new Intent(mContext, AttendanceScanner.class);
+                    n.putExtra("activity_id", activity_id);
+                    n.putExtra("api_token", api_token);
                     n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(n);
                 }

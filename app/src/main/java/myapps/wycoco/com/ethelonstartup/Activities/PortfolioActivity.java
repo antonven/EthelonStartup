@@ -69,10 +69,12 @@ public class PortfolioActivity extends AppCompatActivity {
 
         String volunteer_id = getIntent().getStringExtra("volunteer_id");
         String api_token = getIntent().getStringExtra("api_token");
+        String activity_id = getIntent().getStringExtra("activity_id");
 
         Bundle b = new Bundle();
         b.putString("volunteer_id", volunteer_id);
         b.putString("api_token", api_token);
+        b.putString("activity_id", activity_id);
 
         Fragment portFrag = new PortfolioFragment();
         portFrag.setArguments(b);

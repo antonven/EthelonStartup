@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="8dp"
+    android:background="@drawable/background_black_gradation"
     android:layout_marginBottom="14dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -16,7 +17,7 @@
     folding-cell:backSideColor="@color/bgBackSideColor"
     android:layout_width="match_parent"
     android:background="@drawable/folding_cell_background"
-    android:layout_height="180dp"
+    android:layout_height="172dp"
     android:id="@+id/foldingCell"
     folding-cell:cameraHeight="20"
     >

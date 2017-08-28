@@ -27,10 +27,12 @@ public class SuccessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String api_token = getIntent().getStringExtra("api_token");
                 String volunteer_id = getIntent().getStringExtra("volunteer_id");
+                String activity_id = getIntent().getStringExtra("activity_id");
 
                 Intent n = new Intent(SuccessActivity.this, PortfolioActivity.class);
                 n.putExtra("api_token", api_token);
                 n.putExtra("volunteer_id", volunteer_id);
+                n.putExtra("activity_id", activity_id);
                 startActivity(n);
                 finish();
             }

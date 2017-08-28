@@ -196,6 +196,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                                 Intent n = new Intent(EventDetailsActivity.this, SuccessActivity.class);
                                 n.putExtra("api_token", api_token);
                                 n.putExtra("volunteer_id", volunteer_id);
+                                n.putExtra("activity_id", activity_id);
                                 startActivity(n);
                                 //ma add sha sa portfolio
                             }

@@ -86,8 +86,9 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         swipeRefreshLayout.setRefreshing(true);
 
         activities = new ArrayList<>();
-        String volunteer_id = getArguments().getString("volunteer_id");
-        String api_token = getArguments().getString("api_token");
+        final String volunteer_id = getArguments().getString("volunteer_id");
+        final String api_token = getArguments().getString("api_token");
+//        final String activity_id = getArguments().getString("activity_id");
         Log.e("VOLUNTEERID", "" + volunteer_id + api_token);
 
         Map<String, String> params = new HashMap<String, String>();
@@ -105,7 +106,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     JSONObject activityObject = response.getJSONObject(i);
                                     String activityName = activityObject.getString("name");
                                     String foundationId = activityObject.getString("foundation_id");
-                                    String activityId = activityObject.getString("activity_id");
+                                    activity_id = activityObject.getString("activity_id");
                                     String activityImage = activityObject.getString("image_url");
                                     String activityQr = activityObject.getString("imageQr_url");
                                     String activityDes = activityObject.getString("description");
@@ -125,7 +126,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     String volunteerStatus = activityObject.getString("joined");
                                     String foundationName = activityObject.getString("foundation_name");
 
-                                    PortfolioModel portfolioModel = new PortfolioModel(activityId, foundationId, activityName, activityImage,
+                                    PortfolioModel portfolioModel = new PortfolioModel(activity_id, foundationId, activityName, activityImage,
                                             activityQr,
                                             activityDes,
                                             activityLocation,
@@ -156,10 +157,10 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
 
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
-                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities);
+                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, api_token, activity_id);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(portfolioAdapter);
-                            Log.e("PISTE KOBE ", activities.size() + "");
+                            Log.e("PISTE KOBE ", activities.size() + "id :" + activity_id);
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }

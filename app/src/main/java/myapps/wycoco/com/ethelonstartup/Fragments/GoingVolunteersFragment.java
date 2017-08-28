@@ -80,11 +80,11 @@ public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLay
         fetchGoingVolunteers();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        fetchGoingVolunteers();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        fetchGoingVolunteers();
+//    }
 
     public void fetchGoingVolunteers(){
 

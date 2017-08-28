@@ -1,5 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import myapps.wycoco.com.ethelonstartup.Fragments.DialogFragmentAttendanceSuccess;
 
 /**
  * Created by dell on 8/26/2017.
@@ -18,6 +20,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class AttendanceScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     ZXingScannerView scannerView;
+    String api_token, activity_id;
 
 
     @Override
@@ -33,11 +36,20 @@ public class AttendanceScanner extends AppCompatActivity implements ZXingScanner
 
     @Override
     public void handleResult(Result result) {
-//       String result1 = result.getText();
-//        Toast.makeText(this, "" + result1 + result.toString(), Toast.LENGTH_SHORT).show();
-        Intent n = new Intent(this, SuccessActivity.class);
-        startActivity(n);
-        finish();
+
+        String api_token = getIntent().getStringExtra("api_token");
+        String activity_id = getIntent().getStringExtra("activity_id");
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogFragmentAttendanceSuccess fd = new DialogFragmentAttendanceSuccess();
+        Bundle bundle = new Bundle();
+        bundle.putString("api_token", api_token);
+        bundle.putString("activity_id", activity_id);
+        Toast.makeText(this, "" + activity_id + result.toString(), Toast.LENGTH_SHORT).show();
+
+        fd.setArguments(bundle);
+        fd.show(fragmentManager, "Success");
+
     }
 
     @Override
