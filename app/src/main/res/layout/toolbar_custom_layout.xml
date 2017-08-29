@@ -6,6 +6,7 @@
     android:background="@color/colorPrimary"
     android:popupTheme="@style/Theme.AppCompat.NoActionBar"
     app:layout_collapseMode="pin"
+    android:layout_marginTop="22dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:layout_scrollFlags="scroll|enterAlways"
     app:navigationIcon="@drawable/navigation_icon_background"

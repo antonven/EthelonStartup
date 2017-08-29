@@ -12,7 +12,7 @@
     <!-- LEFT TITLE PART -->
     <RelativeLayout
         android:id="@+id/indicatorLine"
-        android:layout_width="45dp"
+        android:layout_width="40dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:background="#C53F46"
@@ -33,6 +33,8 @@
         android:paddingEnd="20dp"
         android:paddingStart="5dp"
         android:paddingRight="20dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         android:paddingLeft="8dp">
 
         <LinearLayout
@@ -150,6 +152,7 @@
                     android:layout_weight="1"
                     android:id="@+id/title_volunteers_count"
                     style="@style/TextViewRedBig"
+                    android:textSize="25sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="24"
@@ -161,9 +164,18 @@
                     android:layout_weight="1"
                     android:id="@+id/eventPoints"
                     style="@style/TextViewRedBig"
+                    android:textSize="25sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      />
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:id="@+id/goingVolunteersList">-->
+
+                <!--</android.support.v7.widget.RecyclerView>-->
             </LinearLayout>
         </LinearLayout>
 

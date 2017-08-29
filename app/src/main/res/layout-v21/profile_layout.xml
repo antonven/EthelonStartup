@@ -6,11 +6,11 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:background="#fff"
         android:id="@+id/appBarLayout"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:fitsSystemWindows="true"
                     android:id="@+id/coverPhoto"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
+                    android:layout_height="165dp"
                     android:src="@drawable/ethback"
                     app:layout_collapseMode="parallax"
                     android:scaleType="centerCrop" />

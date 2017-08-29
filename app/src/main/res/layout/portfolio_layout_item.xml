@@ -17,7 +17,7 @@
     folding-cell:backSideColor="@color/bgBackSideColor"
     android:layout_width="match_parent"
     android:background="@drawable/folding_cell_background"
-    android:layout_height="172dp"
+    android:layout_height="wrap_content"
     android:id="@+id/foldingCell"
     folding-cell:cameraHeight="20"
     >
@@ -42,7 +42,8 @@
         android:text="Attend"
         android:id="@+id/attendBtn"
         android:layout_alignEnd="@+id/status"
-        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/status"
+        android:layout_marginTop="124dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="15dp"
         android:textColor="#fff"/>
