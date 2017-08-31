@@ -34,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     CollapsingToolbarLayout collapsingToolbarLayout = null;
     String imageUrl, profName, id;
+    String fbProfilePicture, fbProfileName;
     ImageView profilePicture;
     TextView profileName, volunteerPoints, activitiesJoined;
     Toolbar toolbar;
@@ -60,13 +61,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent n = getIntent();
         n.getExtras();
-        profName = n.getStringExtra("profName");
+        fbProfileName = n.getStringExtra("fbProfileName");
         id = n.getStringExtra("profileId");
-        imageUrl = n.getStringExtra("image");
+        fbProfilePicture = n.getStringExtra("fbProfilePicture");
 
         Glide.with(this).load("https://graph.facebook.com/"+id+"/picture?height=500&width=500&migration_overrides=%7Boctober_2012%3Atrue%7D")
                 .centerCrop().crossFade().into(profilePicture);
-        profileName.setText(profName);
+        profileName.setText(fbProfileName);
 
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.nav_toolbar);

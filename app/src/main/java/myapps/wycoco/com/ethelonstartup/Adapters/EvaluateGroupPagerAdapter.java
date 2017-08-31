@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -25,21 +26,21 @@ import myapps.wycoco.com.ethelonstartup.R;
 
 public class EvaluateGroupPagerAdapter extends PagerAdapter {
 
-    ArrayList<UserModel> users = new ArrayList<>();
+    ArrayList<RateVolunteer> volunteers = new ArrayList<>();
     LayoutInflater layoutInflater;
     Context mContext;
 
     public EvaluateGroupPagerAdapter() {
     }
 
-    public EvaluateGroupPagerAdapter(ArrayList<UserModel> users, Context mContext) {
-        this.users = users;
+    public EvaluateGroupPagerAdapter(ArrayList<RateVolunteer> volunteers, Context mContext) {
+        this.volunteers = volunteers;
         this.mContext = mContext;
     }
 
     @Override
     public int getCount() {
-        return users.size();
+        return volunteers.size();
     }
 
     @Override
@@ -56,9 +57,9 @@ public class EvaluateGroupPagerAdapter extends PagerAdapter {
         TextView volunteerName = (TextView)view.findViewById(R.id.volunteerFirstName);
         RecyclerView recyclerCriteria = (RecyclerView)view.findViewById(R.id.recyclerCriteria);
 
-        Glide.with(mContext).load(users.get(position).getUserImage())
+        Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
                 .centerCrop().crossFade().into(volunteerImage);
-        volunteerName.setText(users.get(position).getUserFirstName());
+        volunteerName.setText(volunteers.get(position).getVolunteer_name());
         ViewPager vp = (ViewPager) container;
         vp.addView(view ,0);
         return view;

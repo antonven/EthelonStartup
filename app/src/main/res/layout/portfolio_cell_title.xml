@@ -12,14 +12,14 @@
     <!-- LEFT TITLE PART -->
     <RelativeLayout
         android:id="@+id/indicatorLine"
-        android:layout_width="40dp"
+        android:layout_width="30dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:background="#C53F46"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="3dp">
 
 
     </RelativeLayout>
@@ -31,7 +31,7 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:paddingEnd="20dp"
-        android:paddingStart="5dp"
+        android:paddingStart="10dp"
         android:paddingRight="20dp"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
@@ -47,11 +47,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextViewRedBig"
+            android:textSize="24sp"
             android:text="I.C.T.O. Feeding Program" />
 
         <TextView
             android:id="@+id/eventHost"
             android:textSize="18sp"
+            android:textColor="#000"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +64,7 @@
         <ImageView
             android:id="@+id/title_from_to_dots_divider"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="3dp"
             android:src="@color/contentDividerLine"/>
@@ -71,6 +73,7 @@
                 android:id="@+id/eventAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="USJ-R Basak Campus, Cebu City"
                 />
 
@@ -88,12 +91,13 @@
                 android:layout_width="34dp"
                 android:scaleType="centerInside"
                 android:layout_height="match_parent"
-                android:src="@drawable/calendar_icon"
+                android:src="@drawable/calendar_ic"
                  />
 
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/eventDate"
+                android:textColor="#000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -105,7 +109,7 @@
                 android:id="@+id/clockImage"
                 android:layout_width="34dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/clock_icon"
+                android:src="@drawable/clock_ic"
 
                 />
 
@@ -114,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:textColor="#000"
                 android:text="8:00 am"
                 android:id="@+id/eventTimeStart"
                 />
@@ -129,12 +134,14 @@
                 <TextView
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
+                    android:textColor="#000"
                     android:layout_height="wrap_content"
                     android:text="@string/volunteers_count_badge"
                     android:id="@+id/textView3" />
 
                 <TextView
                     android:layout_weight="1"
+                    android:textColor="#000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/points_badge"

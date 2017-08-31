@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -105,7 +106,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         vp.setAdapter(viewPager);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new AutomaticSlide(), 2000, 4000);
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
 
+        buttonSignup.setTypeface(typeface);
+        buttonLogin.setTypeface(typeface);
+        buttonFacebook.setTypeface(typeface);
         buttonLogin.setOnClickListener(this);
         buttonSignup.setOnClickListener(this);
         buttonFacebook.setOnClickListener(this);
@@ -238,8 +243,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-            i.putExtra("profileName", profile.getName());
-            i.putExtra("profilePicture", profile.getProfilePictureUri(500,500).toString());
+            i.putExtra("fbProfileName", profile.getName());
+            i.putExtra("fbProfilePicture", profile.getProfilePictureUri(500,500).toString());
             i.putExtra("profileId", profile.getId());
             i.putExtra("first_name", profile.getFirstName());
             i.putExtra("last_name", profile.getLastName());
@@ -336,18 +341,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         message = response.getString("message");
 
                                         if(message.equals("First Time")) {
-                                            profilePicture = profile.getProfilePictureUri(500,500).toString();
-                                            profile_id = profile.getId();
-                                            profileName = profile.getName();
+                                            String profilePicture = profile.getProfilePictureUri(500,500).toString();
+                                            String profile_id = profile.getId();
+                                            String profileName = profile.getName();
                                             Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                             volunteer_id = response.getString("volunteer_id");
                                             api_token = response.getString("api_token");
                                             intent.putExtra("volunteer_id", volunteer_id);
                                             intent.putExtra("api_token", api_token);
                                             intent.putExtra("profileId", profile_id);
-                                            intent.putExtra("image_url", profilePicture);
-                                            intent.putExtra("profilePicture", profilePicture);
-                                            intent.putExtra("profileName", profileName);
+                                            intent.putExtra("fbProfilePicture", profilePicture);
+                                            intent.putExtra("fbProfileName", profileName);
                                             startActivity(intent);
 
                                         }else if(message.equals("Email already exists")){
@@ -395,17 +399,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 message = response.getString("message");
 
                                                 if(message.equals("First Time")) {
-                                                    profilePicture = profile.getProfilePictureUri(500,500).toString();
-                                                    profileName = profile.getName();
+                                                    String profilePicture = profile.getProfilePictureUri(500,500).toString();
+                                                    String profileName = profile.getName();
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
                                                     intent.putExtra("volunteer_id", volunteer_id);
                                                     intent.putExtra("api_token", api_token);
                                                     intent.putExtra("profileId", profile_id);
-                                                    intent.putExtra("image_url", profilePicture);
-                                                    intent.putExtra("profilePicture", profilePicture);
-                                                    intent.putExtra("profileName", profileName);
+                                                    intent.putExtra("fbProfilePicture", profilePicture);
+                                                    intent.putExtra("fbProfileName", profileName);
                                                     startActivity(intent);
 
                                                 }else if(message.equals("Email already exists")){

@@ -34,12 +34,20 @@
 
         <activity
             android:name=".Activities.PortfolioActivity"
-            android:label="@string/title_activity_portfolio" />
-        <activity android:name=".Activities.EventDetailsActivity" />
-        <activity android:name=".Activities.SkillsActivity" />
-        <activity android:name=".Activities.LoginWithEthelonActivity" />
-        <activity android:name=".Activities.SuccessActivity"></activity>
-        <activity android:name=".Activities.AttendanceScanner"></activity>
+            android:label="@string/title_activity_portfolio"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activities.EventDetailsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activities.SkillsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activities.LoginWithEthelonActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activities.SuccessActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".Activities.AttendanceScanner"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

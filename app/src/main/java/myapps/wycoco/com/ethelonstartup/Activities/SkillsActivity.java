@@ -42,7 +42,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     ImageView environmentCheck, livelihoodCheck, culinaryCheck, charityCheck, sportsCheck, educationalCheck, medicineCheck, artsCheck;
     GridView gridView;
     ImageView environmental, livelihood, educational, culinary, charity, sports, medicine, arts;
-    String volunteer_id;
+    String volunteer_id, fbProfilePicture, fbProfileName;
     String api_token, profileId, profilePicture;
     String name;
     ArrayList<String> skillSet = new ArrayList<>();
@@ -71,7 +71,9 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         api_token = n.getStringExtra("api_token");
         name = n.getStringExtra("profileName");
         profileId = n.getStringExtra("profileId");
+        fbProfilePicture = n.getStringExtra("fbProfilePicture");
         profilePicture = n.getStringExtra("image_url");
+        fbProfileName = n.getStringExtra("fbProfileName");
 
 
         environmentCheck = (ImageView)findViewById(R.id.environmentCheck);
@@ -276,7 +278,9 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                     intent.putExtra("api_token",api_token);
                                     intent.putExtra("profileId", profileId);
                                     intent.putExtra("image_url", profilePicture);
+                                    intent.putExtra("fbProfilePicture", fbProfilePicture);
                                     intent.putExtra("newSignUpUsername",name);
+                                    intent.putExtra("fbProfileName", fbProfileName);
                                     Log.e("SKILLSACTI", "a: " + name + profilePicture + profileId);
                                     startActivity(intent);
                                 }else{

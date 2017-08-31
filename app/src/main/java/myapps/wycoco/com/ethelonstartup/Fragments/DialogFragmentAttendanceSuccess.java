@@ -38,6 +38,7 @@ import java.util.Map;
 import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
+import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -46,10 +47,10 @@ import myapps.wycoco.com.ethelonstartup.R;
  */
 public class DialogFragmentAttendanceSuccess extends DialogFragment {
 
-    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitygetvolunteersbefore";
+    private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
     RecyclerView recyclerView;
     GridLayoutManager linearLayoutManager;
-    ArrayList<UserModel> users;
+    ArrayList<RateVolunteer> volunteers;
     GoingVolunteersAdapter goingVolunteersAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
     ViewPager viewPager;
@@ -85,14 +86,14 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
 
     public void fetchVolunteerGroup(){
 
-        users  = new ArrayList<>();
+        volunteers  = new ArrayList<>();
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("activity_id", activity_id);
         params.put("api_token", api_token);
-        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + users.size());
+        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
 
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
@@ -105,31 +106,26 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
                                 try {
                                     Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
                                     JSONObject usersObject = response.getJSONObject(i);
-                                    String user_image = usersObject.getString("image_url");
-                                    String user_name = usersObject.getString("name");
-                                    String profile_id = getArguments().getString("profileId");
+                                    String volunteer_name = usersObject.getString("name");
+                                    String volunteer_image = usersObject.getString("image_url");
+                                    String volunteers_id = usersObject.getString("volunteer_id");
+                                    String volunteer_group_id = usersObject.getString("activity_group_id");
+                                    int number_of_volunteers = usersObject.getInt("num_of_vol");
 
-                                    Log.e("GOINGVOLUNTEERS", "PICTURES" + user_image);
-                                    UserModel user = new UserModel();
-                                    user.setUser_id(profile_id);
-                                    user.setUserFirstName(user_name);
-                                    user.setUserImage(user_image);
-                                    users.add(user);
+                                    Log.e("GOINGVOLUNTEERS", "PICTURES" + volunteer_image);
+                                    RateVolunteer volunteer = new RateVolunteer(volunteers_id, volunteer_name, volunteer_image, volunteer_group_id
+                                    , number_of_volunteers);
+
+                                    volunteers.add(volunteer);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
 
-//                            goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
-                            evaluateGroupPagerAdapter = new EvaluateGroupPagerAdapter(users, getContext());
-//                            linearLayoutManager = new GridLayoutManager(getContext(), 3);
-//                            recyclerView.setLayoutManager(linearLayoutManager);
-//                            goingVolunteersAdapter.notifyDataSetChanged();
-//                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                            evaluateGroupPagerAdapter = new EvaluateGroupPagerAdapter(volunteers, getContext());
                             viewPager.setAdapter(evaluateGroupPagerAdapter);
                         }
-//                        swipeRefreshLayout.setRefreshing(false);
                     }
                 },
                 new Response.ErrorListener() {

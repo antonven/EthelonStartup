@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f8f8f8"
-    android:fitsSystemWindows="true"
+
     android:id="@+id/funny"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity">
 
@@ -109,7 +109,7 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
         <android.support.design.widget.TabLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:id="@+id/detailsTabs"
             android:layout_width="match_parent"
             android:background="@drawable/event_details_custom_tab"
@@ -118,16 +118,17 @@
             app:tabMode="fixed"
             app:tabGravity="fill"
             app:layout_collapseMode="pin"
-            android:layout_marginBottom="2dp"
             />
     </android.support.design.widget.AppBarLayout>
 
 
-        <android.support.v4.view.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:id="@+id/viePagerDetails">
-        </android.support.v4.view.ViewPager>
+    <android.support.v4.view.ViewPager
+        android:background="#fff"
+        android:id="@+id/viePagerDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v4.view.ViewPager>
 
 </android.support.design.widget.CoordinatorLayout>

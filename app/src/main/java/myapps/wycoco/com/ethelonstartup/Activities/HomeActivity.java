@@ -25,11 +25,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.squareup.otto.Subscribe;
-
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
@@ -46,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
     TextView profileName;
     ImageView profilePicture;
     String profName, image, newSignUpUsername, profileId, cov_photo,  ethelonUserName, ethelonUserImage;
+    String fbProfilePicture, fbProfileName;
     ViewPager viewPager;
     Toolbar toolbar;
     TabLayout tabLayout;
@@ -83,12 +82,13 @@ public class HomeActivity extends AppCompatActivity
         Intent n = getIntent();
         volunteer_id = n.getStringExtra("volunteer_id");
         profName = n.getStringExtra("profileName");
-        image = n.getStringExtra("profilePicture");
+        fbProfilePicture = n.getStringExtra("fbProfilePicture");
         profileId = n.getStringExtra("profileId");
         cov_photo = n.getStringExtra("cover_photo");
         ethelonUserName = n.getStringExtra("userName");
         ethelonUserImage = n.getStringExtra("image_url");
         newSignUpUsername = n.getStringExtra("newSignUpUsername");
+        fbProfileName = n.getStringExtra("fbProfileName");
 
         Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName);
 
@@ -96,9 +96,9 @@ public class HomeActivity extends AppCompatActivity
         profileName = (TextView) view.findViewById(R.id.profileName);
         profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
 
-        if(profName != null && image != null && profileId != null) {
-            profileName.setText(profName);
-            Glide.with(getApplicationContext()).load(image)
+        if(fbProfileName != null && fbProfilePicture != null && profileId != null) {
+            profileName.setText(fbProfileName);
+            Glide.with(getApplicationContext()).load(fbProfilePicture)
                     .centerCrop().crossFade().into(profilePicture);
 
         }else if(newSignUpUsername != null){
@@ -136,8 +136,8 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_first_layout) {
 
             Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("image", image);
-            intent.putExtra("profName", profName);
+            intent.putExtra("fbProfilePicture", fbProfilePicture);
+            intent.putExtra("fbProfileName", fbProfileName);
             intent.putExtra("profileId", profileId);
             intent.putExtra("volunteer_id",volunteer_id);
 
