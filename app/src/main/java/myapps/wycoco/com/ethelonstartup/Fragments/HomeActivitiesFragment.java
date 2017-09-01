@@ -74,7 +74,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
 
         swipeRefreshLayout.post(new Runnable() {
                 @Override

@@ -1,142 +1,162 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="12dp"
-    android:paddingTop="20dp"
+    android:layout_marginTop="70dp"
+    android:orientation="vertical"
     tools:context="myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="2dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="3"
         android:id="@+id/funnyContainer">
+
         <LinearLayout
             android:visibility="visible"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            android:layout_marginBottom="15dp">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/calendarLabel"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/calendar_icon"
-                android:layout_marginLeft="14dp"
-                android:layout_marginStart="14dp" />
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:src="@drawable/calendar_ic"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="January 1, 2017"
-                style="@style/TextViewIndigo"
+                android:paddingTop="5dp"
+                android:textColor="#000"
+                android:layout_gravity="center"
                 android:id="@+id/eventDate"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="15dp">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <ImageView
-                android:layout_marginLeft="16dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/clock_icon"
+                android:layout_gravity="center"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/clock_ic"
                  />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="8:00 am"
-                style="@style/TextViewIndigo"
+                android:paddingTop="5dp"
+                android:textColor="#000"
                 android:id="@+id/eventTimeStart"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="40dp"
-                android:gravity="center_vertical"/>
+                android:gravity="center"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:visibility="visible"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            android:layout_marginBottom="15dp">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/compass"
-                android:layout_marginLeft="14dp"/>
+                android:layout_gravity="center"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/location_ic"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cebu City"
-                style="@style/TextViewIndigo"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:paddingTop="5dp"
                 android:id="@+id/eventLocation"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="40dp"
                 android:gravity="center_vertical"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:visibility="visible"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="15dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/skills"
-                android:layout_marginLeft="14dp"/>
-
-            <TextView
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:text="Education"
-                style="@style/TextViewIndigo"
-                android:id="@+id/eventSkills"
-
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="40dp"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:visibility="visible"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="15dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/phone_book"
-                android:layout_marginLeft="14dp" />
-            <TextView
-                android:text="Anton Wycoco/ 09420170888"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewIndigo"
-                android:id="@+id/eventContact"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="40dp"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
     </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="2"
+        android:id="@+id/funnyContainer2">
+
+        <LinearLayout
+            android:visibility="visible"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/skills_ic"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Culinary"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:paddingTop="5dp"
+                android:id="@+id/eventSkills"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/contacts_ic"
+                />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Anton Wycoco / 09420170888"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:paddingTop="5dp"
+                android:id="@+id/eventContact"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

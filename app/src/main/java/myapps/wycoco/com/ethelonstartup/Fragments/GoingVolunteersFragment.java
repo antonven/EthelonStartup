@@ -57,6 +57,7 @@ public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLay
 
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayoutGoingVolunteers);
         recyclerView = (RecyclerView)view.findViewById(R.id.recViewVolunteers);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
 
 
 

@@ -89,9 +89,11 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
         volunteers  = new ArrayList<>();
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
+        String volunteer_id = getArguments().getString("volunteer_id");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("activity_id", activity_id);
+        params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
         Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
 

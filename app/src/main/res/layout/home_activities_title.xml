@@ -42,32 +42,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/eventName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextViewRedBig"
-            android:textSize="20sp"
-            android:text="I.C.T.O. Feeding Program" />
+            <TextView
+                android:id="@+id/eventName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextViewRedBig"
+                android:textSize="20sp"
+                android:text="I.C.T.O. Feeding Program" />
 
-        <TextView
-            android:id="@+id/eventHost"
-            android:textSize="16sp"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CICCT ICT Org"
-            />
+            <TextView
+                android:id="@+id/eventHost"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CICCT ICT Org"
+                />
 
 
-        <ImageView
-            android:id="@+id/title_from_to_dots_divider"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="3dp"
-            android:src="@color/contentDividerLine"/>
+            <ImageView
+                android:id="@+id/title_from_to_dots_divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="3dp"
+                android:src="@color/contentDividerLine"/>
 
             <TextView
                 android:id="@+id/eventAddress"
@@ -85,45 +85,45 @@
                 android:layout_marginBottom="10dp"
                 android:weightSum="4">
 
-            <ImageView
-                android:layout_weight="1"
-                android:id="@+id/imageView"
-                android:layout_width="34dp"
-                android:scaleType="fitCenter"
-                android:layout_height="match_parent"
-                android:src="@drawable/calendar_ic"
-                 />
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView"
+                    android:layout_width="34dp"
+                    android:scaleType="fitCenter"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/calendar_ic"
+                    />
 
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/eventDate"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="12/25/2017" />
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/eventDate"
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="12/25/2017" />
 
-            <ImageView
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:id="@+id/clockImage"
-                android:layout_width="34dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/clock_ic"
+                <ImageView
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/clockImage"
+                    android:layout_width="34dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/clock_ic"
 
-                />
+                    />
 
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="#000"
-                android:text="8:00 am"
-                android:id="@+id/eventTimeStart"
-                />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#000"
+                    android:text="8:00 am"
+                    android:id="@+id/eventTimeStart"
+                    />
 
-                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="200dp"
@@ -147,18 +147,19 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:text="@string/points_badge"
-                     />
+                    />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:weightSum="2"
                 >
 
                 <TextView
-
+                    android:layout_weight="1"
                     android:id="@+id/title_volunteers_count"
                     style="@style/TextViewRedBig"
                     android:textSize="20sp"
@@ -170,21 +171,21 @@
                 <TextView
                     android:layout_marginLeft="95dp"
                     android:text="100"
+                    android:layout_weight="1"
                     android:id="@+id/eventPoints"
                     style="@style/TextViewRedBig"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                     />
+                    />
 
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:id="@+id/goingRecycler">
+                <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:id="@+id/goingVolunteersList">-->
 
-                </android.support.v7.widget.RecyclerView>
-
+                <!--</android.support.v7.widget.RecyclerView>-->
 
             </LinearLayout>
         </LinearLayout>

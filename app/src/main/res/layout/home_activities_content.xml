@@ -93,19 +93,6 @@
             android:text="@string/points_badge"
             android:layout_alignLeft="@id/clickedEventPoints" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:background="@drawable/login_ethelon_bg_button_user"
-            android:text="Attend"
-            android:layout_alignBottom="@id/clickedEventPoints"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/attendBtn"
-            android:textColor="#fff"
-            android:layout_alignParentRight="true" />
-
 
     </RelativeLayout>
 
@@ -194,13 +181,13 @@
 
 
                 <!--<TextView-->
-                    <!--android:id="@+id/content_from_badge"-->
-                    <!--style="@style/ContentMainBadgeTitle"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:text="@string/from_badge"-->
-                    <!--android:layout_alignParentLeft="true" />-->
+                <!--android:id="@+id/content_from_badge"-->
+                <!--style="@style/ContentMainBadgeTitle"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:text="@string/from_badge"-->
+                <!--android:layout_alignParentLeft="true" />-->
 
                 <TextView
                     android:id="@+id/clickedEventDescription"
@@ -215,62 +202,62 @@
                     android:layout_alignLeft="@id/clickedEventDescriptionLabel" />
 
                 <!--<TextView-->
-                    <!--android:id="@+id/clickedEventTimeStart"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignStart="@id/clickedEventDate"-->
-                    <!--android:layout_below="@id/clickedEventDate"-->
-                    <!--android:text="11:00 am"-->
-                    <!--android:textColor="@color/mainTextColor"-->
-                    <!--android:textSize="14sp"-->
-                    <!--android:layout_alignLeft="@id/clickedEventDate" />-->
+                <!--android:id="@+id/clickedEventTimeStart"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignStart="@id/clickedEventDate"-->
+                <!--android:layout_below="@id/clickedEventDate"-->
+                <!--android:text="11:00 am"-->
+                <!--android:textColor="@color/mainTextColor"-->
+                <!--android:textSize="14sp"-->
+                <!--android:layout_alignLeft="@id/clickedEventDate" />-->
 
             </RelativeLayout>
 
             <!--<RelativeLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1">-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1">-->
 
-                <!--<TextView-->
-                    <!--android:id="@+id/content_to_badge"-->
-                    <!--style="@style/ContentMainBadgeTitle"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:text="@string/to_badge"-->
-                    <!--android:layout_alignParentLeft="true" />-->
+            <!--<TextView-->
+            <!--android:id="@+id/content_to_badge"-->
+            <!--style="@style/ContentMainBadgeTitle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:text="@string/to_badge"-->
+            <!--android:layout_alignParentLeft="true" />-->
 
-                <!--<TextView-->
-                    <!--android:id="@+id/clickedEventLocation"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignStart="@id/content_to_badge"-->
-                    <!--android:layout_below="@id/content_to_badge"-->
-                    <!--android:text="Basak, Pardo"-->
-                    <!--android:textColor="@color/mainTextColor"-->
-                    <!--android:textSize="18sp"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:layout_alignLeft="@id/content_to_badge" />-->
+            <!--<TextView-->
+            <!--android:id="@+id/clickedEventLocation"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignStart="@id/content_to_badge"-->
+            <!--android:layout_below="@id/content_to_badge"-->
+            <!--android:text="Basak, Pardo"-->
+            <!--android:textColor="@color/mainTextColor"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_alignLeft="@id/content_to_badge" />-->
 
-                <!--<TextView-->
-                    <!--android:id="@+id/content_to_address_2"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignStart="@id/clickedEventLocation"-->
-                    <!--android:layout_below="@id/clickedEventLocation"-->
-                    <!--android:text="Cebu City"-->
-                    <!--android:textColor="@color/mainTextColor"-->
-                    <!--android:textSize="14sp"-->
-                    <!--android:layout_alignLeft="@id/clickedEventLocation" />-->
+            <!--<TextView-->
+            <!--android:id="@+id/content_to_address_2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignStart="@id/clickedEventLocation"-->
+            <!--android:layout_below="@id/clickedEventLocation"-->
+            <!--android:text="Cebu City"-->
+            <!--android:textColor="@color/mainTextColor"-->
+            <!--android:textSize="14sp"-->
+            <!--android:layout_alignLeft="@id/clickedEventLocation" />-->
 
-                <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_alignParentEnd="true"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:src="@drawable/arrow"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_alignParentRight="true" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_alignParentEnd="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:src="@drawable/arrow"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_alignParentRight="true" />&ndash;&gt;-->
 
             <!--</RelativeLayout>-->
 

@@ -60,10 +60,10 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         holder.eventPoints.setText(activities.get(position).getActivityPoints());
         holder.clickedEventName.setText(activities.get(position).getActivityName());
         holder.clickedEventHost.setText(activities.get(position).getFoundationName());
-        holder.clickedEventDate.setText(activities.get(position).getActivityDate());
-        holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
+        holder.clickedEventDescription.setText(activities.get(position).getActivityDes());
+//        holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
         holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
-        holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
+//        holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
         holder.contactPerson.setText(activities.get(position).getContactPerson());
         holder.activityContact.setText(activities.get(position).getActivityContact());
@@ -81,7 +81,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
         FoldingCell fc;
         TextView eventName, eventHost, eventAddress, eventDate, eventTimeStart, eventVolunteers, eventPoints;
-        TextView clickedEventName, clickedEventHost, clickedEventLocation, clickedEventDate, clickedEventTimeStart,
+        TextView clickedEventName, clickedEventHost, clickedEventLocation, clickedEventDescription, clickedEventTimeStart,
                 clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact;
         RelativeLayout relativeLayout;
         ImageView clickedActivityImage;
@@ -101,9 +101,9 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             clickedEventName = (TextView)itemView.findViewById(R.id.clickedEventName);
             clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
-            clickedEventLocation = (TextView)itemView.findViewById(R.id.clickedEventLocation);
-            clickedEventDate = (TextView)itemView.findViewById(R.id.clickedEventDate);
-            clickedEventTimeStart = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
+//            clickedEventLocation = (TextView)itemView.findViewById(R.id.clickedEventLocation);
+            clickedEventDescription = (TextView)itemView.findViewById(R.id.clickedEventDescription);
+//            clickedEventTimeStart = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
             clickedEventVolunteers = (TextView)itemView.findViewById(R.id.clickedEventVolunteerCount);
             clickedPoints = (TextView)itemView.findViewById(R.id.clickedEventPoints);
             clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);

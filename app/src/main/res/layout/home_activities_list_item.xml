@@ -21,8 +21,8 @@
     >
 
 
-    <include layout="@layout/portfolio_cell_content"/>
-    <include layout="@layout/portfolio_cell_title"/>
+    <include layout="@layout/home_activities_content"/>
+    <include layout="@layout/home_activities_title"/>
 
 
 </com.ramotion.foldingcell.FoldingCell>

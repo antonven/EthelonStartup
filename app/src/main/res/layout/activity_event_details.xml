@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f8f8f8"
-
+    android:fitsSystemWindows="false"
     android:id="@+id/funny"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity">
 
@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:id="@+id/linearHeader"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
 
 
             <FrameLayout
@@ -34,7 +35,7 @@
             <ImageView
                 android:id="@+id/eventDetailsImage"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="300dp"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
                 app:layout_collapseParallaxMultiplier="0.9"
@@ -109,7 +110,7 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
         <android.support.design.widget.TabLayout
-            android:layout_marginTop="15dp"
+
             android:id="@+id/detailsTabs"
             android:layout_width="match_parent"
             android:background="@drawable/event_details_custom_tab"
@@ -117,6 +118,7 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:tabMode="fixed"
             app:tabGravity="fill"
+            android:fitsSystemWindows="true"
             app:layout_collapseMode="pin"
             />
     </android.support.design.widget.AppBarLayout>

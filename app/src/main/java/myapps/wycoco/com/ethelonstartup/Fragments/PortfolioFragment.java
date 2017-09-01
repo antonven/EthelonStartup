@@ -62,6 +62,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         recView = (RecyclerView) v.findViewById(R.id.recView);
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
 
 
         swipeRefreshLayout.post(new Runnable() {
@@ -157,7 +158,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
 
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
-                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, api_token, activity_id);
+                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, api_token, volunteer_id);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(portfolioAdapter);
                             Log.e("PISTE KOBE ", activities.size() + "id :" + activity_id);
