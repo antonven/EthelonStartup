@@ -72,7 +72,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
         View v = inflater.inflate(R.layout.home_activities_fragment, container, false);
         recView = (RecyclerView) v.findViewById(R.id.recView);
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
-        swipeRefreshLayout.setOnRefreshListener(this);
+            swipeRefreshLayout.setOnRefreshListener(this);
 
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
 
@@ -162,6 +162,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                             foundationName);
 
                                     Log.e("ACTIVITIES", response.toString());
+
                                     activities.add(activityModel1);
 
                                 } catch (JSONException e) {

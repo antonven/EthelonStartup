@@ -99,9 +99,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         toolbar = (Toolbar) findViewById(R.id.nav_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setBackground(null);
+       toolbar.setBackground(null);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

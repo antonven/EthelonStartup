@@ -1,15 +1,21 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -43,6 +49,8 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
@@ -60,9 +68,11 @@ import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
 import myapps.wycoco.com.ethelonstartup.Models.BusStation;
+import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.UserCredentials;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Utils.NotificationUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -73,13 +83,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProfileTracker profileTracker;
     Profile profile;
     ViewPager vp;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     LoginViewPagerAdapter viewPager;
     String name, facebook_id, email, profile_id, profileName, first_name, last_name, profilePicture;
     String volunteer_id;
     String message, api_token;
+    TextView text;
 
     private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
-
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +111,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
+        text = (TextView)findViewById(R.id.alreadAUserLabel);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
         vp = (ViewPager)findViewById(R.id.viewPagerText);
+        Log.e("FirebaseKobe","outside onrecieve");
+        System.out.print("outside on recieve");
+        Toast.makeText(this, "Fuck this hist", Toast.LENGTH_SHORT).show();
+
 
         viewPager = new LoginViewPagerAdapter(this);
         vp.setAdapter(viewPager);
@@ -115,7 +132,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonSignup.setOnClickListener(this);
         buttonFacebook.setOnClickListener(this);
 
+
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(context, "inside on recieve", Toast.LENGTH_SHORT).show();
+                Log.e("FirebaseKobe","inside onrecieve");
+                System.out.print("inside on recieve inatay");
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+
+                    displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+
+                    String message = intent.getStringExtra("message");
+
+                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+
+                    //txtMessage.setText(message);
+
+                    Log.e("FirebaseKobe",message + " mgreg broadcastreciever");
+                }
+            }
+        };
+
         accestToken();
+    }
+
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+
+        Log.e(TAG, "Firebase reg id: " + regId);
+        Toast.makeText(this, "reg id = "+regId, Toast.LENGTH_SHORT).show();
+
+        if (!TextUtils.isEmpty(regId)) {
+            Log.wtf("No logs", regId);
+            System.out.printf(regId);
+            text.setText(regId + "");
+        }
+        else
+           text.setText("wala pa daw ");
     }
 
 
@@ -149,6 +213,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onResume();
 
         profile = Profile.getCurrentProfile();
+
+        // register GCM registration complete receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.REGISTRATION_COMPLETE));
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.PUSH_NOTIFICATION));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(getApplicationContext());
 
         if(profile!=null) {
 
