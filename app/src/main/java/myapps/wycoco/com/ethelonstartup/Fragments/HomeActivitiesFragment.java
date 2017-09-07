@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
@@ -71,6 +72,8 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
 
         View v = inflater.inflate(R.layout.home_activities_fragment, container, false);
         recView = (RecyclerView) v.findViewById(R.id.recView);
+        Log.e("homeactivityline83", FirebaseInstanceId.getInstance().getToken());
+
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
             swipeRefreshLayout.setOnRefreshListener(this);
 

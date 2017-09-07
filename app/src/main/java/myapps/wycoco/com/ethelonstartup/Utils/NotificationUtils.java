@@ -162,8 +162,8 @@ public class NotificationUtils {
         try {
             Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                     + "://" + mContext.getPackageName() + "/raw/notification");
-            Ringtone r = RingtoneManager.getRingtone(mContext, alarmSound);
-            r.play();
+//            Ringtone r = RingtoneManager.getRingtone(mContext, alarmSound);
+           // r.play();
         } catch (Exception e) {
             e.printStackTrace();
         }

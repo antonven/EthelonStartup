@@ -49,6 +49,7 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
@@ -399,6 +400,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if(object.getString("email")!= null){
                         email = object.getString("email");
+                    }else{
+                        email = "email not avaiable " + facebook_id;
                     }
 
                     Map<String, String> params = new HashMap<String, String>();
@@ -407,6 +410,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     params.put("name", name);
                     params.put("role", "volunteer");
                     params.put("image_url",profilePicture);
+                    params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
 
                     JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                             new Response.Listener<JSONObject>() {
@@ -441,6 +445,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         }
                                     }catch (JSONException e) {
                                         e.printStackTrace();
+                                        Log.e("line 444","catch");
                                     }
 
                                 }
@@ -465,6 +470,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         params.put("name", name);
                         params.put("role", "volunteer");
                         params.put("image_url",profilePicture);
+                        params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
 
                         JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                                     new Response.Listener<JSONObject>() {
