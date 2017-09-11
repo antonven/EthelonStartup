@@ -7,5 +7,5 @@
     android:textAlignment="center"
 
     android:drawablePadding="2dp"
-    android:textSize="@dimen/tab_label"
+
     android:fontFamily="@string/font_fontFamily_medium"/>

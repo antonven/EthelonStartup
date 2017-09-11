@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(this, "reg id = "+regId, Toast.LENGTH_SHORT).show();
 
         if (!TextUtils.isEmpty(regId)) {
-            Log.wtf("No logs", regId);
+            Log.d("No logs", regId);
             System.out.printf(regId);
             text.setText(regId + "");
         }
@@ -251,7 +251,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 intent.putExtra("api_token", api_token);
                                 intent.putExtra("profileId", profile_id);
                                 intent.putExtra("image_url", profilePicture);
-                                Log.e("LOGIN ACTIVITY","facebook_id "+profile_id + "proPIC"+ profilePicture);
+                                intent.putExtra("email", email);
+                                Log.e("LOGIN ACTIVITY","facebook_id "+profile_id + email + "proPIC"+ profilePicture);
                                 startActivity(intent);
 
                             }else if(message.equals("Email already exists")){
@@ -327,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("last_name", profile.getLastName());
             i.putExtra("volunteer_id",volunteer_id);
             i.putExtra("api_token",api_token);
-
+            i.putExtra("email", email);
             Log.e("kobe","next act" + api_token + volunteer_id);
             startActivity(i);
         }
@@ -432,6 +433,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             intent.putExtra("profileId", profile_id);
                                             intent.putExtra("fbProfilePicture", profilePicture);
                                             intent.putExtra("fbProfileName", profileName);
+                                            intent.putExtra("email", email);
                                             startActivity(intent);
 
                                         }else if(message.equals("Email already exists")){
@@ -491,6 +493,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     intent.putExtra("profileId", profile_id);
                                                     intent.putExtra("fbProfilePicture", profilePicture);
                                                     intent.putExtra("fbProfileName", profileName);
+                                                    intent.putExtra("email", email);
                                                     startActivity(intent);
 
                                                 }else if(message.equals("Email already exists")){
@@ -527,5 +530,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+
+    public void requestEmail(){
+
     }
 }

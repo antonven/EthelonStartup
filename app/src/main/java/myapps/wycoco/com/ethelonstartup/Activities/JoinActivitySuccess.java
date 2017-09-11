@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import myapps.wycoco.com.ethelonstartup.R;
 
-public class SuccessActivity extends AppCompatActivity {
+public class JoinActivitySuccess extends AppCompatActivity {
 
     ImageView checkmark;
 
@@ -29,7 +29,7 @@ public class SuccessActivity extends AppCompatActivity {
                 String volunteer_id = getIntent().getStringExtra("volunteer_id");
                 String activity_id = getIntent().getStringExtra("activity_id");
 
-                Intent n = new Intent(SuccessActivity.this, PortfolioActivity.class);
+                Intent n = new Intent(JoinActivitySuccess.this, PortfolioActivity.class);
                 n.putExtra("api_token", api_token);
                 n.putExtra("volunteer_id", volunteer_id);
                 n.putExtra("activity_id", activity_id);

@@ -7,54 +7,50 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/volunteerPicture"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:padding="5dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/feed1"/>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="100dp"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/volunteerFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Anton Ven"
+                android:gravity="center"
+                android:textColor="#000"
+                android:textSize="22sp"
+                android:layout_below="@id/volunteerPicture"
+                android:layout_marginTop="10dp"
+                android:layout_centerInParent="true"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/volunteerPicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="5dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/feed1"/>
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/volunteerFirstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Anton Ven"
-            android:gravity="center"
-            android:textColor="#000"
-            android:textSize="16sp"
-            android:layout_below="@id/volunteerPicture"
-            android:layout_marginTop="10dp"
-            android:layout_centerInParent="true"/>
 
-    </RelativeLayout>
-    </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
+
+        <!--<include layout="@layout/fragment_criteria"/>-->
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="20dp"
             android:id="@+id/recyclerCriteria">
 
         </android.support.v7.widget.RecyclerView>
 
-    </FrameLayout>
+
+
+
 
 
 </LinearLayout>

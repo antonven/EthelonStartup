@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="myapps.wycoco.com.ethelonstartup.Activities.EvaluateGroupActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        android:textColor="@color/signatureColor"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:text="EVALUATE GROUP MATES"/>
+
+
+    <FrameLayout
+        android:layout_margin="40dp"
+        android:id="@+id/evaluateGroupFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+
+</LinearLayout>

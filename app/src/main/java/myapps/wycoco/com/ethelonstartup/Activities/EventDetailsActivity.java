@@ -2,12 +2,8 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,14 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.varunest.sparkbutton.SparkButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
-import myapps.wycoco.com.ethelonstartup.Fragments.DialogFragmentJoinAct;
 import myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
@@ -54,7 +45,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     Toolbar toolbar;
     String eventName, eventHost, eventLocation, eventDate, eventTimeStart, eventImage, activity_id;
     TextView eventName1, eventHost1;
-    Button joinActivityBtn;
+    Button joinActivityBtn, unjoinActivityBtn;
     ImageView eventDetailsImage;
     Intent n;
     private static final String URL = "http://"+new Localhost().getLocalhost()+"joinactivity";
@@ -75,6 +66,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         eventName1 = (TextView)findViewById(R.id.eventName);
         eventHost1 = (TextView)findViewById(R.id.eventHost);
         joinActivityBtn = (Button)findViewById(R.id.joinActivityBtn);
+        unjoinActivityBtn = (Button)findViewById(R.id.unjoinActivityBtn);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
 
         n = getIntent();
@@ -91,7 +83,58 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         eventName1.setText(eventName);
         eventHost1.setText(eventHost);
 
-        joinActivityBtn.setOnClickListener(this);
+        joinActivityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String volunteer_id = n.getStringExtra("id");
+                final String api_token = n.getStringExtra("api_token");
+                final String activity_id = n.getStringExtra("activity_id");
+
+                joinActivityBtn.setVisibility(View.GONE);
+                unjoinActivityBtn.setVisibility(View.VISIBLE);
+
+                final Map<String, String> params = new HashMap<String, String>();
+                params.put("volunteer_id", volunteer_id);
+                params.put("activity_id", activity_id);
+                params.put("api_token", api_token);
+
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    if (response.getString("message").equals("Already Joined")) {
+                                        Toast.makeText(EventDetailsActivity.this, "You have already joined this activity!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        //Fragment na naka success siya!
+                                        Intent n = new Intent(EventDetailsActivity.this, JoinActivitySuccess.class);
+                                        n.putExtra("api_token", api_token);
+                                        n.putExtra("volunteer_id", volunteer_id);
+                                        n.putExtra("activity_id", activity_id);
+                                        startActivity(n);
+                                        //ma add sha sa portfolio
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }) {
+
+
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
+                requestQueue.add(jsonObjectRequest);
+
+            }
+        });
         insTabs();
 
     }
@@ -175,50 +218,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
 
-        final String volunteer_id = n.getStringExtra("id");
-        final String api_token = n.getStringExtra("api_token");
-        final String activity_id = n.getStringExtra("activity_id");
-
-
-        final Map<String, String> params = new HashMap<String, String>();
-        params.put("volunteer_id", volunteer_id);
-        params.put("activity_id", activity_id);
-        params.put("api_token", api_token);
-
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response.getString("message").equals("Already Joined")) {
-                                Toast.makeText(EventDetailsActivity.this, "You have already joined this activity!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                //Fragment na naka success siya!
-                                Intent n = new Intent(EventDetailsActivity.this, SuccessActivity.class);
-                                n.putExtra("api_token", api_token);
-                                n.putExtra("volunteer_id", volunteer_id);
-                                n.putExtra("activity_id", activity_id);
-                                startActivity(n);
-                                //ma add sha sa portfolio
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
-        requestQueue.add(jsonObjectRequest);
 
 
     }

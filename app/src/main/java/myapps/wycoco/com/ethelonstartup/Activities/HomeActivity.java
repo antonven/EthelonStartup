@@ -42,7 +42,7 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView profileName;
+    TextView profileName, profileEmail;
     ImageView profilePicture;
     String profName, image, newSignUpUsername, profileId, cov_photo,  ethelonUserName, ethelonUserImage;
     String fbProfilePicture, fbProfileName;
@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity
     Toolbar toolbar;
     TabLayout tabLayout;
     AppBarLayout appBarLayout;
-    String api_token;
+    String api_token, email;
     String volunteer_id;
 
 
@@ -92,17 +92,21 @@ public class HomeActivity extends AppCompatActivity
         ethelonUserImage = n.getStringExtra("image_url");
         newSignUpUsername = n.getStringExtra("newSignUpUsername");
         fbProfileName = n.getStringExtra("fbProfileName");
+        email = n.getStringExtra("email");
 
         Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName);
 
         View view = navigationView.getHeaderView(0);
         profileName = (TextView) view.findViewById(R.id.profileName);
         profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
+        profileEmail = (TextView)view.findViewById(R.id.profileEmail);
+
 
         if(fbProfileName != null && fbProfilePicture != null && profileId != null) {
             profileName.setText(fbProfileName);
             Glide.with(getApplicationContext()).load(fbProfilePicture)
                     .centerCrop().crossFade().into(profilePicture);
+            profileEmail.setText(email);
 
         }else if(newSignUpUsername != null){
             profileName.setText(newSignUpUsername);
@@ -190,27 +194,42 @@ public class HomeActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+//                tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
+                tab.getIcon().setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getIcon().setColorFilter(Color.parseColor("#808080"), PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
     }
 
     private void setupTabIcons() {
 
-    TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-//        tabOne.setText("Home");
-    tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_black_24dp, 0, 0);
-    tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
-    tabLayout.getTabAt(0).setCustomView(tabOne);
 
-    TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-//           tabTwo.setText("Notifications");
-    tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_notifications_black_24dp, 0, 0);
+    tabLayout.getTabAt(0).setIcon(R.drawable.home_icon);
     tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
-    tabLayout.getTabAt(1).setCustomView(tabTwo);
+    tabLayout.getTabAt(0).getIcon().setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
 
-    TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-//           tabThree.setText("Leaderboard");
-    tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_format_list_numbered_black_24dp, 0, 0);
+    tabLayout.getTabAt(1).setIcon(R.drawable.ic_notifications_black_24dp);
     tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
-    tabLayout.getTabAt(2).setCustomView(tabThree);
+
+    tabLayout.getTabAt(2).setIcon(R.drawable.ic_format_list_numbered_black_24dp);
+    tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
+
+
     }
 
     private void setupViewPager(ViewPager viewPager){

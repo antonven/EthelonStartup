@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import myapps.wycoco.com.ethelonstartup.Adapters.LeaderBoardCustomAdapter;
+//import myapps.wycoco.com.ethelonstartup.Adapters.LeaderBoardCustomAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 import shivam.developer.featuredrecyclerview.FeatureLinearLayoutManager;
@@ -27,7 +27,7 @@ public class LeaderBoardFragment extends Fragment {
 
     ArrayList<UserModel> userLeaders = new ArrayList<>();
     FeaturedRecyclerView featuredRecyclerView;
-    LeaderBoardCustomAdapter adapter;
+//    LeaderBoardCustomAdapter adapter;
     UserModel userModel;
 
     @Nullable
@@ -40,8 +40,8 @@ public class LeaderBoardFragment extends Fragment {
         featuredRecyclerView = (FeaturedRecyclerView)v.findViewById(R.id.featured_recycler_view);
         FeatureLinearLayoutManager layoutManager = new FeatureLinearLayoutManager(getContext());
         featuredRecyclerView.setLayoutManager(layoutManager);
-        adapter = new LeaderBoardCustomAdapter(getContext(), userLeaders);
-        featuredRecyclerView.setAdapter(adapter);
+//        adapter = new LeaderBoardCustomAdapter(getContext(), userLeaders);
+//        featuredRecyclerView.setAdapter(adapter);
 
         return v;
     }

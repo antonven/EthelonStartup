@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.zip.Inflater;
@@ -23,6 +24,11 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
     Context mContext;
     ArrayList<EvaluationCriteria> criteria = new ArrayList<>();
 
+    public EvaluationCriteriaAdapter(Context mContext, ArrayList<EvaluationCriteria> criteria) {
+        this.mContext = mContext;
+        this.criteria = criteria;
+    }
+
     @Override
     public EvaluationCriteriaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.evaluate_criteria_item, parent,false);
@@ -35,6 +41,9 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
     @Override
     public void onBindViewHolder(EvaluationCriteriaAdapter.ViewHolder holder, int position) {
 
+        holder.criteriaName.setText(criteria.get(position).getCriteriaName());
+        holder.criteriaRating.setRating(criteria.get(position).getCriteriaRating());
+
     }
 
     @Override
@@ -44,14 +53,28 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView criteria;
-        RatingBar ratingBar;
+        TextView criteriaName;
+        RatingBar criteriaRating;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            criteria = (TextView)itemView.findViewById(R.id.criteriaTxt);
-            ratingBar = (RatingBar)itemView.findViewById(R.id.criteriaRating);
+            criteriaName = (TextView)itemView.findViewById(R.id.criteriaTxt);
+            criteriaRating = (RatingBar)itemView.findViewById(R.id.criteriaRating);
+
+            criteriaRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+
+                }
+            });
+
+            criteriaRating.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, "NAPISTE KA!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

@@ -91,18 +91,38 @@
                     android:text="USJ-R ICT Organization" />
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <Button
                 android:layout_weight="1"
-                android:id="@+id/joinActivityBtn"
+                android:id="@+id/unjoinActivityBtn"
                 android:layout_width="120dp"
                 android:layout_height="35dp"
                 android:layout_gravity="right"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 android:background="@drawable/edit_profile_btn"
-                android:text="Join"
+                android:text="Unjoin"
                 android:textColor="#fff" />
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/joinActivityBtn"
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_profile_btn"
+                    android:text="Join"
+                    android:textColor="#fff" />
+
+            </RelativeLayout>
 
         </LinearLayout>
         </FrameLayout>
