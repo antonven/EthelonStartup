@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,13 +58,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
 
-//        Window window = this.getWindow();
-////        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
-//        }
+        Window window = this.getWindow();
+//        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(Color.parseColor("#8b0000"));
+        }
 
         eventName1 = (TextView)findViewById(R.id.eventName);
         eventHost1 = (TextView)findViewById(R.id.eventHost);
@@ -72,9 +75,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         n = getIntent();
         eventName = n.getStringExtra("eventName");
         eventHost = n.getStringExtra("eventHost");
-        eventDate = n.getStringExtra("eventDate");
-        eventTimeStart = n.getStringExtra("eventTimeStart");
-        eventLocation = n.getStringExtra("eventLocation");
+
         eventImage = n.getStringExtra("eventImage");
         activity_id = n.getStringExtra("activity_id");
         Log.e("EVENTDETAILSACT", "activity_id " + activity_id);
@@ -191,6 +192,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         String api_token = n.getStringExtra("api_token");
         String activity_id = n.getStringExtra("activity_id");
         String profile_id = n.getStringExtra("profileId");
+        String eventDate = n.getStringExtra("eventDate");
+        String eventTimeStart = n.getStringExtra("eventTimeStart");
+        String eventLocation = n.getStringExtra("eventLocation");
+        String contactNo = n.getStringExtra("contactNo");
+        String contactPerson = n.getStringExtra("contactPerson");
+
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
@@ -198,6 +206,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         in.putString("eventDate", eventDate);
         in.putString("eventTimeStart", eventTimeStart);
         in.putString("eventLocation", eventLocation);
+        in.putString("contactNo", contactNo);
+        in.putString("contactPerson", contactPerson);
         eventDetailsFragment.setArguments(in);
 
         GoingVolunteersFragment goingVolunteersFragment = new GoingVolunteersFragment();

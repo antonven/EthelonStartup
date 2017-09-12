@@ -69,56 +69,5 @@ public class CriteriaFragment extends Fragment {
     }
 
 
-//    public void fetchCriteria(){
-//
-//        String activity_id = getArguments().getString("activity_id");
-//        String api_token = getArguments().getString("api_token");
-//        String volunteer_id = getArguments().getString("volunteer_id");
-//
-//        criteria = new ArrayList<>();
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put("activity_id", activity_id);
-//        params.put("volunteer_id", volunteer_id);
-//        params.put("api_token", api_token);
-//        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
-//
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//
-//                        if (response.length() > 0) {
-//                            for (int i = 0; i < response.length(); i++) {
-//                                try {
-//                                    Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
-//                                    JSONObject usersObject = response.getJSONObject(i);
-//                                    for(int a = 0; a<5; a++) {
-//                                        EvaluationCriteria evaluationCriteria = new EvaluationCriteria("productivity", 3);
-//                                        criteria.add(evaluationCriteria);
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//
-//                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//                            recyclerCriteria.setLayoutManager(layoutManager);
-//                            evaluationCriteriaAdapter = new EvaluationCriteriaAdapter(mContext, criteria);
-//                            recyclerCriteria.setItemAnimator(new DefaultItemAnimator());
-//                            recyclerCriteria.setAdapter(evaluationCriteriaAdapter);
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        error.printStackTrace();
-////                        swipeRefreshLayout.setRefreshing(false);
-//
-//                    }
-//                });
-//        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-//        requestQueue.add(jsonArrayRequest);
-//    }
+
 }

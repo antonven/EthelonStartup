@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
 
+import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
@@ -39,6 +41,7 @@ import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
 import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupPagerAdapter;
+import myapps.wycoco.com.ethelonstartup.Adapters.EvaluationCriteriaAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
@@ -47,13 +50,22 @@ import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DialogFragmentAttendanceSuccess extends DialogFragment {
 
-    private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
+    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
+    ArrayList<RateVolunteer> volunteers = new ArrayList<>();
+    ArrayList<EvaluationCriteria> criteria;
+    EvaluationCriteriaAdapter evaluationCriteriaAdapter;
 
+    LayoutInflater layoutInflater;
+    RecyclerView recyclerCriteria;
+    String api_token, volunteer_id, activity_id;
+    Context mContext;
     ViewPager viewPager;
 
     public DialogFragmentAttendanceSuccess() {
@@ -102,7 +114,58 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
         return view;
     }
 
+    public void fetchCriteria(){
 
+        String activity_id = getArguments().getString("activity_id");
+        String api_token = getArguments().getString("api_token");
+        String volunteer_id = getArguments().getString("volunteer_id");
+
+        criteria = new ArrayList<>();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("activity_id", activity_id);
+        params.put("volunteer_id", volunteer_id);
+        params.put("api_token", api_token);
+        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        if (response.length() > 0) {
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
+                                    JSONObject usersObject = response.getJSONObject(i);
+                                    for(int a = 0; a<5; a++) {
+                                        EvaluationCriteria evaluationCriteria = new EvaluationCriteria("productivity", 3);
+                                        criteria.add(evaluationCriteria);
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            recyclerCriteria.setLayoutManager(layoutManager);
+                            evaluationCriteriaAdapter = new EvaluationCriteriaAdapter(mContext, criteria);
+                            recyclerCriteria.setItemAnimator(new DefaultItemAnimator());
+                            recyclerCriteria.setAdapter(evaluationCriteriaAdapter);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+//                        swipeRefreshLayout.setRefreshing(false);
+
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(jsonArrayRequest);
+    }
 
 
 

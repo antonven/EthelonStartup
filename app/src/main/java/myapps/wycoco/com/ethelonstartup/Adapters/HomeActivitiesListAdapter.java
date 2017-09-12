@@ -130,6 +130,9 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             String eventLocation = activities.get(getAdapterPosition()).getActivityLocation();
             String activity_id = activities.get(getAdapterPosition()).getActivityId();
             String eventImage = activities.get(getAdapterPosition()).getActivityImage();
+            String eventContactNo = activities.get(getAdapterPosition()).getActivityContact();
+            String eventContactPerson = activities.get(getAdapterPosition()).getContactPerson();
+            String eventSkills = activities.get(getAdapterPosition()).getActivityPoints();
 
             Intent in = new Intent(mContext, EventDetailsActivity.class);
             in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -139,6 +142,9 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             in.putExtra("eventDate", eventDate);
             in.putExtra("eventTimeStart", eventTimeStart);
             in.putExtra("eventLocation", eventLocation);
+            in.putExtra("contactNo", eventContactNo);
+            in.putExtra("contactPerson", eventContactPerson);
+            in.putExtra("eventPoints", eventSkills);
             in.putExtra("id", id);
             in.putExtra("activity_id", activity_id);
             in.putExtra("api_token", api_token);

@@ -39,9 +39,10 @@ import myapps.wycoco.com.ethelonstartup.R;
  */
 public class EventDetailsFragment extends Fragment {
 
-    TextView eventDate1, eventTimeStart1, eventLocation1;
+    TextView eventDate1, eventTimeStart1, eventLocation1, eventSkills1, eventContact1;
     Button joinActvitiyBtn;
     Context mContext;
+
 
 
 
@@ -59,20 +60,26 @@ public class EventDetailsFragment extends Fragment {
 
 
         String eventName = getArguments().getString("eventName");
-        String eventHost = getArguments().getString("eventHost");
+        String eventSkills = getArguments().getString("eventPoints");
         String eventDate = getArguments().getString("eventDate");
         String eventTimeStart = getArguments().getString("eventTimeStart");
         String eventLocation = getArguments().getString("eventLocation");
+        String contactNo = getArguments().getString("contactNo");
+        String contactPerson = getArguments().getString("contactPerson");
+
 
 
         eventDate1 = (TextView)view.findViewById(R.id.eventDate);
         eventTimeStart1 = (TextView)view.findViewById(R.id.eventTimeStart);
         eventLocation1 = (TextView)view.findViewById(R.id.eventLocation);
-//        joinActvitiyBtn = (Button)view.findViewById(R.id.joinActivityBtn);
-//        SparkButton heartButton = new SparkButton(mContext);
+        eventSkills1 = (TextView)view.findViewById(R.id.eventSkills);
+        eventContact1 = (TextView)view.findViewById(R.id.eventContact);
 
-
-
+        eventDate1.setText(eventDate);
+        eventTimeStart1.setText(eventTimeStart);
+        eventLocation1.setText(eventLocation);
+        eventSkills1.setText(eventSkills);
+        eventContact1.setText(contactPerson + "/ " + contactNo);
 
         return view;
     }

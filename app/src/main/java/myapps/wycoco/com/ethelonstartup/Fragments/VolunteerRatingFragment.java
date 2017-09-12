@@ -46,21 +46,15 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class VolunteerRatingFragment extends Fragment {
 
-    RecyclerView recyclerView;
+
     LinearLayoutManager linearLayoutManager;
     ArrayList<RateVolunteer> volunteers;
-    GoingVolunteersAdapter goingVolunteersAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
     ViewPager viewPager;
     EvaluateGroupAdapter evaluateGroupAdapter;
-    RecyclerView recyclerCriteria;
-    ArrayList<EvaluationCriteria> criteria;
+    RecyclerView volrec;
 
 
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
-
-    Context mContext;
-
 
     public VolunteerRatingFragment() {
         // Required empty public constructor
@@ -75,7 +69,7 @@ public class VolunteerRatingFragment extends Fragment {
 
 //        fetchVolunteerGroup(view);
         viewPager = (ViewPager)view.findViewById(R.id.evaluateGroupViewPager);
-        recyclerCriteria = (RecyclerView)view.findViewById(R.id.recyclerCriteria);
+        volrec = (RecyclerView)view.findViewById(R.id.volRec);
         volunteers  = new ArrayList<>();
         final String activity_id = getArguments().getString("activity_id");
         final String api_token = getArguments().getString("api_token");
@@ -118,10 +112,10 @@ public class VolunteerRatingFragment extends Fragment {
                             evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id);
 
                             linearLayoutManager = new LinearLayoutManager(getContext());
-                            recyclerView.setLayoutManager(linearLayoutManager);
+                            volrec.setLayoutManager(linearLayoutManager);
                             evaluateGroupAdapter.notifyDataSetChanged();
-                            recyclerView.setItemAnimator(new DefaultItemAnimator());
-                            recyclerView.setAdapter(evaluateGroupAdapter);
+                            volrec.setItemAnimator(new DefaultItemAnimator());
+                            volrec.setAdapter(evaluateGroupAdapter);
 
 //                            evaluateGroupPagerAdapter = new EvaluateGroupPagerAdapter(volunteers, getContext(), activity_id, api_token, volunteer_id);
 //                            viewPager.setAdapter(evaluateGroupPagerAdapter);

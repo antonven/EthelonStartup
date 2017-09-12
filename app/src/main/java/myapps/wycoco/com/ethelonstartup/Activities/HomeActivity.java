@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
@@ -42,7 +43,7 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView profileName, profileEmail;
+    TextView profileName, profileEmail, toolbarTitle;
     ImageView profilePicture;
     String profName, image, newSignUpUsername, profileId, cov_photo,  ethelonUserName, ethelonUserImage;
     String fbProfilePicture, fbProfileName;
@@ -60,17 +61,19 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
 
 
-//        Window window = this.getWindow();
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
-//        }
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(Color.parseColor("#8b0000"));
+        }
 
         initInstancesDrawer();
 
         appBarLayout = (AppBarLayout)findViewById(R.id.appBarHome);
-
+        toolbarTitle = (TextView)findViewById(R.id.toolbarTitle);
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Rancho-Regular.ttf");
+        toolbarTitle.setTypeface(typeface);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

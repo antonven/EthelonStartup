@@ -85,8 +85,8 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
     public void RequestPortfolio(){
 
         swipeRefreshLayout.setRefreshing(true);
-
         activities = new ArrayList<>();
+
         final String volunteer_id = getArguments().getString("volunteer_id");
         final String api_token = getArguments().getString("api_token");
 //        final String activity_id = getArguments().getString("activity_id");
@@ -147,6 +147,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                             foundationName);
 
                                     Log.e("KirstenMay", response.toString());
+
 
                                     activities.add(portfolioModel);
 
