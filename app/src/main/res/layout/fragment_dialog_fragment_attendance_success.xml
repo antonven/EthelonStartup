@@ -1,26 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.HomeActivity">
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/evaluateGroupViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v4.view.ViewPager>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/dialogFragment">
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/colorPrimary"
+                android:text="Rate Anton"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="32sp"
+                />
 
+            <FrameLayout
+                android:id="@+id/recFrame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginLeft="70dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="40dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:id="@+id/doneRateBtn"
+                android:text="Done"
+                android:layout_gravity="center_horizontal"
+
+                android:background="@drawable/login_ethelon_bg_button_user"/>
+        </LinearLayout>
     </FrameLayout>
 
-
-</FrameLayout>
+</LinearLayout>

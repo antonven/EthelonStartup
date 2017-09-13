@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.location.Criteria;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -61,7 +62,7 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
     ArrayList<RateVolunteer> volunteers = new ArrayList<>();
     ArrayList<EvaluationCriteria> criteria;
     EvaluationCriteriaAdapter evaluationCriteriaAdapter;
-
+    LinearLayoutManager linearLayout;
     LayoutInflater layoutInflater;
     RecyclerView recyclerCriteria;
     String api_token, volunteer_id, activity_id;
@@ -81,91 +82,48 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
         Window window = getDialog().getWindow();
         Point size = new Point();
 
+
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
         int width = size.x;
 
-        window.setLayout((int) (width * 2), WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(300, 700);
         window.setGravity(Gravity.CENTER);
-        viewPager = (ViewPager) view.findViewById(R.id.evaluateGroupViewPager);
+        recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
 
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
         String volunteer_id = getArguments().getString("volunteer_id");
+        CriteriaFragment criteriaFragment = new CriteriaFragment();
         Log.e("DIALOGFRAGMENT", "act_id" + activity_id);
-
-
-        EvaluateFragment evaluateFragment = new EvaluateFragment();
-
         Bundle bundle = new Bundle();
-        bundle.putString("api_token", api_token);
         bundle.putString("activity_id", activity_id);
+        bundle.putString("api_token", api_token);
         bundle.putString("volunteer_id", volunteer_id);
+        criteriaFragment.setArguments(bundle);
         FragmentManager fm = getChildFragmentManager();
-        evaluateFragment.setArguments(bundle);
-
         fm.beginTransaction()
-                .replace(R.id.dialogFragment, evaluateFragment)
-
-                .addToBackStack("Rate")
+                .replace(R.id.recFrame, criteriaFragment)
                 .commit();
+
+        if(getArguments() != null){
+            getCriteria();
+        }
 
         return view;
     }
 
-    public void fetchCriteria(){
+    public void getCriteria(){
 
-        String activity_id = getArguments().getString("activity_id");
-        String api_token = getArguments().getString("api_token");
-        String volunteer_id = getArguments().getString("volunteer_id");
+        int rating = getArguments().getInt("rating");
+        String criteria_name = getArguments().getString("criteria_name");
 
-        criteria = new ArrayList<>();
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("activity_id", activity_id);
-        params.put("volunteer_id", volunteer_id);
-        params.put("api_token", api_token);
-        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
+        Log.e("rating: ", rating + "" + criteria_name);
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        if (response.length() > 0) {
-                            for (int i = 0; i < response.length(); i++) {
-                                try {
-                                    Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
-                                    JSONObject usersObject = response.getJSONObject(i);
-                                    for(int a = 0; a<5; a++) {
-                                        EvaluationCriteria evaluationCriteria = new EvaluationCriteria("productivity", 3);
-                                        criteria.add(evaluationCriteria);
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                            recyclerCriteria.setLayoutManager(layoutManager);
-                            evaluationCriteriaAdapter = new EvaluationCriteriaAdapter(mContext, criteria);
-                            recyclerCriteria.setItemAnimator(new DefaultItemAnimator());
-                            recyclerCriteria.setAdapter(evaluationCriteriaAdapter);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-//                        swipeRefreshLayout.setRefreshing(false);
-
-                    }
-                });
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(jsonArrayRequest);
     }
+
+
 
 
 

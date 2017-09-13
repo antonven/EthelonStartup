@@ -49,6 +49,7 @@ public class VolunteerRatingFragment extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
     ArrayList<RateVolunteer> volunteers;
+
     ViewPager viewPager;
     EvaluateGroupAdapter evaluateGroupAdapter;
     RecyclerView volrec;
@@ -68,7 +69,6 @@ public class VolunteerRatingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_group_rate, container, false);
 
 //        fetchVolunteerGroup(view);
-        viewPager = (ViewPager)view.findViewById(R.id.evaluateGroupViewPager);
         volrec = (RecyclerView)view.findViewById(R.id.volRec);
         volunteers  = new ArrayList<>();
         final String activity_id = getArguments().getString("activity_id");

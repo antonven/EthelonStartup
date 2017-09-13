@@ -99,18 +99,4 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()){
-//
-//            case R.id.proceedBtn:
-//                Log.e("ASD", "ni click ang shet" + email + password);
-//                postLoginCredentials();
-//                break;
-//        }
-//    }
-
-    public void postLoginCredentials(){
-
-    }
 }

@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Criteria;
 import android.os.Bundle;
 import android.support.v4.app.BundleCompat;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Fragments.DialogFragmentAttendanceSuccess;
+import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -33,6 +35,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
     Context mContext;
     ArrayList<RateVolunteer> volunteers = new ArrayList<>();
     String activity_id, api_token, volunteer_id;
+    ArrayList<EvaluationCriteria> criterias = new ArrayList<>();
 
     public EvaluateGroupAdapter(Context mContext, ArrayList<RateVolunteer> volunteers, String activity_id, String api_token, String volunteer_id) {
         this.mContext = mContext;
@@ -40,6 +43,11 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         this.activity_id = activity_id;
         this.api_token = api_token;
         this.volunteer_id = volunteer_id;
+    }
+
+    public EvaluateGroupAdapter(Context mContext, ArrayList<EvaluationCriteria> criterias){
+        this.mContext = mContext;
+        this.criterias = criterias;
     }
 
     @Override
@@ -54,6 +62,12 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
                 .centerCrop().crossFade().into(holder.volunteerImage);
         holder.volunteerName.setText(volunteers.get(position).getVolunteer_name());
+        if(criterias.size() == 0){
+            holder.ratingBar.setRating(0);
+
+        }else{
+            holder.ratingBar.setRating(criterias.get(position).getCriteriaRating());
+        }
     }
 
     @Override

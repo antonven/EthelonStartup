@@ -54,6 +54,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +74,7 @@ import myapps.wycoco.com.ethelonstartup.Models.BusStation;
 import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.UserCredentials;
+import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 import myapps.wycoco.com.ethelonstartup.Utils.NotificationUtils;
 
@@ -83,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AccessTokenTracker accessTokenTracker;
     ProfileTracker profileTracker;
     Profile profile;
+    UserModel userModel;
     ViewPager vp;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     LoginViewPagerAdapter viewPager;
@@ -90,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String volunteer_id;
     String message, api_token;
     TextView text;
+    ArrayList<UserModel> emails = new ArrayList<>();
 
     private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -329,7 +334,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("volunteer_id",volunteer_id);
             i.putExtra("api_token",api_token);
             i.putExtra("email", email);
-            Log.e("kobe","next act" + api_token + volunteer_id);
+            Log.e("NEXT ACT","EMAIL" + email + volunteer_id);
             startActivity(i);
         }
     }
@@ -388,6 +393,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+
+
     public void pushFacebookCred(AccessToken accessToken, final Profile profile){
 
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
@@ -401,6 +408,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if(object.getString("email")!= null){
                         email = object.getString("email");
+                        userModel = new UserModel();
+                        userModel.setUser_id(email);
+                        emails.add(userModel);
                     }else{
                         email = "email not avaiable " + facebook_id;
                     }

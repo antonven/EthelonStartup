@@ -45,4 +45,10 @@
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#FFD700</item>
+        <item name="borderlessButtonStyle">@color/signature2Color</item>
+        <item name="colorControlActivated">#808080</item>
+    </style>
 </resources>

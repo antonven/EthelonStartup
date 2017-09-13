@@ -72,8 +72,7 @@ public class RegisterForm2 extends Fragment {
         roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inputRole.setAdapter(roleAdapter);
 
-        final String email = getArguments().getString("email");
-        final String password = getArguments().getString("password");
+
 
         inputRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -91,6 +90,9 @@ public class RegisterForm2 extends Fragment {
 
             @Override
             public void onClick(View view) {
+
+                final String email = getArguments().getString("email");
+                final String password = getArguments().getString("password");
                 final String name = inputName.getText().toString();
                 Log.e("kobe","id "+ email + password + name + role);
                 Toast.makeText(getContext(), "" + name, Toast.LENGTH_SHORT).show();

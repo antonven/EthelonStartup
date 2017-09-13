@@ -121,6 +121,10 @@
         <item name="tabIndicatorHeight">35dp</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#FFD700</item>
+        <item name="colorControlActivated">#808080</item>
+    </style>
 
 
 </resources>
