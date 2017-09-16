@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterViewFlipper;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,10 +43,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
+import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.EvaluationCriteriaAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
+import myapps.wycoco.com.ethelonstartup.Models.AdapterInterface;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
@@ -56,23 +60,18 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DialogFragmentAttendanceSuccess extends DialogFragment {
+public class DialogFragmentAttendanceSuccess extends DialogFragment implements View.OnClickListener {
+
 
     private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
-    ArrayList<RateVolunteer> volunteers = new ArrayList<>();
-    ArrayList<EvaluationCriteria> criteria;
-    EvaluationCriteriaAdapter evaluationCriteriaAdapter;
-    LinearLayoutManager linearLayout;
-    LayoutInflater layoutInflater;
     RecyclerView recyclerCriteria;
-    String api_token, volunteer_id, activity_id;
-    Context mContext;
-    ViewPager viewPager;
+    Button doneBtn;
+    EvaluationCriteriaAdapter adapter;
+    ArrayList<EvaluationCriteria> criteria = new ArrayList<>();
 
     public DialogFragmentAttendanceSuccess() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +80,7 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_fragment_attendance_success,container,false);
         Window window = getDialog().getWindow();
         Point size = new Point();
+        doneBtn = (Button)view.findViewById(R.id.doneRateBtn);
 
 
         Display display = window.getWindowManager().getDefaultDisplay();
@@ -91,6 +91,7 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
         window.setLayout(300, 700);
         window.setGravity(Gravity.CENTER);
         recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
+        doneBtn.setOnClickListener(this);
 
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
@@ -124,7 +125,15 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        adapter = new EvaluationCriteriaAdapter();
 
-
-
+        adapter.setOnChangedRating(new AdapterInterface() {
+            @Override
+            public void onChanged(String criterion) {
+                Toast.makeText(getContext(), "Shit" + criterion, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

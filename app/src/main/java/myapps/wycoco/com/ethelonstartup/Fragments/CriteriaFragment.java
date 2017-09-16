@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,8 +50,9 @@ public class CriteriaFragment extends Fragment {
     LinearLayoutManager linearLayout;
     LayoutInflater layoutInflater;
     RecyclerView recyclerCriteria;
-    String api_token, volunteer_id, activity_id;
+
     Context mContext;
+
 
     public CriteriaFragment() {
         // Required empty public constructor

@@ -37,6 +37,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
     String activity_id, api_token, volunteer_id;
     ArrayList<EvaluationCriteria> criterias = new ArrayList<>();
 
+
     public EvaluateGroupAdapter(Context mContext, ArrayList<RateVolunteer> volunteers, String activity_id, String api_token, String volunteer_id) {
         this.mContext = mContext;
         this.volunteers = volunteers;
@@ -103,11 +104,13 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     n.putString("volunteer_id", volunteer_id);
                     dialog.setArguments(n);
                     dialog.show(fm, "EvaluateCriteria");
+
                 }
             });
 
         }
     }
+
 }
 
 

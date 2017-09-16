@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 import myapps.wycoco.com.ethelonstartup.Fragments.DialogFragmentAttendanceSuccess;
+import myapps.wycoco.com.ethelonstartup.Models.AdapterInterface;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -31,11 +32,15 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
     Context mContext;
     ArrayList<EvaluationCriteria> criteria = new ArrayList<>();
-    EvaluateGroupAdapter evaluateGroupAdapter;
+    ArrayList<Integer> rates = new ArrayList<>();
+    AdapterInterface adapterInterface;
 
     public EvaluationCriteriaAdapter(Context mContext, ArrayList<EvaluationCriteria> criteria) {
         this.mContext = mContext;
         this.criteria = criteria;
+    }
+
+    public EvaluationCriteriaAdapter() {
     }
 
     @Override
@@ -80,11 +85,14 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 //                    ratingBar.setRating(v);
                     int rating = (int) v;
                     String criterion = criteria.get(getAdapterPosition()).getCriteriaName();
+//                    rates.add(rating);
                     Bundle a = new Bundle();
                     a.putInt("rating", rating);
                     a.putString("criteria_name", criterion);
                     DialogFragmentAttendanceSuccess fd = new DialogFragmentAttendanceSuccess();
                     fd.setArguments(a);
+                    adapterInterface.onChanged(criterion);
+//                    adapterInterface.ratingChanged("");
 //                    criteria.get(getAdapterPosition()).setCriteriaRating(rating);
 //                    evaluateGroupAdapter = new EvaluateGroupAdapter(mContext, criteria);
                 }
@@ -92,4 +100,12 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
         }
     }
+
+    public void setOnChangedRating(AdapterInterface adapterInterface){
+        this.adapterInterface = adapterInterface;
+    }
+
+
+
+
 }
