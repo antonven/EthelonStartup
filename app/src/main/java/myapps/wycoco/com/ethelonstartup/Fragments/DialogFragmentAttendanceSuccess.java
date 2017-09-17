@@ -60,14 +60,27 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DialogFragmentAttendanceSuccess extends DialogFragment implements View.OnClickListener {
+public class DialogFragmentAttendanceSuccess extends DialogFragment implements View.OnClickListener, EvaluationCriteriaAdapter.OnClickListener{
 
 
-    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
-    RecyclerView recyclerCriteria;
+
+
     Button doneBtn;
     EvaluationCriteriaAdapter adapter;
-    ArrayList<EvaluationCriteria> criteria = new ArrayList<>();
+
+    ArrayList<Integer> ratings;
+
+    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
+
+    ArrayList<RateVolunteer> volunteers = new ArrayList<>();
+    ArrayList<EvaluationCriteria> criteria;
+    EvaluationCriteriaAdapter evaluationCriteriaAdapter;
+    LinearLayoutManager linearLayout;
+    LayoutInflater layoutInflater;
+    RecyclerView recyclerCriteria;
+
+    Context mContext;
+
 
     public DialogFragmentAttendanceSuccess() {
         // Required empty public constructor
@@ -82,6 +95,7 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
         Point size = new Point();
         doneBtn = (Button)view.findViewById(R.id.doneRateBtn);
 
+        ratings = new ArrayList<>();
 
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
@@ -90,20 +104,26 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
 
         window.setLayout(300, 700);
         window.setGravity(Gravity.CENTER);
-        recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
+        recyclerCriteria = (RecyclerView)view.findViewById(R.id.recycler);
         doneBtn.setOnClickListener(this);
+
+        fetchCriteria();
 
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
         String volunteer_id = getArguments().getString("volunteer_id");
-        CriteriaFragment criteriaFragment = new CriteriaFragment();
+
+        Context mContext;
+       /* CriteriaFragment criteriaFragment = new CriteriaFragment();
         Log.e("DIALOGFRAGMENT", "act_id" + activity_id);
         Bundle bundle = new Bundle();
         bundle.putString("activity_id", activity_id);
         bundle.putString("api_token", api_token);
         bundle.putString("volunteer_id", volunteer_id);
-        criteriaFragment.setArguments(bundle);
-        FragmentManager fm = getChildFragmentManager();
+
+        criteriaFragment.setArguments(bundle);*/
+
+       /* FragmentManager fm = getChildFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.recFrame, criteriaFragment)
                 .commit();
@@ -111,9 +131,62 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
         if(getArguments() != null){
             getCriteria();
         }
-
+*/
         return view;
     }
+
+
+    public void fetchCriteria(){
+
+        String activity_id = getArguments().getString("activity_id");
+        String api_token = getArguments().getString("api_token");
+        String volunteer_id = getArguments().getString("volunteer_id");
+
+        criteria = new ArrayList<>();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("activity_id", activity_id);
+        params.put("volunteer_id", volunteer_id);
+        params.put("api_token", api_token);
+        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        if (response.length() > 0) {
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
+                                    JSONObject usersObject = response.getJSONObject(i);
+                                    EvaluationCriteria evaluationCriteria = new EvaluationCriteria();
+                                    evaluationCriteria.setCriteriaName(usersObject.getString("criteria"));
+                                    criteria.add(evaluationCriteria);
+                                    Log.e("CRITERIA: " , criteria.size() + "");
+                                    declarations();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+//                        swipeRefreshLayout.setRefreshing(false);
+
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(jsonArrayRequest);
+    }
+
+
+
 
     public void getCriteria(){
 
@@ -124,16 +197,43 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
 
     }
 
+    public void declarations(){
+
+        linearLayout = new LinearLayoutManager(getApplicationContext());
+        recyclerCriteria.setLayoutManager(linearLayout);
+        evaluationCriteriaAdapter = new EvaluationCriteriaAdapter(mContext, criteria,this);
+        recyclerCriteria.setItemAnimator(new DefaultItemAnimator());
+        recyclerCriteria.setAdapter(evaluationCriteriaAdapter);
+
+    }
+
 
     @Override
     public void onClick(View view) {
         adapter = new EvaluationCriteriaAdapter();
-
+        Log.e("214","yawa");
+/*
         adapter.setOnChangedRating(new AdapterInterface() {
             @Override
             public void onChanged(String criterion) {
                 Toast.makeText(getContext(), "Shit" + criterion, Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+        for(int i = 0; i<ratings.size(); i++)
+        Log.e("dialogfragmentate222","  "+ratings.get(i));
+
+
+        //ipasa dayon ang ratings nga og katong criteria nga arraylist. dapat parehag index ha. pareha atong inputskills. katong g for loop ang params
+        //isend sa server ang activitygroups_id, volunteer_id, volunteer_id_to_rate, activity_id, count, criteriaParams0, ratingParams0 (index nang 0), volunteer_id, activity_id, api_token
+
+
+        //pinakaubos ni ton para ma clear ang arraylist
+        ratings.clear();
+    }
+
+    @Override
+    public void onClick(int rating, int index) {
+        Log.e("line144dialogfragm","rating = "+rating + index);
+        ratings.add(index,rating);
     }
 }

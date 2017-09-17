@@ -236,6 +236,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("facebook_id", profile.getId());
+            params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
             Log.e("LOGIN ACTIVITY","facebook_id "+profile.getId());
 
             JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
@@ -246,8 +247,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         try {
                             message = response.getString("message");
                             Log.e("onResume LOGIN", "facebook_id & message " + profile.getId() + response.getString("message"));
-
+                            Log.e("line 245"," iste = " + FirebaseInstanceId.getInstance().getToken());
                             if(message.equals("First Time")) {
+
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
                                 profilePicture = profile.getProfilePictureUri(500,500).toString();
@@ -432,12 +434,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         message = response.getString("message");
 
                                         if(message.equals("First Time")) {
+
                                             String profilePicture = profile.getProfilePictureUri(500,500).toString();
                                             String profile_id = profile.getId();
                                             String profileName = profile.getName();
                                             Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
+
                                             volunteer_id = response.getString("volunteer_id");
                                             api_token = response.getString("api_token");
+
+
+
                                             intent.putExtra("volunteer_id", volunteer_id);
                                             intent.putExtra("api_token", api_token);
                                             intent.putExtra("profileId", profile_id);
@@ -452,8 +459,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         }else{
                                             volunteer_id = response.getString("volunteer_id");
                                             api_token = response.getString("api_token");
+
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            params.put("volunteer_id",volunteer_id);
+                                            params.put("api_token",api_token);
+
+                                            JsonObjectRequest notif = new JsonObjectRequest(Request.Method.POST, "http://" + new Localhost().getLocalhost() + "checkNotif", new JSONObject(params), new Response.Listener<JSONObject>() {
+                                                @Override
+                                                public void onResponse(JSONObject response) {
+                                                     String msg;
+                                                    try {
+                                                        msg = response.getString("message");
+                                                        if(msg.equals("good")){
+                                                            nextActivity(profile);
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+
+                                                    Log.e("line 469 login act","error " + error.toString());
+                                                }
+                                            }
+                                            );
+                                            RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                                            request.add(notif);
                                             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-                                            nextActivity(profile);
+
                                         }
                                     }catch (JSONException e) {
                                         e.printStackTrace();

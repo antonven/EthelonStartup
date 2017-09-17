@@ -26,12 +26,12 @@
                 android:textSize="32sp"
                 />
 
-            <FrameLayout
-                android:id="@+id/recFrame"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="250dp">
 
-            </FrameLayout>
+            </android.support.v7.widget.RecyclerView>
             <Button
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"

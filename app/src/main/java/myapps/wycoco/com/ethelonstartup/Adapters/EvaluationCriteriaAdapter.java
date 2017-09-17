@@ -34,10 +34,12 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
     ArrayList<EvaluationCriteria> criteria = new ArrayList<>();
     ArrayList<Integer> rates = new ArrayList<>();
     AdapterInterface adapterInterface;
+    private OnClickListener mLiistener;
 
-    public EvaluationCriteriaAdapter(Context mContext, ArrayList<EvaluationCriteria> criteria) {
+    public EvaluationCriteriaAdapter(Context mContext, ArrayList<EvaluationCriteria> criteria, OnClickListener mLiistener) {
         this.mContext = mContext;
         this.criteria = criteria;
+        this.mLiistener = mLiistener;
     }
 
     public EvaluationCriteriaAdapter() {
@@ -91,7 +93,8 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
                     a.putString("criteria_name", criterion);
                     DialogFragmentAttendanceSuccess fd = new DialogFragmentAttendanceSuccess();
                     fd.setArguments(a);
-                    adapterInterface.onChanged(criterion);
+//                    adapterInterface.onChanged(criterion);
+                    mLiistener.onClick(rating,getAdapterPosition());
 //                    adapterInterface.ratingChanged("");
 //                    criteria.get(getAdapterPosition()).setCriteriaRating(rating);
 //                    evaluateGroupAdapter = new EvaluateGroupAdapter(mContext, criteria);
@@ -103,6 +106,11 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
     public void setOnChangedRating(AdapterInterface adapterInterface){
         this.adapterInterface = adapterInterface;
+    }
+
+    public interface OnClickListener{
+        public void onClick(int rating, int index);
+
     }
 
 

@@ -110,6 +110,9 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
 
         }
     }
+    public interface OnClickListener{
+        public void onClick();
+    }
 
 }
 

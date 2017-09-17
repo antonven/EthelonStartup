@@ -83,7 +83,7 @@ public class CriteriaFragment extends Fragment {
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
         Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
-
+/*
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -121,7 +121,7 @@ public class CriteriaFragment extends Fragment {
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(jsonArrayRequest);*/
     }
 
 }
