@@ -89,6 +89,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
 
         final String volunteer_id = getArguments().getString("volunteer_id");
         final String api_token = getArguments().getString("api_token");
+        final String profile_id = getArguments().getString("profileId");
 //        final String activity_id = getArguments().getString("activity_id");
         Log.e("VOLUNTEERID", "" + volunteer_id + api_token);
 
@@ -159,7 +160,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
 
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
-                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, api_token, volunteer_id);
+                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, activity_id, api_token, volunteer_id, profile_id);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(portfolioAdapter);
                             Log.e("PISTE KOBE ", activities.size() + "id :" + activity_id);

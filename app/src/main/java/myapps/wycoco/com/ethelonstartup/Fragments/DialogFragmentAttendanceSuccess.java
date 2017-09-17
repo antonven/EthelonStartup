@@ -25,6 +25,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterViewFlipper;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -71,14 +72,14 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
     ArrayList<Integer> ratings;
 
     private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
-
+    private static final String URL2 = "http://" + new Localhost().getLocalhost() + "rategroupmate";
     ArrayList<RateVolunteer> volunteers = new ArrayList<>();
     ArrayList<EvaluationCriteria> criteria;
     EvaluationCriteriaAdapter evaluationCriteriaAdapter;
     LinearLayoutManager linearLayout;
     LayoutInflater layoutInflater;
     RecyclerView recyclerCriteria;
-
+    TextView volunteerNameTxt;
     Context mContext;
 
 
@@ -104,9 +105,14 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
 
         window.setLayout(300, 700);
         window.setGravity(Gravity.CENTER);
-        recyclerCriteria = (RecyclerView)view.findViewById(R.id.recycler);
-        doneBtn.setOnClickListener(this);
 
+        volunteerNameTxt = (TextView)view.findViewById(R.id.rateVolunteerName);
+//        getDialog().getWindow().setLayout(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
+//        getDialog().getWindow().setGravity(Gravity.CENTER);
+
+        recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
+        doneBtn.setOnClickListener(this);
+        String volunteer_name = getArguments().getString("volunteer_name");
         fetchCriteria();
 
         String activity_id = getArguments().getString("activity_id");
@@ -153,23 +159,20 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-
+                        Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
                         if (response.length() > 0) {
                             for (int i = 0; i < response.length(); i++) {
                                 try {
-                                    Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
                                     JSONObject usersObject = response.getJSONObject(i);
                                     EvaluationCriteria evaluationCriteria = new EvaluationCriteria();
                                     evaluationCriteria.setCriteriaName(usersObject.getString("criteria"));
                                     criteria.add(evaluationCriteria);
-                                    Log.e("CRITERIA: " , criteria.size() + "");
+                                    Log.e("CRITERIA: " , criteria.size() + "" + criteria.get(i).getCriteriaName());
                                     declarations();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
-
-
                         }
                     }
                 },
@@ -186,18 +189,11 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
     }
 
 
-
-
-    public void getCriteria(){
-
-        int rating = getArguments().getInt("rating");
-        String criteria_name = getArguments().getString("criteria_name");
-
-        Log.e("rating: ", rating + "" + criteria_name);
-
-    }
-
     public void declarations(){
+
+        for(int i = 0; i<criteria.size(); i++){
+            ratings.add(0);
+        }
 
         linearLayout = new LinearLayoutManager(getApplicationContext());
         recyclerCriteria.setLayoutManager(linearLayout);
@@ -211,24 +207,56 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
     @Override
     public void onClick(View view) {
         adapter = new EvaluationCriteriaAdapter();
-        Log.e("214","yawa");
-/*
-        adapter.setOnChangedRating(new AdapterInterface() {
-            @Override
-            public void onChanged(String criterion) {
-                Toast.makeText(getContext(), "Shit" + criterion, Toast.LENGTH_SHORT).show();
-            }
-        });*/
-        for(int i = 0; i<ratings.size(); i++)
-        Log.e("dialogfragmentate222","  "+ratings.get(i));
+        Log.e("214","yawa" + criteria.size()+ " " + ratings.size() );
+
+        String activity_id = getArguments().getString("activity_id");
+        String api_token = getArguments().getString("api_token");
+        String volunteer_id = getArguments().getString("volunteer_id");
+        String activitygroups_id = getArguments().getString("activitygroups_id");
+        String volunteer_id_to_rate = getArguments().getString("volunteer_id_to_rate");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("activity_id", activity_id);
+        params.put("volunteer_id", volunteer_id);
+        params.put("api_token", api_token);
+
+        for(int i = 0; i<criteria.size(); i++) {
+            Log.e("dialogfragmentate222", "  " + ratings.get(i) +" cri" + criteria.get(i).getCriteriaName());
+            params.put("criteriaParams" + i, criteria.get(i).toString());
+            params.put("ratingParams" + i, ratings.get(i).toString());
+        }
+        params.put("activitygroups_id", activitygroups_id);
+        params.put("volunteer_id_to_rate", volunteer_id_to_rate);
+        params.put("count", String.valueOf(criteria.size()));
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL2, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                    }
+                }
+                , new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(jsonArrayRequest);
 
 
         //ipasa dayon ang ratings nga og katong criteria nga arraylist. dapat parehag index ha. pareha atong inputskills. katong g for loop ang params
         //isend sa server ang activitygroups_id, volunteer_id, volunteer_id_to_rate, activity_id, count, criteriaParams0, ratingParams0 (index nang 0), volunteer_id, activity_id, api_token
-
+//        for(int i = 0; i<criteria.size(); i++){
+//            ratings.add(0);
+//        }
 
         //pinakaubos ni ton para ma clear ang arraylist
         ratings.clear();
+        getDialog().dismiss();
     }
 
     @Override

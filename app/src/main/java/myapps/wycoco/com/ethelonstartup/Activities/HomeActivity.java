@@ -157,6 +157,7 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(this, PortfolioActivity.class);
             intent.putExtra("volunteer_id", volunteer_id);
             intent.putExtra("api_token", api_token);
+            intent.putExtra("profileId", profileId);
             startActivity(intent);
 
         }else if (id == R.id.nav_third_layout) {

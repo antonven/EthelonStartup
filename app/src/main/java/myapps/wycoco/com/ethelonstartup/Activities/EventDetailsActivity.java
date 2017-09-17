@@ -52,6 +52,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     Button joinActivityBtn, unjoinActivityBtn;
     ImageView eventDetailsImage;
     Intent n;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    ViewPagerAdapter adapter;
     private static final String URL = "http://"+new Localhost().getLocalhost()+"joinactivity";
 
     @Override
@@ -68,6 +70,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         }
         Typeface typefaceRoboto = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
 
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.linearHeader);
+        collapsingToolbarLayout.setTitle(eventName);
         eventName1 = (TextView)findViewById(R.id.eventName);
         eventName1.setTypeface(typefaceRoboto);
         eventHost1 = (TextView)findViewById(R.id.eventHost);
@@ -87,7 +91,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
-        eventHost1.setText(eventHost);
+        eventHost1.setText(eventHost + "University of San Jose - Recoletos");
 
         joinActivityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +169,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         tabLayout = (TabLayout) findViewById(R.id.detailsTabs);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setSelectedTabIndicatorHeight(12);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
+        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
         setupTabIcons();
 
     }
@@ -172,25 +179,11 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private void setupTabIcons() {
 
         Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
+        tabLayout.getTabAt(0).setText("Details");
 
-        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
-        tabOne.setTypeface(typeface);
-        tabOne.setText("Details");
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
+        tabLayout.getTabAt(1).setText("Going");
 
-        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
-        tabTwo.setTypeface(typeface);
-        tabTwo.setText("Volunteers");
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
-
-
-        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
-        tabThree.setTypeface(typeface);
-        tabThree.setText("Reviews");
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
+        tabLayout.getTabAt(2).setText("Reviews");
 
     }
 
@@ -206,7 +199,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         String contactPerson = n.getStringExtra("contactPerson");
 
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
         Bundle in = new Bundle();

@@ -94,7 +94,7 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
                     DialogFragmentAttendanceSuccess fd = new DialogFragmentAttendanceSuccess();
                     fd.setArguments(a);
 //                    adapterInterface.onChanged(criterion);
-                    mLiistener.onClick(rating,getAdapterPosition());
+                    mLiistener.onClick(rating, getAdapterPosition());
 //                    adapterInterface.ratingChanged("");
 //                    criteria.get(getAdapterPosition()).setCriteriaRating(rating);
 //                    evaluateGroupAdapter = new EvaluateGroupAdapter(mContext, criteria);

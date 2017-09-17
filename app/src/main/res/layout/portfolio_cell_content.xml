@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <!-- content header line -->
     <RelativeLayout
@@ -127,12 +127,12 @@
 
             <TextView
                 android:id="@+id/content_avatar_title"
-                style="@style/ContentMainBadgeTitle"
+                android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="5dp"
-                android:text="@string/host_badge"
+                android:text="Host"
                 android:layout_alignParentLeft="true" />
 
             <ImageView
@@ -211,68 +211,10 @@
                     android:text="also communicate to the worker what work activities they are authorized to perform, what hazards are associated with that work, and what controls are necessary to protect the worker."
                     android:textColor="#000"
                     android:textSize="15sp"
-                    android:textStyle="bold"
                     android:layout_alignLeft="@id/clickedEventDescriptionLabel" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/clickedEventTimeStart"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignStart="@id/clickedEventDate"-->
-                    <!--android:layout_below="@id/clickedEventDate"-->
-                    <!--android:text="11:00 am"-->
-                    <!--android:textColor="@color/mainTextColor"-->
-                    <!--android:textSize="14sp"-->
-                    <!--android:layout_alignLeft="@id/clickedEventDate" />-->
 
             </RelativeLayout>
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/content_to_badge"-->
-                    <!--style="@style/ContentMainBadgeTitle"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:text="@string/to_badge"-->
-                    <!--android:layout_alignParentLeft="true" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/clickedEventLocation"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignStart="@id/content_to_badge"-->
-                    <!--android:layout_below="@id/content_to_badge"-->
-                    <!--android:text="Basak, Pardo"-->
-                    <!--android:textColor="@color/mainTextColor"-->
-                    <!--android:textSize="18sp"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:layout_alignLeft="@id/content_to_badge" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/content_to_address_2"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignStart="@id/clickedEventLocation"-->
-                    <!--android:layout_below="@id/clickedEventLocation"-->
-                    <!--android:text="Cebu City"-->
-                    <!--android:textColor="@color/mainTextColor"-->
-                    <!--android:textSize="14sp"-->
-                    <!--android:layout_alignLeft="@id/clickedEventLocation" />-->
-
-                <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_alignParentEnd="true"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:src="@drawable/arrow"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_alignParentRight="true" />&ndash;&gt;-->
-
-            <!--</RelativeLayout>-->
 
         </LinearLayout>
 
@@ -299,11 +241,11 @@
 
                 <TextView
                     android:id="@+id/content_delivery_date_badge"
-                    style="@style/ContentMainBadgeTitle"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="@string/delivery_date_badge"
+                    android:text="Contact"
                     android:layout_alignParentLeft="true" />
 
                 <TextView
@@ -338,11 +280,11 @@
 
                 <TextView
                     android:id="@+id/content_deadline_badge"
-                    style="@style/ContentMainBadgeTitle"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="@string/deadline_badge"
+                    android:text="Event type"
                     android:layout_alignParentLeft="true" />
 
                 <TextView
@@ -369,6 +311,7 @@
             android:layout_marginTop="16dp"
             android:background="@color/colorPrimary"
             android:padding="8dp"
+            android:textStyle="bold"
             android:text="VIEW ACTIVITY"
             android:textAlignment="center"
             android:textColor="#ffffff"

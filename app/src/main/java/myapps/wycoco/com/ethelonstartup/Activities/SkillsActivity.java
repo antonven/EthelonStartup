@@ -300,9 +300,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("volunteer_id",volunteer_id);
                         params.put("api_token",api_token);
-
-                        Log.e("kobe",volunteer_id + api_token);
-
                         //JSONObject jsonObject=new JSONObject();
                         for(int i =0; i<skillSet.size(); i++) {
                             params.put("params" + i, skillSet.get(i));

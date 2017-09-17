@@ -20,6 +20,7 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/colorPrimary"
                 android:text="Rate Anton"
+                android:id="@+id/rateVolunteerName"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:textStyle="bold"
@@ -27,7 +28,7 @@
                 />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler"
+                android:id="@+id/criteriaRec"
                 android:layout_width="match_parent"
                 android:layout_height="250dp">
 

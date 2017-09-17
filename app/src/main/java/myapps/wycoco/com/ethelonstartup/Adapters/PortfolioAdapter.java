@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -34,6 +35,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
+import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
@@ -52,18 +54,20 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     Context mContext;
     ArrayList<PortfolioModel> activities = new ArrayList<>();
     int count = 0;
-    String api_token, activity_id, volunteer_id;
+    String api_token, id, volunteer_id, profile_id;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "activitygetvolunteersbefore";
 
 
     public PortfolioAdapter() {
     }
 
-    public PortfolioAdapter(Context mContext, ArrayList<PortfolioModel> activities, String api_token, String volunteer_id) {
+    public PortfolioAdapter(Context mContext, ArrayList<PortfolioModel> activities, String id, String api_token, String volunteer_id, String profile_id) {
         this.mContext = mContext;
         this.activities = activities;
         this.api_token = api_token;
         this.volunteer_id = volunteer_id;
+        this.profile_id = profile_id;
+        this.id = id;
     }
 
     @Override
@@ -113,7 +117,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
         TextView eventDate, eventTimeStart, eventName, eventAddress, eventHost, eventVolunteers, eventPoints, contentRequestBtn,
         clickedEventHost, clickedEventDescription, clickedEventTimeStart, clickedEventVolunteers, clickedEventLocation, clickedPoints,
-        contactPerson, activityContact, clickedEventName;
+        contactPerson, activityContact, clickedEventName, viewActivity;
         ImageView status, clickedActivityImage;
         Button attendBtn;
         FoldingCell fc;
@@ -135,7 +139,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             eventTimeStart = (TextView)itemView.findViewById(R.id.eventTimeStart);
             eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
             eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
-            contentRequestBtn = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             status = (ImageView) itemView.findViewById(R.id.status);
             clickedEventName= (TextView)itemView.findViewById(R.id.clickedEventName);
             clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
@@ -147,8 +150,58 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             contactPerson = (TextView)itemView.findViewById(R.id.contactPerson);
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
             clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);
+            viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
 
-            fetchGoingVolunteers();
+            Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
+            eventName.setTypeface(typeface);
+            eventHost.setTypeface(typeface);
+            eventAddress.setTypeface(typeface);
+            eventDate.setTypeface(typeface);
+            eventTimeStart.setTypeface(typeface);
+            eventVolunteers.setTypeface(typeface);
+            eventPoints.setTypeface(typeface);
+            clickedEventName.setTypeface(typeface);
+            clickedEventHost.setTypeface(typeface);
+            clickedEventDescription.setTypeface(typeface);
+            clickedEventVolunteers.setTypeface(typeface);
+            clickedPoints.setTypeface(typeface);
+            contactPerson.setTypeface(typeface);
+            activityContact.setTypeface(typeface);
+
+//            fetchGoingVolunteers();
+            viewActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String eventName = activities.get(getAdapterPosition()).getActivityName();
+                    String eventHost = activities.get(getAdapterPosition()).getFoundationName();
+                    String eventDate = activities.get(getAdapterPosition()).getActivityDate();
+                    String eventTimeStart = activities.get(getAdapterPosition()).getActivityStart();
+                    String eventLocation = activities.get(getAdapterPosition()).getActivityLocation();
+                    String activity_id = activities.get(getAdapterPosition()).getActivityId();
+                    String eventImage = activities.get(getAdapterPosition()).getActivityImage();
+                    String eventContactNo = activities.get(getAdapterPosition()).getActivityContact();
+                    String eventContactPerson = activities.get(getAdapterPosition()).getContactPerson();
+                    String eventSkills = activities.get(getAdapterPosition()).getActivityPoints();
+
+                    Intent in = new Intent(mContext, EventDetailsActivity.class);
+                    in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    in.putExtra("eventImage", eventImage);
+                    in.putExtra("eventName", eventName);
+                    in.putExtra("eventHost", eventHost);
+                    in.putExtra("eventDate", eventDate);
+                    in.putExtra("eventTimeStart", eventTimeStart);
+                    in.putExtra("eventLocation", eventLocation);
+                    in.putExtra("contactNo", eventContactNo);
+                    in.putExtra("contactPerson", eventContactPerson);
+                    in.putExtra("eventPoints", eventSkills);
+                    in.putExtra("id", id);
+                    in.putExtra("activity_id", activity_id);
+                    in.putExtra("api_token", api_token);
+                    in.putExtra("profileId", profile_id);
+
+                    mContext.startActivity(in);
+                }
+            });
 
             attendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,65 +225,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                 }
             });
 
-        }
-
-        public void fetchGoingVolunteers(){
-
-
-            users  = new ArrayList<>();
-//            String activity_id = getArguments().getString("activity_id");
-//            String api_token = getArguments().getString("api_token");
-
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("activity_id", activity_id);
-            params.put("api_token", api_token);
-            Log.e("Wycoco", "GOINGVOLUNTEERSFRAGMENT " + api_token + activity_id + users.size());
-
-
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-
-                            if (response.length() > 0) {
-                                for (int i = 0; i < response.length(); i++) {
-                                    try {
-                                        Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
-                                        JSONObject usersObject = response.getJSONObject(i);
-                                        String user_image = usersObject.getString("image_url");
-                                        String user_name = usersObject.getString("name");
-//                                        String profile_id = getArguments().getString("profileId");
-
-                                        Log.e("GOINGVOLUNTEERS", "PICTURES" + user_image);
-                                        UserModel user = new UserModel();
-//                                        user.setUser_id(profile_id);
-                                        user.setUserFirstName(user_name);
-                                        user.setUserImage(user_image);
-                                        users.add(user);
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                adapter = new ActivityListGoingVolunteersAdapter(mContext, users);
-
-                                linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
-                                recyclerView.setLayoutManager(linearLayoutManager);
-                                adapter.notifyDataSetChanged();
-                                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                                recyclerView.setAdapter(adapter);
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                        }
-                    });
-            RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-            requestQueue.add(jsonArrayRequest);
         }
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -109,6 +110,22 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);
             contactPerson = (TextView)itemView.findViewById(R.id.contactPerson);
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
+
+            Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
+            eventName.setTypeface(typeface);
+            eventHost.setTypeface(typeface);
+            eventAddress.setTypeface(typeface);
+            eventDate.setTypeface(typeface);
+            eventTimeStart.setTypeface(typeface);
+            eventVolunteers.setTypeface(typeface);
+            eventPoints.setTypeface(typeface);
+            clickedEventName.setTypeface(typeface);
+            clickedEventHost.setTypeface(typeface);
+            clickedEventDescription.setTypeface(typeface);
+            clickedEventVolunteers.setTypeface(typeface);
+            clickedPoints.setTypeface(typeface);
+            contactPerson.setTypeface(typeface);
+            activityContact.setTypeface(typeface);
 
             fc.setOnClickListener(new View.OnClickListener() {
                 @Override

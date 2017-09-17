@@ -31,6 +31,8 @@
                 android:layout_height="wrap_content"
                 android:text="Ethelon"
                 android:id="@+id/toolbarTitle"
+                android:gravity="center_horizontal"
+
                 android:textColor="#fff"
                 android:textSize="30sp"
                 android:textStyle="bold" />

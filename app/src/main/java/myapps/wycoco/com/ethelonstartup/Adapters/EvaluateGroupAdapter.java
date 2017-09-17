@@ -95,13 +95,19 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    String volunteer_name = volunteers.get(getAdapterPosition()).getVolunteer_name();
+                    String activity_group_id = volunteers.get(getAdapterPosition()).getVolunteer_group_id();
+                    String volunteer_rate_id = volunteers.get(getAdapterPosition()).getVolunteer_id();
                     FragmentManager fm = ((AppCompatActivity) mContext).getSupportFragmentManager();
                     DialogFragmentAttendanceSuccess dialog = new DialogFragmentAttendanceSuccess();
                     Bundle n = new Bundle();
                     n.putString("api_token", api_token);
                     n.putString("activity_id", activity_id);
                     n.putString("volunteer_id", volunteer_id);
+                    n.putString("volunteer_name", volunteer_name);
+                    n.putString("volunteer_id_to_rate", volunteer_rate_id);
+                    n.putString("activitygroups_id", activity_group_id);
+                    n.putInt("criteri_size", criterias.size());
                     dialog.setArguments(n);
                     dialog.show(fm, "EvaluateCriteria");
 

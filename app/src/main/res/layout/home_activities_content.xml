@@ -114,12 +114,12 @@
 
             <TextView
                 android:id="@+id/content_avatar_title"
-                style="@style/ContentMainBadgeTitle"
+                android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="5dp"
-                android:text="@string/host_badge"
+                android:text="Host"
                 android:layout_alignParentLeft="true" />
 
             <ImageView
@@ -219,11 +219,11 @@
 
                 <TextView
                     android:id="@+id/content_delivery_date_badge"
-                    style="@style/ContentMainBadgeTitle"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="@string/delivery_date_badge"
+                    android:text="Contact"
                     android:layout_alignParentLeft="true" />
 
                 <TextView
@@ -258,11 +258,11 @@
 
                 <TextView
                     android:id="@+id/content_deadline_badge"
-                    style="@style/ContentMainBadgeTitle"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="@string/deadline_badge"
+                    android:text="Event type"
                     android:layout_alignParentLeft="true" />
 
                 <TextView
@@ -289,6 +289,7 @@
             android:layout_marginTop="16dp"
             android:background="@color/colorPrimary"
             android:padding="8dp"
+            android:textStyle="bold"
             android:text="VIEW ACTIVITY"
             android:textAlignment="center"
             android:textColor="#ffffff"
