@@ -2,6 +2,8 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -44,9 +46,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
-    String eventName, eventHost, eventLocation, eventDate, eventTimeStart, eventImage, activity_id;
+    String eventName, eventHost, eventImage, activity_id;
     TextView eventName1, eventHost1;
     Button joinActivityBtn, unjoinActivityBtn;
     ImageView eventDetailsImage;
@@ -65,9 +66,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
+        Typeface typefaceRoboto = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
 
         eventName1 = (TextView)findViewById(R.id.eventName);
+        eventName1.setTypeface(typefaceRoboto);
         eventHost1 = (TextView)findViewById(R.id.eventHost);
+        eventHost1.setTypeface(typefaceRoboto);
+
         joinActivityBtn = (Button)findViewById(R.id.joinActivityBtn);
         unjoinActivityBtn = (Button)findViewById(R.id.unjoinActivityBtn);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
@@ -161,30 +166,32 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         tabLayout = (TabLayout) findViewById(R.id.detailsTabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+
     }
 
     private void setupTabIcons() {
 
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
+
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
+        tabOne.setTypeface(typeface);
         tabOne.setText("Details");
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.getTabAt(0).setText("Details");
-        tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
-//        tabLayout.getTabAt(0).setCustomView(tabOne);
+        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
 
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
+        tabTwo.setTypeface(typeface);
         tabTwo.setText("Volunteers");
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.getTabAt(1).setText("Volunteers");
-        tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
-//        tabLayout.getTabAt(1).setCustomView(tabTwo);
+        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
+
 
         TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.event_details_custom_tab, null);
+        tabThree.setTypeface(typeface);
         tabThree.setText("Reviews");
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
-        tabLayout.getTabAt(2).setText("Reviews");
-        tabLayout.setTabTextColors(Color.parseColor("#c62828"), Color.parseColor("#ffffff"));
-//        tabLayout.getTabAt(2).setCustomView(tabThree);
+        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
+
     }
 
     private void setupViewPager(ViewPager viewPager){

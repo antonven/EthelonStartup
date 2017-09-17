@@ -204,6 +204,13 @@ public class HomeActivity extends AppCompatActivity
 
 //                tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
                 tab.getIcon().setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
+                if(tab.getPosition() == 0){
+                    toolbarTitle.setText("Home");
+                }else if (tab.getPosition() == 1){
+                    toolbarTitle.setText("Notifications");
+                }else{
+                    toolbarTitle.setText("Leaderboard");
+                }
             }
 
             @Override

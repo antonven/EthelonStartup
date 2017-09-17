@@ -42,7 +42,7 @@
                     android:fitsSystemWindows="true"
                     android:id="@+id/coverPhoto"
                     android:layout_width="match_parent"
-                    android:layout_height="165dp"
+                    android:layout_height="145dp"
                     android:src="@drawable/ethback"
                     app:layout_collapseMode="parallax"
                     android:scaleType="centerCrop" />
