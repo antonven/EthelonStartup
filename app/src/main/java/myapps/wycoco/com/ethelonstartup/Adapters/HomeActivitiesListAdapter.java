@@ -19,6 +19,8 @@ import com.ramotion.foldingcell.FoldingCell;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
@@ -52,18 +54,19 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
     @Override
     public void onBindViewHolder(HomeActivitiesListAdapter.ViewHolder holder, int position) {
+
         holder.eventName.setText(activities.get(position).getActivityName());
         holder.eventAddress.setText(activities.get(position).getActivityLocation());
         holder.eventHost.setText(activities.get(position).getFoundationName());
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
-        holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
+        holder.eventVolunteers.setText(String.valueOf(activities.get(position).getVolunteerCount()));
         holder.eventPoints.setText(activities.get(position).getActivityPoints());
         holder.clickedEventName.setText(activities.get(position).getActivityName());
         holder.clickedEventHost.setText(activities.get(position).getFoundationName());
         holder.clickedEventDescription.setText(activities.get(position).getActivityDes());
 //        holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
-        holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
+        holder.clickedEventVolunteers.setText(String.valueOf(activities.get(position).getVolunteerCount()));
 //        holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
         holder.contactPerson.setText(activities.get(position).getContactPerson());

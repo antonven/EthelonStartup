@@ -29,7 +29,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,7 +148,20 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                     String contactPerson = activityObject.getString("contactperson");
                                     String activityContact = activityObject.getString("contact");
                                     String foundationName = activityObject.getString("foundtion_name");
+                                    int volunteerCount = Integer.parseInt(activityObject.getString("volunteer_count"));
 
+//                                    DateFormat dateFormat1 = new SimpleDateFormat("MMM dd, EEE");
+//                                    DateFormat dateFormat2 = new SimpleDateFormat("MMM dd, EEE");
+//
+//                                        Date date = dateFormat1.parse(activityDate);
+//                                        String finalDate = dateFormat2.format(date);
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    Date date = dateFormat.parse(activityDate);
+
+                                    SimpleDateFormat dateFormat1 = new SimpleDateFormat("MMMM dd, EEE");
+                                    String finalDate = dateFormat1.format(date);
+
+                                    Log.e("Date 160" , finalDate);
 
                                     ActivityModel activityModel1 = new ActivityModel(activity_id, foundationId, activityName, activityImage,
                                             activityQr,
@@ -152,7 +169,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                             activityLocation,
                                             activityStart,
                                             activityEnd,
-                                            activityDate,
+                                            finalDate,
                                             activityGroup,
                                             activityLong,
                                             activityLat,
@@ -162,13 +179,17 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                             activityUpdated,
                                             contactPerson,
                                             activityContact,
-                                            foundationName);
+                                            foundationName,
+                                            volunteerCount);
 
                                     Log.e("ACTIVITIES", response.toString());
 
                                     activities.add(activityModel1);
 
+
                                 } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
                             }

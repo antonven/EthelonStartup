@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -63,7 +64,9 @@ public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteers
         public ViewHolder(View itemView) {
             super(itemView);
 
+            Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
             volunteerFirstName = (TextView)itemView.findViewById(R.id.volunteerFirstName);
+            volunteerFirstName.setTypeface(typeface);
             volunteerImage = (ImageView)itemView.findViewById(R.id.volunteerPicture);
         }
     }

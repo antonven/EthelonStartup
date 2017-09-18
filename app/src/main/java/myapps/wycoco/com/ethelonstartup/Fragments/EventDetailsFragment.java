@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -66,14 +67,20 @@ public class EventDetailsFragment extends Fragment {
         String eventLocation = getArguments().getString("eventLocation");
         String contactNo = getArguments().getString("contactNo");
         String contactPerson = getArguments().getString("contactPerson");
-
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Roboto-Black.ttf");
 
 
         eventDate1 = (TextView)view.findViewById(R.id.eventDate);
+
         eventTimeStart1 = (TextView)view.findViewById(R.id.eventTimeStart);
         eventLocation1 = (TextView)view.findViewById(R.id.eventLocation);
         eventSkills1 = (TextView)view.findViewById(R.id.eventSkills);
         eventContact1 = (TextView)view.findViewById(R.id.eventContact);
+        eventDate1.setTypeface(typeface);
+        eventLocation1.setTypeface(typeface);
+        eventSkills1.setTypeface(typeface);
+        eventContact1.setTypeface(typeface);
+        eventDate1.setTypeface(typeface);
 
         eventDate1.setText(eventDate);
         eventTimeStart1.setText(eventTimeStart);

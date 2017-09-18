@@ -25,14 +25,15 @@ public class ActivityModel {
     private String contactPerson;
     private String activityContact;
     private String foundationName;
+    private int volunteerCount;
 
 
     public ActivityModel(String activityId, String foundationId, String activityName, String activityImage,
-                         String activityQr, String activityDes,  String activityLocation,
+                         String activityQr, String activityDes, String activityLocation,
                          String activityStart, String activityEnd, String activityStartDate, String activityGroup, String activityLong,
                          String activityLat,
-                         String activityPoints ,String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
-                         String activityContact, String foundationName) {
+                         String activityPoints, String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
+                         String activityContact, String foundationName, int volunteerCount) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -53,6 +54,7 @@ public class ActivityModel {
         this.contactPerson = contactPerson;
         this.activityContact = activityContact;
         this.foundationName = foundationName;
+        this.volunteerCount = volunteerCount;
     }
 
 
@@ -217,5 +219,13 @@ public class ActivityModel {
 
     public void setFoundationName(String foundationName) {
         this.foundationName = foundationName;
+    }
+
+    public int getVolunteerCount() {
+        return volunteerCount;
+    }
+
+    public void setVolunteerCount(int volunteerCount) {
+        this.volunteerCount = volunteerCount;
     }
 }

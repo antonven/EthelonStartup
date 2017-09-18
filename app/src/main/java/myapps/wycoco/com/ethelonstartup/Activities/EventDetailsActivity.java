@@ -42,7 +42,7 @@ import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
-public class EventDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class EventDetailsActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -62,21 +62,19 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_event_details);
 
         Window window = this.getWindow();
-//        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
-        Typeface typefaceRoboto = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
 
+        Typeface typefaceRoboto = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.linearHeader);
         collapsingToolbarLayout.setTitle(eventName);
         eventName1 = (TextView)findViewById(R.id.eventName);
         eventName1.setTypeface(typefaceRoboto);
         eventHost1 = (TextView)findViewById(R.id.eventHost);
         eventHost1.setTypeface(typefaceRoboto);
-
         joinActivityBtn = (Button)findViewById(R.id.joinActivityBtn);
         unjoinActivityBtn = (Button)findViewById(R.id.unjoinActivityBtn);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
@@ -84,70 +82,27 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         n = getIntent();
         eventName = n.getStringExtra("eventName");
         eventHost = n.getStringExtra("eventHost");
-
         eventImage = n.getStringExtra("eventImage");
         activity_id = n.getStringExtra("activity_id");
-        Log.e("EVENTDETAILSACT", "activity_id " + activity_id);
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
         eventHost1.setText(eventHost + "University of San Jose - Recoletos");
 
+        validateJoin();
+
         joinActivityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String volunteer_id = n.getStringExtra("id");
-                final String api_token = n.getStringExtra("api_token");
-                final String activity_id = n.getStringExtra("activity_id");
-
                 joinActivityBtn.setVisibility(View.GONE);
                 unjoinActivityBtn.setVisibility(View.VISIBLE);
-
-                final Map<String, String> params = new HashMap<String, String>();
-                params.put("volunteer_id", volunteer_id);
-                params.put("activity_id", activity_id);
-                params.put("api_token", api_token);
-
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    if (response.getString("message").equals("Already Joined")) {
-                                        Toast.makeText(EventDetailsActivity.this, "You have already joined this activity!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        //Fragment na naka success siya!
-                                        Intent n = new Intent(EventDetailsActivity.this, JoinActivitySuccess.class);
-                                        n.putExtra("api_token", api_token);
-                                        n.putExtra("volunteer_id", volunteer_id);
-                                        n.putExtra("activity_id", activity_id);
-                                        startActivity(n);
-                                        //ma add sha sa portfolio
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        }) {
-
-
-                };
-                RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
-                requestQueue.add(jsonObjectRequest);
-
+                fetchDetails();
             }
         });
-        insTabs();
 
+        insTabs();
     }
+
     private void insTabs(){
 
         toolbar = (Toolbar) findViewById(R.id.nav_toolbar);
@@ -155,8 +110,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
        toolbar.setBackground(null);
-
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,14 +130,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void setupTabIcons() {
-
-        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
         tabLayout.getTabAt(0).setText("Details");
-
         tabLayout.getTabAt(1).setText("Going");
-
         tabLayout.getTabAt(2).setText("Reviews");
-
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -197,7 +145,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         String eventLocation = n.getStringExtra("eventLocation");
         String contactNo = n.getStringExtra("contactNo");
         String contactPerson = n.getStringExtra("contactPerson");
-
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -223,12 +170,89 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         viewPager.setAdapter(adapter);
     }
 
+    public void validateJoin(){
+        final String volunteer_id = n.getStringExtra("id");
+        final String api_token = n.getStringExtra("api_token");
+        final String activity_id = n.getStringExtra("activity_id");
+
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id", volunteer_id);
+        params.put("activity_id", activity_id);
+        params.put("api_token", api_token);
 
 
-    @Override
-    public void onClick(View view) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getString("message").equals("Already Joined")) {
+                                joinActivityBtn.setVisibility(View.GONE);
+                                unjoinActivityBtn.setVisibility(View.VISIBLE);
+                            } else {
+                                //Fragment na naka success siya!
+                                //ma add sha sa portfolio
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void fetchDetails(){
+
+        final String volunteer_id = n.getStringExtra("id");
+        final String api_token = n.getStringExtra("api_token");
+        final String activity_id = n.getStringExtra("activity_id");
+
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id", volunteer_id);
+        params.put("activity_id", activity_id);
+        params.put("api_token", api_token);
 
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getString("message").equals("Already Joined")) {
 
+                                Toast.makeText(EventDetailsActivity.this, "You have already joined this activity!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                //Fragment na naka success siya!
+                                Intent n = new Intent(EventDetailsActivity.this, JoinActivitySuccess.class);
+                                n.putExtra("api_token", api_token);
+                                n.putExtra("volunteer_id", volunteer_id);
+                                n.putExtra("activity_id", activity_id);
+                                startActivity(n);
+                                //ma add sha sa portfolio
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
+        requestQueue.add(jsonObjectRequest);
     }
 }

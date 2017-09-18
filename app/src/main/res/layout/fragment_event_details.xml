@@ -1,19 +1,26 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="70dp"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
     <LinearLayout
         android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp"
-        android:weightSum="3"
+        android:weightSum="2"
         android:id="@+id/funnyContainer">
 
         <LinearLayout
@@ -69,6 +76,19 @@
 
         </LinearLayout>
 
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="2"
+        android:id="@+id/funnyContainer2">
+
         <LinearLayout
             android:visibility="visible"
             android:layout_width="0dp"
@@ -91,42 +111,7 @@
                 android:layout_gravity="center"
                 android:paddingTop="5dp"
                 android:id="@+id/eventLocation"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        android:weightSum="2"
-        android:id="@+id/funnyContainer2">
-
-        <LinearLayout
-            android:visibility="visible"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/skills_ic"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Culinary"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:paddingTop="5dp"
-                android:id="@+id/eventSkills"
-                android:gravity="center_vertical"/>
+                android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -152,11 +137,43 @@
                 android:gravity="center_vertical"/>
         </LinearLayout>
 
-
-
     </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="2"
+        android:id="@+id/funnyContainer3">
 
+        <LinearLayout
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <ImageView
+        android:layout_gravity="center"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/skills_ic"
+        />
 
-</LinearLayout>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Culinary"
+        android:textColor="#000"
+        android:layout_gravity="center"
+        android:paddingTop="5dp"
+        android:id="@+id/eventSkills"
+        android:gravity="center_vertical"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
