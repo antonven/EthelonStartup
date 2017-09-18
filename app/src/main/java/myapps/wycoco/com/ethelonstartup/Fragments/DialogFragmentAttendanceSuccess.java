@@ -222,8 +222,8 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
 
         for(int i = 0; i<criteria.size(); i++) {
             Log.e("dialogfragmentate222", "  " + ratings.get(i) +" cri" + criteria.get(i).getCriteriaName());
-            params.put("criteriaParams" + i, criteria.get(i).toString());
-            params.put("ratingParams" + i, ratings.get(i).toString());
+            params.put("criteriaParams" + i, criteria.get(i).getCriteriaName());
+            params.put("ratingParams" + i, String.valueOf(ratings.get(i)));
         }
         params.put("activitygroups_id", activitygroups_id);
         params.put("volunteer_id_to_rate", volunteer_id_to_rate);
