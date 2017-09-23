@@ -106,7 +106,7 @@ public class VolunteerRatingFragment extends Fragment implements DialogFragmentA
                                 }
                             }
 
-                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id,VolunteerRatingFragment.this);
+                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id, VolunteerRatingFragment.this);
 
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             volrec.setLayoutManager(linearLayoutManager);

@@ -1,32 +1,17 @@
-package myapps.wycoco.com.ethelonstartup.Fragments;
-
+package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Context;
-import android.graphics.Point;
-import android.location.Criteria;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterViewFlipper;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,110 +28,51 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
-import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.EvaluationCriteriaAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
-import myapps.wycoco.com.ethelonstartup.Models.AdapterInterface;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
-import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class DialogFragmentAttendanceSuccess extends DialogFragment implements View.OnClickListener, EvaluationCriteriaAdapter.OnClickListener{
-
-
-
+public class VolunteerRateActivity extends AppCompatActivity implements View.OnClickListener, EvaluationCriteriaAdapter.OnClickListener {
+    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
+    private static final String URL2 = "http://" + new Localhost().getLocalhost() + "rategroupmate";
 
     Button doneBtn;
     EvaluationCriteriaAdapter adapter;
-
     ArrayList<Integer> ratings;
-
-    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
-    private static final String URL2 = "http://" + new Localhost().getLocalhost() + "rategroupmate";
     ArrayList<RateVolunteer> volunteers = new ArrayList<>();
     ArrayList<EvaluationCriteria> criteria;
     EvaluationCriteriaAdapter evaluationCriteriaAdapter;
     LinearLayoutManager linearLayout;
-    LayoutInflater layoutInflater;
     RecyclerView recyclerCriteria;
-    TextView volunteerNameTxt;
     Context mContext;
-
-
-    public DialogFragmentAttendanceSuccess() {
-        // Required empty public constructor
-    }
+    TextView volunteerNameTxt;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_dialog_fragment_attendance_success,container,false);
-        Window window = getDialog().getWindow();
-        Point size = new Point();
-        doneBtn = (Button)view.findViewById(R.id.doneRateBtn);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rate_volunteer);
 
+        doneBtn = (Button)findViewById(R.id.doneRateBtn);
         ratings = new ArrayList<>();
 
-        Display display = window.getWindowManager().getDefaultDisplay();
-        display.getSize(size);
+        volunteerNameTxt = (TextView)findViewById(R.id.rateVolunteerName);
+        recyclerCriteria = (RecyclerView)findViewById(R.id.criteriaRec);
 
-        int width = size.x;
-
-        window.setLayout(300, 700);
-        window.setGravity(Gravity.CENTER);
-
-        volunteerNameTxt = (TextView)view.findViewById(R.id.rateVolunteerName);
-//        getDialog().getWindow().setLayout(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
-//        getDialog().getWindow().setGravity(Gravity.CENTER);
-
-        recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
         doneBtn.setOnClickListener(this);
-        String volunteer_name = getArguments().getString("volunteer_name");
         fetchCriteria();
-
-        String activity_id = getArguments().getString("activity_id");
-        String api_token = getArguments().getString("api_token");
-        String volunteer_id = getArguments().getString("volunteer_id");
-
-        Context mContext;
-       /* CriteriaFragment criteriaFragment = new CriteriaFragment();
-        Log.e("DIALOGFRAGMENT", "act_id" + activity_id);
-        Bundle bundle = new Bundle();
-        bundle.putString("activity_id", activity_id);
-        bundle.putString("api_token", api_token);
-        bundle.putString("volunteer_id", volunteer_id);
-
-        criteriaFragment.setArguments(bundle);*/
-
-       /* FragmentManager fm = getChildFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.recFrame, criteriaFragment)
-                .commit();
-
-        if(getArguments() != null){
-            getCriteria();
-        }
-*/
-        return view;
     }
-
 
     public void fetchCriteria(){
 
-        String activity_id = getArguments().getString("activity_id");
-        String api_token = getArguments().getString("api_token");
-        String volunteer_id = getArguments().getString("volunteer_id");
+        Intent n = getIntent();
+
+        String activity_id = n.getStringExtra("activity_id");
+        String api_token = n.getStringExtra("api_token");
+        String volunteer_id = n.getStringExtra("volunteer_id");
 
         criteria = new ArrayList<>();
         Map<String, String> params = new HashMap<String, String>();
@@ -207,13 +133,15 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
     @Override
     public void onClick(View view) {
         adapter = new EvaluationCriteriaAdapter();
-        Log.e("214","yawa" + criteria.size()+ " " + ratings.size() );
 
-        String activity_id = getArguments().getString("activity_id");
-        String api_token = getArguments().getString("api_token");
-        String volunteer_id = getArguments().getString("volunteer_id");
-        String activitygroups_id = getArguments().getString("activitygroups_id");
-        String volunteer_id_to_rate = getArguments().getString("volunteer_id_to_rate");
+        Intent n = getIntent();
+
+        String activity_id = n.getStringExtra("activity_id");
+        String api_token = n.getStringExtra("api_token");
+        String volunteer_id = n.getStringExtra("volunteer_id");
+
+        String activitygroups_id = n.getStringExtra("activitygroups_id");
+        String volunteer_id_to_rate = n.getStringExtra("volunteer_id_to_rate");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("activity_id", activity_id);
@@ -238,11 +166,11 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
                     }
                 }
                 , new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
+            }
+        });
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonArrayRequest);
@@ -256,7 +184,7 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
 
         //pinakaubos ni ton para ma clear ang arraylist
         ratings.clear();
-        getDialog().dismiss();
+        finish();
     }
 
     @Override

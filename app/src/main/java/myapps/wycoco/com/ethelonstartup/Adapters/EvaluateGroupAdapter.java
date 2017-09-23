@@ -1,13 +1,10 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.location.Criteria;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.BundleCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +18,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import myapps.wycoco.com.ethelonstartup.Fragments.DialogFragmentAttendanceSuccess;
+import myapps.wycoco.com.ethelonstartup.Activities.VolunteerRateActivity;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -98,18 +95,17 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     String volunteer_name = volunteers.get(getAdapterPosition()).getVolunteer_name();
                     String activity_group_id = volunteers.get(getAdapterPosition()).getVolunteer_group_id();
                     String volunteer_rate_id = volunteers.get(getAdapterPosition()).getVolunteer_id();
-                    FragmentManager fm = ((AppCompatActivity) mContext).getSupportFragmentManager();
-                    DialogFragmentAttendanceSuccess dialog = new DialogFragmentAttendanceSuccess();
-                    Bundle n = new Bundle();
-                    n.putString("api_token", api_token);
-                    n.putString("activity_id", activity_id);
-                    n.putString("volunteer_id", volunteer_id);
-                    n.putString("volunteer_name", volunteer_name);
-                    n.putString("volunteer_id_to_rate", volunteer_rate_id);
-                    n.putString("activitygroups_id", activity_group_id);
-                    n.putInt("criteri_size", criterias.size());
-                    dialog.setArguments(n);
-                    dialog.show(fm, "EvaluateCriteria");
+
+                    Intent n = new Intent(mContext, VolunteerRateActivity.class);
+                    n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    n.putExtra("api_token", api_token);
+                    n.putExtra("activity_id", activity_id);
+                    n.putExtra("volunteer_id", volunteer_id);
+                    n.putExtra("volunteer_name", volunteer_name);
+                    n.putExtra("volunteer_id_to_rate", volunteer_rate_id);
+                    n.putExtra("activitygroups_id", activity_group_id);
+                    n.putExtra("criteri_size", criterias.size());
+                    mContext.startActivity(n);
 
                 }
             });

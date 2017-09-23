@@ -69,7 +69,8 @@
             android:name=".Activities.AttendanceScanner"
             android:theme="@style/AppTheme" />
         <activity android:name=".Activities.EvaluateGroupActivity" />
-        <activity android:name=".Activities.RateVolunteerActivity"></activity>
+        <activity android:name=".Activities.RateVolunteerActivity" />
+        <activity android:name=".Activities.VolunteerRateActivity"></activity>
     </application>
 
 </manifest>
