@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="myapps.wycoco.com.ethelonstartup.Activities.HomeActivity">
 
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,24 +28,24 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/criteriaRec"
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="400dp"
+                >
 
             </android.support.v7.widget.RecyclerView>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginLeft="70dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="40dp"
-                android:textStyle="bold"
-                android:textColor="#fff"
-                android:id="@+id/doneRateBtn"
-                android:text="Done"
-                android:layout_gravity="center_horizontal"
 
-                android:background="@drawable/login_ethelon_bg_button_user"/>
-        </LinearLayout>
-    </FrameLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:id="@+id/doneRateBtn"
+        android:text="Done"
+        android:layout_marginBottom="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/login_ethelon_bg_button_user"/>
+
+</RelativeLayout>

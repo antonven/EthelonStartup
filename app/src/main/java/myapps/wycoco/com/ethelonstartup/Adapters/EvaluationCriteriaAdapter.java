@@ -1,11 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.zip.Inflater;
-
-import myapps.wycoco.com.ethelonstartup.Fragments.DialogFragmentAttendanceSuccess;
-import myapps.wycoco.com.ethelonstartup.Models.AdapterInterface;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -33,7 +23,6 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
     Context mContext;
     ArrayList<EvaluationCriteria> criteria = new ArrayList<>();
     ArrayList<Integer> rates = new ArrayList<>();
-    AdapterInterface adapterInterface;
     private OnClickListener mLiistener;
 
     public EvaluationCriteriaAdapter(Context mContext, ArrayList<EvaluationCriteria> criteria, OnClickListener mLiistener) {
@@ -84,36 +73,23 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
             criteriaRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                 @Override
                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-//                    ratingBar.setRating(v);
+
                     int rating = (int) v;
                     String criterion = criteria.get(getAdapterPosition()).getCriteriaName();
-//                    rates.add(rating);
+
                     Bundle a = new Bundle();
                     a.putInt("rating", rating);
                     a.putString("criteria_name", criterion);
-                    DialogFragmentAttendanceSuccess fd = new DialogFragmentAttendanceSuccess();
-                    fd.setArguments(a);
-//                    adapterInterface.onChanged(criterion);
                     mLiistener.onClick(rating, getAdapterPosition());
-//                    adapterInterface.ratingChanged("");
-//                    criteria.get(getAdapterPosition()).setCriteriaRating(rating);
-//                    evaluateGroupAdapter = new EvaluateGroupAdapter(mContext, criteria);
                 }
             });
 
         }
     }
 
-    public void setOnChangedRating(AdapterInterface adapterInterface){
-        this.adapterInterface = adapterInterface;
-    }
-
     public interface OnClickListener{
         public void onClick(int rating, int index);
 
     }
-
-
-
 
 }

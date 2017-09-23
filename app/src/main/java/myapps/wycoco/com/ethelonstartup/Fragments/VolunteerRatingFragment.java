@@ -25,21 +25,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupPagerAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.EvaluationCriteriaAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
-import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.R;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,9 +113,6 @@ public class VolunteerRatingFragment extends Fragment implements DialogFragmentA
                             evaluateGroupAdapter.notifyDataSetChanged();
                             volrec.setItemAnimator(new DefaultItemAnimator());
                             volrec.setAdapter(evaluateGroupAdapter);
-
-//                            evaluateGroupPagerAdapter = new EvaluateGroupPagerAdapter(volunteers, getContext(), activity_id, api_token, volunteer_id);
-//                            viewPager.setAdapter(evaluateGroupPagerAdapter);
 
                         }
                     }

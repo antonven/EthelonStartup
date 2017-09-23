@@ -52,6 +52,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     Button joinActivityBtn, unjoinActivityBtn;
     ImageView eventDetailsImage;
     Intent n;
+    String message;
     CollapsingToolbarLayout collapsingToolbarLayout;
     ViewPagerAdapter adapter;
     private static final String URL = "http://"+new Localhost().getLocalhost()+"joinactivity";
@@ -79,6 +80,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         unjoinActivityBtn = (Button)findViewById(R.id.unjoinActivityBtn);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
 
+        if(getMessage()!=null) {
+            if (getMessage().equals("Already Joined")) {
+                joinActivityBtn.setVisibility(View.GONE);
+                unjoinActivityBtn.setVisibility(View.VISIBLE);
+            }
+        }
+
         n = getIntent();
         eventName = n.getStringExtra("eventName");
         eventHost = n.getStringExtra("eventHost");
@@ -89,19 +97,21 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventName1.setText(eventName);
         eventHost1.setText(eventHost + "University of San Jose - Recoletos");
 
-        validateJoin();
+//        validateJoin();
 
         joinActivityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fetchDetails();
                 joinActivityBtn.setVisibility(View.GONE);
                 unjoinActivityBtn.setVisibility(View.VISIBLE);
-                fetchDetails();
+
             }
         });
 
         insTabs();
     }
+
 
     private void insTabs(){
 
@@ -170,45 +180,45 @@ public class EventDetailsActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    public void validateJoin(){
-        final String volunteer_id = n.getStringExtra("id");
-        final String api_token = n.getStringExtra("api_token");
-        final String activity_id = n.getStringExtra("activity_id");
-
-        final Map<String, String> params = new HashMap<String, String>();
-        params.put("volunteer_id", volunteer_id);
-        params.put("activity_id", activity_id);
-        params.put("api_token", api_token);
-
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response.getString("message").equals("Already Joined")) {
-                                joinActivityBtn.setVisibility(View.GONE);
-                                unjoinActivityBtn.setVisibility(View.VISIBLE);
-                            } else {
-                                //Fragment na naka success siya!
-                                //ma add sha sa portfolio
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
-        requestQueue.add(jsonObjectRequest);
-    }
+//    public void validateJoin(){
+//        final String volunteer_id = n.getStringExtra("id");
+//        final String api_token = n.getStringExtra("api_token");
+//        final String activity_id = n.getStringExtra("activity_id");
+//
+//        final Map<String, String> params = new HashMap<String, String>();
+//        params.put("volunteer_id", volunteer_id);
+//        params.put("activity_id", activity_id);
+//        params.put("api_token", api_token);
+//
+//
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            if (response.getString("message").equals("Already Joined")) {
+//                                joinActivityBtn.setVisibility(View.GONE);
+//                                unjoinActivityBtn.setVisibility(View.VISIBLE);
+//                            } else {
+//                                //Fragment na naka success siya!
+//                                //ma add sha sa portfolio
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                }) {
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
+//        requestQueue.add(jsonObjectRequest);
+//    }
 
     public void fetchDetails(){
 
@@ -228,8 +238,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getString("message").equals("Already Joined")) {
-
-                                Toast.makeText(EventDetailsActivity.this, "You have already joined this activity!", Toast.LENGTH_SHORT).show();
+                                setMessage(response.getString("message"));
                             } else {
                                 //Fragment na naka success siya!
                                 Intent n = new Intent(EventDetailsActivity.this, JoinActivitySuccess.class);
@@ -254,5 +263,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public String getMessage(){
+        return message;
+    }
+
+    public void setMessage(String message){
+        this.message = message;
     }
 }
