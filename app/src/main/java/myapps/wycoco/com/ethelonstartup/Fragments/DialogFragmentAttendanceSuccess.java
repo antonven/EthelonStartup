@@ -70,6 +70,7 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
     EvaluationCriteriaAdapter adapter;
 
     ArrayList<Integer> ratings;
+    private OnCompleteListener onCompleteListener;
 
     private static final String URL = "http://" + new Localhost().getLocalhost() + "activitycriteria";
     private static final String URL2 = "http://" + new Localhost().getLocalhost() + "rategroupmate";
@@ -81,6 +82,7 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
     RecyclerView recyclerCriteria;
     TextView volunteerNameTxt;
     Context mContext;
+    int index;
 
 
     public DialogFragmentAttendanceSuccess() {
@@ -95,8 +97,9 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
         Window window = getDialog().getWindow();
         Point size = new Point();
         doneBtn = (Button)view.findViewById(R.id.doneRateBtn);
-
         ratings = new ArrayList<>();
+
+        onCompleteListener = (OnCompleteListener)getTargetFragment();
 
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
@@ -115,29 +118,14 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
         String volunteer_name = getArguments().getString("volunteer_name");
         fetchCriteria();
 
+        index = getArguments().getInt("index");
+        Log.e("DFASline122", " "+index);
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
         String volunteer_id = getArguments().getString("volunteer_id");
 
+
         Context mContext;
-       /* CriteriaFragment criteriaFragment = new CriteriaFragment();
-        Log.e("DIALOGFRAGMENT", "act_id" + activity_id);
-        Bundle bundle = new Bundle();
-        bundle.putString("activity_id", activity_id);
-        bundle.putString("api_token", api_token);
-        bundle.putString("volunteer_id", volunteer_id);
-
-        criteriaFragment.setArguments(bundle);*/
-
-       /* FragmentManager fm = getChildFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.recFrame, criteriaFragment)
-                .commit();
-
-        if(getArguments() != null){
-            getCriteria();
-        }
-*/
         return view;
     }
 
@@ -248,15 +236,20 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
         requestQueue.add(jsonArrayRequest);
 
 
-        //ipasa dayon ang ratings nga og katong criteria nga arraylist. dapat parehag index ha. pareha atong inputskills. katong g for loop ang params
-        //isend sa server ang activitygroups_id, volunteer_id, volunteer_id_to_rate, activity_id, count, criteriaParams0, ratingParams0 (index nang 0), volunteer_id, activity_id, api_token
-//        for(int i = 0; i<criteria.size(); i++){
-//            ratings.add(0);
-//        }
+        onCompleteListener.onComplete(index);
 
-        //pinakaubos ni ton para ma clear ang arraylist
         ratings.clear();
         getDialog().dismiss();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            this.onCompleteListener = (OnCompleteListener)context;
+        }catch (final ClassCastException e ){
+            Log.e("ANIMALYAWA",e.toString());
+        }
     }
 
     @Override
@@ -264,4 +257,10 @@ public class DialogFragmentAttendanceSuccess extends DialogFragment implements V
         Log.e("line144dialogfragm","rating = "+rating + index);
         ratings.add(index,rating);
     }
+
+    public static interface OnCompleteListener{
+        public void onComplete(int index);
+
+    }
+
 }

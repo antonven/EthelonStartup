@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Fragments.DialogFragmentAttendanceSuccess;
+import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -36,14 +37,16 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
     ArrayList<RateVolunteer> volunteers = new ArrayList<>();
     String activity_id, api_token, volunteer_id;
     ArrayList<EvaluationCriteria> criterias = new ArrayList<>();
+    VolunteerRatingFragment volunteerRatingFragment;
 
 
-    public EvaluateGroupAdapter(Context mContext, ArrayList<RateVolunteer> volunteers, String activity_id, String api_token, String volunteer_id) {
+    public EvaluateGroupAdapter(Context mContext, ArrayList<RateVolunteer> volunteers, String activity_id, String api_token, String volunteer_id, VolunteerRatingFragment volunteerRatingFragment) {
         this.mContext = mContext;
         this.volunteers = volunteers;
         this.activity_id = activity_id;
         this.api_token = api_token;
         this.volunteer_id = volunteer_id;
+        this.volunteerRatingFragment = volunteerRatingFragment;
     }
 
     public EvaluateGroupAdapter(Context mContext, ArrayList<EvaluationCriteria> criterias){
@@ -63,6 +66,8 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
                 .centerCrop().crossFade().into(holder.volunteerImage);
         holder.volunteerName.setText(volunteers.get(position).getVolunteer_name());
+        holder.status.setText(volunteers.get(position).getStatus());
+
         if(criterias.size() == 0){
             holder.ratingBar.setRating(0);
 
@@ -82,6 +87,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         TextView volunteerName;
         RatingBar ratingBar;
         LinearLayout linearLayout;
+        TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -91,6 +97,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
             ratingBar = (RatingBar)itemView.findViewById(R.id.rateVolunteerRate);
             evaluateStatus = (ImageView)itemView.findViewById(R.id.rateVolunteerStatus);
             linearLayout = (LinearLayout)itemView.findViewById(R.id.rateLinear);
+            status = (TextView)itemView.findViewById(R.id.stat);
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,6 +107,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     String volunteer_rate_id = volunteers.get(getAdapterPosition()).getVolunteer_id();
                     FragmentManager fm = ((AppCompatActivity) mContext).getSupportFragmentManager();
                     DialogFragmentAttendanceSuccess dialog = new DialogFragmentAttendanceSuccess();
+                    dialog.setTargetFragment(volunteerRatingFragment,0);
                     Bundle n = new Bundle();
                     n.putString("api_token", api_token);
                     n.putString("activity_id", activity_id);
@@ -107,6 +115,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     n.putString("volunteer_name", volunteer_name);
                     n.putString("volunteer_id_to_rate", volunteer_rate_id);
                     n.putString("activitygroups_id", activity_group_id);
+                    n.putInt("index",getAdapterPosition());
                     n.putInt("criteri_size", criterias.size());
                     dialog.setArguments(n);
                     dialog.show(fm, "EvaluateCriteria");

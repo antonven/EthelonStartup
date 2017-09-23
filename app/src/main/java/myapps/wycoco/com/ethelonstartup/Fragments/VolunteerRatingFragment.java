@@ -44,7 +44,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VolunteerRatingFragment extends Fragment {
+public class VolunteerRatingFragment extends Fragment implements DialogFragmentAttendanceSuccess.OnCompleteListener{
 
 
     LinearLayoutManager linearLayoutManager;
@@ -81,6 +81,10 @@ public class VolunteerRatingFragment extends Fragment {
         params.put("api_token", api_token);
         Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
 
+        DialogFragmentAttendanceSuccess dialogFragmentAttendanceSuccess = new DialogFragmentAttendanceSuccess();
+
+        dialogFragmentAttendanceSuccess.setTargetFragment(this,0);
+
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
@@ -100,7 +104,7 @@ public class VolunteerRatingFragment extends Fragment {
 
                                     Log.e("GOINGVOLUNTEERS", "PICTURES" + volunteer_image);
                                     RateVolunteer volunteer = new RateVolunteer(volunteers_id, volunteer_name, volunteer_image, volunteer_group_id
-                                            , number_of_volunteers);
+                                            , number_of_volunteers, "wala pa");
 
                                     volunteers.add(volunteer);
 //                                    fetchCriteria();
@@ -109,7 +113,8 @@ public class VolunteerRatingFragment extends Fragment {
                                     e.printStackTrace();
                                 }
                             }
-                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id);
+
+                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id,VolunteerRatingFragment.this);
 
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             volrec.setLayoutManager(linearLayoutManager);
@@ -137,7 +142,11 @@ public class VolunteerRatingFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onComplete(int index) {
 
-
-
+        //buhati didto sa adapter nga dili nah niya ma rate ang mana niyag rate if ang status kay mana
+        volunteers.get(index).setStatus("Mana");
+        evaluateGroupAdapter.notifyDataSetChanged();
+    }
 }

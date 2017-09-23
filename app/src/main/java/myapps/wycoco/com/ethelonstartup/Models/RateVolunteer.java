@@ -11,21 +11,31 @@ public class RateVolunteer {
     private String volunteer_image;
     private String volunteer_group_id;
     private int number_of_volunteers;
+    private String status;
 
     public RateVolunteer() {
     }
 
     public RateVolunteer(String volunteer_id, String volunteer_name, String volunteer_image,
-                         String volunteer_group_id, int number_of_volunteers) {
+                         String volunteer_group_id, int number_of_volunteers, String status) {
         this.volunteer_id = volunteer_id;
         this.volunteer_name = volunteer_name;
         this.volunteer_image = volunteer_image;
         this.volunteer_group_id = volunteer_group_id;
         this.number_of_volunteers = number_of_volunteers;
+        this.status = status;
     }
 
     public String getVolunteer_id() {
         return volunteer_id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setVolunteer_id(String volunteer_id) {
