@@ -11,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -72,8 +71,12 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
 
-        //submitAttendance();
-        //butangig murag pina dialog nga mana siyag attendance og rate
+        switch (view.getId()){
+            case R.id.submitBtn:
+                submitAttendance();
+                break;
+
+        }
 
     }
 

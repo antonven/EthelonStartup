@@ -44,8 +44,6 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
     ViewPager viewPager;
     EvaluateGroupAdapter evaluateGroupAdapter;
     RecyclerView volrec;
-
-
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
 
     public VolunteerRatingFragment() {
@@ -59,7 +57,6 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_rate, container, false);
 
-//        fetchVolunteerGroup(view);
         volrec = (RecyclerView)view.findViewById(R.id.volRec);
         volunteers  = new ArrayList<>();
         final String activity_id = getArguments().getString("activity_id");

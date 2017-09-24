@@ -141,8 +141,8 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setText("Details");
-        tabLayout.getTabAt(1).setText("Going");
-        tabLayout.getTabAt(2).setText("Reviews");
+        tabLayout.getTabAt(1).setText("Volunteers");
+        tabLayout.getTabAt(2).setText("Group");
     }
 
     private void setupViewPager(ViewPager viewPager){

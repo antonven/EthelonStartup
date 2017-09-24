@@ -36,6 +36,7 @@ import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
 import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
+import myapps.wycoco.com.ethelonstartup.Activities.PortfolioEventDetailsActivity;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
@@ -183,7 +184,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     String eventContactPerson = activities.get(getAdapterPosition()).getContactPerson();
                     String eventSkills = activities.get(getAdapterPosition()).getActivityPoints();
 
-                    Intent in = new Intent(mContext, EventDetailsActivity.class);
+                    Intent in = new Intent(mContext, PortfolioEventDetailsActivity.class);
                     in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     in.putExtra("eventImage", eventImage);
                     in.putExtra("eventName", eventName);
@@ -198,6 +199,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     in.putExtra("activity_id", activity_id);
                     in.putExtra("api_token", api_token);
                     in.putExtra("profileId", profile_id);
+                    in.putExtra("volunteer_id", volunteer_id);
 
                     mContext.startActivity(in);
                 }

@@ -5,15 +5,12 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,16 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.squareup.otto.Subscribe;
+
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.SecondFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
-import myapps.wycoco.com.ethelonstartup.Models.BusStation;
-import myapps.wycoco.com.ethelonstartup.Models.Localhost;
-import myapps.wycoco.com.ethelonstartup.Models.UserCredentials;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class HomeActivity extends AppCompatActivity

@@ -1,9 +1,9 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
-
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -29,62 +28,59 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
+import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by dell on 7/15/2017.
  */
-public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitygetvolunteersbefore";
-    RecyclerView recyclerView;
-    GridLayoutManager linearLayoutManager;
-    ArrayList<UserModel> users;
+public class GroupmatesFragment extends Fragment {
+
+    LinearLayoutManager linearLayoutManager;
+    ArrayList<UserModel> volunteers;
+    ViewPager viewPager;
+    EvaluateGroupAdapter evaluateGroupAdapter;
     GoingVolunteersAdapter goingVolunteersAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
+    RecyclerView volrec;
+    private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
 
-    public GoingVolunteersFragment() {
+    public GroupmatesFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_going_volunteers, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_rate, container, false);
 
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayoutGoingVolunteers);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recViewVolunteers);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
+        volrec = (RecyclerView) view.findViewById(R.id.volRec);
+        volunteers = new ArrayList<>();
 
-
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-        fetchGoingVolunteers();
+        fetchGroup();
 
         return view;
+
     }
 
-    @Override
-    public void onRefresh() {
-        fetchGoingVolunteers();
-    }
-
-
-    public void fetchGoingVolunteers(){
-
-        swipeRefreshLayout.setRefreshing(true);
-
-        users  = new ArrayList<>();
-        String activity_id = getArguments().getString("activity_id");
-        String api_token = getArguments().getString("api_token");
+    public void fetchGroup(){
+        final String activity_id = getArguments().getString("activity_id");
+        final String api_token = getArguments().getString("api_token");
+        final String volunteer_id = getArguments().getString("volunteer_id");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("activity_id", activity_id);
+        params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
-        Log.e("Wycoco", "GOINGVOLUNTEERSFRAGMENT " + api_token + activity_id + users.size());
+        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
+
+        RateVolunteerDialogFragment dialogFragmentAttendanceSuccess = new RateVolunteerDialogFragment();
+        dialogFragmentAttendanceSuccess.setTargetFragment(this,0);
 
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
@@ -97,38 +93,38 @@ public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLay
                                 try {
                                     Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
                                     JSONObject usersObject = response.getJSONObject(i);
-                                    String user_image = usersObject.getString("image_url");
-                                    String user_name = usersObject.getString("name");
-                                    String profile_id = getArguments().getString("profileId");
+                                    String volunteer_name = usersObject.getString("name");
+                                    String volunteer_image = usersObject.getString("image_url");
 
-                                    Log.e("GOINGVOLUNTEERS", "PICTURES" + user_image);
-                                    UserModel user = new UserModel();
-                                    user.setUser_id(profile_id);
-                                    user.setUserFirstName(user_name);
-                                    user.setUserImage(user_image);
-                                    users.add(user);
+                                    Log.e("GOINGVOLUNTEERS", "PICTURES" + volunteer_image);
+                                    UserModel volunteer = new UserModel();
+                                    volunteer.setUserFirstName(volunteer_name);
+                                    volunteer.setUserImage(volunteer_image);
+
+                                    volunteers.add(volunteer);
+//                                    fetchCriteria();
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
 
-                            goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
+                            goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), volunteers);
 
                             linearLayoutManager = new GridLayoutManager(getContext(), 3);
-                            recyclerView.setLayoutManager(linearLayoutManager);
+                            volrec.setLayoutManager(linearLayoutManager);
                             goingVolunteersAdapter.notifyDataSetChanged();
-                            recyclerView.setItemAnimator(new DefaultItemAnimator());
-                            recyclerView.setAdapter(goingVolunteersAdapter);
+                            volrec.setItemAnimator(new DefaultItemAnimator());
+                            volrec.setAdapter(goingVolunteersAdapter);
+
                         }
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        swipeRefreshLayout.setRefreshing(false);
+//                        swipeRefreshLayout.setRefreshing(false);
 
                     }
                 });
