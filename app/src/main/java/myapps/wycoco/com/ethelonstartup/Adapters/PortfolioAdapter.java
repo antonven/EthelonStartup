@@ -93,7 +93,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
         holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
-        holder.eventPoints.setText(activities.get(position).getActivityPoints());
+//        holder.eventPoints.setText(activities.get(position).getPoints());
         Glide.with(mContext).load(activities.get(position).getActivityImage())
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
 
@@ -181,6 +181,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     String eventContactNo = activities.get(getAdapterPosition()).getActivityContact();
                     String eventContactPerson = activities.get(getAdapterPosition()).getContactPerson();
                     String eventSkills = activities.get(getAdapterPosition()).getActivityPoints();
+                    int points = activities.get(getAdapterPosition()).getPoints();
 
                     Intent in = new Intent(mContext, PortfolioEventDetailsActivity.class);
                     in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -198,6 +199,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     in.putExtra("api_token", api_token);
                     in.putExtra("profileId", profile_id);
                     in.putExtra("volunteer_id", volunteer_id);
+                    in.putExtra("points",points);
 
                     mContext.startActivity(in);
                 }

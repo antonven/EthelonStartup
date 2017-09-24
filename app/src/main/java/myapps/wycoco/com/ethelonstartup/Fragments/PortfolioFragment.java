@@ -127,6 +127,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     String activityContact = activityObject.getString("contact");
                                     String volunteerStatus = activityObject.getString("joined");
                                     String foundationName = activityObject.getString("foundation_name");
+                                    int points = activityObject.getInt("points");
 
                                     PortfolioModel portfolioModel = new PortfolioModel(activity_id, foundationId, activityName, activityImage,
                                             activityQr,
@@ -145,7 +146,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                             contactPerson,
                                             activityContact,
                                             volunteerStatus,
-                                            foundationName);
+                                            foundationName,points);
 
                                     Log.e("KirstenMay", response.toString());
 

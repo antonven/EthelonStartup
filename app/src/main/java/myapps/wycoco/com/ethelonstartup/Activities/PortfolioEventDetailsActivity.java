@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,6 +40,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
     String message;
     CollapsingToolbarLayout collapsingToolbarLayout;
     ViewPagerAdapter adapter;
+    TextView pointsEarned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
+        tabLayout = (TabLayout) findViewById(R.id.detailsTabs);
 
         Typeface typefaceRoboto = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.linearHeader);
@@ -60,22 +63,51 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         eventHost1 = (TextView)findViewById(R.id.eventHost);
         eventHost1.setTypeface(typefaceRoboto);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
+        pointsEarned = (TextView)findViewById(R.id.pointsEarned);
 
         n = getIntent();
         eventName = n.getStringExtra("eventName");
         eventHost = n.getStringExtra("eventHost");
         eventImage = n.getStringExtra("eventImage");
         activity_id = n.getStringExtra("activity_id");
+        String api_token = n.getStringExtra("api_token");
+        String activity_id = n.getStringExtra("activity_id");
+        String profile_id = n.getStringExtra("profileId");
+        String eventDate = n.getStringExtra("eventDate");
+        String eventTimeStart = n.getStringExtra("eventTimeStart");
+        String eventLocation = n.getStringExtra("eventLocation");
+        String contactNo = n.getStringExtra("contactNo");
+        String contactPerson = n.getStringExtra("contactPerson");
+        String volunteer_id = n.getStringExtra("volunteer_id");
+        int points = n.getIntExtra("points",0);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
         eventHost1.setText(eventHost + "University of San Jose - Recoletos");
+        pointsEarned.setText(points+"");
 
 //        validateJoin();
 
 
 
         insTabs();
+        try{
+            Log.e("YAWAYAWAYAWA",n.getStringExtra("indicator"));
+            GroupmatesFragment groupmatesFragment = new GroupmatesFragment();
+            Bundle group = new Bundle();
+            group.putString("activity_id", activity_id);
+            group.putString("api_token", api_token);
+            group.putString("volunteer_id", volunteer_id);
+            groupmatesFragment.setArguments(group);
+
+            viewPager.setCurrentItem(2);
+
+        }catch (Exception e){
+
+        }
     }
 
 
@@ -96,7 +128,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         viewPager = (ViewPager)findViewById(R.id.viePagerDetails);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.detailsTabs);
+
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorHeight(12);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
@@ -123,7 +155,8 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         String contactPerson = n.getStringExtra("contactPerson");
         String volunteer_id = n.getStringExtra("volunteer_id");
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+
 
         EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
         Bundle in = new Bundle();

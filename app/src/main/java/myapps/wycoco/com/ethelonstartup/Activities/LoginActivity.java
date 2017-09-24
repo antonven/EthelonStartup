@@ -112,6 +112,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //            window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
 //        }
 
+
+
+
         callbackManager = CallbackManager.Factory.create();
         buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
         inputEmail = (EditText)findViewById(R.id.inputEmail);
@@ -268,9 +271,83 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }else{
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
-                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-                                Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
-                                nextActivity(profile);
+
+                            /*    in.putExtra("eventImage", eventImage);
+                                in.putExtra("eventName", eventName);
+                                in.putExtra("eventHost", eventHost);
+                                in.putExtra("eventDate", eventDate);
+                                in.putExtra("eventTimeStart", eventTimeStart);
+                                in.putExtra("eventLocation", eventLocation);
+                                in.putExtra("contactNo", eventContactNo);
+                                in.putExtra("contactPerson", eventContactPerson);
+                                in.putExtra("eventPoints", eventSkills);
+                                in.putExtra("id", id);
+                                in.putExtra("activity_id", activity_id);
+                                in.putExtra("api_token", api_token);
+                                in.putExtra("profileId", profile_id);
+                                in.putExtra("volunteer_id", volunteer_id);
+*/
+
+                           /*     if (getIntent().getExtras() != null ) {
+                                  // Log.e("NOTIFICATION PISTE",getIntent().getExtras().getString("activity") + " = = "+getIntent().getExtras().getString("volunteersToRate"));
+
+                                    Intent in = new Intent(LoginActivity.this, PortfolioEventDetailsActivity.class);
+                                    in.putExtra("eventImage", getIntent().getExtras().getString("eventImage"));
+                                    in.putExtra("eventName", getIntent().getExtras().getString("eventName"));
+                                    in.putExtra("eventHost", getIntent().getExtras().getString("eventHost"));
+                                    in.putExtra("eventDate", getIntent().getExtras().getString("eventDate"));
+                                    in.putExtra("eventTimeStart",getIntent().getExtras().getString("eventTimeStart") );
+                                    in.putExtra("eventLocation", getIntent().getExtras().getString("eventLocation") );
+                                    in.putExtra("contactNo", getIntent().getExtras().getString("eventContactNo") );
+                                    in.putExtra("contactPerson",  getIntent().getExtras().getString("eventContactPerson"));
+                                    in.putExtra("eventPoints",getIntent().getExtras().getString("eventSkills") );
+                                    in.putExtra("activity_id", getIntent().getExtras().getString("activity_id"));
+                                    in.putExtra("api_token", api_token);
+                                    in.putExtra("profileId", profile_id);
+                                    in.putExtra("volunteer_id", volunteer_id);
+                                    in.putExtra("indicator","yes");
+                                    startActivity(in);
+
+                                }else{
+                                    BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+                                    Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
+                                    nextActivity(profile);
+                                }*/
+
+                                try{
+                                    if (getIntent().getExtras().getString("eventName") != null ) {
+                                        // Log.e("NOTIFICATION PISTE",getIntent().getExtras().getString("activity") + " = = "+getIntent().getExtras().getString("volunteersToRate"));
+
+                                        Intent in = new Intent(LoginActivity.this, PortfolioEventDetailsActivity.class);
+                                        in.putExtra("eventImage", getIntent().getExtras().getString("eventImage"));
+                                        in.putExtra("eventName", getIntent().getExtras().getString("eventName"));
+                                        in.putExtra("eventHost", getIntent().getExtras().getString("eventHost"));
+                                        in.putExtra("eventDate", getIntent().getExtras().getString("eventDate"));
+                                        in.putExtra("eventTimeStart",getIntent().getExtras().getString("eventTimeStart") );
+                                        in.putExtra("eventLocation", getIntent().getExtras().getString("eventLocation") );
+                                        in.putExtra("contactNo", getIntent().getExtras().getString("eventContactNo") );
+                                        in.putExtra("contactPerson",  getIntent().getExtras().getString("eventContactPerson"));
+                                        in.putExtra("eventPoints",getIntent().getExtras().getString("eventSkills") );
+                                        in.putExtra("activity_id", getIntent().getExtras().getString("activity_id"));
+                                        in.putExtra("api_token", api_token);
+                                        in.putExtra("profileId", profile_id);
+                                        in.putExtra("volunteer_id", volunteer_id);
+                                        in.putExtra("indicator","yes");
+                                        startActivity(in);
+
+                                    }else{
+                                        BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+                                        Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
+                                        nextActivity(profile);
+                                    }
+
+
+                                }catch (Exception e){
+                                    BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+                                    Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
+                                    nextActivity(profile);
+                                }
+
                             }
 
                         }catch (JSONException e) {

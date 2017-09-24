@@ -27,14 +27,23 @@ public class PortfolioModel {
     private String activityContact;
     private String volunteerStatus;
     private String foundationName;
+    private int points;
 
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 
     public PortfolioModel(String activityId, String foundationId, String activityName, String activityImage,
-                         String activityQr, String activityDes,  String activityLocation,
-                         String activityStart, String activityEnd, String activityDate, String activityGroup, String activityLong,
-                         String activityLat,
-                         String activityPoints ,String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
-                         String activityContact, String volunteerStatus, String foundationName) {
+                          String activityQr, String activityDes, String activityLocation,
+                          String activityStart, String activityEnd, String activityDate, String activityGroup, String activityLong,
+                          String activityLat,
+                          String activityPoints , String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
+                          String activityContact, String volunteerStatus, String foundationName, int points) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -56,6 +65,8 @@ public class PortfolioModel {
         this.activityContact = activityContact;
         this.volunteerStatus = volunteerStatus;
         this.foundationName = foundationName;
+        this.points = points;
+
     }
 
 
