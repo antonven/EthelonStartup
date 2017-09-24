@@ -22,7 +22,17 @@
 
         android:id="@+id/evaluateGroupFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="400dp">
     </FrameLayout>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/login_ethelon_bg_button_user"
+        android:text="Submit"
+        android:textColor="#fff" />
 
 </LinearLayout>

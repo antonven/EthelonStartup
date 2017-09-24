@@ -1,7 +1,9 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.VolunteerRateActivity;
+import myapps.wycoco.com.ethelonstartup.Fragments.RateVolunteerDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -60,6 +63,11 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
                 .centerCrop().crossFade().into(holder.volunteerImage);
         holder.volunteerName.setText(volunteers.get(position).getVolunteer_name());
+
+        if(volunteers.get(position).getStatus().equals("Mana")) {
+            holder.evaluateStatus.setColorFilter(Color.parseColor("#000000"));
+        }
+
         if(criterias.size() == 0){
             holder.ratingBar.setRating(0);
 
@@ -95,17 +103,19 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     String volunteer_name = volunteers.get(getAdapterPosition()).getVolunteer_name();
                     String activity_group_id = volunteers.get(getAdapterPosition()).getVolunteer_group_id();
                     String volunteer_rate_id = volunteers.get(getAdapterPosition()).getVolunteer_id();
+                    FragmentManager fm = ((AppCompatActivity)mContext).getSupportFragmentManager();
 
-                    Intent n = new Intent(mContext, VolunteerRateActivity.class);
-                    n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    n.putExtra("api_token", api_token);
-                    n.putExtra("activity_id", activity_id);
-                    n.putExtra("volunteer_id", volunteer_id);
-                    n.putExtra("volunteer_name", volunteer_name);
-                    n.putExtra("volunteer_id_to_rate", volunteer_rate_id);
-                    n.putExtra("activitygroups_id", activity_group_id);
-                    n.putExtra("criteri_size", criterias.size());
-                    mContext.startActivity(n);
+                    RateVolunteerDialogFragment rateVolunteerDialogFragment = new RateVolunteerDialogFragment();
+                    Bundle n = new Bundle();
+                    n.putString("volunteer_name", volunteer_name);
+                    n.putString("activity_group_id", activity_group_id);
+                    n.putString("volunteer_id_to_rate", volunteer_rate_id);
+                    n.putString("api_token", api_token);
+                    n.putInt("criteria_size", criterias.size());
+                    n.putString("activity_id", activity_id);
+                    n.putString("volunteer_id", volunteer_id);
+                    rateVolunteerDialogFragment.setArguments(n);
+                    rateVolunteerDialogFragment.show(fm, "Rate");
 
                 }
             });

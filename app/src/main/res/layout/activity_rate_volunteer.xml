@@ -15,7 +15,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/colorPrimary"
                 android:text="Rate Anton"
                 android:id="@+id/rateVolunteerName"
@@ -28,11 +29,11 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/criteriaRec"
                 android:layout_width="match_parent"
+                android:padding="10dp"
                 android:layout_height="400dp"
                 >
 
             </android.support.v7.widget.RecyclerView>
-
 
     </LinearLayout>
 
@@ -43,7 +44,7 @@
         android:textColor="#fff"
         android:id="@+id/doneRateBtn"
         android:text="Done"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="50dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:background="@drawable/login_ethelon_bg_button_user"/>

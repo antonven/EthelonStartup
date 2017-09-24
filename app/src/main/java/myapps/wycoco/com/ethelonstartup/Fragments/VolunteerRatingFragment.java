@@ -36,12 +36,11 @@ import myapps.wycoco.com.ethelonstartup.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VolunteerRatingFragment extends Fragment implements DialogFragmentAttendanceSuccess.OnCompleteListener{
+public class VolunteerRatingFragment extends Fragment implements RateVolunteerDialogFragment.OnCompleteListener{
 
 
     LinearLayoutManager linearLayoutManager;
     ArrayList<RateVolunteer> volunteers;
-
     ViewPager viewPager;
     EvaluateGroupAdapter evaluateGroupAdapter;
     RecyclerView volrec;
@@ -73,8 +72,7 @@ public class VolunteerRatingFragment extends Fragment implements DialogFragmentA
         params.put("api_token", api_token);
         Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
 
-        DialogFragmentAttendanceSuccess dialogFragmentAttendanceSuccess = new DialogFragmentAttendanceSuccess();
-
+        RateVolunteerDialogFragment dialogFragmentAttendanceSuccess = new RateVolunteerDialogFragment();
         dialogFragmentAttendanceSuccess.setTargetFragment(this,0);
 
 
@@ -106,7 +104,7 @@ public class VolunteerRatingFragment extends Fragment implements DialogFragmentA
                                 }
                             }
 
-                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id, VolunteerRatingFragment.this);
+                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id);
 
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             volrec.setLayoutManager(linearLayoutManager);

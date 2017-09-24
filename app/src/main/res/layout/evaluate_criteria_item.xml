@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
@@ -16,10 +16,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+
             android:text="Productivity"
             style="@style/TextViewBlue"
             android:id="@+id/criteriaTxt"
-            android:gravity="start|center_vertical"
             android:layout_weight="1"
             android:textSize="18sp"
             android:layout_marginRight="20dp"
@@ -29,6 +29,7 @@
             android:id="@+id/criteriaRating"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:stepSize="1"
             android:theme="@style/RatingBar"
