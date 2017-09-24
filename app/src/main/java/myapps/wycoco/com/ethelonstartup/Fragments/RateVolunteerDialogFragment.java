@@ -79,9 +79,12 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
         onCompleteListener = (OnCompleteListener)getTargetFragment();
 
+        String volunteer_name = getArguments().getString("volunteer_name");
+
         volunteerNameTxt = (TextView)view.findViewById(R.id.rateVolunteerName);
         recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
 
+        volunteerNameTxt.setText(volunteer_name);
         doneBtn.setOnClickListener(this);
         fetchCriteria();
 
