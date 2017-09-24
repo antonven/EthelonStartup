@@ -41,22 +41,17 @@
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_marginLeft="16dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="wala pa"
-                android:id="@+id/status"/>
+
 
 
 
         </LinearLayout>
 
         <ImageView
-            android:layout_marginLeft="20dp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitEnd"
-            android:tint="#808080"
             android:id="@+id/rateVolunteerStatus"
             app:srcCompat="@drawable/check_ic"
             android:layout_gravity="center_horizontal"

@@ -248,7 +248,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         }
     }
 
-    public static interface OnCompleteListener{
+    public interface OnCompleteListener{
         public void onComplete(int index);
 
     }

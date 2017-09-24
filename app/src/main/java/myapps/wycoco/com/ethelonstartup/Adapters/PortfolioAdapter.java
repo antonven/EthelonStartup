@@ -83,9 +83,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.clickedEventName.setText(activities.get(position).getActivityName());
         holder.clickedEventHost.setText(activities.get(position).getFoundationName());
         holder.clickedEventDescription.setText(activities.get(position).getActivityDes());
-//        holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
         holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
-//        holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
         holder.contactPerson.setText(activities.get(position).getContactPerson());
         holder.activityContact.setText(activities.get(position).getActivityContact());
@@ -99,10 +97,9 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         Glide.with(mContext).load(activities.get(position).getActivityImage())
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
 
-        Log.e("Paran", "" + activities.get(position).getActivityImage());
-
         if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
+
         }else
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
 
@@ -117,7 +114,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView eventDate, eventTimeStart, eventName, eventAddress, eventHost, eventVolunteers, eventPoints, contentRequestBtn,
-        clickedEventHost, clickedEventDescription, clickedEventTimeStart, clickedEventVolunteers, clickedEventLocation, clickedPoints,
+        clickedEventHost, clickedEventDescription, clickedEventPoints, clickedEventVolunteers, clickedEventLocation, clickedPoints,
         contactPerson, activityContact, clickedEventName, viewActivity;
         ImageView status, clickedActivityImage;
         Button attendBtn;
@@ -143,7 +140,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             status = (ImageView) itemView.findViewById(R.id.status);
             clickedEventName= (TextView)itemView.findViewById(R.id.clickedEventName);
             clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
-//            clickedEventTimeStart = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
+            clickedEventPoints = (TextView)itemView.findViewById(R.id.pointsEarned);
             clickedEventDescription = (TextView)itemView.findViewById(R.id.clickedEventDescription);
             clickedEventVolunteers = (TextView)itemView.findViewById(R.id.clickedEventVolunteerCount);
 //            clickedEventLocation = (TextView)itemView.findViewById(R.id.clickedEventLocation);
@@ -168,6 +165,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             clickedPoints.setTypeface(typeface);
             contactPerson.setTypeface(typeface);
             activityContact.setTypeface(typeface);
+            eventPoints.setTypeface(typeface);
 
 //            fetchGoingVolunteers();
             viewActivity.setOnClickListener(new View.OnClickListener() {

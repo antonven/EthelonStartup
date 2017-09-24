@@ -1,13 +1,13 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +18,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-import myapps.wycoco.com.ethelonstartup.Activities.VolunteerRateActivity;
 import myapps.wycoco.com.ethelonstartup.Fragments.RateVolunteerDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
@@ -67,9 +64,11 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
                 .centerCrop().crossFade().into(holder.volunteerImage);
         holder.volunteerName.setText(volunteers.get(position).getVolunteer_name());
-        holder.status.setText(volunteers.get(position).getStatus());
+
+        Log.e("Status sa pag rate",  volunteers.get(position) + " " + volunteers.get(position).getStatus());
         if(volunteers.get(position).getStatus().equals("Mana")) {
-            holder.evaluateStatus.setColorFilter(Color.parseColor("#000000"));
+            holder.evaluateStatus.setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
+            holder.evaluateStatus.setBackgroundColor(Color.parseColor("#c62828"));
         }
 
         if(criterias.size() == 0){
@@ -101,7 +100,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
             ratingBar = (RatingBar)itemView.findViewById(R.id.rateVolunteerRate);
             evaluateStatus = (ImageView)itemView.findViewById(R.id.rateVolunteerStatus);
             linearLayout = (LinearLayout)itemView.findViewById(R.id.rateLinear);
-            status = (TextView)itemView.findViewById(R.id.status);
+
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

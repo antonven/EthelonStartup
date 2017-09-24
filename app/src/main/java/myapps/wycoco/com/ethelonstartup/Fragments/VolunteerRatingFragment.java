@@ -70,7 +70,7 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
         Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
 
         RateVolunteerDialogFragment dialogFragmentAttendanceSuccess = new RateVolunteerDialogFragment();
-        dialogFragmentAttendanceSuccess.setTargetFragment(this,0);
+        dialogFragmentAttendanceSuccess.setTargetFragment(this, 0);
 
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),

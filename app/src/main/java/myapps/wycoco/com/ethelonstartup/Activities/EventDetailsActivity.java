@@ -180,45 +180,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-//    public void validateJoin(){
-//        final String volunteer_id = n.getStringExtra("id");
-//        final String api_token = n.getStringExtra("api_token");
-//        final String activity_id = n.getStringExtra("activity_id");
-//
-//        final Map<String, String> params = new HashMap<String, String>();
-//        params.put("volunteer_id", volunteer_id);
-//        params.put("activity_id", activity_id);
-//        params.put("api_token", api_token);
-//
-//
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            if (response.getString("message").equals("Already Joined")) {
-//                                joinActivityBtn.setVisibility(View.GONE);
-//                                unjoinActivityBtn.setVisibility(View.VISIBLE);
-//                            } else {
-//                                //Fragment na naka success siya!
-//                                //ma add sha sa portfolio
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                }) {
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(EventDetailsActivity.this);
-//        requestQueue.add(jsonObjectRequest);
-//    }
+
 
     public void fetchDetails(){
 
