@@ -104,7 +104,7 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
                                 }
                             }
 
-                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id);
+                            evaluateGroupAdapter = new EvaluateGroupAdapter(getContext(), volunteers, activity_id, api_token, volunteer_id, VolunteerRatingFragment.this);
 
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             volrec.setLayoutManager(linearLayoutManager);
@@ -133,6 +133,7 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
     public void onComplete(int index) {
 
         //buhati didto sa adapter nga dili nah niya ma rate ang mana niyag rate if ang status kay mana
+        Log.e("136KOBE"," "+index);
         volunteers.get(index).setStatus("Mana");
         evaluateGroupAdapter.notifyDataSetChanged();
     }

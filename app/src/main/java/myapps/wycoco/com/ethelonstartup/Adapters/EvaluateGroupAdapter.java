@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.VolunteerRateActivity;
 import myapps.wycoco.com.ethelonstartup.Fragments.RateVolunteerDialogFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
 import myapps.wycoco.com.ethelonstartup.Models.EvaluationCriteria;
 import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -36,14 +39,15 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
     ArrayList<RateVolunteer> volunteers = new ArrayList<>();
     String activity_id, api_token, volunteer_id;
     ArrayList<EvaluationCriteria> criterias = new ArrayList<>();
+    VolunteerRatingFragment volunteerRatingFragment;
 
-
-    public EvaluateGroupAdapter(Context mContext, ArrayList<RateVolunteer> volunteers, String activity_id, String api_token, String volunteer_id) {
+    public EvaluateGroupAdapter(Context mContext, ArrayList<RateVolunteer> volunteers, String activity_id, String api_token, String volunteer_id,VolunteerRatingFragment volunteerRatingFragment) {
         this.mContext = mContext;
         this.volunteers = volunteers;
         this.activity_id = activity_id;
         this.api_token = api_token;
         this.volunteer_id = volunteer_id;
+        this.volunteerRatingFragment = volunteerRatingFragment;
     }
 
     public EvaluateGroupAdapter(Context mContext, ArrayList<EvaluationCriteria> criterias){
@@ -63,7 +67,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
                 .centerCrop().crossFade().into(holder.volunteerImage);
         holder.volunteerName.setText(volunteers.get(position).getVolunteer_name());
-
+        holder.status.setText(volunteers.get(position).getStatus());
         if(volunteers.get(position).getStatus().equals("Mana")) {
             holder.evaluateStatus.setColorFilter(Color.parseColor("#000000"));
         }
@@ -87,6 +91,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         TextView volunteerName;
         RatingBar ratingBar;
         LinearLayout linearLayout;
+        TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -96,6 +101,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
             ratingBar = (RatingBar)itemView.findViewById(R.id.rateVolunteerRate);
             evaluateStatus = (ImageView)itemView.findViewById(R.id.rateVolunteerStatus);
             linearLayout = (LinearLayout)itemView.findViewById(R.id.rateLinear);
+            status = (TextView)itemView.findViewById(R.id.status);
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -106,6 +112,10 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     FragmentManager fm = ((AppCompatActivity)mContext).getSupportFragmentManager();
 
                     RateVolunteerDialogFragment rateVolunteerDialogFragment = new RateVolunteerDialogFragment();
+                    rateVolunteerDialogFragment.setTargetFragment(volunteerRatingFragment,0);
+
+                    //paghimo og laing dialog nga if iyang status kay mana kay kato nga dialog ang mo show nya if wala pa ang status kay ang ratevolunteerdialogfragment
+
                     Bundle n = new Bundle();
                     n.putString("volunteer_name", volunteer_name);
                     n.putString("activity_group_id", activity_group_id);
@@ -114,8 +124,10 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     n.putInt("criteria_size", criterias.size());
                     n.putString("activity_id", activity_id);
                     n.putString("volunteer_id", volunteer_id);
+                    n.putInt("index",getAdapterPosition());
                     rateVolunteerDialogFragment.setArguments(n);
                     rateVolunteerDialogFragment.show(fm, "Rate");
+
 
                 }
             });

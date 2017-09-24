@@ -72,6 +72,9 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
 
+        //submitAttendance();
+        //butangig murag pina dialog nga mana siyag attendance og rate
+
     }
 
     public void submitAttendance(){
