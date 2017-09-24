@@ -29,7 +29,6 @@ import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class EvaluateGroupActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -72,6 +71,11 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
 
+        switch (view.getId()){
+            case R.id.submitBtn:
+                submitAttendance();
+                break;
+        }
     }
 
     public void submitAttendance(){
@@ -104,4 +108,5 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonArrayRequest);
     }
+
 }
