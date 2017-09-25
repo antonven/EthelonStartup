@@ -25,7 +25,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,13 +132,19 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     String foundationName = activityObject.getString("foundation_name");
                                     int points = activityObject.getInt("points");
 
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    Date date = dateFormat.parse(activityDate);
+
+                                    SimpleDateFormat dateFormat1 = new SimpleDateFormat("MMMM dd, EEE");
+                                    String finalDate = dateFormat1.format(date);
+
                                     PortfolioModel portfolioModel = new PortfolioModel(activity_id, foundationId, activityName, activityImage,
                                             activityQr,
                                             activityDes,
                                             activityLocation,
                                             activityStart,
                                             activityEnd,
-                                            activityDate,
+                                            finalDate,
                                             activityGroup,
                                             activityLong,
                                             activityLat,
@@ -155,6 +164,8 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
 
 
                                 } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
                             }

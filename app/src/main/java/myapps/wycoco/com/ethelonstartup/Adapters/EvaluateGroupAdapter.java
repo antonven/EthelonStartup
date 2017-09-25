@@ -68,7 +68,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         Log.e("Status sa pag rate",  volunteers.get(position) + " " + volunteers.get(position).getStatus());
         if(volunteers.get(position).getStatus().equals("Mana")) {
             holder.evaluateStatus.setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
-            holder.evaluateStatus.setBackgroundColor(Color.parseColor("#c62828"));
+
         }
 
         if(criterias.size() == 0){

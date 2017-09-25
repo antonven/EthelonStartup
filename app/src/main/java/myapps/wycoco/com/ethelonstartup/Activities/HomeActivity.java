@@ -31,6 +31,9 @@ import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.R;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,6 +48,7 @@ public class HomeActivity extends AppCompatActivity
     AppBarLayout appBarLayout;
     String api_token, email;
     String volunteer_id;
+    KonfettiView konfettiView;
 
 
     @Override
@@ -64,6 +68,7 @@ public class HomeActivity extends AppCompatActivity
 
         appBarLayout = (AppBarLayout)findViewById(R.id.appBarHome);
         toolbarTitle = (TextView)findViewById(R.id.toolbarTitle);
+        konfettiView = (KonfettiView)findViewById(R.id.konfettiView);
         Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Rancho-Regular.ttf");
         toolbarTitle.setTypeface(typeface);
 
@@ -203,6 +208,16 @@ public class HomeActivity extends AppCompatActivity
                     toolbarTitle.setText("Notifications");
                 }else{
                     toolbarTitle.setText("Leaderboard");
+                    konfettiView.build()
+                            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                            .setDirection(0.0, 359.0)
+                            .setSpeed(1f, 5f)
+                            .setFadeOutEnabled(true)
+                            .setTimeToLive(2000L)
+                            .addShapes(Shape.RECT, Shape.CIRCLE)
+                            .addSizes(new Size(12, 5f))
+                            .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                            .stream(300, 5000L);
                 }
             }
 

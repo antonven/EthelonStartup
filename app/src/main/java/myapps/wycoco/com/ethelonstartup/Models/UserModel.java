@@ -12,14 +12,16 @@ public class UserModel {
     private String userRole;
     private String user_id;
     private String user_token;
+    private int user_points;
 
-    public UserModel(String userImage, String userFirstName, String userLastName, String userRole, String user_id, String user_token) {
+    public UserModel(String userImage, String userFirstName, String userLastName, String userRole, String user_id, String user_token, int user_points) {
         this.userImage = userImage;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userRole = userRole;
         this.user_id = user_id;
         this.user_token = user_token;
+        this.user_points = user_points;
     }
 
     public UserModel() {
@@ -72,5 +74,13 @@ public class UserModel {
 
     public void setUser_token(String user_token) {
         this.user_token = user_token;
+    }
+
+    public int getUser_points(){
+        return user_points;
+    }
+
+    public void setUser_points(int user_points){
+        this.user_points = user_points;
     }
 }
