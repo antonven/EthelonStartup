@@ -22,7 +22,7 @@ public class RegisterForm1 extends Fragment {
     public RegisterForm1() {
         // Required empty public constructor
     }
-    EditText userName, passWord, conPass, eMail;
+    EditText passWord, eMail;
     Button nextStepBtn;
 
     @Override
@@ -30,11 +30,9 @@ public class RegisterForm1 extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.register1_form, container, false);
 
-
         passWord = (EditText)v.findViewById(R.id.inputPassword);
         eMail = (EditText)v.findViewById(R.id.inputEmail);
         nextStepBtn = (Button)v.findViewById(R.id.nextStepBtn);
-
 
         nextStepBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +66,6 @@ public class RegisterForm1 extends Fragment {
     public static RegisterForm1 newInstance() {
         
         Bundle args = new Bundle();
-        
         RegisterForm1 fragment = new RegisterForm1();
         fragment.setArguments(args);
         return fragment;

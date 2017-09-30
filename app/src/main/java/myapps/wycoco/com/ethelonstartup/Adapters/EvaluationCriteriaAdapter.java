@@ -22,7 +22,6 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
     Context mContext;
     ArrayList<EvaluationCriteria> criteria = new ArrayList<>();
-    ArrayList<Integer> rates = new ArrayList<>();
     private OnClickListener mLiistener;
 
     public EvaluationCriteriaAdapter(Context mContext, ArrayList<EvaluationCriteria> criteria, OnClickListener mLiistener) {
@@ -37,7 +36,6 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
     @Override
     public EvaluationCriteriaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.evaluate_criteria_item, parent,false);
-
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
@@ -60,7 +58,6 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
         TextView criteriaName;
         RatingBar criteriaRating;
         LinearLayout linearLayout;
-        Button doneBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -1,6 +1,5 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,12 +24,9 @@ public class NotificationsFragment extends Fragment {
     ArrayList<NotificationsModel> notifications = new ArrayList<>();
     NotificationsModel notificationsModel;
 
-
-
     public NotificationsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +40,6 @@ public class NotificationsFragment extends Fragment {
 
             notificationsModel = new NotificationsModel("1", "Kirsten Repunte", "", "New", "has invited you to join this activity.",
                     "invite", "4 hours ago.");
-
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             recyclerView.setLayoutManager(linearLayoutManager);

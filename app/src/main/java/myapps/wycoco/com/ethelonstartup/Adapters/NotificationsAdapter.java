@@ -2,7 +2,6 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +24,7 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
 
     Context mContext;
-    ArrayList<NotificationsModel> notifs =  new ArrayList<>();
-
-    public NotificationsAdapter() {
-    }
+    private ArrayList<NotificationsModel> notifs =  new ArrayList<>();
 
     public NotificationsAdapter(Context mContext, ArrayList<NotificationsModel> notifs) {
         this.mContext = mContext;
@@ -53,10 +49,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         Glide.with(mContext).load(notifs.get(position).getUserImage())
                 .centerCrop().crossFade().into(holder.notifTypeLogo);
 
-
-
-
-
     }
 
     @Override
@@ -64,13 +56,13 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         return notifs.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout linearLayout;
         ImageView userImage, notifTypeLogo;
         TextView userName, notifContent, notifTime;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             linearLayout = (LinearLayout)itemView.findViewById(R.id.linearNotif);

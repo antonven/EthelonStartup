@@ -28,7 +28,6 @@
                 android:id="@+id/profilePictureProfile"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:src="@drawable/account"
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"/>

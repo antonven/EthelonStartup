@@ -1,19 +1,14 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,8 +17,6 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
 
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -34,13 +27,11 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class ProfileActivity extends AppCompatActivity {
 
     CollapsingToolbarLayout collapsingToolbarLayout = null;
-    String imageUrl, profName, id;
+    String id;
     String fbProfilePicture, fbProfileName;
     ImageView profilePicture;
-    TextView profileName, volunteerPoints, activitiesJoined;
-    Toolbar toolbar;
+    TextView profileName;
     AppBarLayout appBarLayout;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +39,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile_layout);
 
         Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
@@ -73,11 +68,11 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         toolbar.setBackground(null);
+        assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapse1);
-
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -93,13 +88,11 @@ public class ProfileActivity extends AppCompatActivity {
                     collapsingToolbarLayout.setTitle(profileName.getText());
                     isShow = true;
                 } else if (isShow) {
-                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    collapsingToolbarLayout.setTitle(" ");
                     isShow = false;
                 }
             }
         });
-
-
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +104,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void dynamicToolbarColor(){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ethback);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ethback);
             collapsingToolbarLayout.setContentScrimColor((getResources().getColor(R.color.colorPrimary)));
             collapsingToolbarLayout.setStatusBarScrimColor((getResources().getColor(R.color.colorPrimary)));
 

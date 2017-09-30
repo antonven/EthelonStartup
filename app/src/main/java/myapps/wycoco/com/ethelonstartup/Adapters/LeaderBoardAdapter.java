@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         Glide.with(mContext).load(users.get(position).getUserImage())
                 .centerCrop().crossFade().into(holder.leaderboardImage);
         holder.leaderboardName.setText(users.get(position).getUserFirstName());
+        holder.leaderboardPosition.setText(position + "");
+        Log.e("position", position + "");
 
     }
 
@@ -52,7 +55,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView leaderboardPosition, leaderboardName, leaderboardPoints;
+        TextView leaderboardPosition, leaderboardName;
         ImageView leaderboardImage;
 
         public ViewHolder(View itemView) {
@@ -60,6 +63,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
 
             leaderboardName = (TextView)itemView.findViewById(R.id.leaderboardName);
             leaderboardImage = (ImageView)itemView.findViewById(R.id.leaderboardImage);
+            leaderboardPosition = (TextView)itemView.findViewById(R.id.leaderboardPosition);
         }
     }
 }

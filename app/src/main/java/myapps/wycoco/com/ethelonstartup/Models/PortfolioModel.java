@@ -28,6 +28,7 @@ public class PortfolioModel {
     private String volunteerStatus;
     private String foundationName;
     private int points;
+    private int volunteer_count;
 
 
     public int getPoints() {
@@ -42,8 +43,8 @@ public class PortfolioModel {
                           String activityQr, String activityDes, String activityLocation,
                           String activityStart, String activityEnd, String activityDate, String activityGroup, String activityLong,
                           String activityLat,
-                          String activityPoints , String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
-                          String activityContact, String volunteerStatus, String foundationName, int points) {
+                          String activityPoints, String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
+                          String activityContact, String volunteerStatus, String foundationName, int points, int volunteer_count) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -66,6 +67,7 @@ public class PortfolioModel {
         this.volunteerStatus = volunteerStatus;
         this.foundationName = foundationName;
         this.points = points;
+        this.volunteer_count = volunteer_count;
 
     }
 
@@ -243,5 +245,13 @@ public class PortfolioModel {
 
     public void setFoundationName(String foundationName) {
         this.foundationName = foundationName;
+    }
+
+    public int getVolunteer_count() {
+        return volunteer_count;
+    }
+
+    public void setVolunteer_count(int volunteer_count) {
+        this.volunteer_count = volunteer_count;
     }
 }

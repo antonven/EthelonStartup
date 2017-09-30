@@ -72,26 +72,14 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         activity_id = n.getStringExtra("activity_id");
         String api_token = n.getStringExtra("api_token");
         String activity_id = n.getStringExtra("activity_id");
-        String profile_id = n.getStringExtra("profileId");
-        String eventDate = n.getStringExtra("eventDate");
-        String eventTimeStart = n.getStringExtra("eventTimeStart");
-        String eventLocation = n.getStringExtra("eventLocation");
-        String contactNo = n.getStringExtra("contactNo");
-        String contactPerson = n.getStringExtra("contactPerson");
         String volunteer_id = n.getStringExtra("volunteer_id");
-        int points = n.getIntExtra("points",0);
+        int points = n.getIntExtra("points", 0);
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
         eventHost1.setText(eventHost + "University of San Jose - Recoletos");
         pointsEarned.setText(points+"");
-
-//        validateJoin();
-
-
 
         insTabs();
         try{
@@ -128,7 +116,6 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         viewPager = (ViewPager)findViewById(R.id.viePagerDetails);
         setupViewPager(viewPager);
 
-
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorHeight(12);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
@@ -154,9 +141,6 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         String contactNo = n.getStringExtra("contactNo");
         String contactPerson = n.getStringExtra("contactPerson");
         String volunteer_id = n.getStringExtra("volunteer_id");
-
-
-
 
         EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
         Bundle in = new Bundle();
@@ -187,8 +171,6 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         adapter.addFrag(groupmatesFragment, "Group");
         viewPager.setAdapter(adapter);
     }
-
-
 
     public String getMessage(){
         return message;

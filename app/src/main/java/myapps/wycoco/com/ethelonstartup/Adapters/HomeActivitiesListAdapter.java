@@ -1,12 +1,9 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
@@ -34,8 +27,8 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActivitiesListAdapter.ViewHolder>{
 
     Context mContext;
-    ArrayList<ActivityModel> activities = new ArrayList<>();
-    String id, api_token, profile_id;
+    private ArrayList<ActivityModel> activities = new ArrayList<>();
+    private String id, api_token, profile_id;
 
     public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities, String id, String api_token, String profile_id) {
         this.mContext = mContext;
@@ -65,9 +58,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         holder.clickedEventName.setText(activities.get(position).getActivityName());
         holder.clickedEventHost.setText(activities.get(position).getFoundationName());
         holder.clickedEventDescription.setText(activities.get(position).getActivityDes());
-//        holder.clickedEventTimeStart.setText(activities.get(position).getActivityStart());
         holder.clickedEventVolunteers.setText(String.valueOf(activities.get(position).getVolunteerCount()));
-//        holder.clickedEventLocation.setText(activities.get(position).getActivityLocation());
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
         holder.contactPerson.setText(activities.get(position).getContactPerson());
         holder.activityContact.setText(activities.get(position).getActivityContact());
@@ -85,7 +76,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
         FoldingCell fc;
         TextView eventName, eventHost, eventAddress, eventDate, eventTimeStart, eventVolunteers, eventPoints;
-        TextView clickedEventName, clickedEventHost, clickedEventLocation, clickedEventDescription, clickedEventTimeStart,
+        TextView clickedEventName, clickedEventHost, clickedEventDescription,
                 clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact;
         RelativeLayout relativeLayout;
         ImageView clickedActivityImage;
@@ -105,9 +96,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             clickedEventName = (TextView)itemView.findViewById(R.id.clickedEventName);
             clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
-//            clickedEventLocation = (TextView)itemView.findViewById(R.id.clickedEventLocation);
             clickedEventDescription = (TextView)itemView.findViewById(R.id.clickedEventDescription);
-//            clickedEventTimeStart = (TextView)itemView.findViewById(R.id.clickedEventTimeStart);
             clickedEventVolunteers = (TextView)itemView.findViewById(R.id.clickedEventVolunteerCount);
             clickedPoints = (TextView)itemView.findViewById(R.id.clickedEventPoints);
             clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);

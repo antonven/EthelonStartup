@@ -2,10 +2,6 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,28 +12,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
-import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
 import myapps.wycoco.com.ethelonstartup.Activities.PortfolioEventDetailsActivity;
-import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
@@ -48,19 +29,10 @@ import myapps.wycoco.com.ethelonstartup.R;
  */
 
 public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.ViewHolder>{
-    private HashSet<Integer> unfoldedIndexes = new HashSet<>();
-    private View.OnClickListener defaultRequestBtnClickListener;
-
 
     Context mContext;
-    ArrayList<PortfolioModel> activities = new ArrayList<>();
-    int count = 0;
-    String api_token, id, volunteer_id, profile_id;
-    private static final String URL = "http://" + new Localhost().getLocalhost() + "activitygetvolunteersbefore";
-
-
-    public PortfolioAdapter() {
-    }
+    private ArrayList<PortfolioModel> activities = new ArrayList<>();
+    private String api_token, id, volunteer_id, profile_id;
 
     public PortfolioAdapter(Context mContext, ArrayList<PortfolioModel> activities, String id, String api_token, String volunteer_id, String profile_id) {
         this.mContext = mContext;
@@ -93,16 +65,15 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
         holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
-//        holder.eventPoints.setText(activities.get(position).getPoints());
         Glide.with(mContext).load(activities.get(position).getActivityImage())
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
 
         if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
+            holder.attendBtn.setVisibility(View.GONE);
 
         }else
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
-
 
     }
 
@@ -113,16 +84,13 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView eventDate, eventTimeStart, eventName, eventAddress, eventHost, eventVolunteers, eventPoints, contentRequestBtn,
-        clickedEventHost, clickedEventDescription, clickedEventPoints, clickedEventVolunteers, clickedEventLocation, clickedPoints,
+        TextView eventDate, eventTimeStart, eventName, eventAddress, eventHost, eventVolunteers, eventPoints,
+        clickedEventHost, clickedEventDescription, clickedEventPoints, clickedEventVolunteers, clickedPoints,
         contactPerson, activityContact, clickedEventName, viewActivity;
         ImageView status, clickedActivityImage;
         Button attendBtn;
         FoldingCell fc;
         RecyclerView recyclerView;
-        ActivityListGoingVolunteersAdapter adapter;
-        LinearLayoutManager linearLayoutManager;
-        ArrayList<UserModel> users;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -143,7 +111,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             clickedEventPoints = (TextView)itemView.findViewById(R.id.pointsEarned);
             clickedEventDescription = (TextView)itemView.findViewById(R.id.clickedEventDescription);
             clickedEventVolunteers = (TextView)itemView.findViewById(R.id.clickedEventVolunteerCount);
-//            clickedEventLocation = (TextView)itemView.findViewById(R.id.clickedEventLocation);
             clickedPoints = (TextView)itemView.findViewById(R.id.clickedEventPoints);
             contactPerson = (TextView)itemView.findViewById(R.id.contactPerson);
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
@@ -167,7 +134,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             activityContact.setTypeface(typeface);
             eventPoints.setTypeface(typeface);
 
-//            fetchGoingVolunteers();
             viewActivity.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

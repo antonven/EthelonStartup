@@ -2,7 +2,6 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,16 +24,11 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteersAdapter.ViewHolder> {
 
     Context mContext;
-    ArrayList<UserModel> users = new ArrayList<>();
-
-
-    public GoingVolunteersAdapter() {
-    }
+    private ArrayList<UserModel> users = new ArrayList<>();
 
     public GoingVolunteersAdapter(Context mContext, ArrayList<UserModel> users) {
         this.mContext = mContext;
         this.users = users;
-        Log.e("USERS ADAPTER", "" + users.size());
     }
 
     @Override

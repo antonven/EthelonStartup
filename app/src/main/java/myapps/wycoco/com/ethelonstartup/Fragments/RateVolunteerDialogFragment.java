@@ -1,11 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
-
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -16,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -99,7 +94,6 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-//        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         return dialog;
     }
@@ -116,8 +110,6 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
     public void fetchCriteria(){
 
-//        Intent n = getIntent();
-
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
         String volunteer_id = getArguments().getString("volunteer_id");
@@ -127,13 +119,11 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         params.put("activity_id", activity_id);
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
-        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
                         if (response.length() > 0) {
                             for (int i = 0; i < response.length(); i++) {
                                 try {
@@ -182,7 +172,6 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     public void onClick(View view) {
         adapter = new EvaluationCriteriaAdapter();
 
-
         String activity_id = getArguments().getString("activity_id");
         String api_token = getArguments().getString("api_token");
         String volunteer_id = getArguments().getString("volunteer_id");
@@ -222,13 +211,6 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonArrayRequest);
 
-
-        //ipasa dayon ang ratings nga og katong criteria nga arraylist. dapat parehag index ha. pareha atong inputskills. katong g for loop ang params
-        //isend sa server ang activitygroups_id, volunteer_id, volunteer_id_to_rate, activity_id, count, criteriaParams0, ratingParams0 (index nang 0), volunteer_id, activity_id, api_token
-//        for(int i = 0; i<criteria.size(); i++){
-//            ratings.add(0);
-//        }
-
         onCompleteListener.onComplete(index);
         ratings.clear();
         dismiss();
@@ -236,7 +218,6 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
     @Override
     public void onClick(int rating, int index) {
-        Log.e("line144dialogfragm","rating = "+rating + index);
         ratings.add(index,rating);
     }
 
@@ -247,13 +228,11 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         try{
             this.onCompleteListener = (OnCompleteListener)context;
         }catch (final ClassCastException e ){
-            Log.e("ANIMALYAWA",e.toString());
+            e.printStackTrace();
         }
     }
 
     public interface OnCompleteListener{
-        public void onComplete(int index);
-
-    }
+        public void onComplete(int index);}
 
 }

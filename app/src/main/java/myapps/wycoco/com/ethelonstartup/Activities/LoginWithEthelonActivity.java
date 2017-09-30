@@ -37,12 +37,9 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_with_ethelon);
 
-
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         proceedBtn = (Button)findViewById(R.id.proceedBtn);
-
-
 
         proceedBtn.setOnClickListener(new View.OnClickListener() {
             @Override

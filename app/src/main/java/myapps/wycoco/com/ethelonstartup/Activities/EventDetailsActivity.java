@@ -2,7 +2,6 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -11,15 +10,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,7 +34,7 @@ import java.util.Map;
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.ReviewsFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -63,8 +59,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_details);
 
         Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
@@ -80,12 +80,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         unjoinActivityBtn = (Button)findViewById(R.id.unjoinActivityBtn);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
 
-        if(getMessage()!=null) {
-            if (getMessage().equals("Already Joined")) {
-                joinActivityBtn.setVisibility(View.GONE);
-                unjoinActivityBtn.setVisibility(View.VISIBLE);
-            }
-        }
+//        if(getMessage()!=null) {
+//            if (getMessage().equals("Already Joined")) {
+//                joinActivityBtn.setVisibility(View.GONE);
+//                unjoinActivityBtn.setVisibility(View.VISIBLE);
+//            }
+//        }
 
         n = getIntent();
         eventName = n.getStringExtra("eventName");
@@ -142,7 +142,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setText("Details");
         tabLayout.getTabAt(1).setText("Volunteers");
-        tabLayout.getTabAt(2).setText("Group");
+        tabLayout.getTabAt(2).setText("Reviews");
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -176,7 +176,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         adapter.addFrag(eventDetailsFragment, "Details");
         adapter.addFrag(goingVolunteersFragment, "Volunteers");
-        adapter.addFrag(new LeaderBoardFragment(), "Reviews");
+        adapter.addFrag(new ReviewsFragment(), "Reviews");
         viewPager.setAdapter(adapter);
     }
 

@@ -18,7 +18,6 @@ public class EvaluateFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,7 +30,6 @@ public class EvaluateFragment extends Fragment {
 
         VolunteerRatingFragment volunteerRatingFragment = new VolunteerRatingFragment();
         CriteriaFragment criteriaFragment = new CriteriaFragment();
-        Log.e("EVALUATEFRAGMENT", "act_id" + activity_id);
 
         Bundle bundle = new Bundle();
         bundle.putString("api_token", api_token);
@@ -43,7 +41,6 @@ public class EvaluateFragment extends Fragment {
         FragmentManager fm = getChildFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.volunteerFrame, volunteerRatingFragment)
-//                .replace(R.id.criteriaFrame, criteriaFragment)
                 .commit();
 
         return view;

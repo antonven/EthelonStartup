@@ -28,7 +28,6 @@ public class ActivityListGoingVolunteersAdapter extends RecyclerView.Adapter<Act
     public ActivityListGoingVolunteersAdapter(Context mContext, ArrayList<UserModel> users) {
         this.users = users;
         this.mContext = mContext;
-        Log.e("GVADAPTER", "pictures: " + users.size());
     }
 
     @Override

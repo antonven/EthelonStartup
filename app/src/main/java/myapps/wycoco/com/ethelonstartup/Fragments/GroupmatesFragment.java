@@ -1,7 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,7 +30,6 @@ import java.util.Map;
 import myapps.wycoco.com.ethelonstartup.Adapters.EvaluateGroupAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
-import myapps.wycoco.com.ethelonstartup.Models.RateVolunteer;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -43,8 +41,6 @@ public class GroupmatesFragment extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
     ArrayList<UserModel> volunteers;
-    ViewPager viewPager;
-    EvaluateGroupAdapter evaluateGroupAdapter;
     GoingVolunteersAdapter goingVolunteersAdapter;
     RecyclerView volrec;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
@@ -77,7 +73,6 @@ public class GroupmatesFragment extends Fragment {
         params.put("activity_id", activity_id);
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
-        Log.e("Wycoco", "EVALUATEVOLUNTEERSFRAG " + api_token + activity_id + volunteers.size());
 
         RateVolunteerDialogFragment dialogFragmentAttendanceSuccess = new RateVolunteerDialogFragment();
         dialogFragmentAttendanceSuccess.setTargetFragment(this,0);
@@ -91,12 +86,10 @@ public class GroupmatesFragment extends Fragment {
                         if (response.length() > 0) {
                             for (int i = 0; i < response.length(); i++) {
                                 try {
-                                    Log.e("GOINGVFRAGMENT", "RESPONSE" + response.toString());
                                     JSONObject usersObject = response.getJSONObject(i);
                                     String volunteer_name = usersObject.getString("name");
                                     String volunteer_image = usersObject.getString("image_url");
 
-                                    Log.e("GOINGVOLUNTEERS", "PICTURES" + volunteer_image);
                                     UserModel volunteer = new UserModel();
                                     volunteer.setUserFirstName(volunteer_name);
                                     volunteer.setUserImage(volunteer_image);

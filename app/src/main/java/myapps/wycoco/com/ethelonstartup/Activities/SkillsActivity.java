@@ -1,9 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,15 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import myapps.wycoco.com.ethelonstartup.Libraries.VolleySingleton;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -51,15 +43,17 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     Localhost localhost = new Localhost();
     private String URL = "http://"+localhost.getLocalhost()+"volunteerskills";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skills_interests_choice);
         Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
         }
@@ -74,7 +68,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         fbProfilePicture = n.getStringExtra("fbProfilePicture");
         profilePicture = n.getStringExtra("image_url");
         fbProfileName = n.getStringExtra("fbProfileName");
-
 
         environmentCheck = (ImageView)findViewById(R.id.environmentCheck);
         livelihoodCheck = (ImageView)findViewById(R.id.livelihoodCheck);
@@ -103,9 +96,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         sports.setOnClickListener(this);
         medicine.setOnClickListener(this);
         arts.setOnClickListener(this);
-
         doneButton.setOnClickListener(this);
-
     }
 
     @Override
@@ -114,7 +105,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()){
 
             case R.id.environmental:
-
                 if(count1%2==0) {
                     environmentCheck.setVisibility(View.VISIBLE);
                     skillSet.add("environment");
@@ -134,7 +124,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.livelihood:
-
                 if(count2%2==0) {
                     livelihoodCheck.setVisibility(View.VISIBLE);
                     skillSet.add("livelihood");
@@ -227,7 +216,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.medicine:
-
                 if(count7%2==0) {
                     medicineCheck.setVisibility(View.VISIBLE);
                     skillSet.add("medicine");
@@ -247,7 +235,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.arts:
-
                 if(count8%2==0) {
                     artsCheck.setVisibility(View.VISIBLE);
                     skillSet.add("arts");
@@ -263,7 +250,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                     }
                     count8++;
                 }
-                Log.e("shet", "" + skillSet + skillSet.size());
                 break;
 
             case R.id.doneButton:
@@ -283,8 +269,6 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                     intent.putExtra("fbProfileName", fbProfileName);
                                     Log.e("SKILLSACTI", "a: " + name + profilePicture + profileId);
                                     startActivity(intent);
-                                }else{
-                                    //Log.e("kobe","pisteee" +response.toString());
                                 }
                             }
                         },
@@ -315,6 +299,4 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
-
-
 }

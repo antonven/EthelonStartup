@@ -3,10 +3,8 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,14 +20,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,12 +33,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import myapps.wycoco.com.ethelonstartup.Adapters.ActivityListGoingVolunteersAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.GoingVolunteersAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
-import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -53,18 +46,12 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-
-    Localhost local = new Localhost();
     private static final String URL = "http://"+new Localhost().getLocalhost()+"getallactivities";
     RecyclerView recView;
     ArrayList<ActivityModel> activities;
     HomeActivitiesListAdapter homeActivitiesListAdapter;
-    ArrayList<UserModel> users;
-    ActivityListGoingVolunteersAdapter activityListGoingVolunteersAdapter;
-    LinearLayoutManager linearLayoutManager;
     String id, api_token, activity_id, profileId;
     SwipeRefreshLayout swipeRefreshLayout;
-    private int offset = 0;
 
     public HomeActivitiesFragment() {
         // Required empty public constructor
@@ -76,13 +63,10 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
 
         View v = inflater.inflate(R.layout.home_activities_fragment, container, false);
         recView = (RecyclerView) v.findViewById(R.id.recView);
-        Log.e("homeactivityline83", FirebaseInstanceId.getInstance().getToken());
 
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
-            swipeRefreshLayout.setOnRefreshListener(this);
-
+        swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
-
         swipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
@@ -113,8 +97,6 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id", id);
         params.put("api_token", api_token);
-
-        Log.e("kobe", "sa home" + id + api_token);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
@@ -150,18 +132,11 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                     String foundationName = activityObject.getString("foundtion_name");
                                     int volunteerCount = Integer.parseInt(activityObject.getString("volunteer_count"));
 
-//                                    DateFormat dateFormat1 = new SimpleDateFormat("MMM dd, EEE");
-//                                    DateFormat dateFormat2 = new SimpleDateFormat("MMM dd, EEE");
-//
-//                                        Date date = dateFormat1.parse(activityDate);
-//                                        String finalDate = dateFormat2.format(date);
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date date = dateFormat.parse(activityDate);
 
                                     SimpleDateFormat dateFormat1 = new SimpleDateFormat("MMMM dd, EEE");
                                     String finalDate = dateFormat1.format(date);
-
-                                    Log.e("Date 160" , finalDate);
 
                                     ActivityModel activityModel1 = new ActivityModel(activity_id, foundationId, activityName, activityImage,
                                             activityQr,
@@ -183,13 +158,9 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                             volunteerCount);
 
                                     Log.e("ACTIVITIES", response.toString());
-
                                     activities.add(activityModel1);
 
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                } catch (ParseException e) {
+                                } catch (JSONException | ParseException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -229,9 +200,5 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
     public void getMessage(String message){
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
-
-
-
-
 }
 

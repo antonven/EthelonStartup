@@ -47,10 +47,6 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         this.volunteerRatingFragment = volunteerRatingFragment;
     }
 
-    public EvaluateGroupAdapter(Context mContext, ArrayList<EvaluationCriteria> criterias){
-        this.mContext = mContext;
-        this.criterias = criterias;
-    }
 
     @Override
     public EvaluateGroupAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,7 +64,6 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         Log.e("Status sa pag rate",  volunteers.get(position) + " " + volunteers.get(position).getStatus());
         if(volunteers.get(position).getStatus().equals("Mana")) {
             holder.evaluateStatus.setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
-
         }
 
         if(criterias.size() == 0){
@@ -113,8 +108,6 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     RateVolunteerDialogFragment rateVolunteerDialogFragment = new RateVolunteerDialogFragment();
                     rateVolunteerDialogFragment.setTargetFragment(volunteerRatingFragment,0);
 
-                    //paghimo og laing dialog nga if iyang status kay mana kay kato nga dialog ang mo show nya if wala pa ang status kay ang ratevolunteerdialogfragment
-
                     Bundle n = new Bundle();
                     n.putString("volunteer_name", volunteer_name);
                     n.putString("activity_group_id", activity_group_id);
@@ -126,7 +119,6 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     n.putInt("index",getAdapterPosition());
                     rateVolunteerDialogFragment.setArguments(n);
                     rateVolunteerDialogFragment.show(fm, "Rate");
-
 
                 }
             });

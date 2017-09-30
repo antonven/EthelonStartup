@@ -1,13 +1,8 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
-
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,7 +36,6 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
 
     LinearLayoutManager linearLayoutManager;
     ArrayList<RateVolunteer> volunteers;
-    ViewPager viewPager;
     EvaluateGroupAdapter evaluateGroupAdapter;
     RecyclerView volrec;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
@@ -129,8 +123,6 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
     @Override
     public void onComplete(int index) {
 
-        //buhati didto sa adapter nga dili nah niya ma rate ang mana niyag rate if ang status kay mana
-        Log.e("136KOBE"," "+index);
         volunteers.get(index).setStatus("Mana");
         evaluateGroupAdapter.notifyDataSetChanged();
     }

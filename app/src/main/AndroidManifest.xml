@@ -11,7 +11,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/e"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -68,9 +68,12 @@
         <activity
             android:name=".Activities.AttendanceScanner"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.EvaluateGroupActivity" />
-        <activity android:name=".Activities.RateVolunteerActivity" />
-        <activity android:name=".Activities.PortfolioEventDetailsActivity"></activity>
+        <activity
+            android:name=".Activities.EvaluateGroupActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".Activities.PortfolioEventDetailsActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

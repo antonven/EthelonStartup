@@ -3,7 +3,6 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -33,7 +32,6 @@ public class AttendanceScanner extends AppCompatActivity implements ZXingScanner
         String api_token = getIntent().getStringExtra("api_token");
         String activity_id = getIntent().getStringExtra("activity_id");
         String volunteer_id = getIntent().getStringExtra("volunteer_id");
-        Log.e("Attendancesucces", "act_id" + activity_id);
 
         if(result.getText().equals(activity_id)) {
 
@@ -41,7 +39,7 @@ public class AttendanceScanner extends AppCompatActivity implements ZXingScanner
             n.putExtra("api_token", api_token);
             n.putExtra("activity_id", activity_id);
             n.putExtra("volunteer_id", volunteer_id);
-            Toast.makeText(this, "" + activity_id + result.toString(), Toast.LENGTH_SHORT).show();
+
             startActivity(n);
 
         }else

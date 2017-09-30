@@ -6,11 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,23 +13,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MediaController;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
+
 import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -44,7 +33,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -62,14 +50,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.security.auth.login.LoginException;
-
 import myapps.wycoco.com.ethelonstartup.Activities.Register.RegisterActivity;
 import myapps.wycoco.com.ethelonstartup.Adapters.LoginViewPagerAdapter;
-import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
-import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
-import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
 import myapps.wycoco.com.ethelonstartup.Models.BusStation;
 import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
@@ -90,12 +72,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ViewPager vp;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     LoginViewPagerAdapter viewPager;
-    String name, facebook_id, email, profile_id, profileName, first_name, last_name, profilePicture;
+    String name, facebook_id, email, profile_id, profilePicture;
     String volunteer_id;
     String message, api_token;
     TextView text;
     ArrayList<UserModel> emails = new ArrayList<>();
 
+    private static final String NOTIFURL = "http://" + new Localhost().getLocalhost() + "checkNotif";
     private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
     private static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -105,14 +88,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         setTitle("");
-//        Window window = this.getWindow();
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            window.setStatusBarColor(this.getResources().getColor(R.color.transparent));
-//        }
-
-
 
 
         callbackManager = CallbackManager.Factory.create();
@@ -123,9 +98,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         text = (TextView)findViewById(R.id.alreadAUserLabel);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
         vp = (ViewPager)findViewById(R.id.viewPagerText);
-        Log.e("FirebaseKobe","outside onrecieve");
-        System.out.print("outside on recieve");
-        Toast.makeText(this, "Fuck this hist", Toast.LENGTH_SHORT).show();
 
 
         viewPager = new LoginViewPagerAdapter(this);
@@ -142,14 +114,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonFacebook.setOnClickListener(this);
 
 
-
-
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Toast.makeText(context, "inside on recieve", Toast.LENGTH_SHORT).show();
-                Log.e("FirebaseKobe","inside onrecieve");
-                System.out.print("inside on recieve inatay");
+
+                Log.e("Fire base", "inside onrecieve");
                 // checking for type intent filter
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
                     // gcm successfully registered
@@ -160,14 +129,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
-
                     String message = intent.getStringExtra("message");
-
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-
                     //txtMessage.setText(message);
 
-                    Log.e("FirebaseKobe",message + " mgreg broadcastreciever");
+                    Log.e("Fire base", message + " mgreg broadcastreciever");
                 }
             }
         };
@@ -179,16 +144,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
 
-        Log.e(TAG, "Firebase reg id: " + regId);
-        Toast.makeText(this, "reg id = "+regId, Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "Fire base reg_id: " + regId);
 
         if (!TextUtils.isEmpty(regId)) {
             Log.d("No logs", regId);
             System.out.printf(regId);
-            text.setText(regId + "");
+//            text.setText(regId + "");
         }
-        else
-           text.setText("wala pa daw ");
+//        else
+//           text.setText("wala pa daw ");
     }
 
 
@@ -272,47 +236,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
 
-                            /*    in.putExtra("eventImage", eventImage);
-                                in.putExtra("eventName", eventName);
-                                in.putExtra("eventHost", eventHost);
-                                in.putExtra("eventDate", eventDate);
-                                in.putExtra("eventTimeStart", eventTimeStart);
-                                in.putExtra("eventLocation", eventLocation);
-                                in.putExtra("contactNo", eventContactNo);
-                                in.putExtra("contactPerson", eventContactPerson);
-                                in.putExtra("eventPoints", eventSkills);
-                                in.putExtra("id", id);
-                                in.putExtra("activity_id", activity_id);
-                                in.putExtra("api_token", api_token);
-                                in.putExtra("profileId", profile_id);
-                                in.putExtra("volunteer_id", volunteer_id);
-*/
 
-                           /*     if (getIntent().getExtras() != null ) {
-                                  // Log.e("NOTIFICATION PISTE",getIntent().getExtras().getString("activity") + " = = "+getIntent().getExtras().getString("volunteersToRate"));
-
-                                    Intent in = new Intent(LoginActivity.this, PortfolioEventDetailsActivity.class);
-                                    in.putExtra("eventImage", getIntent().getExtras().getString("eventImage"));
-                                    in.putExtra("eventName", getIntent().getExtras().getString("eventName"));
-                                    in.putExtra("eventHost", getIntent().getExtras().getString("eventHost"));
-                                    in.putExtra("eventDate", getIntent().getExtras().getString("eventDate"));
-                                    in.putExtra("eventTimeStart",getIntent().getExtras().getString("eventTimeStart") );
-                                    in.putExtra("eventLocation", getIntent().getExtras().getString("eventLocation") );
-                                    in.putExtra("contactNo", getIntent().getExtras().getString("eventContactNo") );
-                                    in.putExtra("contactPerson",  getIntent().getExtras().getString("eventContactPerson"));
-                                    in.putExtra("eventPoints",getIntent().getExtras().getString("eventSkills") );
-                                    in.putExtra("activity_id", getIntent().getExtras().getString("activity_id"));
-                                    in.putExtra("api_token", api_token);
-                                    in.putExtra("profileId", profile_id);
-                                    in.putExtra("volunteer_id", volunteer_id);
-                                    in.putExtra("indicator","yes");
-                                    startActivity(in);
-
-                                }else{
-                                    BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-                                    Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
-                                    nextActivity(profile);
-                                }*/
 
                                 try{
                                     if (getIntent().getExtras().getString("eventName") != null ) {
@@ -541,7 +465,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             params.put("volunteer_id",volunteer_id);
                                             params.put("api_token",api_token);
 
-                                            JsonObjectRequest notif = new JsonObjectRequest(Request.Method.POST, "http://" + new Localhost().getLocalhost() + "checkNotif", new JSONObject(params), new Response.Listener<JSONObject>() {
+                                            JsonObjectRequest notification = new JsonObjectRequest(Request.Method.POST, NOTIFURL, new JSONObject(params),
+                                                    new Response.Listener<JSONObject>() {
                                                 @Override
                                                 public void onResponse(JSONObject response) {
                                                      String msg;
@@ -563,7 +488,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             }
                                             );
                                             RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-                                            request.add(notif);
+                                            request.add(notification);
                                             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
 
                                         }

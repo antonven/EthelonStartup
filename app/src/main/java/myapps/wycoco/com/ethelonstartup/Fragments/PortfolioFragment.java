@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.ramotion.foldingcell.FoldingCell;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,9 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.PortfolioAdapter;
-import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -47,14 +43,11 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    HomeActivitiesListAdapter homeActivitiesListAdapter;
-    String id, api_token, activity_id;
+    String id, activity_id;
     SwipeRefreshLayout swipeRefreshLayout;
-    FoldingCell fc;
     RecyclerView recView;
     ArrayList<PortfolioModel> activities;
     PortfolioAdapter portfolioAdapter;
-    Toolbar toolbar;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "portfolio";
 
     @Nullable
@@ -66,7 +59,6 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
-
 
         swipeRefreshLayout.post(new Runnable() {
             @Override
@@ -93,13 +85,10 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         final String volunteer_id = getArguments().getString("volunteer_id");
         final String api_token = getArguments().getString("api_token");
         final String profile_id = getArguments().getString("profileId");
-//        final String activity_id = getArguments().getString("activity_id");
-        Log.e("VOLUNTEERID", "" + volunteer_id + api_token);
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
-
 
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
@@ -131,6 +120,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     String volunteerStatus = activityObject.getString("joined");
                                     String foundationName = activityObject.getString("foundation_name");
                                     int points = activityObject.getInt("points");
+                                    int volunteer_count = activityObject.getInt("volunteer_count");
 
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date date = dateFormat.parse(activityDate);
@@ -155,17 +145,14 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                             contactPerson,
                                             activityContact,
                                             volunteerStatus,
-                                            foundationName,points);
+                                            foundationName,
+                                            points,
+                                            volunteer_count);
 
-                                    Log.e("KirstenMay", response.toString());
-
-
+                                    Log.e("PortfolioActivities", response.toString());
                                     activities.add(portfolioModel);
 
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                } catch (ParseException e) {
+                                } catch (JSONException | ParseException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -184,7 +171,6 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 swipeRefreshLayout.setRefreshing(false);
-
                 Log.e("AntonWycoco", "" + error.toString());
             }
         });

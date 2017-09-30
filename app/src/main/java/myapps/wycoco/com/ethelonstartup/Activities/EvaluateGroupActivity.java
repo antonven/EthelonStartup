@@ -24,11 +24,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import myapps.wycoco.com.ethelonstartup.Fragments.ConfirmDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class EvaluateGroupActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,8 +40,12 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_evaluate_group);
 
         Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
@@ -74,6 +77,8 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()){
             case R.id.submitBtn:
                 submitAttendance();
+                ConfirmDialogFragment confirmDialogFragment = new ConfirmDialogFragment();
+                confirmDialogFragment.show(getSupportFragmentManager(), "Confirm attendance");
                 break;
 
         }
@@ -90,8 +95,6 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         params.put("activity_id", activity_id);
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
-
-
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL2, new JSONObject(params),
                 new Response.Listener<JSONArray>() {

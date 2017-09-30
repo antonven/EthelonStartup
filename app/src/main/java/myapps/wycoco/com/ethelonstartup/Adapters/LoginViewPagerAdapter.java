@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,7 +25,7 @@ import myapps.wycoco.com.ethelonstartup.R;
 
 public class LoginViewPagerAdapter extends PagerAdapter {
 
-    private String []messages = {"From indifference to compassion", "From individualism to bayanihan", "From diversity to Ethelon"};
+    private String [] messages = {"From indifference to compassion", "From individualism to bayanihan", "From diversity to Ethelon"};
     LayoutInflater layoutInflater;
     Context mContext;
 
@@ -37,19 +38,17 @@ public class LoginViewPagerAdapter extends PagerAdapter {
         return messages.length;
     }
 
-
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
     }
-
-
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.second_layout, null);
         TextView textView = (TextView)view.findViewById(R.id.textView2);
+        textView.setTextColor(Color.parseColor("#000000"));
         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
         textView.setTypeface(typeface);
         textView.setText(messages[position]);
@@ -66,6 +65,5 @@ public class LoginViewPagerAdapter extends PagerAdapter {
         View view = (View) object;
         vp.removeView(view);
     }
-
 
 }

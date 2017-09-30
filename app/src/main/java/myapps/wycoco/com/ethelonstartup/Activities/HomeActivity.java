@@ -50,7 +50,6 @@ public class HomeActivity extends AppCompatActivity
     String volunteer_id;
     KonfettiView konfettiView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +57,12 @@ public class HomeActivity extends AppCompatActivity
 
 
         Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
@@ -81,7 +84,6 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         Intent n = getIntent();
         volunteer_id = n.getStringExtra("volunteer_id");
         profName = n.getStringExtra("profileName");
@@ -101,7 +103,6 @@ public class HomeActivity extends AppCompatActivity
         profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
         profileEmail = (TextView)view.findViewById(R.id.profileEmail);
 
-
         if(fbProfileName != null && fbProfilePicture != null && profileId != null) {
             profileName.setText(fbProfileName);
             Glide.with(getApplicationContext()).load(fbProfilePicture)
@@ -117,7 +118,6 @@ public class HomeActivity extends AppCompatActivity
             Glide.with(getApplicationContext()).load(ethelonUserImage).centerCrop().crossFade().into(profilePicture);
         }
 
-
     }
 
     @Override
@@ -130,7 +130,6 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -138,10 +137,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fm = getSupportFragmentManager();
 
-
-
         if (id == R.id.nav_first_layout) {
-
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("fbProfilePicture", fbProfilePicture);
             intent.putExtra("fbProfileName", fbProfileName);
@@ -158,8 +154,6 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }else if (id == R.id.nav_third_layout) {
-
-
             Bundle bundle = new Bundle();
             bundle.putString("id",volunteer_id);
             bundle.putString("api_token",api_token);
@@ -200,7 +194,6 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-//                tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
                 tab.getIcon().setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
                 if(tab.getPosition() == 0){
                     toolbarTitle.setText("Home");
@@ -209,7 +202,7 @@ public class HomeActivity extends AppCompatActivity
                 }else{
                     toolbarTitle.setText("Leaderboard");
                     konfettiView.build()
-                            .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                            .addColors(Color.RED, Color.parseColor("#B71C1C"), Color.parseColor("#C62828"))
                             .setDirection(0.0, 359.0)
                             .setSpeed(1f, 5f)
                             .setFadeOutEnabled(true)
@@ -247,7 +240,6 @@ public class HomeActivity extends AppCompatActivity
     tabLayout.getTabAt(2).setIcon(R.drawable.ic_format_list_numbered_black_24dp);
     tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
 
-
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -273,18 +265,5 @@ public class HomeActivity extends AppCompatActivity
         adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        BusStation.getBus().register(this);
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        BusStation.getBus().unregister(this);
-//    }
-
 
 }
