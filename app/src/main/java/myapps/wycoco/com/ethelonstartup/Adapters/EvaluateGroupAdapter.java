@@ -85,7 +85,6 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         TextView volunteerName;
         RatingBar ratingBar;
         LinearLayout linearLayout;
-        TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);

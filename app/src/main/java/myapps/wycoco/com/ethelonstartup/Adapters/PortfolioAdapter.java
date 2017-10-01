@@ -56,6 +56,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.clickedEventHost.setText(activities.get(position).getFoundationName());
         holder.clickedEventDescription.setText(activities.get(position).getActivityDes());
         holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
+        holder.eventVolunteers.setText(String.valueOf(activities.get(position).getVolunteer_count()));
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
         holder.contactPerson.setText(activities.get(position).getContactPerson());
         holder.activityContact.setText(activities.get(position).getActivityContact());
@@ -64,7 +65,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.eventHost.setText(activities.get(position).getFoundationName());
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
-        holder.eventVolunteers.setText(activities.get(position).getActivityGroup());
         Glide.with(mContext).load(activities.get(position).getActivityImage())
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
 
@@ -148,6 +148,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     String eventContactPerson = activities.get(getAdapterPosition()).getContactPerson();
                     String eventSkills = activities.get(getAdapterPosition()).getActivityPoints();
                     int points = activities.get(getAdapterPosition()).getPoints();
+
 
                     Intent in = new Intent(mContext, PortfolioEventDetailsActivity.class);
                     in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

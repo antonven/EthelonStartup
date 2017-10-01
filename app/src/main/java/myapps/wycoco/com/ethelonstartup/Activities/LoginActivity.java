@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Typeface;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +47,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -88,6 +94,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         setTitle("");
+
+        PackageInfo info;
+        try {
+            info = getPackageManager().getPackageInfo("myapps.wycoco.com.ethelonstartup", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                //String something = new String(Base64.encodeBytes(md.digest()));
+                Log.e("hash key", something);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("name not found", e1.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("no such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("exception", e.toString());
+        }
 
 
         callbackManager = CallbackManager.Factory.create();

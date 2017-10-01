@@ -11,8 +11,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/e"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ethelon"
+        android:roundIcon="@mipmap/ethelon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
