@@ -44,6 +44,8 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
                 .centerCrop().crossFade().into(holder.leaderboardImage);
         holder.leaderboardName.setText(users.get(position).getUserFirstName());
         holder.leaderboardPosition.setText(position + "");
+//        holder.leaderboardPoints.setText(users.get(position).getUser_points());
+
         Log.e("position", position + "");
 
     }
@@ -55,7 +57,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView leaderboardPosition, leaderboardName;
+        TextView leaderboardPosition, leaderboardName, leaderboardPoints;
         ImageView leaderboardImage;
 
         public ViewHolder(View itemView) {
@@ -64,6 +66,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
             leaderboardName = (TextView)itemView.findViewById(R.id.leaderboardName);
             leaderboardImage = (ImageView)itemView.findViewById(R.id.leaderboardImage);
             leaderboardPosition = (TextView)itemView.findViewById(R.id.leaderboardPosition);
+            leaderboardPoints = (TextView)itemView.findViewById(R.id.leaderboardPoints);
         }
     }
 }
