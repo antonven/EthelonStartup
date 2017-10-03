@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setTitle("");
 
         PackageInfo info;
-        try {
+    /*    try {
             info = getPackageManager().getPackageInfo("myapps.wycoco.com.ethelonstartup", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md;
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.e("no such an algorithm", e.toString());
         } catch (Exception e) {
             Log.e("exception", e.toString());
-        }
+        }*/
 
 
         callbackManager = CallbackManager.Factory.create();
@@ -380,6 +380,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.buttonFacebook:
+                Log.e("sud sa facebook button","facebook");
                 LoginManager.getInstance().logInWithReadPermissions(this,
                         Arrays.asList("user_photos", "email", "user_birthday", "user_friends", "public_profile"));
                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -478,7 +479,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-                                            intent.putExtra("volunteer_id", volunteer_id);
+                                            intent.putExtra("id", volunteer_id);
                                             intent.putExtra("api_token", api_token);
                                             intent.putExtra("profileId", profile_id);
                                             intent.putExtra("fbProfilePicture", profilePicture);
@@ -567,7 +568,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
-                                                    intent.putExtra("volunteer_id", volunteer_id);
+                                                    intent.putExtra("id", volunteer_id);
                                                     intent.putExtra("api_token", api_token);
                                                     intent.putExtra("profileId", profile_id);
                                                     intent.putExtra("fbProfilePicture", profilePicture);

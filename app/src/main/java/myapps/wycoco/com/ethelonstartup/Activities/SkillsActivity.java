@@ -61,13 +61,16 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         Snackbar.make(findViewById(R.id.skillsRelative) , "PLEASE CHOOSE ONE OR MORE SKILLS AND INTERESTS", Snackbar.LENGTH_LONG).show();
 
         Intent n = getIntent();
-        volunteer_id = n.getStringExtra("volunteer_id");
+        volunteer_id = n.getStringExtra("id");
+
         api_token = n.getStringExtra("api_token");
         name = n.getStringExtra("profileName");
         profileId = n.getStringExtra("profileId");
         fbProfilePicture = n.getStringExtra("fbProfilePicture");
         profilePicture = n.getStringExtra("image_url");
         fbProfileName = n.getStringExtra("fbProfileName");
+
+        Log.e("skillsActivityline65",volunteer_id + api_token + name + profileId + fbProfilePicture + profilePicture + fbProfileName);
 
         environmentCheck = (ImageView)findViewById(R.id.environmentCheck);
         livelihoodCheck = (ImageView)findViewById(R.id.livelihoodCheck);
@@ -287,9 +290,12 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                         //JSONObject jsonObject=new JSONObject();
                         for(int i =0; i<skillSet.size(); i++) {
                             params.put("params" + i, skillSet.get(i));
+                            Log.e("sudsarequestparaparams",skillSet.get(i));
                         }
 
                         params.put("count",String.valueOf(skillSet.size()));
+
+                        Log.e("sudsarequest",volunteer_id + api_token + String.valueOf(skillSet.size()));
                         return params;
                     }
                 };
