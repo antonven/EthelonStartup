@@ -79,4 +79,8 @@
     <string name="EthelnStartup">Ethelon Startup</string>
     <string name="EthelonStartup">Ethelon Startup</string>
     <string name="done">done</string>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

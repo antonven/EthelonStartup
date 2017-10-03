@@ -7,7 +7,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="23dp"
         android:layout_height="23dp"
-        android:src="@mipmap/ic_launcher"
+
         android:id="@+id/goingVolunteerImage"/>
 
 </LinearLayout>

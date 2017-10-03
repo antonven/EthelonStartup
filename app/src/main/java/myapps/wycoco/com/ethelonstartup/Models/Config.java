@@ -1,8 +1,5 @@
 package myapps.wycoco.com.ethelonstartup.Models;
 
-/**
- * Created by asus on 03/09/2017.
- */
 
 public class Config {
 

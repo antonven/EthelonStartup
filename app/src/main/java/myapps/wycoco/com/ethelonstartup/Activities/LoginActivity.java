@@ -353,7 +353,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void nextActivity(Profile profile){
         if(profile!= null){
-
+            SharedPreferences shared = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+            String email = shared.getString("email", "");
             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             i.putExtra("fbProfileName", profile.getName());
@@ -438,6 +439,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if(object.getString("email")!= null){
                         email = object.getString("email");
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("email", email);
+                        editor.commit();
                         userModel = new UserModel();
                         userModel.setUser_id(email);
                         emails.add(userModel);
