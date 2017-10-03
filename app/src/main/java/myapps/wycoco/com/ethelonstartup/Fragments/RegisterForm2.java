@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +97,7 @@ public class RegisterForm2 extends Fragment {
                 params.put("password", password);
                 params.put("name", name);
                 params.put("role", "Volunteer");
+                params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                         new Response.Listener<JSONObject>() {
