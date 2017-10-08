@@ -90,6 +90,8 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
 
+        Log.e("videee",volunteer_id);
+
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -97,6 +99,8 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                         if(response.length() > 0) {
                             for (int i = 0; i < response.length(); i++) {
                                 try {
+
+                                    Log.e("PortfolioActivities", response.toString());
                                     JSONObject activityObject = response.getJSONObject(i);
                                     String activityName = activityObject.getString("name");
                                     String foundationId = activityObject.getString("foundation_id");

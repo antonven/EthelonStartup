@@ -86,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String volunteer_id;
     String message, api_token;
     TextView text, loginText;
+    String fcm_token;
     ProgressBar progressBar;
     ArrayList<UserModel> emails = new ArrayList<>();
 
@@ -113,6 +114,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         loginText = (TextView)findViewById(R.id.loginText);
 
+
+        displayFirebaseRegId();
 
         viewPager = new LoginViewPagerAdapter(this);
         vp.setAdapter(viewPager);
@@ -158,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void displayFirebaseRegId() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
-
+        fcm_token = regId;
         Log.e(TAG, "Fire base reg_id: " + regId);
 
         if (!TextUtils.isEmpty(regId)) {
@@ -218,7 +221,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("facebook_id", profile.getId());
-            params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
+            if(fcm_token != null){
+                params.put("fcm_token",fcm_token);
+            }else{
+                params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
+            }
+
             Log.e("LOGIN ACTIVITY","facebook_id "+profile.getId());
 
             JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
@@ -451,7 +459,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         params.put("name", name);
                         params.put("role", "volunteer");
                         params.put("image_url", profilePicture);
-                        params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
+                        if(fcm_token != null){
+                            params.put("fcm_token",fcm_token);
+                        }else{
+                            params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
+                        }
 
                         JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                                 new Response.Listener<JSONObject>() {
@@ -546,7 +558,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             params.put("name", name);
                             params.put("role", "volunteer");
                             params.put("image_url", profilePicture);
-                            params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
+                            if(fcm_token != null){
+                                params.put("fcm_token",fcm_token);
+                            }else{
+                                params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
+                            }
 
                             JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                                     new Response.Listener<JSONObject>() {

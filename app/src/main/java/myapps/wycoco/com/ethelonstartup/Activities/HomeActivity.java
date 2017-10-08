@@ -1,8 +1,11 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.app.Notification;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -13,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,18 +31,34 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.nex3z.notificationbadge.NotificationBadge;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.NotificationsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Config;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+                implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView profileName, profileEmail, toolbarTitle;
     ImageView profilePicture;
@@ -47,8 +67,12 @@ public class HomeActivity extends AppCompatActivity
     ViewPager viewPager;
     Toolbar toolbar;
     TabLayout tabLayout;
+    String fcm_token;
     AppBarLayout appBarLayout;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     NotificationBadge badge;
+    private String url = "http://"+new Localhost().getLocalhost()+"fcm_token";
+
 //    KonfettiView konfettiView;
 
     @Override
@@ -56,6 +80,8 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
+        displayFirebaseRegId();
 
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -68,10 +94,77 @@ public class HomeActivity extends AppCompatActivity
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
 
+             mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                Log.e("Fire base", "inside onrecieve");
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+
+                    displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+                    String message = intent.getStringExtra("message");
+                    //txtMessage.setText(message);
+
+                    Log.e("Fire base", message + " mgreg broadcastreciever");
+                }
+            }
+        };
+
+
         initInstancesDrawer();
         getExtras();
 
     }
+
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+        fcm_token = regId;
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",volunteer_id);
+
+        if(fcm_token!=null){
+            params.put("fcm_token",fcm_token);
+        }else{
+            params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
+        }
+
+        JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }
+        );
+
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
+
+        //Log.e(TAG, "Fire base reg_id: " + regId);
+
+
+        if (!TextUtils.isEmpty(regId)) {
+            Log.d("No logs", regId);
+            System.out.printf(regId);
+//            text.setText(regId + "");
+        }
+//        else
+//           text.setText("wala pa daw ");
+    }
+
 
     @Override
     public void onBackPressed() {
