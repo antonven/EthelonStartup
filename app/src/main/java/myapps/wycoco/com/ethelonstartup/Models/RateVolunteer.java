@@ -12,6 +12,7 @@ public class RateVolunteer {
     private String volunteer_group_id;
     private int number_of_volunteers;
     private String status;
+    private int rating;
 
     public RateVolunteer() {
     }
@@ -24,6 +25,7 @@ public class RateVolunteer {
         this.volunteer_group_id = volunteer_group_id;
         this.number_of_volunteers = number_of_volunteers;
         this.status = status;
+        this.rating = rating;
     }
 
     public String getVolunteer_id() {
@@ -72,5 +74,13 @@ public class RateVolunteer {
 
     public void setNumber_of_volunteers(int number_of_volunteers) {
         this.number_of_volunteers = number_of_volunteers;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

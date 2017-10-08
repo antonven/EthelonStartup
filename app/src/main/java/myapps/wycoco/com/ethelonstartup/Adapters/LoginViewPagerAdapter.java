@@ -1,22 +1,15 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import myapps.wycoco.com.ethelonstartup.R;
 
 /**
@@ -48,7 +41,7 @@ public class LoginViewPagerAdapter extends PagerAdapter {
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.second_layout, null);
         TextView textView = (TextView)view.findViewById(R.id.textView2);
-        textView.setTextColor(Color.parseColor("#000000"));
+        textView.setTextColor(Color.parseColor("#ffffff"));
         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
         textView.setTypeface(typeface);
         textView.setText(messages[position]);

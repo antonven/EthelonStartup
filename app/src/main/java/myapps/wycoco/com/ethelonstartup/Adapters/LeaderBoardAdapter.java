@@ -43,8 +43,8 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         Glide.with(mContext).load(users.get(position).getUserImage())
                 .centerCrop().crossFade().into(holder.leaderboardImage);
         holder.leaderboardName.setText(users.get(position).getUserFirstName());
-        holder.leaderboardPosition.setText(position + "");
-//        holder.leaderboardPoints.setText(users.get(position).getUser_points());
+        holder.leaderboardPosition.setText(position + 1 + "");
+        holder.leaderboardPoints.setText(users.get(position).getUser_points() + "");
 
         Log.e("position", position + "");
 

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     String id;
     String fbProfilePicture, fbProfileName;
     ImageView profilePicture;
+    Button editProfileBtn;
     TextView profileName;
     AppBarLayout appBarLayout;
 
@@ -52,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
         profilePicture = (ImageView)findViewById(R.id.profilePictureProfile);
         profileName = (TextView)findViewById(R.id.profileNameProfile);
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        editProfileBtn = (Button)findViewById(R.id.editProfileBtn);
 
         Intent n = getIntent();
         n.getExtras();

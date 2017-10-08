@@ -42,8 +42,11 @@ public class AttendanceScanner extends AppCompatActivity implements ZXingScanner
 
             startActivity(n);
 
-        }else
+        }else {
             Toast.makeText(this, "Invalid Qr Code. Please scan again!" + result, Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
 
     }
 

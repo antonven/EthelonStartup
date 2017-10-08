@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.AttendanceScanner;
@@ -67,7 +69,9 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
         Glide.with(mContext).load(activities.get(position).getActivityImage())
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
-
+        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+                .centerCrop().crossFade().into(holder.clickedFoundationImage);
+        holder.joinCount.setText(activities.get(position).getVolunteer_count() + "have joined this activity");
         if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
             holder.attendBtn.setVisibility(View.GONE);
@@ -86,8 +90,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
         TextView eventDate, eventTimeStart, eventName, eventAddress, eventHost, eventVolunteers, eventPoints,
         clickedEventHost, clickedEventDescription, clickedEventPoints, clickedEventVolunteers, clickedPoints,
-        contactPerson, activityContact, clickedEventName, viewActivity;
-        ImageView status, clickedActivityImage;
+        contactPerson, activityContact, clickedEventName, viewActivity, joinCount;
+        ImageView status, clickedActivityImage, clickedFoundationImage;
         Button attendBtn;
         FoldingCell fc;
         RecyclerView recyclerView;
@@ -116,6 +120,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
             clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);
             viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
+            clickedFoundationImage = (ImageView)itemView.findViewById(R.id.foundationImage);
+            joinCount = (TextView)itemView.findViewById(R.id.joinCount);
 
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
             eventName.setTypeface(typeface);

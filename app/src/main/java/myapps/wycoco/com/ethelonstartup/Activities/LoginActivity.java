@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
@@ -40,8 +41,10 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -82,7 +85,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String name, facebook_id, email, profile_id, profilePicture;
     String volunteer_id;
     String message, api_token;
-    TextView text;
+    TextView text, loginText;
+    ProgressBar progressBar;
     ArrayList<UserModel> emails = new ArrayList<>();
 
     private static final String NOTIFURL = "http://" + new Localhost().getLocalhost() + "checkNotif";
@@ -92,30 +96,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
         setTitle("");
-
-        PackageInfo info;
-    /*    try {
-            info = getPackageManager().getPackageInfo("myapps.wycoco.com.ethelonstartup", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                //String something = new String(Base64.encodeBytes(md.digest()));
-                Log.e("hash key", something);
-            }
-        } catch (PackageManager.NameNotFoundException e1) {
-            Log.e("name not found", e1.toString());
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("no such an algorithm", e.toString());
-        } catch (Exception e) {
-            Log.e("exception", e.toString());
-        }*/
-
 
         callbackManager = CallbackManager.Factory.create();
         buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
@@ -125,6 +110,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         text = (TextView)findViewById(R.id.alreadAUserLabel);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
         vp = (ViewPager)findViewById(R.id.viewPagerText);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        loginText = (TextView)findViewById(R.id.loginText);
 
 
         viewPager = new LoginViewPagerAdapter(this);
@@ -132,6 +119,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new AutomaticSlide(), 2000, 4000);
         Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
+        Typeface typeface2 = Typeface.createFromAsset(this.getAssets(), "Rancho-Regular.ttf");
 
         buttonSignup.setTypeface(typeface);
         buttonLogin.setTypeface(typeface);
@@ -396,13 +384,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     name = currentProfile.getFirstName() +" "+ currentProfile.getMiddleName() + " " + currentProfile.getLastName();
                                     profileTracker.stopTracking();
                                     pushFacebookCred(loginResult.getAccessToken(),currentProfile);
+                                    finish();
                                 }
                             };
                         }else{
                             profile = Profile.getCurrentProfile();
                             name = profile.getName();
                             Log.e("kobe","else"+name);
-                            pushFacebookCred(loginResult.getAccessToken(),profile);
+//                            pushFacebookCred(loginResult.getAccessToken(),profile);
+
                         }
                     }
 
@@ -429,132 +419,136 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void pushFacebookCred(AccessToken accessToken, final Profile profile){
 
+
+
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
+                if(response!=null) {
+                    try {
+                        facebook_id = object.getString("id");
+                        email = " ";
+                        profilePicture = profile.getProfilePictureUri(500, 500).toString();
 
-                try {
-                    facebook_id = object.getString("id");
-                    email = " ";
-                    profilePicture = profile.getProfilePictureUri(500,500).toString();
+                        if (object.getString("email") != null) {
+                            email = object.getString("email");
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("email", email);
+                            editor.commit();
+                            userModel = new UserModel();
+                            userModel.setUser_id(email);
+                            emails.add(userModel);
+                        } else {
+                            email = "email not avaiable " + facebook_id;
+                        }
 
-                    if(object.getString("email")!= null){
-                        email = object.getString("email");
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("email", email);
-                        editor.commit();
-                        userModel = new UserModel();
-                        userModel.setUser_id(email);
-                        emails.add(userModel);
-                    }else{
-                        email = "email not avaiable " + facebook_id;
-                    }
+                        progressBar.setVisibility(View.VISIBLE);
 
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("email", email);
-                    params.put("facebook_id", facebook_id);
-                    params.put("name", name);
-                    params.put("role", "volunteer");
-                    params.put("image_url",profilePicture);
-                    params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
-
-                    JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-
-                                    try {
-                                        message = response.getString("message");
-
-                                        if(message.equals("First Time")) {
-
-                                            String profilePicture = profile.getProfilePictureUri(500,500).toString();
-                                            String profile_id = profile.getId();
-                                            String profileName = profile.getName();
-                                            Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
-
-                                            volunteer_id = response.getString("volunteer_id");
-                                            api_token = response.getString("api_token");
-
-
-
-                                            intent.putExtra("id", volunteer_id);
-                                            intent.putExtra("api_token", api_token);
-                                            intent.putExtra("profileId", profile_id);
-                                            intent.putExtra("fbProfilePicture", profilePicture);
-                                            intent.putExtra("fbProfileName", profileName);
-                                            intent.putExtra("email", email);
-                                            startActivity(intent);
-
-                                        }else if(message.equals("Email already exists")){
-                                            Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
-
-                                        }else{
-                                            volunteer_id = response.getString("volunteer_id");
-                                            api_token = response.getString("api_token");
-
-                                            Map<String, String> params = new HashMap<String, String>();
-                                            params.put("volunteer_id",volunteer_id);
-                                            params.put("api_token",api_token);
-
-                                            JsonObjectRequest notification = new JsonObjectRequest(Request.Method.POST, NOTIFURL, new JSONObject(params),
-                                                    new Response.Listener<JSONObject>() {
-                                                @Override
-                                                public void onResponse(JSONObject response) {
-                                                     String msg;
-                                                    try {
-                                                        msg = response.getString("message");
-                                                        if(msg.equals("good")){
-                                                            nextActivity(profile);
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-                                            }, new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-
-                                                    Log.e("line 469 login act","error " + error.toString());
-                                                }
-                                            }
-                                            );
-                                            RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-                                            request.add(notification);
-                                            BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-
-                                        }
-                                    }catch (JSONException e) {
-                                        e.printStackTrace();
-                                        Log.e("line 444","catch");
-                                    }
-
-                                }
-
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("kyle",error.toString()+ " Ari gyud siya piste");
-                                }
-                            });
-                    RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-                    request.add(string);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
-                    if(e.toString().equals("org.json.JSONException: No value for email")){
-                        profilePicture = profile.getProfilePictureUri(500,500).toString();
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("email", "Email Not Available"+facebook_id);
+                        params.put("email", email);
                         params.put("facebook_id", facebook_id);
                         params.put("name", name);
                         params.put("role", "volunteer");
-                        params.put("image_url",profilePicture);
-                        params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
+                        params.put("image_url", profilePicture);
+                        params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
 
                         JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                    if(response!=null){
+                                        try {
+                                            message = response.getString("message");
+
+                                            if (message.equals("First Time")) {
+
+                                                String profilePicture = profile.getProfilePictureUri(500, 500).toString();
+                                                String profile_id = profile.getId();
+                                                String profileName = profile.getName();
+                                                Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
+
+                                                volunteer_id = response.getString("volunteer_id");
+                                                api_token = response.getString("api_token");
+
+                                                intent.putExtra("id", volunteer_id);
+                                                intent.putExtra("api_token", api_token);
+                                                intent.putExtra("profileId", profile_id);
+                                                intent.putExtra("fbProfilePicture", profilePicture);
+                                                intent.putExtra("fbProfileName", profileName);
+                                                intent.putExtra("email", email);
+                                                startActivity(intent);
+
+
+                                            } else if (message.equals("Email already exists")) {
+                                                Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
+
+                                            } else {
+                                                volunteer_id = response.getString("volunteer_id");
+                                                api_token = response.getString("api_token");
+
+                                                Map<String, String> params = new HashMap<String, String>();
+                                                params.put("volunteer_id", volunteer_id);
+                                                params.put("api_token", api_token);
+
+                                                JsonObjectRequest notification = new JsonObjectRequest(Request.Method.POST, NOTIFURL, new JSONObject(params),
+                                                        new Response.Listener<JSONObject>() {
+                                                            @Override
+                                                            public void onResponse(JSONObject response) {
+                                                                String msg;
+                                                                try {
+                                                                    msg = response.getString("message");
+                                                                    if (msg.equals("good")) {
+                                                                        nextActivity(profile);
+                                                                    }
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        }, new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+
+                                                        Log.e("line 469 login act", "error " + error.toString());
+                                                    }
+                                                }
+                                                );
+                                                RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                                                request.add(notification);
+                                                BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
+
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                            Log.e("line 444", "catch");
+                                        }
+                                        }
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("kyle", error.toString() + " Ari gyud siya piste");
+                            }
+                        });
+                        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+                        request.add(string);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                        if (e.toString().equals("org.json.JSONException: No value for email")) {
+                            profilePicture = profile.getProfilePictureUri(500, 500).toString();
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("email", "Email Not Available" + facebook_id);
+                            params.put("facebook_id", facebook_id);
+                            params.put("name", name);
+                            params.put("role", "volunteer");
+                            params.put("image_url", profilePicture);
+                            params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
+
+                            JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
@@ -562,8 +556,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             try {
                                                 message = response.getString("message");
 
-                                                if(message.equals("First Time")) {
-                                                    String profilePicture = profile.getProfilePictureUri(500,500).toString();
+                                                if (message.equals("First Time")) {
+                                                    String profilePicture = profile.getProfilePictureUri(500, 500).toString();
                                                     String profileName = profile.getName();
                                                     Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
                                                     volunteer_id = response.getString("volunteer_id");
@@ -576,10 +570,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     intent.putExtra("email", email);
                                                     startActivity(intent);
 
-                                                }else if(message.equals("Email already exists")){
+                                                } else if (message.equals("Email already exists")) {
                                                     Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
 
-                                                }else{
+                                                } else {
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
                                                     BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
@@ -601,8 +595,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                             request.add(string);
 
+                        }
                     }
                 }
+                progressBar.setVisibility(View.GONE);
 
             }//on completed
         });

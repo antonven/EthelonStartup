@@ -112,6 +112,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                     JSONObject activityObject = response.getJSONObject(i);
                                     String activityName = activityObject.getString("name");
                                     String foundationId = activityObject.getString("foundation_id");
+                                    String foundationImage = activityObject.getString("foundation_img");
                                     activity_id = activityObject.getString("activity_id");
                                     String activityImage = activityObject.getString("image_url");
                                     String activityQr = activityObject.getString("imageQr_url");
@@ -131,18 +132,25 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                     String activityContact = activityObject.getString("contact");
                                     String foundationName = activityObject.getString("foundtion_name");
                                     int volunteerCount = Integer.parseInt(activityObject.getString("volunteer_count"));
+                                    String volunteerStatus = activityObject.getString("volunteerstatus");
 
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date date = dateFormat.parse(activityDate);
+                                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                                    Date time = timeFormat.parse(activityStart);
 
                                     SimpleDateFormat dateFormat1 = new SimpleDateFormat("MMMM dd, EEE");
                                     String finalDate = dateFormat1.format(date);
+                                    SimpleDateFormat timeFormat1 = new SimpleDateFormat("hh:mm a");
+                                    String finalTime = timeFormat1.format(time);
 
-                                    ActivityModel activityModel1 = new ActivityModel(activity_id, foundationId, activityName, activityImage,
+                                    ActivityModel activityModel1 = new ActivityModel(activity_id, foundationId,
+                                            activityName,
+                                            activityImage,
                                             activityQr,
                                             activityDes,
                                             activityLocation,
-                                            activityStart,
+                                            finalTime,
                                             activityEnd,
                                             finalDate,
                                             activityGroup,
@@ -155,7 +163,9 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                             contactPerson,
                                             activityContact,
                                             foundationName,
-                                            volunteerCount);
+                                            volunteerCount,
+                                            volunteerStatus,
+                                            foundationImage);
 
                                     Log.e("ACTIVITIES", response.toString());
                                     activities.add(activityModel1);

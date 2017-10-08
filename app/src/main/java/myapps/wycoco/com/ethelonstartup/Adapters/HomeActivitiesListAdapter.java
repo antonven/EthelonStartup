@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         holder.activityContact.setText(activities.get(position).getActivityContact());
         Glide.with(mContext).load(activities.get(position).getActivityImage())
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
+        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+                .centerCrop().crossFade().into(holder.clickedFoundationImage);
 
     }
 
@@ -79,7 +82,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         TextView clickedEventName, clickedEventHost, clickedEventDescription,
                 clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact;
         RelativeLayout relativeLayout;
-        ImageView clickedActivityImage;
+        ImageView clickedActivityImage, clickedFoundationImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -102,6 +105,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             clickedActivityImage = (ImageView)itemView.findViewById(R.id.head_image);
             contactPerson = (TextView)itemView.findViewById(R.id.contactPerson);
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
+            clickedFoundationImage = (ImageView)itemView.findViewById(R.id.foundation_img);
 
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
             eventName.setTypeface(typeface);
@@ -142,6 +146,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             String eventContactNo = activities.get(getAdapterPosition()).getActivityContact();
             String eventContactPerson = activities.get(getAdapterPosition()).getContactPerson();
             String eventSkills = activities.get(getAdapterPosition()).getActivityPoints();
+            String volunteerStatus = activities.get(getAdapterPosition()).getVolunteerStatus();
+            String foundation_image = activities.get(getAdapterPosition()).getFoundationImage();
 
             Intent in = new Intent(mContext, EventDetailsActivity.class);
             in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -158,6 +164,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             in.putExtra("activity_id", activity_id);
             in.putExtra("api_token", api_token);
             in.putExtra("profileId", profile_id);
+            in.putExtra("volunteerStatus", volunteerStatus);
+            in.putExtra("foundationImage", foundation_image);
 
             mContext.startActivity(in);
         }

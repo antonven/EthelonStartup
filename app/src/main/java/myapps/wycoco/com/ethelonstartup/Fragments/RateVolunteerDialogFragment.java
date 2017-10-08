@@ -184,11 +184,11 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
 
-        for(int i = 0; i<criteria.size(); i++) {
-            Log.e("dialogfragmentate222", "  " + ratings.get(i) +" cri" + criteria.get(i).getCriteriaName());
-            params.put("criteriaParams" + i, criteria.get(i).getCriteriaName());
-            params.put("ratingParams" + i, String.valueOf(ratings.get(i)));
-        }
+            for(int i = 0; i<criteria.size(); i++) {
+                Log.e("dialogfragmentate222", "  " + ratings.get(i) +" cri" + criteria.get(i).getCriteriaName());
+                params.put("criteriaParams" + i, criteria.get(i).getCriteriaName());
+                params.put("ratingParams" + i, String.valueOf(ratings.get(i)));
+            }
         params.put("activitygroups_id", activitygroups_id);
         params.put("volunteer_id_to_rate", volunteer_id_to_rate);
         params.put("count", String.valueOf(criteria.size()));
@@ -211,7 +211,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonArrayRequest);
 
-        onCompleteListener.onComplete(index);
+        onCompleteListener.onComplete(index, ratings);
         ratings.clear();
         dismiss();
     }
@@ -233,6 +233,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     }
 
     public interface OnCompleteListener{
-        public void onComplete(int index);}
+        public void onComplete(int index, ArrayList<Integer> ratings);
+    }
 
 }

@@ -121,9 +121,10 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
     }
 
     @Override
-    public void onComplete(int index) {
+    public void onComplete(int index, ArrayList<Integer> ratings) {
 
         volunteers.get(index).setStatus("Mana");
+        volunteers.get(index).setRating(ratings.get(index));
         evaluateGroupAdapter.notifyDataSetChanged();
     }
 }

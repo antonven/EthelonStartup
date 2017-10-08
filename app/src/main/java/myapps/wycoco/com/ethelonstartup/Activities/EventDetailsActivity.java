@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,12 +45,12 @@ public class EventDetailsActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     Toolbar toolbar;
-    String eventName, eventHost, eventImage, activity_id;
+    String eventName, eventHost, eventImage, activity_id, volunteerStatus, foundationImage;
     TextView eventName1, eventHost1;
     Button joinActivityBtn, unjoinActivityBtn;
     ImageView eventDetailsImage;
     Intent n;
-    String message;
+
     CollapsingToolbarLayout collapsingToolbarLayout;
     ViewPagerAdapter adapter;
     private static final String URL = "http://"+new Localhost().getLocalhost()+"joinactivity";
@@ -57,7 +59,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
-
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -80,24 +81,26 @@ public class EventDetailsActivity extends AppCompatActivity {
         unjoinActivityBtn = (Button)findViewById(R.id.unjoinActivityBtn);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
 
-//        if(getMessage()!=null) {
-//            if (getMessage().equals("Already Joined")) {
-//                joinActivityBtn.setVisibility(View.GONE);
-//                unjoinActivityBtn.setVisibility(View.VISIBLE);
-//            }
-//        }
-
         n = getIntent();
         eventName = n.getStringExtra("eventName");
         eventHost = n.getStringExtra("eventHost");
         eventImage = n.getStringExtra("eventImage");
         activity_id = n.getStringExtra("activity_id");
+        volunteerStatus = n.getStringExtra("volunteerStatus");
+        foundationImage = n.getStringExtra("foundationImage");
+
+
+        if (volunteerStatus.equals("yes")) {
+                joinActivityBtn.setVisibility(View.GONE);
+                unjoinActivityBtn.setVisibility(View.VISIBLE);
+            }
+
+
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
-        eventHost1.setText(eventHost + "University of San Jose - Recoletos");
+        eventHost1.setText(eventHost);
 
-//        validateJoin();
 
         joinActivityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +203,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getString("message").equals("Already Joined")) {
-                                setMessage(response.getString("message"));
+
                             } else {
                                 //Fragment na naka success siya!
                                 Intent n = new Intent(EventDetailsActivity.this, JoinActivitySuccess.class);
@@ -227,11 +230,4 @@ public class EventDetailsActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public String getMessage(){
-        return message;
-    }
-
-    public void setMessage(String message){
-        this.message = message;
-    }
 }

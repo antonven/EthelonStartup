@@ -33,10 +33,10 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdapter.ViewHolder>{
 
     Context mContext;
-    ArrayList<RateVolunteer> volunteers = new ArrayList<>();
-    String activity_id, api_token, volunteer_id;
-    ArrayList<EvaluationCriteria> criterias = new ArrayList<>();
-    VolunteerRatingFragment volunteerRatingFragment;
+    private ArrayList<RateVolunteer> volunteers = new ArrayList<>();
+    private String activity_id, api_token, volunteer_id;
+    private ArrayList<EvaluationCriteria> criterias = new ArrayList<>();
+    private VolunteerRatingFragment volunteerRatingFragment;
 
     public EvaluateGroupAdapter(Context mContext, ArrayList<RateVolunteer> volunteers, String activity_id, String api_token, String volunteer_id,VolunteerRatingFragment volunteerRatingFragment) {
         this.mContext = mContext;
@@ -67,7 +67,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
         }
 
         if(criterias.size() == 0){
-            holder.ratingBar.setRating(0);
+            holder.ratingBar.setRating(volunteers.get(position).getRating());
 
         }else{
             holder.ratingBar.setRating(criterias.get(position).getCriteriaRating());

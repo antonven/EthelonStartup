@@ -50,6 +50,7 @@ public class EventDetailsFragment extends Fragment {
         eventSkills1.setTypeface(typeface);
         eventContact1.setTypeface(typeface);
         eventDate1.setTypeface(typeface);
+        eventTimeStart1.setTypeface(typeface);
 
         eventDate1.setText(eventDate);
         eventTimeStart1.setText(eventTimeStart);

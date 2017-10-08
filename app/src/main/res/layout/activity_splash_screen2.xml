@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8f8f8"
+    tools:context="myapps.wycoco.com.ethelonstartup.Activities.SplashScreenActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ethelon"
+        android:layout_marginBottom="24dp"
+        android:layout_above="@+id/loginText"
+        android:id="@+id/ethelonLogo"
+        android:layout_centerInParent="true"
+        android:scaleX="2"
+        android:scaleY="2">
+
+    </ImageView>
+
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Ethelon"
+        android:textSize="48sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_centerInParent="true"
+         />
+
+
+
+
+
+</RelativeLayout>

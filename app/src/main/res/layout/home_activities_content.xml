@@ -122,8 +122,8 @@
                 android:text="Host"
                 android:layout_alignParentLeft="true" />
 
-            <ImageView
-                android:id="@+id/content_avatar"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/foundation_img"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_below="@id/content_avatar_title"
@@ -133,17 +133,17 @@
             <TextView
                 android:id="@+id/clickedEventHost"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/content_avatar"
+                android:layout_height="30dp"
+                android:layout_alignTop="@id/foundation_img"
                 android:layout_marginBottom="2dp"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/content_avatar"
+                android:layout_toEndOf="@id/foundation_img"
                 android:text="Rise Above Foundation"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:textSize="20sp"
                 style="@style/TextViewRedBig"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/content_avatar" />
+                android:layout_toRightOf="@id/foundation_img" />
 
 
         </RelativeLayout>

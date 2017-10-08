@@ -89,14 +89,16 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
                                     JSONObject jsonObject = response.getJSONObject(i);
                                     String leaderboard_name = jsonObject.getString("name");
                                     String leaderboard_image = jsonObject.getString("image_url");
-//                                    int leaderboard_points = Integer.parseInt(jsonObject.getString("points"));
+                                    int leaderboard_points = jsonObject.getInt("points");
+                                    if(leaderboard_points != 0) {
 
-                                    userModel = new UserModel();
-                                    userModel.setUserFirstName(leaderboard_name);
-                                    userModel.setUserImage(leaderboard_image);
-//                                    userModel.setUser_points(leaderboard_points);
+                                        userModel = new UserModel();
+                                        userModel.setUserFirstName(leaderboard_name);
+                                        userModel.setUserImage(leaderboard_image);
+                                        userModel.setUser_points(leaderboard_points);
 
-                                    userLeaders.add(userModel);
+                                        userLeaders.add(userModel);
+                                    }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

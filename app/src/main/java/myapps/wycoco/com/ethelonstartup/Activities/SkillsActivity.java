@@ -272,6 +272,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                                     intent.putExtra("fbProfileName", fbProfileName);
                                     Log.e("SKILLSACTI", "a: " + name + profilePicture + profileId);
                                     startActivity(intent);
+                                    finish();
                                 }
                             }
                         },

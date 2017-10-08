@@ -48,8 +48,8 @@
 
         <ImageView
 
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:scaleType="centerCrop"
             android:id="@+id/rateVolunteerStatus"
             app:srcCompat="@drawable/check_ic"

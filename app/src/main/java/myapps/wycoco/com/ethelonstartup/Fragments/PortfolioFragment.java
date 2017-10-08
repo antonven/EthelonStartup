@@ -118,21 +118,26 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     String contactPerson = activityObject.getString("contactperson");
                                     String activityContact = activityObject.getString("contact");
                                     String volunteerStatus = activityObject.getString("joined");
-                                    String foundationName = activityObject.getString("foundation_name");
+                                    String foundationName = activityObject.getString("foundtion_name");
                                     int points = activityObject.getInt("points");
                                     int volunteer_count = activityObject.getInt("volunteer_count");
+                                    String foundationImage = activityObject.getString("foundation_img");
 
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date date = dateFormat.parse(activityDate);
+                                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                                    Date time = timeFormat.parse(activityStart);
 
                                     SimpleDateFormat dateFormat1 = new SimpleDateFormat("MMMM dd, EEE");
                                     String finalDate = dateFormat1.format(date);
+                                    SimpleDateFormat timeFormat1 = new SimpleDateFormat("hh:mm a");
+                                    String finalTime = timeFormat1.format(time);
 
                                     PortfolioModel portfolioModel = new PortfolioModel(activity_id, foundationId, activityName, activityImage,
                                             activityQr,
                                             activityDes,
                                             activityLocation,
-                                            activityStart,
+                                            finalTime,
                                             activityEnd,
                                             finalDate,
                                             activityGroup,
@@ -147,7 +152,8 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                             volunteerStatus,
                                             foundationName,
                                             points,
-                                            volunteer_count);
+                                            volunteer_count,
+                                            foundationImage);
 
                                     Log.e("PortfolioActivities", response.toString());
                                     activities.add(portfolioModel);
@@ -162,7 +168,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                             portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, activity_id, api_token, volunteer_id, profile_id);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(portfolioAdapter);
-                            Log.e("PISTE KOBE ", activities.size() + "id :" + activity_id);
+                            Log.e("PISTE KOBE ", activities.size() + "id :" + activity_id + volunteer_id);
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }

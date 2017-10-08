@@ -8,6 +8,12 @@ android {
             storeFile file('D:/AndroidPracices/KEY_STORES/ethelonkey.jks')
             storePassword 'Kirstenmay1'
         }
+        config1 {
+            keyAlias 'ethelonstartup'
+            keyPassword 'Kirstenmay1'
+            storeFile file('D:/ETHELONKEYSTORE/keystores/ethelonstartupkey.jks')
+            storePassword 'Kirstenmay1'
+        }
     }
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
@@ -15,8 +21,8 @@ android {
         applicationId "myapps.wycoco.com.ethelonstartup"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 8
-        versionName "1.7"
+        versionCode 13
+        versionName "1.12"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -25,6 +31,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config1
         }
     }
     dexOptions {
@@ -43,8 +50,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     apply plugin: 'com.google.gms.google-services'
+
     compile 'com.mcxiaoke.volley:library:1.0.18'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.facebook.android:facebook-login:[4,5)'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
@@ -65,6 +73,6 @@ dependencies {
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile 'com.google.firebase:firebase-core:9.6.0'
     compile 'com.google.firebase:firebase-messaging:9.6.0'
-    compile 'nl.dionsegijn:konfetti:1.1.0'
+    compile 'com.nex3z:notification-badge:0.2.0'
     testCompile 'junit:junit:4.12'
 }
