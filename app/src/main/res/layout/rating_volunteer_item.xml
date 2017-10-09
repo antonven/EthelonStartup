@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
+        android:layout_gravity="center"
         android:id="@+id/rateLinear"
         android:orientation="horizontal">
 
@@ -39,9 +40,6 @@
                 android:id="@+id/rateVolunteerRate"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_marginLeft="16dp"/>
-
-
-
 
 
         </LinearLayout>
