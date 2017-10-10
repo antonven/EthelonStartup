@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,6 +37,7 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
     EditText inputEmail, inputPassword;
     Button proceedBtn;
     String email, password, api_token, volunteer_id, userName, userImage, message;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +58,12 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         proceedBtn = (Button)findViewById(R.id.proceedBtn);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar3);
 
         proceedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 email = inputEmail.getText().toString();
                 password = inputPassword.getText().toString();
 
@@ -91,6 +95,7 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
                                         n.putExtra("userName", userName);
                                         n.putExtra("userImage", userImage);
                                         startActivity(n);
+                                        progressBar.setVisibility(View.GONE);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

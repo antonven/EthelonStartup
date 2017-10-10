@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class RegisterForm2 extends Fragment {
     Spinner inputRole;
     EditText inputName;
     Button doneBtn;
+    ProgressBar progressBar;
     private String URL = "http://"+new Localhost().getLocalhost()+"register";
     String role;
 
@@ -61,6 +63,7 @@ public class RegisterForm2 extends Fragment {
         inputName = (EditText)v.findViewById(R.id.inputName);
         inputRole = (Spinner)v.findViewById(R.id.inputRole);
         doneBtn = (Button)v.findViewById(R.id.doneBtn);
+        progressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
 
         ArrayAdapter<String> roleAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, roles);
         roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,6 +87,8 @@ public class RegisterForm2 extends Fragment {
 
             @Override
             public void onClick(View view) {
+
+                progressBar.setVisibility(View.VISIBLE);
 
                 final String email = getArguments().getString("email");
                 final String password = getArguments().getString("password");
@@ -118,6 +123,7 @@ public class RegisterForm2 extends Fragment {
                                 intent.putExtra("profileName",name);
 
                                 startActivity(intent);
+                                progressBar.setVisibility(View.VISIBLE);
                             }
 
                         } catch (JSONException e) {

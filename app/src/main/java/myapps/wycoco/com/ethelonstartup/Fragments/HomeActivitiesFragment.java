@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Utils.SingletonClass;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -52,6 +54,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
     HomeActivitiesListAdapter homeActivitiesListAdapter;
     String id, api_token, activity_id, profileId;
     SwipeRefreshLayout swipeRefreshLayout;
+    ArrayList<String> final_skills;
 
     public HomeActivitiesFragment() {
         // Required empty public constructor
@@ -108,7 +111,6 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     Log.e("RESPONsE", response.toString());
-
                                     JSONObject activityObject = response.getJSONObject(i);
                                     String activityName = activityObject.getString("name");
                                     String foundationId = activityObject.getString("foundation_id");
@@ -133,6 +135,15 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                     String foundationName = activityObject.getString("foundtion_name");
                                     int volunteerCount = Integer.parseInt(activityObject.getString("volunteer_count"));
                                     String volunteerStatus = activityObject.getString("volunteerstatus");
+                                    JSONArray act_skills = activityObject.getJSONArray("activity_skills");
+                                    final_skills = new ArrayList<String>();
+
+                                    for(int x = 0; x<act_skills.length(); x++){
+                                        JSONObject obj = act_skills.getJSONObject(x);
+                                        String skill = obj.getString("name");
+                                        final_skills.add(skill);
+                                    }
+                                    Log.i("final_skills", final_skills + "" + activityName);
 
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date date = dateFormat.parse(activityDate);
@@ -165,19 +176,22 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                             foundationName,
                                             volunteerCount,
                                             volunteerStatus,
-                                            foundationImage);
+                                            foundationImage,
+                                            final_skills);
 
-                                    Log.e("ACTIVITIES", response.toString());
+                                    Log.e("ACTIVITIES and skillz", "" + final_skills + act_skills);
                                     activities.add(activityModel1);
 
                                 } catch (JSONException | ParseException e) {
                                     e.printStackTrace();
                                 }
                             }
+
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
                             Log.e("ACTIVITY ID ", "HOME FRAGMENT" + activity_id );
-                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(), activities, id, api_token, profileId);
+                            FragmentManager suppFragment = getChildFragmentManager();
+                            homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(),activity_id, activities, id, api_token, profileId, suppFragment);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(homeActivitiesListAdapter);
 
@@ -195,9 +209,9 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
 
         };
 
-        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-        request.add(jsonArrayRequest);
-
+//        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+//        request.add(jsonArrayRequest);
+        SingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 5000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

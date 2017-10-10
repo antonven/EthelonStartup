@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/eventHost"
                 android:textSize="16sp"
-                android:textColor="#000"
+
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,24 +152,78 @@
                 android:orientation="horizontal"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="2">
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:textColor="#000"
-                    android:textSize="14sp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/volunteers_count_badge"
-                    android:id="@+id/textView3" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:textColor="#000"
+                <GridView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="@string/points_badge"
-                    />
+                    android:id="@id/gridView"
+                    android:numColumns="8"
+                    android:horizontalSpacing="5dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center">
+                </GridView>
+                
+                <!--<ImageView-->
+                    <!--android:id="@+id/im1"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:src="@drawable/sports_volunteer"/>-->
+                <!--<ImageView-->
+
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:id="@+id/im2"-->
+
+                    <!--android:src="@drawable/charity_volunteer"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:id="@+id/im3"-->
+
+                    <!--android:src="@drawable/livelihood_volunteer"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:id="@+id/im4"-->
+
+                    <!--android:src="@drawable/arts_volunteer"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:id="@+id/im5"-->
+
+                    <!--android:src="@drawable/environment_volunteer"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:id="@+id/im6"-->
+
+                    <!--android:src="@drawable/medical_volunteer"/>-->
+                <!--<TextView-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/volunteers_count_badge"-->
+                    <!--android:id="@+id/textView3" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:text="@string/points_badge"-->
+                    <!--/>-->
 
             </LinearLayout>
 
@@ -181,26 +235,32 @@
                 android:weightSum="2"
                 >
 
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/title_volunteers_count"
-                    style="@style/TextViewRedBig"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="24"
-                    />
+                <!--<TextView-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:id="@+id/title_volunteers_count"-->
+                    <!--style="@style/TextViewRedBig"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="24"-->
+                    <!--/>-->
+                <!--<FrameLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/volFrame">-->
 
-                <TextView
-                    android:layout_marginLeft="95dp"
-                    android:text="100"
-                    android:layout_weight="1"
-                    android:id="@+id/eventPoints"
-                    style="@style/TextViewRedBig"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
+                <!--</FrameLayout>-->
+
+                <!--<TextView-->
+                    <!--android:layout_marginLeft="95dp"-->
+                    <!--android:text="100"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:id="@+id/eventPoints"-->
+                    <!--style="@style/TextViewRedBig"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--/>-->
 
                 <!--<android.support.v7.widget.RecyclerView-->
                 <!--android:layout_width="match_parent"-->

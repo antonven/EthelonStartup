@@ -19,11 +19,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
 
             <ImageView
                 android:id="@+id/environmental"
@@ -44,15 +49,26 @@
                 android:layout_height="match_parent"
                 android:background="#80000000"
                 android:visibility="gone"/>
+
+
         </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ENVIRONMENT"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
 
-
-
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        >
 
             <ImageView
                 android:id="@+id/livelihood"
@@ -74,7 +90,14 @@
                 android:background="#80000000"
                 android:visibility="gone"/>
     </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LIVELIHOOD"
+                android:layout_gravity="center_horizontal"/>
 
+
+        </LinearLayout>
     </LinearLayout>
 
 
@@ -84,10 +107,15 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
 
             <ImageView
                 android:id="@+id/educational"
@@ -109,12 +137,24 @@
                 android:background="#80000000"
                 android:visibility="gone"/>
         </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDUCATION"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
 
             <ImageView
                 android:id="@+id/culinary"
@@ -136,6 +176,12 @@
                 android:background="#80000000"
                 android:visibility="gone"/>
         </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CULINARY"
+                android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
     </LinearLayout>
 
@@ -144,11 +190,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
 
             <ImageView
                 android:id="@+id/charity"
@@ -156,6 +207,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/charity_volunteer"
                 android:scaleType="centerInside"
+                android:padding="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
@@ -170,10 +222,21 @@
                 android:background="#80000000"
                 android:visibility="gone"/>
         </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CULINARY"
+                android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:layout_weight="1">
 
             <ImageView
@@ -197,6 +260,12 @@
                 android:background="#80000000"
                 android:visibility="gone"/>
         </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SPORTS"
+                android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
     </LinearLayout>
 
@@ -206,10 +275,15 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
 
             <ImageView
                 android:id="@+id/medicine"
@@ -231,11 +305,23 @@
                 android:background="#80000000"
                 android:visibility="gone"/>
         </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHARITY"
+                android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
 
             <ImageView
                 android:id="@+id/arts"
@@ -258,6 +344,12 @@
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_check_black_24dp" />
         </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ARTS"
+                android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
     </LinearLayout>
 
@@ -270,10 +362,17 @@
         android:textColor="#fff"
         android:layout_centerHorizontal="true"
         android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:id="@+id/doneButton"
         android:layout_alignParentBottom="true"
 
 
         />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/progbar"/>
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,6 +35,7 @@ import myapps.wycoco.com.ethelonstartup.Adapters.PortfolioAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Utils.SingletonClass;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -90,7 +92,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
 
-        Log.e("videee",volunteer_id);
+        Log.e("PORTFOLIO ID",volunteer_id + profile_id + api_token);
 
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
@@ -184,7 +186,15 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                 Log.e("AntonWycoco", "" + error.toString());
             }
         });
-        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-        request.add(jsonObjectRequest);
+//        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+//        request.add(jsonObjectRequest);
+
+        SingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
     }
 }

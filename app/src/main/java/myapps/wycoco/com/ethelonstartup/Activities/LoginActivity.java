@@ -376,6 +376,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.buttonFacebook:
+                progressBar.setVisibility(View.VISIBLE);
                 Log.e("sud sa facebook button","facebook");
                 LoginManager.getInstance().logInWithReadPermissions(this,
                         Arrays.asList("user_photos", "email", "user_birthday", "user_friends", "public_profile"));
@@ -393,6 +394,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     profileTracker.stopTracking();
                                     pushFacebookCred(loginResult.getAccessToken(),currentProfile);
                                     finish();
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             };
                         }else{
@@ -427,8 +429,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void pushFacebookCred(AccessToken accessToken, final Profile profile){
 
-
-
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -451,7 +451,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             email = "email not avaiable " + facebook_id;
                         }
 
-                        progressBar.setVisibility(View.VISIBLE);
+//                        progressBar.setVisibility(View.VISIBLE);
 
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
@@ -535,7 +535,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Log.e("line 444", "catch");
                                         }
                                         }
-                                        progressBar.setVisibility(View.GONE);
+//                                        progressBar.setVisibility(View.GONE);
                                     }
 
                                 }, new Response.ErrorListener() {
@@ -614,7 +614,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 }
-                progressBar.setVisibility(View.GONE);
+//                progressBar.setVisibility(View.GONE);
 
             }//on completed
         });

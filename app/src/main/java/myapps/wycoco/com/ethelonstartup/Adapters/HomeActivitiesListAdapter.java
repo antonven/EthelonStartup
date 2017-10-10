@@ -1,13 +1,20 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +25,8 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
+import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.HomeGoingVolunteersFragment;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -29,14 +38,19 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
     Context mContext;
     private ArrayList<ActivityModel> activities = new ArrayList<>();
-    private String id, api_token, profile_id;
+    private String id, api_token, profile_id, activity_id;
+    private FragmentManager suppFragment;
+    private ArrayList<Integer> images;
 
-    public HomeActivitiesListAdapter(Context mContext, ArrayList<ActivityModel> activities, String id, String api_token, String profile_id) {
+    public HomeActivitiesListAdapter(Context mContext, String activity_id,  ArrayList<ActivityModel> activities, String id, String api_token, String profile_id,
+                                     FragmentManager suppFragment) {
         this.mContext = mContext;
         this.activities = activities;
         this.id = id;
         this.api_token = api_token;
         this.profile_id = profile_id;
+        this.suppFragment = suppFragment;
+        this.activity_id = activity_id;
     }
 
     @Override
@@ -54,8 +68,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         holder.eventHost.setText(activities.get(position).getFoundationName());
         holder.eventDate.setText(activities.get(position).getActivityDate());
         holder.eventTimeStart.setText(activities.get(position).getActivityStart());
-        holder.eventVolunteers.setText(String.valueOf(activities.get(position).getVolunteerCount()));
-        holder.eventPoints.setText(activities.get(position).getActivityPoints());
+//        holder.eventVolunteers.setText(String.valueOf(activities.get(position).getVolunteerCount()));
+//        holder.eventPoints.setText(activities.get(position).getActivityPoints());
         holder.clickedEventName.setText(activities.get(position).getActivityName());
         holder.clickedEventHost.setText(activities.get(position).getFoundationName());
         holder.clickedEventDescription.setText(activities.get(position).getActivityDes());
@@ -68,6 +82,49 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         Glide.with(mContext).load(activities.get(position).getFoundationImage())
                 .centerCrop().crossFade().into(holder.clickedFoundationImage);
 
+        images = new ArrayList<>();
+        ArrayList<String> skills = activities.get(position).getAct_skills();
+        Log.e("HOMEADAPTER skills", skills.toString());
+        for(int i = 0; i<skills.size(); i++){
+            String skill = skills.get(i);
+            if(skill.equals("Environment"))
+                images.add(R.drawable.environment_volunteer);
+            else if(skill.equals("Medical"))
+                images.add(R.drawable.medical_volunteer);
+            else if(skill.equals("Livelihood"))
+                images.add(R.drawable.livelihood_volunteer);
+            else if(skill.equals("Sports"))
+                images.add(R.drawable.sports_volunteer);
+            else if(skill.equals("Culinary"))
+                images.add(R.drawable.culinary_volunteer);
+            else if(skill.equals("Charity"))
+                images.add(R.drawable.charity_volunteer);
+            else if(skill.equals("Arts"))
+                images.add(R.drawable.arts_volunteer);
+            else if(skill.equals("Education"))
+                images.add(R.drawable.education_volunteer);
+        }
+
+        holder.gridView.setAdapter(new BasicAdapter(images, mContext));
+
+//        for(String skill : skills){
+//            if(skill.equals("Environment"))
+//                holder.im1.setImageDrawable(mContext.getResources().getDrawable(R.drawable.environment_volunteer));
+//
+//
+//        }
+//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+//                .centerCrop().crossFade().into(holder.im1);
+//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+//                .centerCrop().crossFade().into(holder.im2);
+//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+//                .centerCrop().crossFade().into(holder.im3);
+//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+//                .centerCrop().crossFade().into(holder.im4);
+//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+//                .centerCrop().crossFade().into(holder.im5);
+//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
+//                .centerCrop().crossFade().into(holder.im6);
     }
 
     @Override
@@ -82,7 +139,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         TextView clickedEventName, clickedEventHost, clickedEventDescription,
                 clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact;
         RelativeLayout relativeLayout;
-        ImageView clickedActivityImage, clickedFoundationImage;
+        GridView gridView;
+        ImageView clickedActivityImage, clickedFoundationImage, im1,im2,im3,im4,im5,im6;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -94,8 +152,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             eventAddress = (TextView)itemView.findViewById(R.id.eventAddress);
             eventDate = (TextView)itemView.findViewById(R.id.eventDate);
             eventTimeStart = (TextView)itemView.findViewById(R.id.eventTimeStart);
-            eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
-            eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
+//            eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
+//            eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
             viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             clickedEventName = (TextView)itemView.findViewById(R.id.clickedEventName);
             clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
@@ -106,6 +164,14 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             contactPerson = (TextView)itemView.findViewById(R.id.contactPerson);
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
             clickedFoundationImage = (ImageView)itemView.findViewById(R.id.foundation_img);
+            gridView = (GridView)itemView.findViewById(R.id.gridView);
+//            im1 = (ImageView)itemView.findViewById(R.id.im1);
+//            im2 = (ImageView)itemView.findViewById(R.id.im2);
+//            im3 = (ImageView)itemView.findViewById(R.id.im3);
+//            im4 = (ImageView)itemView.findViewById(R.id.im4);
+//            im5 = (ImageView)itemView.findViewById(R.id.im5);
+//            im6 = (ImageView)itemView.findViewById(R.id.im6);
+
 
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
             eventName.setTypeface(typeface);
@@ -113,8 +179,8 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             eventAddress.setTypeface(typeface);
             eventDate.setTypeface(typeface);
             eventTimeStart.setTypeface(typeface);
-            eventVolunteers.setTypeface(typeface);
-            eventPoints.setTypeface(typeface);
+//            eventVolunteers.setTypeface(typeface);
+//            eventPoints.setTypeface(typeface);
             clickedEventName.setTypeface(typeface);
             clickedEventHost.setTypeface(typeface);
             clickedEventDescription.setTypeface(typeface);
@@ -131,6 +197,19 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             });
 
             viewActivity.setOnClickListener(this);
+//
+//            HomeGoingVolunteersFragment goingVolunteersFragment = new HomeGoingVolunteersFragment();
+//            Bundle b = new Bundle();
+//            b.putString("activity_id", activities.get(getAdapterPosition()).getActivityId());
+//            b.putString("api_token", api_token);
+//            Log.e("HOME ADAPTERanton", activity_id + " " + api_token);
+//            goingVolunteersFragment.setArguments(b);
+
+//            FragmentManager fragmentManager = suppFragment;
+//            fragmentManager
+//                    .beginTransaction()
+//                    .replace(R.id.volFrame, goingVolunteersFragment)
+//                    .commit();
 
         }
 

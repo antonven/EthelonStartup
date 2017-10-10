@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,6 +39,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     String api_token, profileId, profilePicture;
     String name;
     ArrayList<String> skillSet = new ArrayList<>();
+    ProgressBar progbar;
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
 
     Localhost localhost = new Localhost();
@@ -90,6 +92,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
         sports = (ImageView)findViewById(R.id.sports);
         medicine = (ImageView)findViewById(R.id.medicine);
         arts = (ImageView)findViewById(R.id.arts);
+        progbar = (ProgressBar)findViewById(R.id.progbar);
 
         environmental.setOnClickListener(this);
         livelihood.setOnClickListener(this);
@@ -104,6 +107,8 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+
+
 
         switch (view.getId()){
 
@@ -256,7 +261,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.doneButton:
-
+                progbar.setVisibility(View.VISIBLE);
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                         new Response.Listener<String>() {
                             @Override

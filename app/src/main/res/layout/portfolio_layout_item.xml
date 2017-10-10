@@ -13,7 +13,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:folding-cell="http://schemas.android.com/apk/res-auto"
     folding-cell:additionalFlipsCount="2"
-    folding-cell:animationDuration="1100"
+    folding-cell:animationDuration="800"
     folding-cell:backSideColor="@color/bgBackSideColor"
     android:layout_width="match_parent"
     android:background="@drawable/folding_cell_background"

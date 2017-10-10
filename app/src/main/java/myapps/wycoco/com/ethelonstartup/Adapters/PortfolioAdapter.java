@@ -58,7 +58,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.clickedEventHost.setText(activities.get(position).getFoundationName());
         holder.clickedEventDescription.setText(activities.get(position).getActivityDes());
         holder.clickedEventVolunteers.setText(activities.get(position).getActivityGroup());
-        holder.eventVolunteers.setText(String.valueOf(activities.get(position).getVolunteer_count()));
+//        holder.eventVolunteers.setText(String.valueOf(activities.get(position).getVolunteer_count()));
         holder.clickedPoints.setText(activities.get(position).getActivityPoints());
         holder.contactPerson.setText(activities.get(position).getContactPerson());
         holder.activityContact.setText(activities.get(position).getActivityContact());
@@ -107,8 +107,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             eventAddress = (TextView)itemView.findViewById(R.id.eventAddress);
             eventDate = (TextView)itemView.findViewById(R.id.eventDate);
             eventTimeStart = (TextView)itemView.findViewById(R.id.eventTimeStart);
-            eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
-            eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
+//            eventVolunteers = (TextView)itemView.findViewById(R.id.title_volunteers_count);
+//            eventPoints = (TextView)itemView.findViewById(R.id.eventPoints);
             status = (ImageView) itemView.findViewById(R.id.status);
             clickedEventName= (TextView)itemView.findViewById(R.id.clickedEventName);
             clickedEventHost = (TextView)itemView.findViewById(R.id.clickedEventHost);
@@ -129,8 +129,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             eventAddress.setTypeface(typeface);
             eventDate.setTypeface(typeface);
             eventTimeStart.setTypeface(typeface);
-            eventVolunteers.setTypeface(typeface);
-            eventPoints.setTypeface(typeface);
+//            eventVolunteers.setTypeface(typeface);
+//            eventPoints.setTypeface(typeface);
             clickedEventName.setTypeface(typeface);
             clickedEventHost.setTypeface(typeface);
             clickedEventDescription.setTypeface(typeface);
@@ -138,7 +138,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             clickedPoints.setTypeface(typeface);
             contactPerson.setTypeface(typeface);
             activityContact.setTypeface(typeface);
-            eventPoints.setTypeface(typeface);
+//            eventPoints.setTypeface(typeface);
 
             viewActivity.setOnClickListener(new View.OnClickListener() {
                 @Override
