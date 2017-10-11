@@ -209,14 +209,15 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
 
         };
 
-//        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-//        request.add(jsonArrayRequest);
-        SingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 5000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonArrayRequest);
+//        SingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+
 
 
     }

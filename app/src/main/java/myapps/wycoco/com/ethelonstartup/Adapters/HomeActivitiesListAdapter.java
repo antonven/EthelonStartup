@@ -107,24 +107,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
 
         holder.gridView.setAdapter(new BasicAdapter(images, mContext));
 
-//        for(String skill : skills){
-//            if(skill.equals("Environment"))
-//                holder.im1.setImageDrawable(mContext.getResources().getDrawable(R.drawable.environment_volunteer));
-//
-//
-//        }
-//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
-//                .centerCrop().crossFade().into(holder.im1);
-//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
-//                .centerCrop().crossFade().into(holder.im2);
-//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
-//                .centerCrop().crossFade().into(holder.im3);
-//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
-//                .centerCrop().crossFade().into(holder.im4);
-//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
-//                .centerCrop().crossFade().into(holder.im5);
-//        Glide.with(mContext).load(activities.get(position).getFoundationImage())
-//                .centerCrop().crossFade().into(holder.im6);
+//H
     }
 
     @Override
@@ -140,7 +123,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
                 clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact;
         RelativeLayout relativeLayout;
         GridView gridView;
-        ImageView clickedActivityImage, clickedFoundationImage, im1,im2,im3,im4,im5,im6;
+        ImageView clickedActivityImage, clickedFoundationImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -165,12 +148,6 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             activityContact = (TextView)itemView.findViewById(R.id.activityContact);
             clickedFoundationImage = (ImageView)itemView.findViewById(R.id.foundation_img);
             gridView = (GridView)itemView.findViewById(R.id.gridView);
-//            im1 = (ImageView)itemView.findViewById(R.id.im1);
-//            im2 = (ImageView)itemView.findViewById(R.id.im2);
-//            im3 = (ImageView)itemView.findViewById(R.id.im3);
-//            im4 = (ImageView)itemView.findViewById(R.id.im4);
-//            im5 = (ImageView)itemView.findViewById(R.id.im5);
-//            im6 = (ImageView)itemView.findViewById(R.id.im6);
 
 
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");

@@ -51,7 +51,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     Button doneBtn;
     EvaluationCriteriaAdapter adapter;
     ArrayList<Integer> ratings;
-    ArrayList<RateVolunteer> volunteers = new ArrayList<>();
+
     ArrayList<EvaluationCriteria> criteria;
     EvaluationCriteriaAdapter evaluationCriteriaAdapter;
     LinearLayoutManager linearLayout;
@@ -132,11 +132,12 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
                                     evaluationCriteria.setCriteriaName(usersObject.getString("criteria"));
                                     criteria.add(evaluationCriteria);
                                     Log.e("CRITERIA: " , criteria.size() + "" + criteria.get(i).getCriteriaName());
-                                    declarations();
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
+                            declarations();
                         }
                     }
                 },

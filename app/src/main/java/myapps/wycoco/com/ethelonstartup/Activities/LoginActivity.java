@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -351,6 +353,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(profile!= null){
             SharedPreferences shared = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
             String email = shared.getString("email", "");
+
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("HOME_INFO", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("email", email);
+            editor.putString("fbProfileName", profile.getName());
+            editor.putString("fbProfilePicture", profile.getProfilePictureUri(500,500).toString());
+            editor.putString("profileId", profile.getId());
+            editor.putString("first_name", profile.getFirstName());
+            editor.putString("last_name", profile.getLastName());
+            editor.putString("volunteer_id", volunteer_id);
+            editor.putString("api_token", api_token);
+            editor.commit();
+
             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             i.putExtra("fbProfileName", profile.getName());
@@ -428,6 +443,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void pushFacebookCred(AccessToken accessToken, final Profile profile){
+
 
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
@@ -525,6 +541,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     }
                                                 }
                                                 );
+                                                notification.setRetryPolicy(new DefaultRetryPolicy(
+                                                        5000,
+                                                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                                                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                                                ));
                                                 RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                                                 request.add(notification);
                                                 BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
@@ -544,6 +565,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Log.e("kyle", error.toString() + " Ari gyud siya piste");
                             }
                         });
+                        string.setRetryPolicy(new DefaultRetryPolicy(
+                                5000,
+                                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                        ));
                         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                         request.add(string);
 
@@ -608,6 +634,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 }
                             });
+                            string.setRetryPolicy(new DefaultRetryPolicy(
+                                    5000,
+                                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                            ));
                             RequestQueue request = Volley.newRequestQueue(getApplicationContext());
                             request.add(string);
 

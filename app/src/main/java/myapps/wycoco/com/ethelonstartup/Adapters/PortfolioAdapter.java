@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     Context mContext;
     private ArrayList<PortfolioModel> activities = new ArrayList<>();
     private String api_token, id, volunteer_id, profile_id;
+    private ArrayList<Integer> images;
 
     public PortfolioAdapter(Context mContext, ArrayList<PortfolioModel> activities, String id, String api_token, String volunteer_id, String profile_id) {
         this.mContext = mContext;
@@ -71,13 +73,39 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                 .centerCrop().crossFade().into(holder.clickedActivityImage);
         Glide.with(mContext).load(activities.get(position).getFoundationImage())
                 .centerCrop().crossFade().into(holder.clickedFoundationImage);
-        holder.joinCount.setText(activities.get(position).getVolunteer_count() + "have joined this activity");
+        holder.joinCount.setText(activities.get(position).getVolunteer_count() + " have joined this activity");
         if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
             holder.attendBtn.setVisibility(View.GONE);
 
         }else
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
+
+
+        images = new ArrayList<>();
+        ArrayList<String> skills = activities.get(position).getAct_skills();
+        Log.e("HOMEADAPTER skills", skills.toString());
+        for(int i = 0; i<skills.size(); i++){
+            String skill = skills.get(i);
+            if(skill.equals("Environment"))
+                images.add(R.drawable.environment_volunteer);
+            else if(skill.equals("Medical"))
+                images.add(R.drawable.medical_volunteer);
+            else if(skill.equals("Livelihood"))
+                images.add(R.drawable.livelihood_volunteer);
+            else if(skill.equals("Sports"))
+                images.add(R.drawable.sports_volunteer);
+            else if(skill.equals("Culinary"))
+                images.add(R.drawable.culinary_volunteer);
+            else if(skill.equals("Charity"))
+                images.add(R.drawable.charity_volunteer);
+            else if(skill.equals("Arts"))
+                images.add(R.drawable.arts_volunteer);
+            else if(skill.equals("Education"))
+                images.add(R.drawable.education_volunteer);
+        }
+
+        holder.gridView.setAdapter(new BasicAdapter(images, mContext));
 
     }
 
@@ -94,12 +122,13 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         ImageView status, clickedActivityImage, clickedFoundationImage;
         Button attendBtn;
         FoldingCell fc;
+        GridView gridView;
         RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            recyclerView = (RecyclerView)itemView.findViewById(R.id.goingRecycler);
+//            recyclerView = (RecyclerView)itemView.findViewById(R.id.goingRecycler);
             attendBtn = (Button)itemView.findViewById(R.id.attendBtn);
             fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
             eventName = (TextView)itemView.findViewById(R.id.eventName);
@@ -122,6 +151,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             viewActivity = (TextView)itemView.findViewById(R.id.viewActivityDetailsBtn);
             clickedFoundationImage = (ImageView)itemView.findViewById(R.id.foundationImage);
             joinCount = (TextView)itemView.findViewById(R.id.joinCount);
+            gridView = (GridView)itemView.findViewById(R.id.gridView);
 
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
             eventName.setTypeface(typeface);

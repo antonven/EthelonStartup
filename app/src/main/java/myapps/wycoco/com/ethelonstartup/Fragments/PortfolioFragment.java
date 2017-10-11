@@ -49,6 +49,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recView;
     ArrayList<PortfolioModel> activities;
+    ArrayList<String> final_skills;
     PortfolioAdapter portfolioAdapter;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "portfolio";
 
@@ -128,6 +129,15 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     int points = activityObject.getInt("points");
                                     int volunteer_count = activityObject.getInt("volunteer_count");
                                     String foundationImage = activityObject.getString("foundation_img");
+                                    JSONArray act_skills = activityObject.getJSONArray("activity_skills");
+                                    final_skills = new ArrayList<String>();
+
+                                    for(int x = 0; x<act_skills.length(); x++){
+                                        JSONObject obj = act_skills.getJSONObject(x);
+                                        String skill = obj.getString("name");
+                                        final_skills.add(skill);
+                                    }
+                                    Log.i("final_skills", final_skills + "" + activityName);
 
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date date = dateFormat.parse(activityDate);
@@ -159,7 +169,8 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                             foundationName,
                                             points,
                                             volunteer_count,
-                                            foundationImage);
+                                            foundationImage,
+                                            final_skills);
 
                                     Log.e("PortfolioActivities", response.toString());
                                     activities.add(portfolioModel);
@@ -186,15 +197,14 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                 Log.e("AntonWycoco", "" + error.toString());
             }
         });
-//        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-//        request.add(jsonObjectRequest);
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonObjectRequest);
 
-        SingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
+//        SingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+//        int x = 2;
+//        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 48,x,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+//        ));
 
     }
 }

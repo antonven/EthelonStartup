@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,6 +34,7 @@ import java.util.Map;
 import myapps.wycoco.com.ethelonstartup.Activities.SkillsActivity;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Utils.SingletonClass;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -138,8 +140,14 @@ public class RegisterForm2 extends Fragment {
                 }
                 );
 
-                RequestQueue request = Volley.newRequestQueue(getContext());
-                request.add(jsonObjectRequest);
+                SingletonClass.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                ));
+//                RequestQueue request = Volley.newRequestQueue(getContext());
+//                request.add(jsonObjectRequest);
             }
         });
 

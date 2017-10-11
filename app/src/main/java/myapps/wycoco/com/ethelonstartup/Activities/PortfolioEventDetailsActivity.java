@@ -78,7 +78,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
-        eventHost1.setText(eventHost + "University of San Jose - Recoletos");
+        eventHost1.setText(eventHost);
         pointsEarned.setText(points+"");
 
         insTabs();

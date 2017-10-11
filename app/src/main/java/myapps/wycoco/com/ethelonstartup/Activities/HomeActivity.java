@@ -83,6 +83,7 @@ public class HomeActivity extends AppCompatActivity
 
         displayFirebaseRegId();
 
+
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -199,17 +200,13 @@ public class HomeActivity extends AppCompatActivity
             intent.putExtra("profileId", profileId);
             startActivity(intent);
 
-//        }else if (id == R.id.nav_third_layout) {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("id",volunteer_id);
-//            bundle.putString("api_token",api_token);
-//
-//            HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
-//            homeActivitiesFragment.setArguments(bundle);
-//
-//            fm.beginTransaction()
-//                    .replace(R.id.frame1, homeActivitiesFragment)
-//                    .commit();
+        }else if (id == R.id.nav_third_layout) {
+            Bundle bundle = new Bundle();
+            bundle.putString("id",volunteer_id);
+            bundle.putString("api_token",api_token);
+
+            Intent intent = new Intent(this, SkillPreferenceActivity.class);
+            startActivity(intent);
         }else if (id == R.id.logOutButton){
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -242,6 +239,8 @@ public class HomeActivity extends AppCompatActivity
 
         return true;
     }
+
+
 
     private void initInstancesDrawer() {
 
@@ -365,6 +364,9 @@ public class HomeActivity extends AppCompatActivity
         newSignUpUsername = n.getStringExtra("newSignUpUsername");
         fbProfileName = n.getStringExtra("fbProfileName");
         email = n.getStringExtra("email");
+
+
+
 
         Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName);
 

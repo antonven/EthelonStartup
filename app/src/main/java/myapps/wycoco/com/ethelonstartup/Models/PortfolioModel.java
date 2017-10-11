@@ -1,5 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Models;
 
+import java.util.ArrayList;
+
 /**
  * Created by dell on 8/15/2017.
  */
@@ -30,6 +32,7 @@ public class PortfolioModel {
     private int points;
     private int volunteer_count;
     private String foundationImage;
+    private ArrayList<String> act_skills;
 
 
     public int getPoints() {
@@ -45,7 +48,8 @@ public class PortfolioModel {
                           String activityStart, String activityEnd, String activityDate, String activityGroup, String activityLong,
                           String activityLat,
                           String activityPoints, String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
-                          String activityContact, String volunteerStatus, String foundationName, int points, int volunteer_count, String foundationImage) {
+                          String activityContact, String volunteerStatus, String foundationName, int points, int volunteer_count, String foundationImage,
+                          ArrayList<String> act_skills) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -70,6 +74,7 @@ public class PortfolioModel {
         this.points = points;
         this.volunteer_count = volunteer_count;
         this.foundationImage = foundationImage;
+        this.act_skills = act_skills;
     }
 
 
@@ -262,5 +267,13 @@ public class PortfolioModel {
 
     public void setFoundationImage(String foundationImage) {
         this.foundationImage = foundationImage;
+    }
+
+    public ArrayList<String> getAct_skills() {
+        return act_skills;
+    }
+
+    public void setAct_skills(ArrayList<String> act_skills) {
+        this.act_skills = act_skills;
     }
 }

@@ -130,23 +130,34 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
                 android:weightSum="2">
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:textColor="#000"
-                    android:textSize="14sp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/volunteers_count_badge"
-                    android:id="@+id/textView3" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:textColor="#000"
+                <GridView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="@string/points_badge"
-                     />
+                    android:id="@id/gridView"
+                    android:numColumns="8"
+                    android:horizontalSpacing="5dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center">
+                </GridView>
+
+                <!--<TextView-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/volunteers_count_badge"-->
+                    <!--android:id="@+id/textView3" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:text="@string/points_badge"-->
+                     <!--/>-->
 
             </LinearLayout>
 
@@ -156,33 +167,33 @@
                 android:orientation="horizontal"
                 >
 
-                <TextView
+                <!--<TextView-->
 
-                    android:id="@+id/title_volunteers_count"
-                    style="@style/TextViewRedBig"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="24"
-                    />
+                    <!--android:id="@+id/title_volunteers_count"-->
+                    <!--style="@style/TextViewRedBig"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="24"-->
+                    <!--/>-->
 
-                <TextView
-                    android:layout_marginLeft="95dp"
-                    android:text="100"
-                    android:id="@+id/eventPoints"
-                    style="@style/TextViewRedBig"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
+                <!--<TextView-->
+                    <!--android:layout_marginLeft="95dp"-->
+                    <!--android:text="100"-->
+                    <!--android:id="@+id/eventPoints"-->
+                    <!--style="@style/TextViewRedBig"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                     <!--/>-->
 
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:id="@+id/goingRecycler">
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:id="@+id/goingRecycler">-->
 
-                </android.support.v7.widget.RecyclerView>
+                <!--</android.support.v7.widget.RecyclerView>-->
 
 
             </LinearLayout>

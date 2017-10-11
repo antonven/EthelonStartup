@@ -225,7 +225,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CULINARY"
+                android:text="CHARITY"
                 android:layout_gravity="center_horizontal"/>
             </LinearLayout>
 
@@ -308,7 +308,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CHARITY"
+                android:text="MEDICINE"
                 android:layout_gravity="center_horizontal"/>
             </LinearLayout>
 

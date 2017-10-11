@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,9 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -262,6 +265,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.doneButton:
                 progbar.setVisibility(View.VISIBLE);
+                final Set<String> skillset = new HashSet<String>();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                         new Response.Listener<String>() {
                             @Override
@@ -297,7 +301,13 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                         for(int i =0; i<skillSet.size(); i++) {
                             params.put("params" + i, skillSet.get(i));
                             Log.e("sudsarequestparaparams",skillSet.get(i));
+                            skillset.add(skillSet.get(i));
                         }
+
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("SKILLS_PREF", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putStringSet("skills", skillset);
+                        editor.commit();
 
                         params.put("count",String.valueOf(skillSet.size()));
 

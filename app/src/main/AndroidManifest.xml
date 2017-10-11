@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        tools:replace="android:label"
         android:allowBackup="true"
         android:icon="@mipmap/ethelon"
         android:label="@string/Ethelon"
         android:roundIcon="@mipmap/ethelon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:theme="@style/AppTheme">
@@ -95,7 +95,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Activities.LoginActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activities.SkillPreferenceActivity"></activity>
     </application>
 
 </manifest>

@@ -73,11 +73,19 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
+        String api_token = getIntent().getStringExtra("api_token");
+        String activity_id = getIntent().getStringExtra("activity_id");
+        String volunteer_id = getIntent().getStringExtra("volunteer_id");
 
         switch (view.getId()){
             case R.id.submitBtn:
                 submitAttendance();
                 ConfirmDialogFragment confirmDialogFragment = new ConfirmDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("api_token", api_token);
+                bundle.putString("activity_id", activity_id);
+                bundle.putString("volunteer_id", volunteer_id);
+                confirmDialogFragment.setArguments(bundle);
                 confirmDialogFragment.show(getSupportFragmentManager(), "Confirm attendance");
                 break;
 
@@ -113,4 +121,11 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonArrayRequest);
     }
+
+
+
+//        @Override
+//        public void onChoose() { finish(); }
+
+
 }
