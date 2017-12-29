@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
         this.mContext = mContext;
         this.criteria = criteria;
         this.mLiistener = mLiistener;
+        Log.e("Kixbogo",criteria.size()+"");
     }
 
     public EvaluationCriteriaAdapter() {
@@ -43,7 +45,7 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
     @Override
     public void onBindViewHolder(EvaluationCriteriaAdapter.ViewHolder holder, int position) {
-
+        Log.e("line48",criteria.size()+" name = "+criteria.get(position).getCriteriaName());
         holder.criteriaName.setText(criteria.get(position).getCriteriaName());
 
     }

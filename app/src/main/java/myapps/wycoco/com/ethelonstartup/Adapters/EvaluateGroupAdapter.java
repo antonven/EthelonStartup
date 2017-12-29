@@ -102,6 +102,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     String volunteer_name = volunteers.get(getAdapterPosition()).getVolunteer_name();
                     String activity_group_id = volunteers.get(getAdapterPosition()).getVolunteer_group_id();
                     String volunteer_rate_id = volunteers.get(getAdapterPosition()).getVolunteer_id();
+                    String groupmateImage = volunteers.get(getAdapterPosition()).getVolunteer_image();
                     FragmentManager fm = ((AppCompatActivity)mContext).getSupportFragmentManager();
 
                     RateVolunteerDialogFragment rateVolunteerDialogFragment = new RateVolunteerDialogFragment();
@@ -112,6 +113,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     n.putString("activity_group_id", activity_group_id);
                     n.putString("volunteer_id_to_rate", volunteer_rate_id);
                     n.putString("api_token", api_token);
+                    n.putString("groupmateImage", groupmateImage);
                     n.putInt("criteria_size", criterias.size());
                     n.putString("activity_id", activity_id);
                     n.putString("volunteer_id", volunteer_id);

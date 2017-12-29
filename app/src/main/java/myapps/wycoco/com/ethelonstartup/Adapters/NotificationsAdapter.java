@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,12 @@ import myapps.wycoco.com.ethelonstartup.R;
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
 
     Context mContext;
-    private ArrayList<NotificationsModel> notifs =  new ArrayList<>();
+    ArrayList<NotificationsModel> notifications =  new ArrayList<>();
 
-    public NotificationsAdapter(Context mContext, ArrayList<NotificationsModel> notifs) {
+    public NotificationsAdapter(Context mContext, ArrayList<NotificationsModel> notifications) {
         this.mContext = mContext;
-        this.notifs = notifs;
+        this.notifications = notifications;
+        Log.e("Array size", "Shit" + notifications.size());
     }
 
     @Override
@@ -41,19 +43,19 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public void onBindViewHolder(NotificationsAdapter.ViewHolder holder, int position) {
 
-        Glide.with(mContext).load(notifs.get(position).getUserImage())
+        Glide.with(mContext).load(notifications.get(position).getImage_url())
                 .centerCrop().crossFade().into(holder.userImage);
-        holder.userName.setText(notifs.get(position).getUserName());
-        holder.notifContent.setText(notifs.get(position).getContent());
-        holder.notifTime.setText(notifs.get(position).getTime());
-        Glide.with(mContext).load(notifs.get(position).getUserImage())
-                .centerCrop().crossFade().into(holder.notifTypeLogo);
+//        holder.userName.setText(notifications.get(position).getSender_id());
+        holder.notifContent.setText(notifications.get(position).getBody());
+        holder.notifTime.setText(notifications.get(position).getTime());
+//        Glide.with(mContext).load(notifs.get(position).get())
+//                .centerCrop().crossFade().into(holder.notifTypeLogo);
 
     }
 
     @Override
     public int getItemCount() {
-        return notifs.size();
+        return notifications.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,7 +70,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             linearLayout = (LinearLayout)itemView.findViewById(R.id.linearNotif);
             userImage = (ImageView)itemView.findViewById(R.id.userImage);
             notifTypeLogo = (ImageView)itemView.findViewById(R.id.notifTypeLogo);
-            userName = (TextView)itemView.findViewById(R.id.userName);
+//            userName = (TextView)itemView.findViewById(R.id.userName);
             notifContent = (TextView)itemView.findViewById(R.id.notifContent);
             notifTime = (TextView)itemView.findViewById(R.id.notifTime);
 

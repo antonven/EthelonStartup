@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -22,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,12 +53,12 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     Button doneBtn;
     EvaluationCriteriaAdapter adapter;
     ArrayList<Integer> ratings;
-
     ArrayList<EvaluationCriteria> criteria;
     EvaluationCriteriaAdapter evaluationCriteriaAdapter;
     LinearLayoutManager linearLayout;
     RecyclerView recyclerCriteria;
     Context mContext;
+    ImageView groupmateImage;
     TextView volunteerNameTxt;
     int index;
 
@@ -70,11 +72,15 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_rate_volunteer ,container,false);
         doneBtn = (Button)view.findViewById(R.id.doneRateBtn);
+        groupmateImage = (ImageView)view.findViewById(R.id.groupmateImage);
         ratings = new ArrayList<>();
 
         onCompleteListener = (OnCompleteListener)getTargetFragment();
 
         String volunteer_name = getArguments().getString("volunteer_name");
+        String groupmateImage1 = getArguments().getString("groupmateImage");
+        Glide.with(mContext).load(groupmateImage1)
+                .centerCrop().crossFade().into(groupmateImage);
 
         volunteerNameTxt = (TextView)view.findViewById(R.id.rateVolunteerName);
         recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);

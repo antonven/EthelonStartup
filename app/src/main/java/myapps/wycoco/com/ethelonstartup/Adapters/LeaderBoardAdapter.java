@@ -28,6 +28,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     public LeaderBoardAdapter(Context mContext, ArrayList<UserModel> users) {
         this.mContext = mContext;
         this.users = users;
+        Log.e("leaderboard size :" , "piste ani" + users.size());
     }
 
     @Override
@@ -44,7 +45,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
                 .centerCrop().crossFade().into(holder.leaderboardImage);
         holder.leaderboardName.setText(users.get(position).getUserFirstName());
         holder.leaderboardPosition.setText(position + 1 + "");
-        holder.leaderboardPoints.setText(users.get(position).getUser_points() + "");
+        holder.leaderboardPoints.setText(users.get(position).getUser_points() + " points");
 
         Log.e("position", position + "");
 

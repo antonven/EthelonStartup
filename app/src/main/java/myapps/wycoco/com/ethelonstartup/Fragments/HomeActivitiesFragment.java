@@ -90,16 +90,19 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
 
     public void fetchActivities(){
 
+
         swipeRefreshLayout.setRefreshing(true);
 
         activities = new ArrayList<>();
         id = getArguments().getString("id");
         api_token = getArguments().getString("api_token");
         profileId = getArguments().getString("profileId");
+        int offsetCount = 5;
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id", id);
         params.put("api_token", api_token);
+        params.put("count", String.valueOf(offsetCount));
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
@@ -137,6 +140,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                     String volunteerStatus = activityObject.getString("volunteerstatus");
                                     JSONArray act_skills = activityObject.getJSONArray("activity_skills");
                                     final_skills = new ArrayList<String>();
+
 
                                     for(int x = 0; x<act_skills.length(); x++){
                                         JSONObject obj = act_skills.getJSONObject(x);

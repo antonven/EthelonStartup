@@ -76,7 +76,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.joinCount.setText(activities.get(position).getVolunteer_count() + " have joined this activity");
         if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
-            holder.attendBtn.setVisibility(View.GONE);
+//            holder.attendBtn.setVisibility(View.GONE);
 
         }else
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));

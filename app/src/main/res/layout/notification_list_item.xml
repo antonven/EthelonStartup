@@ -8,10 +8,10 @@
     android:id="@+id/linearNotif"
     >
     
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="14dp"
@@ -20,33 +20,33 @@
 
     <LinearLayout
         android:weightSum="4"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:paddingRight="18dp"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="78dp"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/userName"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:text="Anton Ven Wycoco"
-            style="@style/TextViewNotification"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/userName"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:text="Anton Ven Wycoco"-->
+            <!--style="@style/TextViewNotification"-->
+            <!--android:layout_height="wrap_content" />-->
 
         <TextView
             android:id="@+id/notifContent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:textSize="15sp"
-            android:text="has invited you to join the activity."/>
+            android:text="has invited you to join the activity. Please Confirm if you could join or not ."/>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 

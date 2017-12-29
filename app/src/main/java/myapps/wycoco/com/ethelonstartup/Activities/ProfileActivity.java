@@ -25,7 +25,7 @@ import myapps.wycoco.com.ethelonstartup.R;
  * Created by dell on 7/22/2017.
  */
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     CollapsingToolbarLayout collapsingToolbarLayout = null;
     String id;
@@ -55,6 +55,8 @@ public class ProfileActivity extends AppCompatActivity {
         profileName = (TextView)findViewById(R.id.profileNameProfile);
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         editProfileBtn = (Button)findViewById(R.id.editProfileBtn);
+
+        editProfileBtn.setOnClickListener(this);
 
         Intent n = getIntent();
         n.getExtras();
@@ -113,4 +115,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View view) {
+
+        switch(view.getId()){
+
+            case R.id.editProfileBtn:
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+        }
+    }
 }

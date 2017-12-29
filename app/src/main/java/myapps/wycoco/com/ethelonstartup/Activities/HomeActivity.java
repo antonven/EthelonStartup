@@ -329,8 +329,11 @@ public class HomeActivity extends AppCompatActivity
         HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
         homeActivitiesFragment.setArguments(bundle);
 
+        NotificationsFragment notificationsFragment = new NotificationsFragment();
+        notificationsFragment.setArguments(bundle);
+
         adapter.addFrag(homeActivitiesFragment,"Home");
-        adapter.addFrag(new NotificationsFragment(), "Notifications");
+        adapter.addFrag(notificationsFragment, "Notifications");
         adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
         viewPager.setAdapter(adapter);
     }

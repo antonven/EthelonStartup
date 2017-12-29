@@ -96,7 +96,8 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.SkillPreferenceActivity"></activity>
+        <activity android:name=".Activities.SkillPreferenceActivity" />
+        <activity android:name=".Activities.EditProfileActivity"></activity>
     </application>
 
 </manifest>

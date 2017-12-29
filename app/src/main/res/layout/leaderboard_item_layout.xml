@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginRight="8dp"
+    android:layout_marginLeft="8dp"
     android:layout_width="match_parent"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="3dp"
+    android:layout_marginBottom="1dp"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -10,36 +15,35 @@
         android:layout_height="80dp"
         android:padding="12dp">
 
-        <TextView
-            android:id="@+id/leaderboardPosition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100"
-            android:textColor="#000000"
-            android:textSize="16sp"
 
-            android:layout_centerVertical="true"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/leaderboardImage"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="2dp"
             app:civ_border_width="1.5dp"
             app:civ_border_color="@color/signature2Color"
-            android:layout_toRightOf="@+id/leaderboardPosition"
+
             android:src="@drawable/feed1"
             />
 
-        <TextView
-            android:id="@+id/leaderboardName"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/leaderboardImage"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/leaderboardName"
+
             android:text="Anton Wycoco"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorPrimary"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -47,16 +51,31 @@
             android:id="@+id/leaderboardPoints"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_alignParentEnd="true"
+
             android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:textStyle="bold"
+
+
             android:layout_centerVertical="true"
+            android:text="100 points"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="16sp"
+           />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/leaderboardPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="100"
             android:textColor="#000000"
             android:textSize="18sp"
+            android:layout_marginRight="2dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

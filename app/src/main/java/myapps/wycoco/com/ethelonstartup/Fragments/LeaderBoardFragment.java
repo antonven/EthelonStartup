@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,7 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
                                         userModel.setUser_points(leaderboard_points);
 
                                         userLeaders.add(userModel);
+                                        Log.e("leadboardfrag", "array size :" + userLeaders.size());
                                     }
 
                                 } catch (JSONException e) {
