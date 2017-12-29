@@ -51,6 +51,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
     ArrayList<PortfolioModel> activities;
     ArrayList<String> final_skills;
     PortfolioAdapter portfolioAdapter;
+    boolean happy = true;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "portfolio";
 
     @Nullable
@@ -180,11 +181,35 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                 }
                             }
 
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
                             portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, activity_id, api_token, volunteer_id, profile_id);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(portfolioAdapter);
+
+                            recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                @Override
+                                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                    super.onScrolled(recyclerView, dx, dy);
+
+                                    if(dy > 0){
+
+                                        int visibleItemCount = layoutManager.getChildCount();
+                                        int totalItemCount = layoutManager.getItemCount();
+                                        int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                                        if(happy){
+                                            if((visibleItemCount + pastVisibleItems)>=totalItemCount){
+                                                happy = false;
+
+
+
+                                            }
+                                        }
+
+                                    }
+                                }
+                            });
                             Log.e("PISTE KOBE ", activities.size() + "id :" + activity_id + volunteer_id);
                         }
                         swipeRefreshLayout.setRefreshing(false);

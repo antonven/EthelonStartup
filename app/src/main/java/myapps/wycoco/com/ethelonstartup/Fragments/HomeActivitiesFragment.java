@@ -55,6 +55,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
     String id, api_token, activity_id, profileId;
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<String> final_skills;
+    boolean happy = true;
 
     public HomeActivitiesFragment() {
         // Required empty public constructor
@@ -191,13 +192,37 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
                                 }
                             }
 
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
                             Log.e("ACTIVITY ID ", "HOME FRAGMENT" + activity_id );
                             FragmentManager suppFragment = getChildFragmentManager();
                             homeActivitiesListAdapter = new HomeActivitiesListAdapter(getApplicationContext(),activity_id, activities, id, api_token, profileId, suppFragment);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(homeActivitiesListAdapter);
+
+                            recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                @Override
+                                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                    super.onScrolled(recyclerView, dx, dy);
+
+                                    if(dy > 0){
+
+                                        int visibleItemCount = layoutManager.getChildCount();
+                                        int totalItemCount = layoutManager.getItemCount();
+                                        int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                                        if(happy){
+                                            if((visibleItemCount + pastVisibleItems)>=totalItemCount){
+                                                happy = false;
+
+
+
+                                            }
+                                        }
+
+                                    }
+                                }
+                            });
 
                         }
                         swipeRefreshLayout.setRefreshing(false);
