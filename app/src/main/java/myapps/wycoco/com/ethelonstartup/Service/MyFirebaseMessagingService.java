@@ -30,8 +30,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(TAG, "From: " + remoteMessage.getFrom());
 
-        if (remoteMessage == null)
+        if (remoteMessage == null){
+            Log.e("naas ==null","naas null");
             return;
+        }
+
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
@@ -58,7 +61,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
             pushNotification.putExtra("message", message);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
+            Log.e("handlenotification",message);
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
 //            notificationUtils.playNotificationSound();
@@ -93,7 +96,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
                 pushNotification.putExtra("message", message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
+                Log.e("sud sa if !notif",message);
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
                 notificationUtils.playNotificationSound();

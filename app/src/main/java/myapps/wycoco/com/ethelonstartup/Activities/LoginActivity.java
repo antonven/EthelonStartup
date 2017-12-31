@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String message = intent.getStringExtra("message");
                     //txtMessage.setText(message);
 
-                    Log.e("Fire base", message + " mgreg broadcastreciever");
+                    Log.e("Fire baseloginactivity", message + " mgreg broadcastreciever");
                 }
             }
         };

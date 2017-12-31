@@ -105,6 +105,7 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                                 featuredRecyclerView.setLayoutManager(layoutManager);
                                 leaderBoardAdapter = new LeaderBoardAdapter(getApplicationContext(), userLeaders);

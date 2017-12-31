@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
 
-             mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
@@ -113,10 +113,11 @@ public class HomeActivity extends AppCompatActivity
                     String message = intent.getStringExtra("message");
                     //txtMessage.setText(message);
 
-                    Log.e("Fire base", message + " mgreg broadcastreciever");
+                    Log.e("Fire homeactivity", message + " mgreg broadcastreciever");
                 }
             }
         };
+
 
 
         initInstancesDrawer();

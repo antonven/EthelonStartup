@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -32,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.PortfolioAdapter;
+import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.PortfolioModel;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -50,7 +53,10 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
     RecyclerView recView;
     ArrayList<PortfolioModel> activities;
     ArrayList<String> final_skills;
+    int offset = 5;
+    int ilhanan = 0;
     PortfolioAdapter portfolioAdapter;
+    Parcelable recyclerViewState;
     boolean happy = true;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "portfolio";
 
@@ -63,12 +69,17 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
+        happy = true;
+        activities = new ArrayList<>();
+        ilhanan = 0;
 
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
+
                 RequestPortfolio();
+
             }
         }
         );
@@ -84,8 +95,8 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
     public void RequestPortfolio(){
 
         swipeRefreshLayout.setRefreshing(true);
-        activities = new ArrayList<>();
 
+        Log.e("kobee","offset = "+offset);
         final String volunteer_id = getArguments().getString("volunteer_id");
         final String api_token = getArguments().getString("api_token");
         final String profile_id = getArguments().getString("profileId");
@@ -93,6 +104,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id", volunteer_id);
         params.put("api_token", api_token);
+        params.put("offset",offset+"");
 
         Log.e("PORTFOLIO ID",volunteer_id + profile_id + api_token);
 
@@ -138,7 +150,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                         String skill = obj.getString("name");
                                         final_skills.add(skill);
                                     }
-                                    Log.i("final_skills", final_skills + "" + activityName);
+                                   // Log.i("final_skills", final_skills + "" + activityName);
 
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date date = dateFormat.parse(activityDate);
@@ -173,44 +185,26 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                             foundationImage,
                                             final_skills);
 
-                                    Log.e("PortfolioActivities", response.toString());
+                                    //Log.e("PortfolioActivities", response.toString());
                                     activities.add(portfolioModel);
+
+                                    if(portfolioAdapter != null)
+                                    portfolioAdapter.notifyDataSetChanged();
+
+                                    setView(activities);
 
                                 } catch (JSONException | ParseException e) {
                                     e.printStackTrace();
                                 }
                             }
 
-                            final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                            recView.setLayoutManager(layoutManager);
-                            portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activities, activity_id, api_token, volunteer_id, profile_id);
-                            recView.setItemAnimator(new DefaultItemAnimator());
-                            recView.setAdapter(portfolioAdapter);
+                            if(portfolioAdapter != null){
 
-                            recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                @Override
-                                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                                    super.onScrolled(recyclerView, dx, dy);
+                                portfolioAdapter.notifyDataSetChanged();
+                            }
 
-                                    if(dy > 0){
+                            happy = true;
 
-                                        int visibleItemCount = layoutManager.getChildCount();
-                                        int totalItemCount = layoutManager.getItemCount();
-                                        int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
-
-                                        if(happy){
-                                            if((visibleItemCount + pastVisibleItems)>=totalItemCount){
-                                                happy = false;
-
-
-
-                                            }
-                                        }
-
-                                    }
-                                }
-                            });
-                            Log.e("PISTE KOBE ", activities.size() + "id :" + activity_id + volunteer_id);
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -219,7 +213,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 swipeRefreshLayout.setRefreshing(false);
-                Log.e("AntonWycoco", "" + error.toString());
+                //Log.e("AntonWycoco", "" + error.toString());
             }
         });
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
@@ -230,6 +224,61 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
 //        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 48,x,
 //                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
 //        ));
+
+    }
+
+    public void setView(ArrayList<PortfolioModel>activityModels){
+
+        final String volunteer_id = getArguments().getString("volunteer_id");
+        final String api_token = getArguments().getString("api_token");
+        final String profile_id = getArguments().getString("profileId");
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+
+      if(ilhanan == 0){
+
+          recView.setLayoutManager(layoutManager);
+          portfolioAdapter = new PortfolioAdapter(getApplicationContext(), activityModels, activity_id, api_token, volunteer_id, profile_id);
+          recView.setAdapter(portfolioAdapter);
+
+      }
+
+      ilhanan++;
+
+        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(dy > 0){
+
+                    int visibleItemCount = layoutManager.getChildCount();
+                    int totalItemCount = layoutManager.getItemCount();
+                    int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                    if(happy){
+
+                        Log.e("kobee","SUD SA HAPPY");
+                        if((visibleItemCount + pastVisibleItems)>=totalItemCount){
+
+
+                            recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+
+                            happy = false;
+                            offset = offset + 5;
+                            RequestPortfolio();
+                            Toast.makeText(getContext(), "oh fuck", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }else{
+                        Log.e("kobee","gawas SA HAPPPY");
+                    }
+
+                }
+            }
+        });
+
 
     }
 }

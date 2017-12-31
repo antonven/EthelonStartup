@@ -35,6 +35,8 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     public LeaderBoardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.leaderboard_item_layout, parent,false);
         ViewHolder view = new ViewHolder(v);
+
+
         return view;
     }
 

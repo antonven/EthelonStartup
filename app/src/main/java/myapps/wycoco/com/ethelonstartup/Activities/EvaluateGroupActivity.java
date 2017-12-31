@@ -1,5 +1,8 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,6 +30,7 @@ import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Fragments.ConfirmDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -33,7 +38,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
     private static final String URL2 = "http://" + new Localhost().getLocalhost() + "attendanceactivity";
     Button submit;
-
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,29 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
         submit = (Button)findViewById(R.id.submitBtn);
         submit.setOnClickListener(this);
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                Log.e("Notification Fragment", "inside onrecieve");
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+
+                    //displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+                    String message = intent.getStringExtra("message");
+                    //txtMessage.setText(message);
+
+                    Log.e("evaluategroupActivity", message + " mgreg broadcastreciever");
+                }
+            }
+        };
 
         String api_token = getIntent().getStringExtra("api_token");
         String activity_id = getIntent().getStringExtra("activity_id");
