@@ -267,7 +267,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                             happy = false;
                             offset = offset + 5;
                             RequestPortfolio();
-                            Toast.makeText(getContext(), "oh fuck", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "oh fuck", Toast.LENGTH_SHORT).show();
 
                         }
 

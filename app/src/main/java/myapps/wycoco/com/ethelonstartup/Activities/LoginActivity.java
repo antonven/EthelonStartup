@@ -70,6 +70,7 @@ import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.UserCredentials;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
 import myapps.wycoco.com.ethelonstartup.Utils.NotificationUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -91,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String fcm_token;
     ProgressBar progressBar;
     ArrayList<UserModel> emails = new ArrayList<>();
+    SessionManager session;
 
     private static final String NOTIFURL = "http://" + new Localhost().getLocalhost() + "checkNotif";
     private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
@@ -132,6 +134,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin.setOnClickListener(this);
         buttonSignup.setOnClickListener(this);
         buttonFacebook.setOnClickListener(this);
+
+        session = new SessionManager(getApplicationContext());
+
+        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -252,6 +258,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 intent.putExtra("image_url", profilePicture);
                                 intent.putExtra("email", email);
                                 Log.e("LOGIN ACTIVITY","facebook_id "+profile_id + email + "proPIC"+ profilePicture);
+//                                session.createLoginSession(email, profile.getName(), profilePicture, profile_id, profile.getFirstName(), profile.getLastName(), volunteer_id, api_token);
                                 startActivity(intent);
 
                             }else if(message.equals("Email already exists")){
@@ -353,18 +360,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(profile!= null){
             SharedPreferences shared = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
             String email = shared.getString("email", "");
+            String fbProfileName = profile.getName();
+            String fbProfilePicture = profile.getProfilePictureUri(500,500).toString();
+            String profileId = profile.getId();
+            String first_name = profile.getFirstName();
+            String last_name = profile.getLastName();
 
-            SharedPreferences pref = getApplicationContext().getSharedPreferences("HOME_INFO", MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("email", email);
-            editor.putString("fbProfileName", profile.getName());
-            editor.putString("fbProfilePicture", profile.getProfilePictureUri(500,500).toString());
-            editor.putString("profileId", profile.getId());
-            editor.putString("first_name", profile.getFirstName());
-            editor.putString("last_name", profile.getLastName());
-            editor.putString("volunteer_id", volunteer_id);
-            editor.putString("api_token", api_token);
-            editor.commit();
+            session.createLoginSession(email, fbProfileName, fbProfilePicture, profileId, first_name, last_name, volunteer_id, api_token);
+
+
+//            SharedPreferences pref = getApplicationContext().getSharedPreferences("HOME_INFO", MODE_PRIVATE);
+//            SharedPreferences.Editor editor = pref.edit();
+//
+//            editor.commit();
 
             BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
@@ -456,6 +464,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (object.getString("email") != null) {
                             email = object.getString("email");
+
                             SharedPreferences pref = getApplicationContext().getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putString("email", email);
@@ -494,6 +503,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 String profilePicture = profile.getProfilePictureUri(500, 500).toString();
                                                 String profile_id = profile.getId();
                                                 String profileName = profile.getName();
+                                                session.createLoginSession(email, profileName, profilePicture, profile_id, profile.getFirstName(), profile.getLastName(), volunteer_id, api_token);
                                                 Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
 
                                                 volunteer_id = response.getString("volunteer_id");
