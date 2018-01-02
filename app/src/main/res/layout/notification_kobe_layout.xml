@@ -11,18 +11,6 @@
         app:srcCompat="@drawable/ic_notifications_black_24dp"
         android:layout_centerInParent="true"/>
 
-    <com.nex3z.notificationbadge.NotificationBadge
-        android:id="@+id/notificationBadge"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_toRightOf="@id/notificationIcon"
-        android:layout_alignTop="@+id/notificationIcon"
-        android:layout_marginLeft="-16dp"
-        android:layout_marginTop="-8dp"
-        app:nbBackground="@drawable/badge_bg_with_shadow"
-        app:nbMaxTextLength="2">
-
-    </com.nex3z.notificationbadge.NotificationBadge>
 
 
 </RelativeLayout>

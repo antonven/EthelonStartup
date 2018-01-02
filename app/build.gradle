@@ -73,6 +73,6 @@ dependencies {
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile 'com.google.firebase:firebase-core:9.6.0'
     compile 'com.google.firebase:firebase-messaging:9.6.0'
-    compile 'com.nex3z:notification-badge:0.2.0'
+    compile 'com.nex3z:notification-badge:0.3.0'
     testCompile 'junit:junit:4.12'
 }

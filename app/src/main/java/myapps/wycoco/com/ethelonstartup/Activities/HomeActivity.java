@@ -1,10 +1,10 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -14,11 +14,13 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,12 +33,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
@@ -44,6 +48,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nex3z.notificationbadge.NotificationBadge;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -56,6 +61,8 @@ import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HomeActivity extends AppCompatActivity
                 implements NavigationView.OnNavigationItemSelectedListener {
@@ -71,6 +78,7 @@ public class HomeActivity extends AppCompatActivity
     AppBarLayout appBarLayout;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     NotificationBadge badge;
+    int notificationCount = 0;
     private String url = "http://"+new Localhost().getLocalhost()+"fcm_token";
 
 //    KonfettiView konfettiView;
@@ -82,6 +90,7 @@ public class HomeActivity extends AppCompatActivity
 
 
         displayFirebaseRegId();
+
 
 
         Window window = this.getWindow();
@@ -114,6 +123,8 @@ public class HomeActivity extends AppCompatActivity
                     //txtMessage.setText(message);
 
                     Log.e("Fire homeactivity", message + " mgreg broadcastreciever");
+                    notificationCount++;
+                    badge.setNumber(notificationCount);
                 }
             }
         };
@@ -122,6 +133,95 @@ public class HomeActivity extends AppCompatActivity
 
         initInstancesDrawer();
         getExtras();
+        getNumberOfUnreadNotifications();
+
+    }
+
+    public void getNumberOfUnreadNotifications(){
+
+        String notifUrl = "http://"+new Localhost().getLocalhost()+"getnumofnotifs";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",volunteer_id);
+
+        JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, notifUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+
+                    int number = response.getInt("number");
+                    notificationCount = number;
+                    Log.e("ZZZZZZZZZZZZZZ",response.toString());
+
+                    badge.setNumber(notificationCount);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ZZZZZZZZZZZZZCCCCERROR",error.toString());
+            }
+        }
+        );
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.REGISTRATION_COMPLETE));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.PUSH_NOTIFICATION));
+
+
+
+
+    }
+
+    public void notificationTabSelected(){
+
+        String notifUrl = "http://"+new Localhost().getLocalhost()+"notiftabclicked";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",volunteer_id);
+
+        JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, notifUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ZZZZZZZZZZZZZCCCCERROR",error.toString());
+            }
+        }
+        );
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
 
     }
 
@@ -129,6 +229,8 @@ public class HomeActivity extends AppCompatActivity
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
         fcm_token = regId;
+
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
 
@@ -255,20 +357,25 @@ public class HomeActivity extends AppCompatActivity
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+        //badge.setNumber(4);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
-                tab.getIcon().setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
-                if(tab.getPosition() == 0){
-                    toolbarTitle.setText("Home");
-                }else if (tab.getPosition() == 1){
+                Log.e("kobe","tab selected : "+tab.getPosition());
+                if(tab.getPosition() == 1){
+                    badge.setNumber(0);
                     toolbarTitle.setText("Notifications");
+                    notificationTabSelected();
                 }else{
-                    toolbarTitle.setText("Leaderboard");
+                    tab.getIcon().setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
+                    if(tab.getPosition() == 0){
+                        toolbarTitle.setText("Home");
+                    }else{
+                        toolbarTitle.setText("Leaderboard");
 //                    konfettiView.build()
 //                            .addColors(Color.RED, Color.parseColor("#B71C1C"), Color.parseColor("#C62828"))
 //                            .setDirection(0.0, 359.0)
@@ -279,11 +386,14 @@ public class HomeActivity extends AppCompatActivity
 //                            .addSizes(new Size(12, 5f))
 //                            .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
 //                            .stream(300, 5000L);
+                    }
                 }
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                if(tab.getPosition() != 1)
                 tab.getIcon().setColorFilter(Color.parseColor("#808080"), PorterDuff.Mode.SRC_IN);
             }
 
@@ -302,13 +412,20 @@ public class HomeActivity extends AppCompatActivity
     tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
     tabLayout.getTabAt(0).getIcon().setColorFilter(Color.parseColor("#c62828"), PorterDuff.Mode.SRC_IN);
 
-    tabLayout.getTabAt(1).setIcon(R.drawable.ic_notifications_black_24dp);
-//        tabLayout.getTabAt(1).setCustomView(R.layout.notification_custom_layout);
+    View v = (View) LayoutInflater.from(this).inflate(R.layout.hahay,null);
+        badge = (NotificationBadge)v.findViewById(R.id.notifBadge);
+
+        tabLayout.getTabAt(1).setCustomView(v);
+        // badge.setNumber(4);
+        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_notifications_black_24dp);
+//        tabLayout.getTabAt(1).setCustomView(R.layout.notification_kobe_layout);
 
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
 
     tabLayout.getTabAt(2).setIcon(R.drawable.ic_format_list_numbered_black_24dp);
     tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
+
+
 
     }
 
@@ -343,7 +460,7 @@ public class HomeActivity extends AppCompatActivity
 
         appBarLayout = (AppBarLayout)findViewById(R.id.appBarHome);
         toolbarTitle = (TextView)findViewById(R.id.toolbarTitle);
-        badge = (NotificationBadge)findViewById(R.id.notificationBadge);
+        //badge = (NotificationBadge)findViewById(R.id.notificationBadge);
 //        konfettiView = (KonfettiView)findViewById(R.id.konfettiView);
         Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Rancho-Regular.ttf");
         toolbarTitle.setTypeface(typeface);

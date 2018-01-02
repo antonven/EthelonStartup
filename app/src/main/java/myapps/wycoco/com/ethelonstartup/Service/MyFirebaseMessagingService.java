@@ -29,12 +29,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(TAG, "From: " + remoteMessage.getFrom());
+        Log.e("NOTIFICATIONFUCK",remoteMessage.toString());
 
         if (remoteMessage == null){
             Log.e("naas ==null","naas null");
             return;
         }
-
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
