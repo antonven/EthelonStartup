@@ -56,6 +56,7 @@ import myapps.wycoco.com.ethelonstartup.Fragments.LeaderBoardFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
 
 public class HomeActivity extends AppCompatActivity
                 implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,6 +69,7 @@ public class HomeActivity extends AppCompatActivity
     Toolbar toolbar;
     TabLayout tabLayout;
     String fcm_token;
+    SessionManager session;
     AppBarLayout appBarLayout;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     NotificationBadge badge;
@@ -81,7 +83,9 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
 
 
+        checkSession();
         displayFirebaseRegId();
+
 
 
         Window window = this.getWindow();
@@ -216,6 +220,7 @@ public class HomeActivity extends AppCompatActivity
                         case DialogInterface.BUTTON_POSITIVE:
                             //Yes button clicked
                             LoginManager.getInstance().logOut();
+                            session.logoutUser();
                             startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                             finish();
                             break;
@@ -315,9 +320,13 @@ public class HomeActivity extends AppCompatActivity
     private void setupViewPager(ViewPager viewPager){
 
         Intent n = getIntent();
-        volunteer_id = n.getStringExtra("volunteer_id");
-        api_token = n.getStringExtra("api_token");
-        profileId = n.getStringExtra("profileId");
+        HashMap<String, String> user = session.getUserCredentials();
+//        volunteer_id = n.getStringExtra("volunteer_id");
+//        api_token = n.getStringExtra("api_token");
+//        profileId = n.getStringExtra("profileId");
+        api_token = user.get(SessionManager.KEY_API_TOKEN);
+        profileId = user.get(SessionManager.KEY_PROFILE_ID);
+        volunteer_id = user.get(SessionManager.KEY_VOLUNTEER_ID);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -325,7 +334,7 @@ public class HomeActivity extends AppCompatActivity
         bundle.putString("id",volunteer_id);
         bundle.putString("api_token", api_token);
         bundle.putString("profileId", profileId);
-        Log.e("fzz",api_token + volunteer_id);
+        Log.e("fzz",api_token + volunteer_id + profileId);
 
         HomeActivitiesFragment homeActivitiesFragment = new HomeActivitiesFragment();
         homeActivitiesFragment.setArguments(bundle);
@@ -358,16 +367,29 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent n = getIntent();
-        volunteer_id = n.getStringExtra("volunteer_id");
-        profName = n.getStringExtra("profileName");
-        fbProfilePicture = n.getStringExtra("fbProfilePicture");
-        profileId = n.getStringExtra("profileId");
-        cov_photo = n.getStringExtra("cover_photo");
-        ethelonUserName = n.getStringExtra("userName");
-        ethelonUserImage = n.getStringExtra("image_url");
-        newSignUpUsername = n.getStringExtra("newSignUpUsername");
-        fbProfileName = n.getStringExtra("fbProfileName");
-        email = n.getStringExtra("email");
+//        Log.e("VID", n.getStringExtra("volunteer_id"));
+//        profName = n.getStringExtra("profileName");
+//        fbProfilePicture = n.getStringExtra("fbProfilePicture");
+//        profileId = n.getStringExtra("profileId");
+//        cov_photo = n.getStringExtra("cover_photo");
+//        ethelonUserName = n.getStringExtra("userName");
+//        ethelonUserImage = n.getStringExtra("image_url");
+//        newSignUpUsername = n.getStringExtra("newSignUpUsername");
+//        fbProfileName = n.getStringExtra("fbProfileName");
+//        email = n.getStringExtra("email");
+
+
+        HashMap<String, String> user = session.getUserCredentials();
+        fbProfilePicture = user.get(SessionManager.KEY_PICTURE);
+        email = user.get(SessionManager.KEY_EMAIL);
+        fbProfileName = user.get(SessionManager.KEY_NAME);
+        profName = user.get(SessionManager.KEY_NAME);
+
+
+
+        Log.e("TONY WYKSS", user.toString());
+
+
 
 
 
@@ -402,6 +424,13 @@ public class HomeActivity extends AppCompatActivity
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void checkSession(){
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+
+
     }
 
 }
