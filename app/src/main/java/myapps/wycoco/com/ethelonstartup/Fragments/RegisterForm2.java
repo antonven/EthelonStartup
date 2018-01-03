@@ -34,6 +34,7 @@ import java.util.Map;
 import myapps.wycoco.com.ethelonstartup.Activities.SkillsActivity;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
 import myapps.wycoco.com.ethelonstartup.Utils.SingletonClass;
 
 /**
@@ -48,6 +49,7 @@ public class RegisterForm2 extends Fragment {
     ProgressBar progressBar;
     private String URL = "http://"+new Localhost().getLocalhost()+"register";
     String role;
+    SessionManager sessionManager;
 
     public RegisterForm2() {
         // Required empty public constructor
@@ -71,6 +73,7 @@ public class RegisterForm2 extends Fragment {
         roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inputRole.setAdapter(roleAdapter);
 
+        sessionManager = new SessionManager(getContext());
 
 
         inputRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -118,7 +121,7 @@ public class RegisterForm2 extends Fragment {
                                 String api_token = response.getString("api_token");
                                 String volunteer_id = response.getString("volunteer_id");
                                 String name = response.getString("name");
-
+                                sessionManager.createLoginSessionForEthelon(email, name, volunteer_id, api_token);
                                 Intent intent = new Intent(getContext(), SkillsActivity.class);
                                 intent.putExtra("api_token",api_token);
                                 intent.putExtra("id",volunteer_id);

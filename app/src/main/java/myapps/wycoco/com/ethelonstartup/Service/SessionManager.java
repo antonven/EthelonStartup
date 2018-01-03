@@ -32,6 +32,8 @@ public class SessionManager {
     public static final String KEY_VOLUNTEER_ID = "volunteer_id";
     public static final String KEY_API_TOKEN = "api_token";
 
+    public static final String KEY_USER_NAME = "username";
+
 
 
 
@@ -57,6 +59,16 @@ public class SessionManager {
         editor.commit();
     }
 
+    public void createLoginSessionForEthelon(String email, String username, String volunteer_id, String api_token){
+
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_USER_NAME, username);
+        editor.putString(KEY_VOLUNTEER_ID, volunteer_id);
+        editor.putString(KEY_API_TOKEN, api_token);
+        editor.commit();
+    }
+
     public void checkLogin(){
 
         if(!this.isLoggedIn()){
@@ -66,15 +78,6 @@ public class SessionManager {
 
             mContext.startActivity(i);
         }
-//        else {
-//            Intent i = new Intent(mContext, HomeActivity.class);
-//            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//            mContext.startActivity(i);
-//        }
-
-
     }
 
     public boolean isLoggedIn(){
@@ -95,6 +98,17 @@ public class SessionManager {
 
         return user;
     }
+    public HashMap<String, String> getUserCredentialsEthelon(){
+        HashMap<String, String> user = new HashMap<String, String>();
+
+        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+        user.put(KEY_USER_NAME, pref.getString(KEY_USER_NAME, null));
+        user.put(KEY_VOLUNTEER_ID, pref.getString(KEY_VOLUNTEER_ID, null));
+        user.put(KEY_API_TOKEN, pref.getString(KEY_API_TOKEN, null));
+
+        return user;
+    }
+
 
     public void logoutUser(){
         editor.clear();

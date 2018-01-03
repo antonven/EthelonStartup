@@ -16,7 +16,7 @@ android {
         }
     }
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+
     defaultConfig {
         applicationId "myapps.wycoco.com.ethelonstartup"
         minSdkVersion 16

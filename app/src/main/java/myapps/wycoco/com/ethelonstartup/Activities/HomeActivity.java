@@ -436,13 +436,23 @@ public class HomeActivity extends AppCompatActivity
     private void setupViewPager(ViewPager viewPager){
 
         Intent n = getIntent();
+
         HashMap<String, String> user = session.getUserCredentials();
+        HashMap<String, String> userEthelon = session.getUserCredentials();
+
 //        volunteer_id = n.getStringExtra("volunteer_id");
 //        api_token = n.getStringExtra("api_token");
 //        profileId = n.getStringExtra("profileId");
-        api_token = user.get(SessionManager.KEY_API_TOKEN);
-        profileId = user.get(SessionManager.KEY_PROFILE_ID);
-        volunteer_id = user.get(SessionManager.KEY_VOLUNTEER_ID);
+        if(user != null) {
+            api_token = user.get(SessionManager.KEY_API_TOKEN);
+            profileId = user.get(SessionManager.KEY_PROFILE_ID);
+            volunteer_id = user.get(SessionManager.KEY_VOLUNTEER_ID);
+        }else{
+            api_token = userEthelon.get(SessionManager.KEY_API_TOKEN);
+            profileId = user.get(SessionManager.KEY_PROFILE_ID);
+            volunteer_id = user.get(SessionManager.KEY_VOLUNTEER_ID);
+
+        }
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -495,15 +505,18 @@ public class HomeActivity extends AppCompatActivity
 //        email = n.getStringExtra("email");
 
 
-        HashMap<String, String> user = session.getUserCredentials();
-        fbProfilePicture = user.get(SessionManager.KEY_PICTURE);
-        email = user.get(SessionManager.KEY_EMAIL);
-        fbProfileName = user.get(SessionManager.KEY_NAME);
-        profName = user.get(SessionManager.KEY_NAME);
+        HashMap<String, String> userFb = session.getUserCredentials();
+        fbProfilePicture = userFb.get(SessionManager.KEY_PICTURE);
+        email = userFb.get(SessionManager.KEY_EMAIL);
+        fbProfileName = userFb.get(SessionManager.KEY_NAME);
+        profName = userFb.get(SessionManager.KEY_NAME);
+
+        HashMap<String, String> userEthelon = session.getUserCredentialsEthelon();
+        newSignUpUsername = userEthelon.get(SessionManager.KEY_USER_NAME);
+        String ethelonEmail = userEthelon.get(SessionManager.KEY_EMAIL);
 
 
-
-        Log.e("TONY WYKSS", user.toString());
+        Log.e("TONY WYKSS", userFb.toString());
 
 
 
@@ -530,6 +543,7 @@ public class HomeActivity extends AppCompatActivity
             //If user signups with Ethelon register
             profileName.setText(ethelonUserName);
             Glide.with(getApplicationContext()).load(ethelonUserImage).centerCrop().crossFade().into(profilePicture);
+            profileEmail.setText(ethelonEmail);
         }
     }
 

@@ -30,6 +30,7 @@ import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
 
 public class LoginWithEthelonActivity extends AppCompatActivity {
 
@@ -38,6 +39,7 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
     Button proceedBtn;
     String email, password, api_token, volunteer_id, userName, userImage, message;
     ProgressBar progressBar;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
 
+        sessionManager = new SessionManager(getApplicationContext());
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
         proceedBtn = (Button)findViewById(R.id.proceedBtn);
@@ -88,7 +91,7 @@ public class LoginWithEthelonActivity extends AppCompatActivity {
                                         userName = response.getString("name");
                                         userImage = response.getString("image_url");
                                         Log.e("ASD", "naabot diries" + userName + userImage);
-
+                                        sessionManager.createLoginSessionForEthelon(email, userName, volunteer_id, api_token);
                                         Intent n = new Intent(LoginWithEthelonActivity.this, HomeActivity.class);
                                         n.putExtra("api_token", api_token);
                                         n.putExtra("volunteer_id", volunteer_id);
