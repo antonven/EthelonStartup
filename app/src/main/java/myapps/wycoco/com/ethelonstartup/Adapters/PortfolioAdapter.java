@@ -173,6 +173,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             viewActivity.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     String eventName = activities.get(getAdapterPosition()).getActivityName();
                     String eventHost = activities.get(getAdapterPosition()).getFoundationName();
                     String eventDate = activities.get(getAdapterPosition()).getActivityDate();
@@ -203,6 +204,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     in.putExtra("profileId", profile_id);
                     in.putExtra("volunteer_id", volunteer_id);
                     in.putExtra("points",points);
+                    in.putExtra("from","normal");
 
                     mContext.startActivity(in);
                 }

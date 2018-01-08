@@ -149,7 +149,7 @@ public class NotificationsFragment extends Fragment implements SwipeRefreshLayou
                             Collections.reverse(notifications);
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recyclerView.setLayoutManager(layoutManager);
-                            NotificationsAdapter notificationsAdapter = new NotificationsAdapter(getApplicationContext(), notifications);
+                            NotificationsAdapter notificationsAdapter = new NotificationsAdapter(getApplicationContext(), notifications,api_token,id,profileId);
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
                             recyclerView.setAdapter(notificationsAdapter);
                         }

@@ -65,6 +65,7 @@ public class GroupmatesFragment extends Fragment {
     }
 
     public void fetchGroup(){
+
         final String activity_id = getArguments().getString("activity_id");
         final String api_token = getArguments().getString("api_token");
         final String volunteer_id = getArguments().getString("volunteer_id");

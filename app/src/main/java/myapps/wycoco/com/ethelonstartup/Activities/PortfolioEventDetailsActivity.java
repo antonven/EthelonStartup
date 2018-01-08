@@ -55,6 +55,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         }
         tabLayout = (TabLayout) findViewById(R.id.detailsTabs);
 
+
         Typeface typefaceRoboto = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.linearHeader);
         collapsingToolbarLayout.setTitle(eventName);
@@ -64,6 +65,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         eventHost1.setTypeface(typefaceRoboto);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
         pointsEarned = (TextView)findViewById(R.id.pointsEarned);
+        insTabs();
 
         n = getIntent();
         eventName = n.getStringExtra("eventName");
@@ -74,6 +76,23 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         String activity_id = n.getStringExtra("activity_id");
         String volunteer_id = n.getStringExtra("volunteer_id");
         int points = n.getIntExtra("points", 0);
+        String fromWhere = n.getStringExtra("from");
+
+        if(fromWhere.equals("notification")){
+
+            //Ibutang diri nga ang group nga groupmates fragment diretso ang mo gawas
+
+            GroupmatesFragment groupmatesFragment = new GroupmatesFragment();
+            Bundle group = new Bundle();
+            group.putString("activity_id", activity_id);
+            group.putString("api_token", api_token);
+            group.putString("volunteer_id", volunteer_id);
+            groupmatesFragment.setArguments(group);
+
+        }else if(fromWhere.equals("normal")){
+
+        }
+
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
@@ -81,7 +100,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         eventHost1.setText(eventHost);
         pointsEarned.setText(points+"");
 
-        insTabs();
+
         try{
             Log.e("YAWAYAWAYAWA",n.getStringExtra("indicator"));
             GroupmatesFragment groupmatesFragment = new GroupmatesFragment();
