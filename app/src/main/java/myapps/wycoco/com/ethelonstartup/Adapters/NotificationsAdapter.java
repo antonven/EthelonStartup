@@ -219,6 +219,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
                                         mContext.startActivity(in);
                                         Log.e("adapter 218",response.toString());
+                                        Log.e("adapter222",api_token);
 
                                         //Log.e("PortfolioActivities", response.toString());
 

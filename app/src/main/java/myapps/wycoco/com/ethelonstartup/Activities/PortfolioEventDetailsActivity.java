@@ -65,9 +65,11 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         eventHost1.setTypeface(typefaceRoboto);
         eventDetailsImage = (ImageView)findViewById(R.id.eventDetailsImage);
         pointsEarned = (TextView)findViewById(R.id.pointsEarned);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        n = getIntent();
         insTabs();
 
-        n = getIntent();
+
         eventName = n.getStringExtra("eventName");
         eventHost = n.getStringExtra("eventHost");
         eventImage = n.getStringExtra("eventImage");
@@ -77,6 +79,8 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         String volunteer_id = n.getStringExtra("volunteer_id");
         int points = n.getIntExtra("points", 0);
         String fromWhere = n.getStringExtra("from");
+
+
 
         if(fromWhere.equals("notification")){
 
@@ -95,7 +99,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
 
         }
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
