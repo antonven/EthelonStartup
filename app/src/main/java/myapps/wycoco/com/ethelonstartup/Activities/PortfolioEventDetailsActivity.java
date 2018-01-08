@@ -81,6 +81,8 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
         if(fromWhere.equals("notification")){
 
             //Ibutang diri nga ang group nga groupmates fragment diretso ang mo gawas
+            TabLayout.Tab tab = tabLayout.getTabAt(2);
+            tab.select();
 
             GroupmatesFragment groupmatesFragment = new GroupmatesFragment();
             Bundle group = new Bundle();

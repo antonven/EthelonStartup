@@ -31,6 +31,7 @@ import java.util.Set;
 
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
 
 public class SkillsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,7 +45,7 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
     ArrayList<String> skillSet = new ArrayList<>();
     ProgressBar progbar;
     int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
-
+    SessionManager sessionManager;
     Localhost localhost = new Localhost();
     private String URL = "http://"+localhost.getLocalhost()+"volunteerskills";
 
@@ -303,15 +304,17 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
                             Log.e("sudsarequestparaparams",skillSet.get(i));
                             skillset.add(skillSet.get(i));
                         }
+                        params.put("count",String.valueOf(skillSet.size()));
+
 
                         SharedPreferences pref = getApplicationContext().getSharedPreferences("SKILLS_PREF", MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putStringSet("skills", skillset);
                         editor.commit();
+//                        sessionManager = new SessionManager(getApplicationContext());
+//                        sessionManager.createSkillPref(skillset);
 
-                        params.put("count",String.valueOf(skillSet.size()));
-
-                        Log.e("sudsarequest",volunteer_id + api_token + String.valueOf(skillSet.size()));
+                        Log.e("sudsarequest",volunteer_id + api_token + String.valueOf(skillSet.size())+ "SKILLSETSUD" + skillset.toString()) ;
                         return params;
                     }
                 };

@@ -206,6 +206,8 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
                     @Override
                     public void onResponse(JSONArray response) {
 
+
+
                     }
                 }
                 , new Response.ErrorListener() {

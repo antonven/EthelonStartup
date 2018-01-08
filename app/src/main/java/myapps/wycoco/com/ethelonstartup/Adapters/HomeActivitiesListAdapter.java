@@ -104,6 +104,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             else if(skill.equals("Education"))
                 images.add(R.drawable.education_volunteer);
         }
+        Log.e("Home item skills", images.toString());
 
         holder.gridView.setAdapter(new BasicAdapter(images, mContext));
 

@@ -1,7 +1,9 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +17,12 @@ import android.widget.ProgressBar;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import myapps.wycoco.com.ethelonstartup.R;
+import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
 
 public class SkillPreferenceActivity extends AppCompatActivity {
 
@@ -28,10 +33,9 @@ public class SkillPreferenceActivity extends AppCompatActivity {
     String volunteer_id, fbProfilePicture, fbProfileName;
     String api_token, profileId, profilePicture;
     String name;
-    ArrayList<String> skillSet = new ArrayList<>();
+    ArrayList<String> skill_set;
     ProgressBar progbar;
-    int count1=0, count2=0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0;
-
+    SessionManager sessionManager;
     ArrayList<String> skillz = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,11 @@ public class SkillPreferenceActivity extends AppCompatActivity {
         }
 
         init();
+
+        Intent n = getIntent();
+        skill_set = new ArrayList<>();
+        skill_set = n.getStringArrayListExtra("skill_set");
+//        Log.e("skillpref", skill_set.toString());
         fetchSkillPreference();
 
     }
@@ -85,10 +94,14 @@ public class SkillPreferenceActivity extends AppCompatActivity {
 //        doneButton.setOnClickListener(this);
     }
 
+
     public void fetchSkillPreference(){
         SharedPreferences shared = getSharedPreferences("SKILLS_PREF", MODE_PRIVATE);
         Set<String> skill_set = shared.getStringSet("skills", null);
-
+//        Set<String> skill_set = sessionManager.getUserSkillSet();
+//        Intent n = getIntent();
+//        skill_set = n.getStringArrayListExtra("skill_set");
+//        Log.e("SKILL_SET ARRAY", "" +skill_set.size());
         if(skill_set!=null) {
             for (String skill : skill_set) {
                 skillz.add(skill);

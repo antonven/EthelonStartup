@@ -89,4 +89,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="environmentalist_badge">Environmentalist Badge</string>
+    <string name="add_new_image">Add new image</string>
+    <string name="interested_in">Interested in</string>
+    <string name="profile_email">profile email</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

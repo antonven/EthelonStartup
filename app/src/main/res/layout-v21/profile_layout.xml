@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f8f8f8"
@@ -53,19 +54,33 @@
                     android:id="@+id/profilePictureProfile"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_marginLeft="21dp"
                     android:layout_marginStart="21dp"
                     android:scaleType="centerCrop"
                     app:civ_border_color="#fff"
                     app:civ_border_width="3dp"
                     app:layout_behavior="saulmm.myapplication.AvatarImageBehavior"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
+
+                <GridView
+                    android:id="@+id/gridViewBadges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/editProfileBtn"
+                    android:layout_toEndOf="@+id/profilePictureProfile"
+                    android:layout_toRightOf="@+id/profilePictureProfile"
+                    android:layout_toStartOf="@+id/editProfileBtn"
+                    android:gravity="center"
+                    android:horizontalSpacing="2dp"
+                    android:layout_marginStart="8dp"
+                    android:numColumns="8"
+                    android:stretchMode="columnWidth"
+                    tools:ignore="RtlHardcoded" />
+
 
                 <Button
                     android:layout_width="120dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginTop="5dp"
                     android:padding="3dp"
                     android:id="@+id/editProfileBtn"
@@ -74,7 +89,7 @@
                     android:layout_height="35dp"
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/edit_profile_btn"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     android:layout_below="@id/coverPhoto"/>
             </RelativeLayout>
 
@@ -85,31 +100,60 @@
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
                 android:textColor="#000"
-                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
                 android:text="@string/profile_name"
-                android:layout_marginTop="2dp"
-                android:layout_below="@+id/profilePictureProfile"
-                />
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_marginLeft="24dp"
-                android:text="@string/skills_interests"
-                android:layout_below="@+id/profileNameProfile"
-                android:id="@+id/textView6" />
+                android:textColor="#808080"
+                android:id="@+id/profileEmail"
+                android:layout_marginStart="24dp"
+                android:text="@string/profile_email" />
 
-            <TextView
-                android:layout_marginTop="4dp"
+
+
+            <!--<TextView-->
+                <!--android:layout_marginTop="4dp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="24dp"-->
+                <!--android:text="Interested"-->
+                <!--android:paddingBottom="10dp"-->
+                <!--android:layout_below="@+id/textView6"-->
+                <!--android:id="@+id/tex" />-->
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:text="Cebu City, Central Visayas"
-                android:paddingBottom="10dp"
-                android:layout_below="@+id/textView6"
-                android:id="@+id/tex" />
+                android:orientation="horizontal"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:weightSum="2">
+                <TextView
+                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#808080"
+                    android:text="@string/interested_in"
+                    android:id="@+id/interests" />
+                <GridView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@id/gridView"
+                    android:numColumns="8"
+                    android:layout_marginStart="6dp"
+                    android:horizontalSpacing="5dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center">
+                </GridView>
+
+
+
+            </LinearLayout>
 
         </LinearLayout>
             <include

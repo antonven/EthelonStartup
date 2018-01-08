@@ -3,9 +3,16 @@ package myapps.wycoco.com.ethelonstartup.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.util.ArraySet;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import myapps.wycoco.com.ethelonstartup.Activities.HomeActivity;
 import myapps.wycoco.com.ethelonstartup.Activities.LoginActivity;
@@ -31,7 +38,7 @@ public class SessionManager {
     public static final String KEY_LAST_NAME = "last_name";
     public static final String KEY_VOLUNTEER_ID = "volunteer_id";
     public static final String KEY_API_TOKEN = "api_token";
-
+    public static final String KEY_SKILL_SET = "skills";
     public static final String KEY_USER_NAME = "username";
 
 
@@ -66,6 +73,12 @@ public class SessionManager {
         editor.putString(KEY_USER_NAME, username);
         editor.putString(KEY_VOLUNTEER_ID, volunteer_id);
         editor.putString(KEY_API_TOKEN, api_token);
+        editor.commit();
+    }
+
+    public void createSkillPref(Set<String> skillSet){
+        editor.putStringSet(KEY_SKILL_SET, skillSet);
+        Log.e("SKILLSETSESONMANAGER", skillSet.toString());
         editor.commit();
     }
 
@@ -107,6 +120,19 @@ public class SessionManager {
         user.put(KEY_API_TOKEN, pref.getString(KEY_API_TOKEN, null));
 
         return user;
+    }
+
+
+    public Set<String> getUserSkillSet(){
+
+
+       Set<String> userSkills = pref.getStringSet(KEY_SKILL_SET, null);
+//        userSkills.put(KEY_SKILL_SET, String.valueOf(pref.getStringSet(KEY_SKILL_SET, null)));
+
+
+//        Log.e("KIRSTEN", userSkills.toString());
+
+        return userSkills;
     }
 
 

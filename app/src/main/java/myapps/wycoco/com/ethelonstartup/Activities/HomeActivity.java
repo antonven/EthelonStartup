@@ -51,8 +51,10 @@ import com.nex3z.notificationbadge.NotificationBadge;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeActivitiesFragment;
@@ -78,6 +80,8 @@ public class HomeActivity extends AppCompatActivity
     String fcm_token;
     SessionManager session;
     AppBarLayout appBarLayout;
+    Set<String> skill_set;
+    ArrayList<String> userSkills = new ArrayList<>();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     NotificationBadge badge;
     int notificationCount = 0;
@@ -307,11 +311,13 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }else if (id == R.id.nav_third_layout) {
-            Bundle bundle = new Bundle();
-            bundle.putString("id",volunteer_id);
-            bundle.putString("api_token",api_token);
+//            Bundle bundle = new Bundle();
 
+//            Log.e("SKILL_SET SA THIRD", userSkills.toString() + bundle.toString());
             Intent intent = new Intent(this, SkillPreferenceActivity.class);
+//            intent.putStringArrayListExtra("skill_set", userSkills);
+            intent.putExtra("id",volunteer_id);
+            intent.putExtra("api_token",api_token);
             startActivity(intent);
         }else if (id == R.id.logOutButton){
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -515,8 +521,10 @@ public class HomeActivity extends AppCompatActivity
         newSignUpUsername = userEthelon.get(SessionManager.KEY_USER_NAME);
         String ethelonEmail = userEthelon.get(SessionManager.KEY_EMAIL);
 
+//        skill_set = session.getUserSkillSet();
+//        userSkills.addAll(skill_set);
 
-        Log.e("TONY WYKSS", userFb.toString());
+//        Log.e("TONY WYKSS", userFb.toString() +"Skill set size" +  skill_set.toString());
 
 
 
