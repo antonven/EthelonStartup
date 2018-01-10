@@ -150,6 +150,7 @@ public class HomeActivity extends AppCompatActivity
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
+        params.put("api_token",api_token);
 
         JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, notifUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -213,6 +214,7 @@ public class HomeActivity extends AppCompatActivity
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
+        params.put("api_token",api_token);
 
         JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, notifUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -240,6 +242,7 @@ public class HomeActivity extends AppCompatActivity
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
+        params.put("api_token",api_token);
 
         if(fcm_token!=null){
             params.put("fcm_token",fcm_token);
