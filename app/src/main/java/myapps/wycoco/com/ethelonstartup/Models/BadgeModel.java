@@ -13,10 +13,10 @@ public class BadgeModel {
     public BadgeModel() {
     }
 
-    public BadgeModel(String badgeName, String badgeImage, float badgeProgress) {
+    public BadgeModel(String badgeName, String badgeImage) {
         this.badgeName = badgeName;
         this.badgeImage = badgeImage;
-        this.badgeProgress = badgeProgress;
+//        this.badgeProgress = badgeProgress;
     }
 
     public String getBadgeName() {

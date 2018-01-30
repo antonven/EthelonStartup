@@ -2,11 +2,27 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:id="@+id/groupType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grouped by "
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
+    </FrameLayout>
+
 <android.support.v4.widget.SwipeRefreshLayout
     android:id="@+id/refreshLayoutGoingVolunteers"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
+    android:layout_marginTop="50dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
 
 
     <android.support.v7.widget.RecyclerView

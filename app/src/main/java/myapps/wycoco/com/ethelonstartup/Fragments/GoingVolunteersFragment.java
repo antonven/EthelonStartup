@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,6 +44,7 @@ public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLay
     ArrayList<UserModel> users;
     GoingVolunteersAdapter goingVolunteersAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView groupType;
 
     public GoingVolunteersFragment() {
         // Required empty public constructor
@@ -55,7 +57,9 @@ public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLay
 
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayoutGoingVolunteers);
         recyclerView = (RecyclerView)view.findViewById(R.id.recViewVolunteers);
+        groupType = (TextView)view.findViewById(R.id.groupType);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.bgContentTop));
+
 
         swipeRefreshLayout.setOnRefreshListener(this);
         fetchGoingVolunteers();
@@ -93,17 +97,20 @@ public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLay
                                     String user_image = usersObject.getString("image_url");
                                     String user_name = usersObject.getString("name");
                                     String profile_id = getArguments().getString("profileId");
-
+                                    String groupTypetxt = usersObject.getString("type");
                                     UserModel user = new UserModel();
                                     user.setUser_id(profile_id);
                                     user.setUserFirstName(user_name);
                                     user.setUserImage(user_image);
                                     users.add(user);
+                                    groupType.setText(groupTypetxt);
+
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
+
 
                             goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), users);
 

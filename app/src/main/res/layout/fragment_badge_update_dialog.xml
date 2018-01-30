@@ -20,7 +20,7 @@
             android:layout_height="170dp"
             android:layout_marginBottom="30dp"
             android:layout_gravity="center"
-            android:src="@drawable/medicinebadge"/>
+            android:src="@drawable/medicine_newbie"/>
 
         <ImageView
             android:id="@+id/btn_close"
@@ -37,6 +37,14 @@
             style="@style/Widget.AppCompat.RatingBar.Indicator"
 
             />
+
+        <ProgressBar
+            android:id="@+id/startGauge"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="87dp"/>
 
     </FrameLayout>
     

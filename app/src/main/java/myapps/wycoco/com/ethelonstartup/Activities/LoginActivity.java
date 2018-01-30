@@ -17,10 +17,12 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,10 +91,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String volunteer_id;
     String message, api_token;
     TextView text, loginText;
+    Spinner loginAsSpinner;
     String fcm_token;
     ProgressBar progressBar;
     ArrayList<UserModel> emails = new ArrayList<>();
     SessionManager session;
+    ArrayList<String> roles = new ArrayList<>();
 
     private static final String NOTIFURL = "http://" + new Localhost().getLocalhost() + "checkNotif";
     private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
@@ -111,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
+//        loginAsSpinner = (Spinner)findViewById(R.id.buttonLogin);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         text = (TextView)findViewById(R.id.alreadAUserLabel);
         buttonFacebook = (Button)findViewById(R.id.buttonFacebook);
@@ -119,6 +124,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginText = (TextView)findViewById(R.id.loginText);
 
 
+        roles.add("as Volunteer");
+        roles.add("as Foundation");
+        
         displayFirebaseRegId();
 
         viewPager = new LoginViewPagerAdapter(this);
@@ -127,6 +135,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         timer.scheduleAtFixedRate(new AutomaticSlide(), 2000, 4000);
         Typeface typeface = Typeface.createFromAsset(this.getAssets(), "Roboto-Black.ttf");
         Typeface typeface2 = Typeface.createFromAsset(this.getAssets(), "Rancho-Regular.ttf");
+
+        ArrayAdapter<String> roleAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, roles);
+        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         buttonSignup.setTypeface(typeface);
         buttonLogin.setTypeface(typeface);
@@ -261,7 +272,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                                session.createLoginSession(email, profile.getName(), profilePicture, profile_id, profile.getFirstName(), profile.getLastName(), volunteer_id, api_token);
                                 startActivity(intent);
 
-                            }else if(message.equals("Email already exists")){
+                            }else if(message.equals("Email already exigsts")){
                                 Toast.makeText(LoginActivity.this, "Email already exists! Try another email", Toast.LENGTH_SHORT).show();
 
                             }else{

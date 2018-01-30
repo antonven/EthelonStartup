@@ -300,6 +300,8 @@ public class HomeActivity extends AppCompatActivity
             intent.putExtra("fbProfileName", fbProfileName);
             intent.putExtra("profileId", profileId);
             intent.putExtra("volunteer_id",volunteer_id);
+            intent.putExtra("api_token", api_token);
+
 
             startActivity(intent);
 

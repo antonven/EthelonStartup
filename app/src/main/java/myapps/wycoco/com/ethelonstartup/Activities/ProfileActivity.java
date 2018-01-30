@@ -9,8 +9,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -27,9 +32,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import myapps.wycoco.com.ethelonstartup.Adapters.BadgeCollectionAdapter;
 import myapps.wycoco.com.ethelonstartup.Adapters.BasicAdapter;
+//import myapps.wycoco.com.ethelonstartup.Adapters.ProfileSkillsController;
+import myapps.wycoco.com.ethelonstartup.Adapters.ViewPagerAdapter;
+import myapps.wycoco.com.ethelonstartup.Fragments.BadgeFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.PortfolioFragment;
+import myapps.wycoco.com.ethelonstartup.Fragments.ReviewsFragment;
+import myapps.wycoco.com.ethelonstartup.Models.SkillBadgesModel;
 import myapps.wycoco.com.ethelonstartup.R;
 import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by dell on 7/22/2017.
@@ -45,16 +61,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     TextView profileName, profileEmail;
     AppBarLayout appBarLayout;
     SessionManager sessionManager;
-    Context mContext;
+    RecyclerView skillBadgesCollection;
     GridView gridView, gridViewBadges;
     ArrayList<Integer> images;
     BasicAdapter basicAdapter;
     ArrayList<Integer> badges;
+    RecyclerView recView;
+    ArrayList<SkillBadgesModel> badgesModels;
+//    ProfileSkillsController controller;
+    TabLayout tabLayout;
+    ViewPagerAdapter adapter;
+    ViewPager viewPager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_layout);
+        setContentView(R.layout.volunteer_layout_profile);
 
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -66,6 +88,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
+
+        insTabs();
 
         sessionManager = new SessionManager(getApplicationContext());
 
@@ -142,6 +166,49 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    private void insTabs(){
+
+
+        viewPager = (ViewPager)findViewById(R.id.viePagerDetails);
+        setupViewPager(viewPager);
+
+
+        tabLayout = (TabLayout) findViewById(R.id.achievementsTab);
+        tabLayout.setSelectedTabIndicatorHeight(12);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#C62828"));
+
+        tabLayout.setTabTextColors(Color.parseColor("#808080"), Color.parseColor("#c62828"));
+        setupTabIcons();
+    }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setText("Achievements");
+        tabLayout.getTabAt(1).setText("Portfolio");
+
+    }
+    private void setupViewPager(ViewPager viewPager){
+
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        Intent intent = getIntent();
+        String profileId = intent.getStringExtra("profileId");
+        String volunteer_id = intent.getStringExtra("volunteer_id");
+        String api_token = intent.getStringExtra("api_token");
+        PortfolioFragment portfolioFragment = new PortfolioFragment();
+        BadgeFragment badgeFragment = new BadgeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("profileId", profileId);
+        bundle.putString("volunteer_id", volunteer_id);
+        bundle.putString("api_token", api_token);
+        portfolioFragment.setArguments(bundle);
+        badgeFragment.setArguments(bundle);
+
+        adapter.addFrag(badgeFragment, "Achievements");
+        adapter.addFrag(portfolioFragment, "Portfolio");
+        viewPager.setAdapter(adapter);
+    }
+
     @Override
     public void onClick(View view) {
         Intent s = getIntent();
@@ -197,4 +264,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         basicAdapter = new BasicAdapter(images, getApplicationContext());
         gridView.setAdapter(basicAdapter);
     }
+
+
 }
