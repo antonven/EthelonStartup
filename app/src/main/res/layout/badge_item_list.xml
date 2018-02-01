@@ -68,18 +68,15 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <GridView
+            <android.support.v7.widget.RecyclerView
 
                 android:id="@id/gridView"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="70dp"
 
-                android:horizontalSpacing="12dp"
-                android:numColumns="8"
-                android:stretchMode="columnWidth"
                 >
 
-            </GridView>
+            </android.support.v7.widget.RecyclerView>
 
 
         </LinearLayout>

@@ -1,6 +1,9 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +55,7 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
     private ArrayList<Badge_Level_Model> badge_levels = new ArrayList<>();
     private static final String URL = "http://" + new Localhost().getLocalhost() + "volunteerprofile";
     private String volunteer_id, api_token;
+    GridLayoutManager linearLayoutManager;
 
     public BadgeCollectionAdapter() {
     }
@@ -101,7 +105,9 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
             }
 
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Helper Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
@@ -115,7 +121,9 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Master Chef Badge")){
@@ -131,7 +139,9 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Surgeon Badge")){
@@ -146,7 +156,9 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
 
 
         }
@@ -162,7 +174,9 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Master Carpenter Badge")){
@@ -177,7 +191,9 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Professor Badge")){
@@ -190,7 +206,10 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
                     Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status + badgeState.size() );
                 }
 
-            }holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            }
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
          }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Olympian Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
@@ -204,7 +223,9 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+            linearLayoutManager = new GridLayoutManager(mContext, 4);
+            holder.gridView.setLayoutManager(linearLayoutManager);
+            holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
 
         }
 
@@ -219,7 +240,7 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
         ImageView badgeImage;
         TextView badgeName, badgePercentage;
-        GridView gridView;
+        RecyclerView gridView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -229,7 +250,7 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
             badgeImage = (ImageView)itemView.findViewById(R.id.badgeImage);
             badgeName = (TextView)itemView.findViewById(R.id.badgeName);
             badgePercentage = (TextView)itemView.findViewById(R.id.badgePercentage);
-            gridView = (GridView)itemView.findViewById(R.id.gridView);
+            gridView = (RecyclerView)itemView.findViewById(R.id.gridView);
 
 
 
