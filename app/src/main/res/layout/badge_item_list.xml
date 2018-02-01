@@ -66,20 +66,51 @@
             android:layout_below="@+id/badgeProgress"
 
             android:orientation="horizontal"
-            android:weightSum="2">
-
-            <android.support.v7.widget.RecyclerView
-
-                android:id="@id/gridView"
-                android:layout_width="150dp"
-                android:layout_height="70dp"
-
-                >
-
-            </android.support.v7.widget.RecyclerView>
+            android:weightSum="2"
+            android:id="@+id/linearLayout4">
 
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/first"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignLeft="@+id/linearLayout4"
+            android:layout_alignStart="@+id/linearLayout4"
+            android:layout_below="@+id/badgeImage"
+             />
+
+        <ImageView
+            android:id="@+id/second"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/first"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
+            android:layout_toEndOf="@+id/first"
+            android:layout_toRightOf="@+id/first"
+           />
+
+        <ImageView
+            android:id="@+id/third"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/second"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
+            android:layout_toEndOf="@+id/second"
+            android:layout_toRightOf="@+id/second" />
+
+        <ImageView
+            android:id="@+id/fourth"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/third"
+            android:layout_alignEnd="@+id/badgeProgress"
+            android:layout_alignRight="@+id/badgeProgress"
+             />
+
 
     </RelativeLayout>
 

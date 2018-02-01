@@ -10,16 +10,36 @@ public class SkillBadgesModel {
     private String badgeImage;
     private int gaugeExp;
     private int star;
+    private String skill;
+    private int status;
 
-    public SkillBadgesModel(String badgeName, String badgeImage, int gaugeExp, int star) {
+    public SkillBadgesModel(String badgeName, String badgeImage, int gaugeExp, int star, String skill, int status) {
         this.badgeName = badgeName;
         this.badgeImage = badgeImage;
         this.gaugeExp = gaugeExp;
         this.star  = star;
+        this.skill = skill;
+        this.status = status;
     }
 
     public SkillBadgesModel() {
 
+    }
+
+    public int getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getSkill() {
+        return this.skill;
+    }
+
+    public void setSkill(String skill) {
+        this.skill = skill;
     }
 
 

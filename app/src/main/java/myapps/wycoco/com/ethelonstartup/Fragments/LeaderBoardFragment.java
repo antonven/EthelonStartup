@@ -120,6 +120,7 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
             @Override
             public void onErrorResponse(VolleyError error) {
                 swipeRefreshLayout.setRefreshing(false);
+                Log.e("kobe",error.toString());
 
             }
         });

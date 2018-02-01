@@ -107,7 +107,8 @@ public class BadgeFragment extends Fragment {
                                     String currentBadgeRank = currentBadge.getString("badge");
                                     int gaugeExp = currentBadge.getInt("gaugeExp");
                                     int star = currentBadge.getInt("star");
-
+                                    String skill = currentBadge.getString("skill");
+                                    int statuss = getBadgeStatus(currentBadgeRank);
                                     JSONArray badges = badge.getJSONArray("badges");
                                     for(int p = 0; p < badges.length(); p++) {
 
@@ -149,16 +150,13 @@ public class BadgeFragment extends Fragment {
 
                                         Badge_Level_Model badge_level_model = new Badge_Level_Model(badge_level_name, badge_level, badge_skill, badge_status);
                                         badge_levels.add(badge_level_model);
-                                        Log.i("BADGE_LEVELS_IMAGE", badge_level+ badge_level_name+ badge_skill + badge_status);
+                                        Log.e("BADGE_LEVELS_IMAGE", "BADGE LEVEL = "+ badge_level+ "BADGE LEVEL NAME "+ badge_level_name+ badge_skill + badge_status);
                                     }
 
                                     Log.i("DETAILS_BADGE", currentBadgeName + currentBadgeImage + gaugeExp + star);
-                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, gaugeExp, star);
+                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, gaugeExp, star,skill,statuss);
 
                                     badgesModels.add(model);
-
-
-
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

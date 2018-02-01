@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,13 +85,321 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
         String status;
         starBadges = new ArrayList<>();
         badgeState = new ArrayList<>();
+        Log.e("PISTING YAWA",badge_levels.size()+"");
+
+        for(int i = 0; i < badge_levels.size(); i++){
+
+            if(badge_levels.get(i).getBadge_skill().equals("Arts") && skillBadgesModels.get(position).getSkill().equals("Arts")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Arts")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.arts_1);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.arts_2);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.arts_3);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.arts_4);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+
+            if(badge_levels.get(i).getBadge_skill().equals("Education") && skillBadgesModels.get(position).getSkill().equals("Education")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Education")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.education_newbie);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer") && badge_levels.get(i).getBadge_skill().equals("Education")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.education_explorer);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert")&& badge_levels.get(i).getBadge_skill().equals("Education")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.education_expert);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend")&& badge_levels.get(i).getBadge_skill().equals("Education")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.education_legend);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+
+            if(badge_levels.get(i).getBadge_skill().equals("Environment") && skillBadgesModels.get(position).getSkill().equals("Environment")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Environment")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.environment_newbie);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer") && badge_levels.get(i).getBadge_skill().equals("Environment")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.environment_archon);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert") && badge_levels.get(i).getBadge_skill().equals("Environment")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.environment_expert);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend") && badge_levels.get(i).getBadge_skill().equals("Environment")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.environment_legend);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+
+            if(badge_levels.get(i).getBadge_skill().equals("Sports") && skillBadgesModels.get(position).getSkill().equals("Sports")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Sports")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.sports_newbie);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer") && badge_levels.get(i).getBadge_skill().equals("Sports")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.sports_archon);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert") && badge_levels.get(i).getBadge_skill().equals("Sports")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.sports_expert);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend") && badge_levels.get(i).getBadge_skill().equals("Sports")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.sports_legend);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+
+            if(badge_levels.get(i).getBadge_skill().equals("Livelihood") && skillBadgesModels.get(position).getSkill().equals("Livelihood")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Livelihood")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.livelihood_newbie);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer") && badge_levels.get(i).getBadge_skill().equals("Livelihood")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.livelihood_archon);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert") && badge_levels.get(i).getBadge_skill().equals("Livelihood")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.livelihood_expert);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend") && badge_levels.get(i).getBadge_skill().equals("Livelihood")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.livelihood_legend);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+
+            if(badge_levels.get(i).getBadge_skill().equals("Medical") && skillBadgesModels.get(position).getSkill().equals("Medical")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Medical")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.medicine_newbie);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer") && badge_levels.get(i).getBadge_skill().equals("Medical")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.medicine_archon);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert") && badge_levels.get(i).getBadge_skill().equals("Medical")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.medicine_expert);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend") && badge_levels.get(i).getBadge_skill().equals("Medical")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.medicine_legend);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+
+            if(badge_levels.get(i).getBadge_skill().equals("Culinary") && skillBadgesModels.get(position).getSkill().equals("Culinary")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Culinary")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.arts_1);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer") && badge_levels.get(i).getBadge_skill().equals("Culinary")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.arts_2);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert") && badge_levels.get(i).getBadge_skill().equals("Culinary")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.arts_3);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend") && badge_levels.get(i).getBadge_skill().equals("Culinary")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.arts_4);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+
+            if(badge_levels.get(i).getBadge_skill().equals("Charity") && skillBadgesModels.get(position).getSkill().equals("Charity")){
+                Log.e("PISTING YAWA","NISUD SA ARTS");
+
+
+                if(badge_levels.get(i).getBadge_level_name().equals("Newbie") && badge_levels.get(i).getBadge_skill().equals("Charity")){
+                    Log.e("PISTING YAWA","NEWBIE");
+                    holder.first.setImageResource(R.drawable.charit_newbie);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+
+                }else  if(badge_levels.get(i).getBadge_level_name().equals("Explorer") && badge_levels.get(i).getBadge_skill().equals("Charity")){
+                    Log.e("PISTING YAWA","EXPLORER");
+                    holder.second.setImageResource(R.drawable.charity_explorer);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.second.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Expert") && badge_levels.get(i).getBadge_skill().equals("Charity")){
+                    Log.e("PISTING YAWA","EXPERT");
+                    holder.third.setImageResource(R.drawable.charity_expert);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.third.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                else  if(badge_levels.get(i).getBadge_level_name().equals("Legend") && badge_levels.get(i).getBadge_skill().equals("Charity")){
+                    Log.e("PISTING YAWA","LEGEND");
+                    holder.fourth.setImageResource(R.drawable.charity_legend);
+
+                    if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
+                        holder.fourth.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            }
+        }
 
         Log.i("BADGE_PICTURES", badge_levels.size() + " ");
-//        for(int o = 0; o < badge_levels.size(); o++){
-//            if(badge_levels.get(o).getBadge_skill().equals("Arts")){
-//
-//            }
-//        }
+       /* for(int o = 0; o < badge_levels.size(); o++){
+            if(badge_levels.get(o).getBadge_skill().equals("Arts")){
+
+            }
+        }
 
         if(skillBadgesModels.get(position).getBadgeName().equals("Artist Badge")) {
 
@@ -226,8 +535,27 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
             linearLayoutManager = new GridLayoutManager(mContext, 4);
             holder.gridView.setLayoutManager(linearLayoutManager);
             holder.gridView.setAdapter(new BadgeRankAdapter(mContext, badgeState, starBadges));
-
         }
+*/
+    }
+    public int getPriority(String badge){
+        int badge_status = 0;
+
+        switch (badge){
+            case "Newbie":
+                badge_status = 1;
+                break;
+            case "Explorer":
+                badge_status = 2;
+                break;
+            case "Expert":
+                badge_status = 3;
+                break;
+            case "Legend":
+                badge_status = 4;
+                break;
+        }
+        return badge_status;
 
     }
 
@@ -238,7 +566,7 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView badgeImage;
+        ImageView badgeImage, first, second, third, fourth;
         TextView badgeName, badgePercentage;
         RecyclerView gridView;
 
@@ -250,7 +578,11 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
             badgeImage = (ImageView)itemView.findViewById(R.id.badgeImage);
             badgeName = (TextView)itemView.findViewById(R.id.badgeName);
             badgePercentage = (TextView)itemView.findViewById(R.id.badgePercentage);
-            gridView = (RecyclerView)itemView.findViewById(R.id.gridView);
+            //gridView = (RecyclerView)itemView.findViewById(R.id.gridView);
+            first = (ImageView)itemView.findViewById(R.id.first);
+            second = (ImageView)itemView.findViewById(R.id.second);
+            third = (ImageView)itemView.findViewById(R.id.third);
+            fourth = (ImageView)itemView.findViewById(R.id.fourth);
 
 
 
