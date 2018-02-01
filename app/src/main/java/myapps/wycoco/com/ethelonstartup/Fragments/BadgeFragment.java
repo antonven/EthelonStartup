@@ -101,25 +101,59 @@ public class BadgeFragment extends Fragment {
                                 try {
                                     JSONObject badge = response.getJSONObject(i);
                                      Log.i("final_BADGES", badge.toString());
-                                    JSONObject info = badge.getJSONObject("info");
-                                    String badgeName = info.getString("badge_name");
-                                    String badgeImage = info.getString("url");
-                                    int gaugeExp = info.getInt("gaugeExp");
-                                    int star = info.getInt("star");
+                                    JSONObject currentBadge = badge.getJSONObject("info");
+                                    String currentBadgeName = currentBadge.getString("badge_name");
+                                    String currentBadgeImage = currentBadge.getString("url");
+                                    String currentBadgeRank = currentBadge.getString("badge");
+                                    int gaugeExp = currentBadge.getInt("gaugeExp");
+                                    int star = currentBadge.getInt("star");
 
                                     JSONArray badges = badge.getJSONArray("badges");
                                     for(int p = 0; p < badges.length(); p++) {
+
                                         JSONObject bad = badges.getJSONObject(p);
                                         String badge_level = bad.getString("url");
                                         String badge_level_name = bad.getString("badge");
                                         String badge_skill = bad.getString("skill");
-                                        Badge_Level_Model badge_level_model = new Badge_Level_Model(badge_level_name, badge_level, badge_skill);
+                                        String badge_status = null;
+
+                                        int result = getBadgeStatus(currentBadgeRank);
+                                        Log.i("STATUS_RESULTS", result + " " + badge_level_name);
+
+                                        if(result == 1){
+                                            if(badge_level_name.equals("Newbie")){
+                                                badge_status = "earned";
+                                            }else{
+                                                badge_status = "notearned";
+                                            }
+                                        }
+                                        else if(result == 2){
+                                            if(badge_level_name.equals("Explorer") || badge_level_name.equals("Newbie")){
+                                                badge_status = "earned";
+                                            }else{
+                                                badge_status = "notearned";
+                                            }
+                                        }
+                                        else if(result == 3){
+                                            if(badge_level_name.equals("Expert")||badge_level_name.equals("Explorer") || badge_level_name.equals("Newbie")){
+                                                badge_status = "earned";
+                                            }else{
+                                                badge_status = "notearned";
+                                            }
+                                        }
+                                        else if(result == 4){
+                                            if(badge_level_name.equals("Legend") || badge_level_name.equals("Expert")||badge_level_name.equals("Explorer") || badge_level_name.equals("Newbie")){
+                                                badge_status = "earned";
+                                            }
+                                        }
+
+                                        Badge_Level_Model badge_level_model = new Badge_Level_Model(badge_level_name, badge_level, badge_skill, badge_status);
                                         badge_levels.add(badge_level_model);
-                                        Log.i("BADGE_LEVELS_IMAGE", badge_level+ badge_level_name+ badge_skill);
+                                        Log.i("BADGE_LEVELS_IMAGE", badge_level+ badge_level_name+ badge_skill + badge_status);
                                     }
 
-                                    Log.i("DETAILS_BADGE", badgeName + badgeImage + gaugeExp + star);
-                                    SkillBadgesModel model = new SkillBadgesModel(badgeName, badgeImage, gaugeExp, star);
+                                    Log.i("DETAILS_BADGE", currentBadgeName + currentBadgeImage + gaugeExp + star);
+                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, gaugeExp, star);
 
                                     badgesModels.add(model);
 
@@ -153,6 +187,26 @@ public class BadgeFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
+    }
+
+    public int getBadgeStatus(String badge_level_name){
+
+        int badge_status = 0;
+        switch (badge_level_name){
+            case "Newbie":
+                badge_status = 1;
+                break;
+            case "Explorer":
+                badge_status = 2;
+                break;
+            case "Expert":
+                badge_status = 3;
+                break;
+            case "Legend":
+                badge_status = 4;
+                break;
+        }
+       return badge_status;
     }
 
 }

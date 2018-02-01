@@ -45,6 +45,8 @@ public class ConfirmDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //if diri dapita para ang points para mo pop up every update sa star/ badge
+
+
                         Intent n = new Intent(getActivity(), HomeActivity.class);
                         n.putExtra("api_token", api_token);
                         n.putExtra("volunteer_id", volunteer_id);

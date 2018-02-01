@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,6 +44,7 @@ public class GroupmatesFragment extends Fragment {
     ArrayList<UserModel> volunteers;
     GoingVolunteersAdapter goingVolunteersAdapter;
     RecyclerView volrec;
+    TextView groupType;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
 
     public GroupmatesFragment() {
@@ -56,6 +58,7 @@ public class GroupmatesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_group_rate, container, false);
 
         volrec = (RecyclerView) view.findViewById(R.id.volRec);
+        groupType = (TextView)view.findViewById(R.id.groupType);
         volunteers = new ArrayList<>();
 
         fetchGroup();
@@ -90,10 +93,12 @@ public class GroupmatesFragment extends Fragment {
                                     JSONObject usersObject = response.getJSONObject(i);
                                     String volunteer_name = usersObject.getString("name");
                                     String volunteer_image = usersObject.getString("image_url");
-
+                                    String groupTypetxt = usersObject.getString("type");
+                                    Log.i("GROUP_TYPE", groupTypetxt);
                                     UserModel volunteer = new UserModel();
                                     volunteer.setUserFirstName(volunteer_name);
                                     volunteer.setUserImage(volunteer_image);
+                                    groupType.append(groupTypetxt);
 
                                     volunteers.add(volunteer);
 //                                    fetchCriteria();

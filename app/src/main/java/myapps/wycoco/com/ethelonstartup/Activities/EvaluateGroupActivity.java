@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,11 +24,13 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import myapps.wycoco.com.ethelonstartup.Fragments.BadgeUpdateDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ConfirmDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Config;
@@ -126,6 +129,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         String api_token = getIntent().getStringExtra("api_token");
         String activity_id = getIntent().getStringExtra("activity_id");
         String volunteer_id = getIntent().getStringExtra("volunteer_id");
+        Log.e("RESPONSE_UPDATE_SUD", "asdasd nisud diri");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("activity_id", activity_id);
@@ -136,12 +140,59 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        
+                        Log.e("RESPONSE_UPDATE", response.toString());
+                        for(int i = 0; i<response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String update = jsonObject.getString("update");
+                                String body = jsonObject.getString("body");
+
+
+
+//                                JSONArray jsonArray = response.getJSONArray(i);
+//                                for (int o = 0; o < jsonArray.length(); o++){
+//                                    JSONObject ob = jsonArray.getJSONObject(1);
+//                                    String update = jsonObject.getString("update");
+//
+//                                }
+                                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                                if(update.equals("nothing")){
+
+                                }else if(update.equals("new badge")){
+                                    JSONObject obj1 = jsonObject.getJSONObject("BadgeInfo");
+                                    String badge_rank = obj1.getString("badge");
+                                    String image_url = obj1.getString("url");
+//                                    int gaugeExp = obj1.getInt("gaugeExp");
+
+                                    BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("badge_rank", badge_rank);
+                                    bundle.putString("image_url", image_url);
+                                    bundle.putString("body", body);
+//                                    bundle.putInt("gaugeExp", gaugeExp);
+
+                                    badgeUpdateDialogFragment.setArguments(bundle);
+                                    badgeUpdateDialogFragment.show(fragmentManager, "badge update");
+
+                                    Toast.makeText(EvaluateGroupActivity.this, "NAAY BAG.O BADGE", Toast.LENGTH_SHORT).show();
+
+                                }else if(update.equals("new star")){
+
+
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
                     }
                 }
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("RESPONSE_UPDATE_ERR", error.toString());
 
             }
         });

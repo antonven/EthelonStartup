@@ -48,11 +48,8 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
     Context mContext;
     private ArrayList<SkillBadgesModel> skillBadgesModels = new ArrayList<>();
-    private ArrayList<String> starBadges;
-    private ArrayList<String> environmentRanks, medicalRanks, educationRanks, sportsRanks, charityRanks, livelihoodRanks, artRanks, culinaryRanks;
-
-    private ArrayList<Badge_Level_Model> badge_levels;
-
+    private ArrayList<String> starBadges, badgeState;
+    private ArrayList<Badge_Level_Model> badge_levels = new ArrayList<>();
     private static final String URL = "http://" + new Localhost().getLocalhost() + "volunteerprofile";
     private String volunteer_id, api_token;
 
@@ -80,8 +77,10 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 //        holder.badgePercentage.setText(String.valueOf(skillBadgesModels.get(position).getBadgePercentage()));
         Glide.with(mContext).load(skillBadgesModels.get(position).getBadgeImage())
                 .fitCenter().crossFade().into(holder.badgeImage);
-
+        String status;
         starBadges = new ArrayList<>();
+        badgeState = new ArrayList<>();
+
         Log.i("BADGE_PICTURES", badge_levels.size() + " ");
 //        for(int o = 0; o < badge_levels.size(); o++){
 //            if(badge_levels.get(o).getBadge_skill().equals("Arts")){
@@ -89,91 +88,123 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 //            }
 //        }
 
-        if(skillBadgesModels.get(position).getBadgeName().equals("Artist Badge")){
-            for(int i = 0; i<badge_levels.size(); i++){
-                if(badge_levels.get(i).getBadge_skill().equals("Arts")) {
+        if(skillBadgesModels.get(position).getBadgeName().equals("Artist Badge")) {
+
+            for (int i = 0; i < badge_levels.size(); i++) {
+                if (badge_levels.get(i).getBadge_skill().equals("Arts")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status);
+
                 }
-                Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image());
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
 
-        }else if(skillBadgesModels.get(position).getBadgeName().equals("Helper Badge")){
+            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+        }
+        else if(skillBadgesModels.get(position).getBadgeName().equals("Helper Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
                 if(badge_levels.get(i).getBadge_skill().equals("Charity")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status);
                 }
-                Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image());
+
+
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
+            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Master Chef Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
                 if(badge_levels.get(i).getBadge_skill().equals("Culinary")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status);
+
                 }
-                Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image());
+
+
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
+            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Surgeon Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
                 if(badge_levels.get(i).getBadge_skill().equals("Medical")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status);
                 }
-                Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image());
+
+
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
+            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Environmentalist Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
                 if(badge_levels.get(i).getBadge_skill().equals("Environment")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status);
+
                 }
-                Log.i("BADGE_ENVIRONMENT", badge_levels.get(i).getBadge_level_image());
+
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
+            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Master Carpenter Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
                 if(badge_levels.get(i).getBadge_skill().equals("Livelihood")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status);
                 }
-                Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image());
+
+
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
+            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
 
         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Professor Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
+
                 if(badge_levels.get(i).getBadge_skill().equals("Education")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status + badgeState.size() );
                 }
-                Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image());
 
-            }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
-
-        }
+            }holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
+         }
         else if(skillBadgesModels.get(position).getBadgeName().equals("Olympian Badge")){
             for(int i = 0; i<badge_levels.size(); i++){
                 if(badge_levels.get(i).getBadge_skill().equals("Sports")) {
                     starBadges.add(badge_levels.get(i).getBadge_level_image());
+                    String badge_status = badge_levels.get(i).getBadge_status();
+                    badgeState.add(badge_status);
+                    Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image() + " " + badge_status);
+
                 }
-                Log.i("BADGE_PICTURESSS", badge_levels.get(i).getBadge_level_image());
+
 
             }
-            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext));
+            holder.gridView.setAdapter(new BasicGlideAdatper(starBadges, mContext, badgeState));
 
         }
 

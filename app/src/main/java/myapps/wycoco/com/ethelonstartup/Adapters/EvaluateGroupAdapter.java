@@ -117,7 +117,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     n.putInt("criteria_size", criterias.size());
                     n.putString("activity_id", activity_id);
                     n.putString("volunteer_id", volunteer_id);
-                    n.putInt("index",getAdapterPosition());
+                    n.putInt("index", getAdapterPosition());
                     rateVolunteerDialogFragment.setArguments(n);
                     rateVolunteerDialogFragment.show(fm, "Rate");
 

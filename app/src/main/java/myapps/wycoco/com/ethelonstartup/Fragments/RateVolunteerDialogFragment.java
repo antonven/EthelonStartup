@@ -79,8 +79,8 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
         String volunteer_name = getArguments().getString("volunteer_name");
         String groupmateImage1 = getArguments().getString("groupmateImage");
-        Glide.with(mContext).load(groupmateImage1)
-                .centerCrop().crossFade().into(groupmateImage);
+//        Glide.with(getApplicationContext()).load(groupmateImage1)
+//                .centerCrop().crossFade().into(groupmateImage);
 
         volunteerNameTxt = (TextView)view.findViewById(R.id.rateVolunteerName);
         recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
@@ -162,6 +162,8 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
     public void declarations(){
 
+        ratings = new ArrayList<>();
+
         for(int i = 0; i<criteria.size(); i++){
             ratings.add(0);
         }
@@ -221,6 +223,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         requestQueue.add(jsonArrayRequest);
 
         onCompleteListener.onComplete(index, ratings);
+        Log.e("OnCompleteRatings", ratings.toString());
         ratings.clear();
         dismiss();
     }
