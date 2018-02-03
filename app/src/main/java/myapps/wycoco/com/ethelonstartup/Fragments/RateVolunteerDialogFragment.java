@@ -61,7 +61,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     ImageView groupmateImage;
     TextView volunteerNameTxt;
     int index;
-
+    int i = 0;
 
     public RateVolunteerDialogFragment() {
         // Required empty public constructor
@@ -144,6 +144,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
                                 }
                             }
                             declarations();
+                            i++;
                         }
                     }
                 },
@@ -162,6 +163,8 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
     public void declarations(){
 
+        Log.e("sud declarations size",i+ "  = criterion size"+criteria.size());
+        i++;
         ratings = new ArrayList<>();
         Log.e("PISTING YAWAzzzzzz",ratings.size() + " = size niya");
         for(int i = 0; i<criteria.size(); i++){
@@ -225,12 +228,14 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         Log.e("PISTING YAWA","INIG CLICK DONE = "+ratings.toString());
         int totalRating;
         int RatingsAdded = 0;
+
         for(int i = 0; i < ratings.size(); i++){
             RatingsAdded = RatingsAdded + ratings.get(i);
         }
+
         totalRating = RatingsAdded / ratings.size();
 
-//        onCompleteListener.onComplete(index, totalRating);
+        onCompleteListener.onComplete(index, totalRating);
         Log.e("OnCompleteRatings", ratings.toString());
         ratings.clear();
         dismiss();
@@ -239,7 +244,8 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     @Override
     public void onClick(int rating, int index) {
         Log.e("RateVolunteerDialont234",rating + " = "+index);
-        ratings.add(index,rating);
+        ratings.set(index,rating);
+        Log.e("RateVolunteerDialont235",ratings.size()+"");
     }
 
 
@@ -254,7 +260,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     }
 
     public interface OnCompleteListener{
-        public void onComplete(int index, ArrayList<Integer> ratings);
+        public void onComplete(int index, int ratings);
     }
 
 }
