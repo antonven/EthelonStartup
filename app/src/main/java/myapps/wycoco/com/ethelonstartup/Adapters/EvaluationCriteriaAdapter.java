@@ -75,7 +75,7 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
                     int rating = (int) v;
                     String criterion = criteria.get(getAdapterPosition()).getCriteriaName();
-
+                    Log.e("PISTING YAWA",rating + "");
                     Bundle a = new Bundle();
                     a.putInt("rating", rating);
                     a.putString("criteria_name", criterion);

@@ -4,6 +4,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +51,7 @@ public class BadgeFragment extends Fragment {
     ArrayList<SkillBadgesModel> badgesModels;
     ArrayList<Badge_Level_Model> badge_levels;
     ProfileSkillsController controller;
+    SwipeRefreshLayout swipeRefreshLayout;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "volunteerprofile";
 
 
@@ -64,6 +66,7 @@ public class BadgeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_badge, container, false);
         recView = (RecyclerView)view.findViewById(R.id.badgeRecView);
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeLayout);
 
         loadSkillBadges();
 
@@ -72,6 +75,9 @@ public class BadgeFragment extends Fragment {
     }
 
     public void loadSkillBadges(){
+
+        swipeRefreshLayout.setRefreshing(true);
+
 
         badgesModels = new ArrayList<>();
         badge_levels = new ArrayList<>();
@@ -109,6 +115,7 @@ public class BadgeFragment extends Fragment {
                                     int star = currentBadge.getInt("star");
                                     String skill = currentBadge.getString("skill");
                                     int statuss = getBadgeStatus(currentBadgeRank);
+
                                     JSONArray badges = badge.getJSONArray("badges");
                                     for(int p = 0; p < badges.length(); p++) {
 
@@ -150,7 +157,7 @@ public class BadgeFragment extends Fragment {
 
                                         Badge_Level_Model badge_level_model = new Badge_Level_Model(badge_level_name, badge_level, badge_skill, badge_status);
                                         badge_levels.add(badge_level_model);
-                                        Log.e("BADGE_LEVELS_IMAGE", "BADGE LEVEL = "+ badge_level+ "BADGE LEVEL NAME "+ badge_level_name+ badge_skill + badge_status);
+                                        Log.e("BADGE_LEVELS_IMAGE", "BADGE LEVEL = "+ badge_level+ " BADGE LEVEL NAME "+ badge_level_name+ badge_skill + badge_status);
                                     }
 
                                     Log.i("DETAILS_BADGE", currentBadgeName + currentBadgeImage + gaugeExp + star);
@@ -169,11 +176,14 @@ public class BadgeFragment extends Fragment {
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(badgeCollectionAdapter);
                         }
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                swipeRefreshLayout.setRefreshing(false);
+
 
             }
         });

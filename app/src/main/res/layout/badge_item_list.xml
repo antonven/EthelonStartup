@@ -59,57 +59,67 @@
             android:layout_marginLeft="20dp" />
 
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/badgePercentage"
             android:layout_alignStart="@+id/badgePercentage"
             android:layout_below="@+id/badgeProgress"
-
             android:orientation="horizontal"
-            android:weightSum="2"
+
+            android:layout_marginTop="4dp"
             android:id="@+id/linearLayout4">
+
+            <ImageView
+                android:id="@+id/first"
+                android:scaleType="fitCenter"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/linearLayout4"
+                android:layout_alignStart="@+id/linearLayout4"
+                android:layout_below="@+id/badgeImage"
+                />
+
+            <ImageView
+                android:id="@+id/second"
+                android:scaleType="fitCenter"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/first"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@+id/first"
+                android:layout_toRightOf="@+id/first"
+                />
+
+            <ImageView
+                android:id="@+id/third"
+                android:layout_width="30dp"
+                android:scaleType="fitCenter"
+
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/second"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@+id/second"
+                android:layout_toRightOf="@+id/second" />
+
+            <ImageView
+                android:id="@+id/fourth"
+                android:scaleType="fitCenter"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_alignBottom="@+id/third"
+                android:layout_toRightOf="@id/third"
+                android:layout_toEndOf="@id/third" />
 
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/first"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/linearLayout4"
-            android:layout_alignStart="@+id/linearLayout4"
-            android:layout_below="@+id/badgeImage"
-             />
 
-        <ImageView
-            android:id="@+id/second"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/first"
-            android:layout_marginLeft="11dp"
-            android:layout_marginStart="11dp"
-            android:layout_toEndOf="@+id/first"
-            android:layout_toRightOf="@+id/first"
-           />
-
-        <ImageView
-            android:id="@+id/third"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignTop="@+id/second"
-            android:layout_marginLeft="11dp"
-            android:layout_marginStart="11dp"
-            android:layout_toEndOf="@+id/second"
-            android:layout_toRightOf="@+id/second" />
-
-        <ImageView
-            android:id="@+id/fourth"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/third"
-            android:layout_alignEnd="@+id/badgeProgress"
-            android:layout_alignRight="@+id/badgeProgress"
-             />
 
 
     </RelativeLayout>

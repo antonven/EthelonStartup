@@ -151,7 +151,7 @@ public class HomeActivity extends AppCompatActivity
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
         params.put("api_token",api_token);
-        Log.e("volunteer_id",volunteer_id);
+//        Log.e("volunteer_id",volunteer_id);
         JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, notifUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -238,7 +238,7 @@ public class HomeActivity extends AppCompatActivity
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
         fcm_token = regId;
-        Log.e("fuck",FirebaseInstanceId.getInstance().getToken());
+        Log.e("fuck",FirebaseInstanceId.getInstance().getToken() + " ");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
@@ -451,9 +451,9 @@ public class HomeActivity extends AppCompatActivity
         HashMap<String, String> user = session.getUserCredentials();
         HashMap<String, String> userEthelon = session.getUserCredentials();
 
-//        volunteer_id = n.getStringExtra("volunteer_id");
-//        api_token = n.getStringExtra("api_token");
-//        profileId = n.getStringExtra("profileId");
+        volunteer_id = n.getStringExtra("volunteer_id");
+        api_token = n.getStringExtra("api_token");
+        profileId = n.getStringExtra("profileId");
         if(user != null) {
             api_token = user.get(SessionManager.KEY_API_TOKEN);
             profileId = user.get(SessionManager.KEY_PROFILE_ID);

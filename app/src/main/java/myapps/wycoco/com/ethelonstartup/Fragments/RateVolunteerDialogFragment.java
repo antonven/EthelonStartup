@@ -163,10 +163,11 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     public void declarations(){
 
         ratings = new ArrayList<>();
-
+        Log.e("PISTING YAWAzzzzzz",ratings.size() + " = size niya");
         for(int i = 0; i<criteria.size(); i++){
             ratings.add(0);
         }
+        Log.e("PISTING YAWAzzzzzz",ratings.size() + " = size niya after sa loop");
 
         linearLayout = new LinearLayoutManager(getApplicationContext());
         recyclerCriteria.setLayoutManager(linearLayout);
@@ -221,8 +222,15 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonArrayRequest);
+        Log.e("PISTING YAWA","INIG CLICK DONE = "+ratings.toString());
+        int totalRating;
+        int RatingsAdded = 0;
+        for(int i = 0; i < ratings.size(); i++){
+            RatingsAdded = RatingsAdded + ratings.get(i);
+        }
+        totalRating = RatingsAdded / ratings.size();
 
-        onCompleteListener.onComplete(index, ratings);
+//        onCompleteListener.onComplete(index, totalRating);
         Log.e("OnCompleteRatings", ratings.toString());
         ratings.clear();
         dismiss();
@@ -230,6 +238,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
     @Override
     public void onClick(int rating, int index) {
+        Log.e("RateVolunteerDialont234",rating + " = "+index);
         ratings.add(index,rating);
     }
 
