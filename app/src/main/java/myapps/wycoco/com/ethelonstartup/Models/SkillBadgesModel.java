@@ -8,15 +8,17 @@ public class SkillBadgesModel {
 
     private String badgeName;
     private String badgeImage;
+    private String badgeRank;
     private int gaugeExp;
     private int star;
     private String skill;
     private int status;
 
-    public SkillBadgesModel(String badgeName, String badgeImage, int gaugeExp, int star, String skill, int status) {
+    public SkillBadgesModel(String badgeName, String badgeImage, String badgeRank, int gaugeExp, int star, String skill, int status) {
         this.badgeName = badgeName;
         this.badgeImage = badgeImage;
         this.gaugeExp = gaugeExp;
+        this.badgeRank = badgeRank;
         this.star  = star;
         this.skill = skill;
         this.status = status;
@@ -73,5 +75,13 @@ public class SkillBadgesModel {
 
     public void setStar(int star) {
         this.star = star;
+    }
+
+    public String getBadgeRank() {
+        return badgeRank;
+    }
+
+    public void setBadgeRank(String badgeRank) {
+        this.badgeRank = badgeRank;
     }
 }

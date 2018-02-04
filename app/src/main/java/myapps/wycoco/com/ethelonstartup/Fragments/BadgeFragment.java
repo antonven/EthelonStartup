@@ -160,8 +160,8 @@ public class BadgeFragment extends Fragment {
                                         Log.e("BADGE_LEVELS_IMAGE", "BADGE LEVEL = "+ badge_level+ " BADGE LEVEL NAME "+ badge_level_name+ badge_skill + badge_status);
                                     }
 
-                                    Log.i("DETAILS_BADGE", currentBadgeName + currentBadgeImage + gaugeExp + star);
-                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, gaugeExp, star,skill,statuss);
+                                    Log.i("DETAILS_BADGE", currentBadgeName + currentBadgeImage + gaugeExp + star + currentBadgeRank);
+                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, currentBadgeRank, gaugeExp, star,skill,statuss);
 
                                     badgesModels.add(model);
 

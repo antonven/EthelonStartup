@@ -88,17 +88,20 @@ public class GroupmatesFragment extends Fragment {
                     public void onResponse(JSONArray response) {
 
                         if (response.length() > 0) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(1);
+                                String groupTypetxt = jsonObject.getString("type");
+
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     JSONObject usersObject = response.getJSONObject(i);
                                     String volunteer_name = usersObject.getString("name");
                                     String volunteer_image = usersObject.getString("image_url");
-                                    String groupTypetxt = usersObject.getString("type");
+//                                    String groupTypetxt = usersObject.getString("type");
                                     Log.i("GROUP_TYPE", groupTypetxt);
                                     UserModel volunteer = new UserModel();
                                     volunteer.setUserFirstName(volunteer_name);
                                     volunteer.setUserImage(volunteer_image);
-                                    groupType.append(groupTypetxt);
 
                                     volunteers.add(volunteer);
 //                                    fetchCriteria();
@@ -107,6 +110,7 @@ public class GroupmatesFragment extends Fragment {
                                     e.printStackTrace();
                                 }
                             }
+                            groupType.append(groupTypetxt);
 
                             goingVolunteersAdapter = new GoingVolunteersAdapter(getContext(), volunteers);
 
@@ -115,6 +119,9 @@ public class GroupmatesFragment extends Fragment {
                             goingVolunteersAdapter.notifyDataSetChanged();
                             volrec.setItemAnimator(new DefaultItemAnimator());
                             volrec.setAdapter(goingVolunteersAdapter);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                         }
                     }

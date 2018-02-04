@@ -41,10 +41,17 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp" />
 
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="1"-->
+            <!--/>-->
+
+
         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
             android:id="@+id/badgeProgress"
             android:layout_width="150dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="22dp"
             android:layout_height="20dp"
             app:rcProgress="80"
             app:rcSecondaryProgress="100"
@@ -54,8 +61,19 @@
             app:rcBackgroundPadding="2dp"
             android:layout_below="@+id/badgePercentage"
             app:rcProgressColor="@color/colorPrimary"
-            app:rcSecondaryProgressColor="@color/transparent"
-            app:rcBackgroundColor="@color/contentBadgeTitle"
+
+            app:rcBackgroundColor="#E0E0E0"
+            android:layout_marginLeft="22dp" />
+
+        <hyogeun.github.com.colorratingbarlib.ColorRatingBar
+            android:id="@+id/stars"
+            android:layout_width="wrap_content"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_below="@+id/badgeProgress"
+            android:layout_marginStart="20dp"
+            app:empty_color="#E0E0E0"
+            app:progress_color="#FFD700"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp" />
 
         <LinearLayout
@@ -63,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/badgePercentage"
             android:layout_alignStart="@+id/badgePercentage"
-            android:layout_below="@+id/badgeProgress"
+            android:layout_below="@+id/stars"
             android:orientation="horizontal"
 
             android:layout_marginTop="4dp"

@@ -75,5 +75,6 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.6.0'
     compile 'com.nex3z:notification-badge:0.3.0'
     compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    compile 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
     testCompile 'junit:junit:4.12'
 }
