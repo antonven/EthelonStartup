@@ -350,7 +350,7 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
                     Log.e("PISTING YAWA","NEWBIE");
                     Glide.with(mContext).load("http://res.cloudinary.com/doaqh7z5c/image/upload/v1516298263/sports_newbie_rbbynh.png")
                             .fitCenter().crossFade().into(holder.first);
-                    holder.roundCornerProgressBar.setProgress(40);
+
 
                     if(skillBadgesModels.get(position).getStatus() < getPriority(badge_levels.get(i).getBadge_level_name())){
                         holder.first.setColorFilter(ContextCompat.getColor(mContext, R.color.black_overlay), android.graphics.PorterDuff.Mode.SRC_IN);
