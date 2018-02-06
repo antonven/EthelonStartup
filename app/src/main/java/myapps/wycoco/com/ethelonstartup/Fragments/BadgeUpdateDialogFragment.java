@@ -43,7 +43,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
 
         badgeUpdate = (ImageView)view.findViewById(R.id.badgeImage);
         updateBody = (TextView)view.findViewById(R.id.updateBody);
-        progressBar = (ProgressBar)view.findViewById(R.id.badgeProgress);
+//        progressBar = (ProgressBar)view.findViewById(R.id.badgeProgress);
 
         String badge_rank = getArguments().getString("badge_rank");
         String image_url = getArguments().getString("image_url");

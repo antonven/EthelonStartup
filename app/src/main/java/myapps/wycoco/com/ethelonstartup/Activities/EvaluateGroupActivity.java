@@ -2,10 +2,12 @@ package myapps.wycoco.com.ethelonstartup.Activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.login.LoginManager;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
@@ -179,6 +182,27 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
                                 }else if(update.equals("new star")){
 
+                                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            switch (which){
+                                                case DialogInterface.BUTTON_POSITIVE:
+                                                    //Yes button clicked
+                                                    LoginManager.getInstance().logOut();
+
+//                                                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                                                    finish();
+                                                    break;
+
+
+                                            }
+                                        }
+                                    };
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                                    builder
+                                            .setMessage("You have earned a new star for")
+                                            .setPositiveButton("Yes", dialogClickListener)
+                                           .show();
 
 
                                 }

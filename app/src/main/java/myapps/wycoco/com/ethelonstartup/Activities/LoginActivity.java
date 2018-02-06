@@ -278,7 +278,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }else{
                                 volunteer_id = response.getString("volunteer_id");
                                 api_token = response.getString("api_token");
-                                Log.e("NOTIFICATIONGIATAY",getIntent().getExtras().getString("activity_id"));
+                                //Log.e("NOTIFICATIONGIATAY",getIntent().getExtras().getString("activity_id"));
 
 
                                 try{

@@ -13,6 +13,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -52,6 +53,7 @@ public class BadgeFragment extends Fragment {
     ArrayList<Badge_Level_Model> badge_levels;
     ProfileSkillsController controller;
     SwipeRefreshLayout swipeRefreshLayout;
+    RelativeLayout relativeLayout;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "volunteerprofile";
 
 
@@ -67,7 +69,7 @@ public class BadgeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_badge, container, false);
         recView = (RecyclerView)view.findViewById(R.id.badgeRecView);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeLayout);
-
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         loadSkillBadges();
 
         return view;
@@ -111,10 +113,13 @@ public class BadgeFragment extends Fragment {
                                     String currentBadgeName = currentBadge.getString("badge_name");
                                     String currentBadgeImage = currentBadge.getString("url");
                                     String currentBadgeRank = currentBadge.getString("badge");
+                                    int currentBadgePoints = currentBadge.getInt("points");
                                     int gaugeExp = currentBadge.getInt("gaugeExp");
                                     int star = currentBadge.getInt("star");
                                     String skill = currentBadge.getString("skill");
                                     int statuss = getBadgeStatus(currentBadgeRank);
+
+                                    int percent = badge.getInt("percentCompleted");
 
                                     JSONArray badges = badge.getJSONArray("badges");
                                     for(int p = 0; p < badges.length(); p++) {
@@ -161,7 +166,7 @@ public class BadgeFragment extends Fragment {
                                     }
 
                                     Log.i("DETAILS_BADGE", currentBadgeName + currentBadgeImage + gaugeExp + star + currentBadgeRank);
-                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, currentBadgeRank, gaugeExp, star,skill,statuss);
+                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, currentBadgeRank, percent, currentBadgePoints, star,skill,statuss);
 
                                     badgesModels.add(model);
 
@@ -169,12 +174,15 @@ public class BadgeFragment extends Fragment {
                                     e.printStackTrace();
                                 }
                             }
+
                             final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             recView.setLayoutManager(layoutManager);
 
                             BadgeCollectionAdapter badgeCollectionAdapter = new BadgeCollectionAdapter(getApplicationContext(), badgesModels, badge_levels, volunteer_id, api_token);
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(badgeCollectionAdapter);
+                        }else{
+                            relativeLayout.setVisibility(View.VISIBLE);
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }

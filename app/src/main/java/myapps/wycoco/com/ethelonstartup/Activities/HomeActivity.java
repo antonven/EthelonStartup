@@ -132,6 +132,7 @@ public class HomeActivity extends AppCompatActivity
                     Log.e("Fire homeactivity", message + " mgreg broadcastreciever");
                     notificationCount++;
                     badge.setNumber(notificationCount);
+                    Toast.makeText(context, "Nay notification", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -211,7 +212,7 @@ public class HomeActivity extends AppCompatActivity
     public void notificationTabSelected(){
 
         String notifUrl = "http://"+new Localhost().getLocalhost()+"notiftabclicked";
-
+        notificationCount = 0;
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
         params.put("api_token",api_token);

@@ -41,22 +41,22 @@
             android:contentDescription="@string/app_name" />
 
 
-        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-            android:id="@+id/badgeProgress"
-            android:layout_width="150dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="80dp"
-            android:layout_height="25dp"
-            app:rcProgress="80"
-            app:rcSecondaryProgress="100"
-            app:rcReverse="false"
-            app:rcMax="150"
-            app:rcRadius="5dp"
-            app:rcBackgroundPadding="2dp"
-            app:rcProgressColor="@color/colorPrimary"
-            app:rcSecondaryProgressColor="@color/transparent"
-            app:rcBackgroundColor="@color/contentBadgeTitle"
-             />
+        <!--<com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar-->
+            <!--android:id="@+id/badgeProgress"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="80dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--app:rcProgress="80"-->
+            <!--app:rcSecondaryProgress="100"-->
+            <!--app:rcReverse="false"-->
+            <!--app:rcMax="150"-->
+            <!--app:rcRadius="5dp"-->
+            <!--app:rcBackgroundPadding="2dp"-->
+            <!--app:rcProgressColor="@color/colorPrimary"-->
+            <!--app:rcSecondaryProgressColor="@color/transparent"-->
+            <!--app:rcBackgroundColor="@color/contentBadgeTitle"-->
+             <!--/>-->
 
         <!--<ProgressBar-->
             <!--android:id="@+id/startGauge"-->

@@ -123,9 +123,10 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
 
 
         }
-        float gaugeExp = skillBadgesModels.get(position).getGaugeExp() / divider * 100;
+//        float gaugeExp = skillBadgesModels.get(position).getGaugeExp() / divider * 100;
+        float gaugeExp = (float) skillBadgesModels.get(position).getGaugeExp();
         holder.roundCornerProgressBar.setProgress((float)skillBadgesModels.get(position).getGaugeExp());
-        holder.badgePercentage.setText(String.valueOf(String.format("%.0f", gaugeExp) + "% complete"));
+        holder.badgePercentage.setText(String.valueOf(String.format("%.0f", (float)skillBadgesModels.get(position).getBadgePercentage()) + "% complete"));
         holder.colorRatingBar.setRating((float) skillBadgesModels.get(position).getStar());
 
 

@@ -3,6 +3,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,6 +45,7 @@ public class GroupmatesFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     ArrayList<UserModel> volunteers;
     GoingVolunteersAdapter goingVolunteersAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView volrec;
     TextView groupType;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
@@ -59,6 +62,7 @@ public class GroupmatesFragment extends Fragment {
 
         volrec = (RecyclerView) view.findViewById(R.id.volRec);
         groupType = (TextView)view.findViewById(R.id.groupType);
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeLayout);
         volunteers = new ArrayList<>();
 
         fetchGroup();
@@ -86,14 +90,16 @@ public class GroupmatesFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-
+                        String groupTypetxt = null;
                         if (response.length() > 0) {
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(1);
-                                String groupTypetxt = jsonObject.getString("type");
+                            Log.e("NAAY GROUP", "BOGO " + response.toString());
+
 
                             for (int i = 0; i < response.length(); i++) {
                                 try {
+                                    JSONObject jsonObject = response.getJSONObject(i);
+                                    groupTypetxt = jsonObject.getString("type");
+
                                     JSONObject usersObject = response.getJSONObject(i);
                                     String volunteer_name = usersObject.getString("name");
                                     String volunteer_image = usersObject.getString("image_url");
@@ -108,6 +114,7 @@ public class GroupmatesFragment extends Fragment {
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+                                    Toast.makeText(getContext(), "BOGO", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             groupType.append(groupTypetxt);
@@ -119,10 +126,12 @@ public class GroupmatesFragment extends Fragment {
                             goingVolunteersAdapter.notifyDataSetChanged();
                             volrec.setItemAnimator(new DefaultItemAnimator());
                             volrec.setAdapter(goingVolunteersAdapter);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            swipeRefreshLayout.setRefreshing(false);
 
+
+                        }
+                        else {
+                            Toast.makeText(getContext(), "WALAY GROUPMATEs", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -130,7 +139,7 @@ public class GroupmatesFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-//                        swipeRefreshLayout.setRefreshing(false);
+                        swipeRefreshLayout.setRefreshing(false);
 
                     }
                 });

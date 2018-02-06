@@ -73,6 +73,7 @@
             android:layout_marginStart="20dp"
             app:empty_color="#E0E0E0"
             app:progress_color="#FFD700"
+            app:changeable="false"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp" />
 
