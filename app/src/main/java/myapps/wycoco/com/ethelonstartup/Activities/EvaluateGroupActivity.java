@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
@@ -30,12 +31,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Fragments.BadgeUpdateDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ConfirmDialogFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.VolunteerRatingFragment;
+import myapps.wycoco.com.ethelonstartup.Models.BadgeUpdateModel;
 import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
@@ -44,11 +47,15 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
     private static final String URL2 = "http://" + new Localhost().getLocalhost() + "attendanceactivity";
     Button submit;
+    String email, fbProfileName,fbProfilePicture,profileId;
+    ArrayList<BadgeUpdateModel>results;
+
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluate_group);
+        results = new ArrayList<>();
 
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -114,17 +121,36 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()){
             case R.id.submitBtn:
                 submitAttendance();
-                ConfirmDialogFragment confirmDialogFragment = new ConfirmDialogFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("api_token", api_token);
-                bundle.putString("activity_id", activity_id);
-                bundle.putString("volunteer_id", volunteer_id);
-                confirmDialogFragment.setArguments(bundle);
-                confirmDialogFragment.show(getSupportFragmentManager(), "Confirm attendance");
                 break;
 
         }
 
+    }
+
+    private void starNextActivity() {
+
+        final String api_token = getIntent().getStringExtra("api_token");
+        final String volunteer_id =  getIntent().getStringExtra("volunteer_id");
+        final String activity_id=  getIntent().getStringExtra("activity_id");
+
+
+        SharedPreferences shared = this.getSharedPreferences("HOME_INFO", MODE_PRIVATE);
+        email = shared.getString("email", "");
+        fbProfileName = shared.getString("fbProfileName", "");
+        fbProfilePicture = shared.getString("fbProfilePicture", "");
+        profileId = shared.getString("profileId", "");
+
+        Intent n = new Intent(this, HomeActivity.class);
+        n.putExtra("api_token", api_token);
+        n.putExtra("volunteer_id", volunteer_id);
+        n.putExtra("activity_id", activity_id);
+        n.putExtra("fbProfileName", fbProfileName);
+        n.putExtra("fbProfilePicture", fbProfilePicture);
+        n.putExtra("profileId", profileId);
+        n.putExtra("profileId", email);
+        Log.e("SHITPREFERENCES", api_token+ volunteer_id + activity_id + fbProfileName +fbProfilePicture + "");
+
+        startActivity(n);
     }
 
     public void submitAttendance(){
@@ -142,7 +168,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL2, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(final JSONArray response) {
                         Log.e("RESPONSE_UPDATE", response.toString());
                         for(int i = 0; i<response.length(); i++) {
                             try {
@@ -151,63 +177,49 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
                                 String body = jsonObject.getString("body");
 
 
-
-//                                JSONArray jsonArray = response.getJSONArray(i);
-//                                for (int o = 0; o < jsonArray.length(); o++){
-//                                    JSONObject ob = jsonArray.getJSONObject(1);
-//                                    String update = jsonObject.getString("update");
-//
-//                                }
-                                FragmentManager fragmentManager = getSupportFragmentManager();
-
                                 if(update.equals("nothing")){
 
+                                    String api_token = getIntent().getStringExtra("api_token");
+                                    String activity_id = getIntent().getStringExtra("activity_id");
+                                    String volunteer_id = getIntent().getStringExtra("volunteer_id");
+
+                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,null,null,null);
+                                    //results.add(badgeUpdateModel);
+
                                 }else if(update.equals("new badge")){
+
                                     JSONObject obj1 = jsonObject.getJSONObject("BadgeInfo");
                                     String badge_rank = obj1.getString("badge");
                                     String image_url = obj1.getString("url");
-//                                    int gaugeExp = obj1.getInt("gaugeExp");
+                                    String badge_name = obj1.getString("badge_name");
 
-                                    BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("badge_rank", badge_rank);
-                                    bundle.putString("image_url", image_url);
-                                    bundle.putString("body", body);
-//                                    bundle.putInt("gaugeExp", gaugeExp);
-
-                                    badgeUpdateDialogFragment.setArguments(bundle);
-                                    badgeUpdateDialogFragment.show(fragmentManager, "badge update");
+                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,badge_rank,image_url,badge_name);
+                                    results.add(badgeUpdateModel);
 
                                     Toast.makeText(EvaluateGroupActivity.this, "NAAY BAG.O BADGE", Toast.LENGTH_SHORT).show();
 
                                 }else if(update.equals("new star")){
 
-                                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            switch (which){
-                                                case DialogInterface.BUTTON_POSITIVE:
-                                                    //Yes button clicked
-                                                    LoginManager.getInstance().logOut();
+                                    JSONObject obj1 = jsonObject.getJSONObject("BadgeInfo");
+                                    String badge_rank = obj1.getString("badge");
+                                    String image_url = obj1.getString("url");
+                                    String badge_name = obj1.getString("badge_name");
 
-//                                                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                                                    finish();
-                                                    break;
+                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,badge_rank,image_url,badge_name);
+                                    results.add(badgeUpdateModel);
 
+                                    Log.e("PISTING YAWA","nisud sa new star");
 
-                                            }
-                                        }
-                                    };
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                                    builder
-                                            .setMessage("You have earned a new star for")
-                                            .setPositiveButton("Yes", dialogClickListener)
-                                           .show();
-
-
+                                }else{
+                                    Log.e("pisting yawa","kayata naa sa else");
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                            }
+
+                            if(i == response.length()-1){
+                                Log.e("response length",response.length()+"");
+                                badgeStart(response.length());
                             }
 
                         }
@@ -225,6 +237,40 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         requestQueue.add(jsonArrayRequest);
     }
 
+    private void badgeStart(int count) {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if(results.size()>0){
+
+            BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
+            Bundle bundle = new Bundle();
+            String badge_rank = results.get(0).getBadge();
+            bundle.putString("badge_rank", results.get(0).getBadge());
+            bundle.putString("image_url", results.get(0).getUrl());
+            bundle.putString("body", results.get(0).getBody());
+            bundle.putString("update",results.get(0).getUpdate());
+            bundle.putString("badge_name",results.get(0).getBadge_name());
+            bundle.putInt("count",0);
+            count = count - 1;
+            bundle.putInt("size",results.size());
+
+            // results.remove(0);
+
+            bundle.putSerializable("array",results);
+            badgeUpdateDialogFragment.setArguments(bundle);
+            badgeUpdateDialogFragment.show(fragmentManager,"Badge");
+
+        }else{
+            //Ton butangig pina success diri
+
+            starNextActivity();
+
+        }
+
+
+
+    }
 
 
 //        @Override

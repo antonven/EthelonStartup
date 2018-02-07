@@ -10,6 +10,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="TextViewWhite">
         <item name="android:textColor">#fff</item>
     </style>

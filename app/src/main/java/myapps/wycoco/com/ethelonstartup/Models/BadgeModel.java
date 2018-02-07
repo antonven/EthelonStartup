@@ -1,5 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by dell on 12/28/2017.
  */
