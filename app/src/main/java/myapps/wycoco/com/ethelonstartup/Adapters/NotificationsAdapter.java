@@ -74,6 +74,10 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 //        holder.userName.setText(notifications.get(position).getSender_id());
         holder.notifContent.setText(notifications.get(position).getBody());
         holder.notifTime.setText(notifications.get(position).getTime());
+
+        if(notifications.get(position).isRead() == 1){
+            holder.linearLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
 //        Glide.with(mContext).load(notifs.get(position).get())
 //                .centerCrop().crossFade().into(holder.notifTypeLogo);
 

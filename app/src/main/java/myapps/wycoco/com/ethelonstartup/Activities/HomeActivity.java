@@ -131,6 +131,7 @@ public class HomeActivity extends AppCompatActivity
 
                     Log.e("Fire homeactivity", message + " mgreg broadcastreciever");
                     notificationCount++;
+                    Log.e("count sa notif",notificationCount+"");
                     badge.setNumber(notificationCount);
                     Toast.makeText(context, "Nay notification", Toast.LENGTH_SHORT).show();
                 }
@@ -198,6 +199,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.REGISTRATION_COMPLETE));
 
@@ -215,6 +217,7 @@ public class HomeActivity extends AppCompatActivity
         notificationCount = 0;
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
+        Log.e("homeactivity219",volunteer_id);
         params.put("api_token",api_token);
 
         JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, notifUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -225,7 +228,7 @@ public class HomeActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("ZZZZZZZZZZZZZCCCCERROR",error.toString());
+                Log.e("ZZZZZZZZZZZZZCCCCERRORccccccc",error.toString());
             }
         }
         );
@@ -239,7 +242,9 @@ public class HomeActivity extends AppCompatActivity
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
         fcm_token = regId;
+
         Log.e("fuck",FirebaseInstanceId.getInstance().getToken() + " ");
+        Log.e("fucker",fcm_token);
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
@@ -259,7 +264,7 @@ public class HomeActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                        Log.e("fuczczk",error.toString());
             }
         }
         );

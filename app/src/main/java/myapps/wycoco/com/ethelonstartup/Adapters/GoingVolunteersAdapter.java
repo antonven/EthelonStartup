@@ -1,6 +1,7 @@
 package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import myapps.wycoco.com.ethelonstartup.Activities.ProfileActivity;
 import myapps.wycoco.com.ethelonstartup.Models.UserModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -68,7 +70,18 @@ public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteers
             volunteerImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent intent = new Intent(mContext, ProfileActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("fbProfilePicture", "");
+                    intent.putExtra("fbProfileName", "");
+                    intent.putExtra("profileId", "");
 
+                    intent.putExtra("volunteer_id",users.get(getAdapterPosition()).getUser_id());
+                    intent.putExtra("api_token", users.get(getAdapterPosition()).getUser_token());
+                    Log.e("FromLeaderboardAdapter",users.get(getAdapterPosition()).getUser_id());
+
+
+                    mContext.startActivity(intent);
                 }
             });
         }

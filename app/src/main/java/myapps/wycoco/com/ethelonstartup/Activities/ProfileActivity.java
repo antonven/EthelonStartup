@@ -26,10 +26,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.BadgeCollectionAdapter;
@@ -41,6 +53,7 @@ import myapps.wycoco.com.ethelonstartup.Fragments.EventDetailsFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.PortfolioFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.ReviewsFragment;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.Models.SkillBadgesModel;
 import myapps.wycoco.com.ethelonstartup.R;
 import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
@@ -111,10 +124,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         fbProfileName = n.getStringExtra("fbProfileName");
         id = n.getStringExtra("profileId");
         fbProfilePicture = n.getStringExtra("fbProfilePicture");
-        profileEmail.setText(userEmail);
+       /* profileEmail.setText(userEmail);
         Glide.with(this).load("https://graph.facebook.com/"+id+"/picture?height=500&width=500&migration_overrides=%7Boctober_2012%3Atrue%7D")
                 .centerCrop().crossFade().into(profilePicture);
-        profileName.setText(fbProfileName);
+        profileName.setText(fbProfileName);*/
+
+       getDetails();
 
         loadBadges();
         loadInterests();
@@ -192,13 +207,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Intent intent = getIntent();
-        String profileId = intent.getStringExtra("profileId");
+        //String profileId = intent.getStringExtra("profileId");
         String volunteer_id = intent.getStringExtra("volunteer_id");
         String api_token = intent.getStringExtra("api_token");
+        Log.e("profile213",volunteer_id + api_token);
         PortfolioFragment portfolioFragment = new PortfolioFragment();
         BadgeFragment badgeFragment = new BadgeFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("profileId", profileId);
+        bundle.putString("profileId", null);
         bundle.putString("volunteer_id", volunteer_id);
         bundle.putString("api_token", api_token);
         portfolioFragment.setArguments(bundle);
@@ -263,6 +279,52 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 //
 //        basicAdapter = new BasicAdapter(images, getApplicationContext());
 //        gridView.setAdapter(basicAdapter);
+    }
+
+    public void getDetails(){
+        String Url = "http://"+new Localhost().getLocalhost()+"profileDetails";
+
+        Intent intent = getIntent();
+        String volunteer_id = intent.getStringExtra("volunteer_id");
+        String api_token = intent.getStringExtra("api_token");
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put("volunteer_id",volunteer_id);
+        params.put("api_token",api_token);
+
+        JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, Url, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONArray arrayOfDetails = response.getJSONArray("details");
+                    JSONObject jsonObject = arrayOfDetails.getJSONObject(0);
+                    String name = jsonObject.getString("name");
+                    String email = jsonObject.getString("email");
+                    String image_url = jsonObject.getString("image_url");
+
+                    profileEmail.setText(email);
+                    Glide.with(ProfileActivity.this).load(image_url)
+                            .centerCrop().crossFade().into(profilePicture);
+                    profileName.setText(name);
+
+                    JSONArray jsonArray = response.getJSONArray("skills");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("animal",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ZZZZZZZZZZZZZCCCCERROR",error.toString());
+            }
+        }
+        );
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
     }
 
 

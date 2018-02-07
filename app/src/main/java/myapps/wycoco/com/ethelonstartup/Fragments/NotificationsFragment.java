@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
@@ -68,7 +69,7 @@ public class NotificationsFragment extends Fragment implements SwipeRefreshLayou
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
         recyclerView = (RecyclerView)v.findViewById(R.id.recView);
 
-
+        Log.e("fuck", FirebaseInstanceId.getInstance().getToken() + " ");
 
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);

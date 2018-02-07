@@ -98,11 +98,17 @@ public class GoingVolunteersFragment extends Fragment implements SwipeRefreshLay
                                     String user_name = usersObject.getString("name");
                                     String profile_id = getArguments().getString("profileId");
 
+                                    String vol_id = usersObject.getString("volunteer_id");
+                                    String api_token = getArguments().getString("api_token");
+
 
                                     UserModel user = new UserModel();
                                     user.setUser_id(profile_id);
                                     user.setUserFirstName(user_name);
                                     user.setUserImage(user_image);
+                                    user.setUser_id(vol_id);
+                                    user.setUser_token(api_token);
+
                                     users.add(user);
 
 

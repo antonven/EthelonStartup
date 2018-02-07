@@ -73,6 +73,13 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
 
         View v = inflater.inflate(R.layout.home_activities_fragment, container, false);
         recView = (RecyclerView) v.findViewById(R.id.recView);
+        Log.e("fuck", FirebaseInstanceId.getInstance().getToken() + " ");
+
+        id = getArguments().getString("id");
+        api_token = getArguments().getString("api_token");
+        profileId = getArguments().getString("profileId");
+
+        displayFirebaseRegId();
 
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -88,6 +95,53 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
 
         return v;
         }
+
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+       // fcm_token = regId;
+
+        Log.e("fuck",FirebaseInstanceId.getInstance().getToken() + " ");
+        //Log.e("fucker",fcm_token);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",id);
+        params.put("api_token",api_token);
+
+        if(FirebaseInstanceId.getInstance().getToken()!=null){
+            params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
+        }else{
+            params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
+        }
+
+        JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, urlFcm, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("fuczczk",error.toString());
+            }
+        }
+        );
+
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
+
+        //Log.e(TAG, "Fire base reg_id: " + regId);
+
+
+        if (!TextUtils.isEmpty(regId)) {
+            Log.d("No logs", regId);
+            System.out.printf(regId);
+//            text.setText(regId + "");
+        }
+//        else
+//           text.setText("wala pa daw ");
+    }
 
 
     @Override
@@ -262,51 +316,5 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
-        // fcm_token = regId;
-
-        Log.e("fuck", FirebaseInstanceId.getInstance().getToken() + " ");
-        //Log.e("fucker",fcm_token);
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("volunteer_id",id);
-        params.put("api_token",api_token);
-
-        if(FirebaseInstanceId.getInstance().getToken()!=null){
-            params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
-        }else{
-            params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
-        }
-
-        JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, urlFcm, new JSONObject(params), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("fuczczk",error.toString());
-            }
-        }
-        );
-
-
-        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-        request.add(jsonrequest);
-
-        //Log.e(TAG, "Fire base reg_id: " + regId);
-
-
-        if (!TextUtils.isEmpty(regId)) {
-            Log.d("No logs", regId);
-            System.out.printf(regId);
-//            text.setText(regId + "");
-        }
-//        else
-//           text.setText("wala pa daw ");
-    }
 }
 

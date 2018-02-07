@@ -103,12 +103,14 @@ public class GroupmatesFragment extends Fragment {
                                     JSONObject usersObject = response.getJSONObject(i);
                                     String volunteer_name = usersObject.getString("name");
                                     String volunteer_image = usersObject.getString("image_url");
+                                    String volunteer_id = usersObject.getString("volunteer_id");
 //                                    String groupTypetxt = usersObject.getString("type");
                                     Log.i("GROUP_TYPE", groupTypetxt);
                                     UserModel volunteer = new UserModel();
                                     volunteer.setUserFirstName(volunteer_name);
                                     volunteer.setUserImage(volunteer_image);
-
+                                    volunteer.setUser_id(volunteer_id);
+                                    volunteer.setUser_token(api_token);
                                     volunteers.add(volunteer);
 //                                    fetchCriteria();
 
