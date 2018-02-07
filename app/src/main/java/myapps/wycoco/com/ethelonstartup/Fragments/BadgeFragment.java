@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,6 +55,7 @@ public class BadgeFragment extends Fragment {
     ProfileSkillsController controller;
     SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout relativeLayout;
+    CardView cardView;
     private static final String URL = "http://" + new Localhost().getLocalhost() + "volunteerprofile";
 
 
@@ -70,6 +72,7 @@ public class BadgeFragment extends Fragment {
         recView = (RecyclerView)view.findViewById(R.id.badgeRecView);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeLayout);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+        cardView = (CardView)view.findViewById(R.id.cardView);
         loadSkillBadges();
 
         return view;
@@ -171,7 +174,7 @@ public class BadgeFragment extends Fragment {
                                     badgesModels.add(model);
 
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.e("ERROR_BADGE", e.toString());
                                 }
                             }
 
@@ -182,14 +185,14 @@ public class BadgeFragment extends Fragment {
                             recView.setItemAnimator(new DefaultItemAnimator());
                             recView.setAdapter(badgeCollectionAdapter);
                         }else{
-                            relativeLayout.setVisibility(View.VISIBLE);
+                            cardView.setVisibility(View.VISIBLE);
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                Log.e("ERROR_BADGE", error.toString());
                 swipeRefreshLayout.setRefreshing(false);
 
 

@@ -62,6 +62,15 @@ public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteers
             volunteerFirstName = (TextView)itemView.findViewById(R.id.volunteerFirstName);
             volunteerFirstName.setTypeface(typeface);
             volunteerImage = (ImageView)itemView.findViewById(R.id.volunteerPicture);
+
+
+
+            volunteerImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
 }

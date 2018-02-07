@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +39,8 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
     ArrayList<RateVolunteer> volunteers;
     EvaluateGroupAdapter evaluateGroupAdapter;
     RecyclerView volrec;
+    CardView cardView;
+
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
 
     public VolunteerRatingFragment() {
@@ -50,7 +53,8 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_rate, container, false);
-
+        cardView = (CardView)view.findViewById(R.id.grouType);
+        cardView.setVisibility(View.GONE);
         volrec = (RecyclerView)view.findViewById(R.id.volRec);
         volunteers  = new ArrayList<>();
         final String activity_id = getArguments().getString("activity_id");

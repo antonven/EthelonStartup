@@ -100,7 +100,8 @@
         <activity android:name=".Activities.SkillPreferenceActivity" />
         <activity android:name=".Activities.EditProfileActivity" />
         <activity android:name=".Activities.LoginAsFoundationActivity" />
-        <activity android:name=".Activities.FoundationHomeActivity"></activity>
+        <activity android:name=".Activities.FoundationHomeActivity" />
+        <activity android:name=".Activities.FoundationProfileActivity"></activity>
     </application>
 
 </manifest>

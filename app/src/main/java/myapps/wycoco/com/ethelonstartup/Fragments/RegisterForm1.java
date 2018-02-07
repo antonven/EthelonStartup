@@ -1,10 +1,13 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,6 +36,23 @@ public class RegisterForm1 extends Fragment {
         passWord = (EditText)v.findViewById(R.id.inputPassword);
         eMail = (EditText)v.findViewById(R.id.inputEmail);
         nextStepBtn = (Button)v.findViewById(R.id.nextStepBtn);
+
+
+        passWord.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                final int DRAWABLE_RIGHT = 2;
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if(motionEvent.getRawX() >= (passWord.getRight()-passWord.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())){
+
+                        passWord.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.visible_on), null);
+                        passWord.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    }
+                }
+                return false;
+            }
+        });
 
         nextStepBtn.setOnClickListener(new View.OnClickListener() {
             @Override

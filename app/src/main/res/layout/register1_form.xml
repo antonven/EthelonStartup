@@ -46,9 +46,11 @@
         android:layout_width="match_parent"
         android:textCursorDrawable="@null"
         android:padding="5dp"
+
         android:layout_height="50dp"
         android:inputType="textVisiblePassword"
         android:background="@drawable/edit_text_custom_bg"
+        android:drawableRight="@drawable/visible_off"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"

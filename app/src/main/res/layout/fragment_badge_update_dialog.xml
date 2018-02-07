@@ -12,13 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/updateBody"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:text="!"/>
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--/>-->
+
+
 
         <ImageView
             android:layout_width="270dp"
@@ -33,12 +32,22 @@
             android:layout_gravity="center"
             android:src="@drawable/medicine_newbie"/>
 
-        <ImageView
-            android:id="@+id/btn_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name" />
+        <!--<ImageView-->
+            <!--android:id="@+id/btn_close"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:contentDescription="@string/app_name" />-->
 
+        <TextView
+            android:layout_width="150dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/updateBody"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="You have earned a new BADGE!"/>
 
 
         <!--<com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar-->

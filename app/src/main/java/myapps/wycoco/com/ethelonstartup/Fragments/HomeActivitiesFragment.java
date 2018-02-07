@@ -1,5 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
@@ -36,6 +40,7 @@ import java.util.Map;
 
 import myapps.wycoco.com.ethelonstartup.Adapters.HomeActivitiesListAdapter;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
+import myapps.wycoco.com.ethelonstartup.Models.Config;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 import myapps.wycoco.com.ethelonstartup.Utils.SingletonClass;
@@ -49,6 +54,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String URL = "http://"+new Localhost().getLocalhost()+"getallactivities";
+    private String urlFcm = "http://"+new Localhost().getLocalhost()+"fcm_token";
     RecyclerView recView;
     ArrayList<ActivityModel> activities;
     HomeActivitiesListAdapter homeActivitiesListAdapter;
@@ -98,6 +104,7 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
         id = getArguments().getString("id");
         api_token = getArguments().getString("api_token");
         profileId = getArguments().getString("profileId");
+        displayFirebaseRegId();
         int offsetCount = 5;
 
         Map<String, String> params = new HashMap<String, String>();
@@ -253,6 +260,53 @@ public class HomeActivitiesFragment extends Fragment implements SwipeRefreshLayo
     @Subscribe
     public void getMessage(String message){
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+        // fcm_token = regId;
+
+        Log.e("fuck", FirebaseInstanceId.getInstance().getToken() + " ");
+        //Log.e("fucker",fcm_token);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",id);
+        params.put("api_token",api_token);
+
+        if(FirebaseInstanceId.getInstance().getToken()!=null){
+            params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
+        }else{
+            params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
+        }
+
+        JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, urlFcm, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("fuczczk",error.toString());
+            }
+        }
+        );
+
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
+
+        //Log.e(TAG, "Fire base reg_id: " + regId);
+
+
+        if (!TextUtils.isEmpty(regId)) {
+            Log.d("No logs", regId);
+            System.out.printf(regId);
+//            text.setText(regId + "");
+        }
+//        else
+//           text.setText("wala pa daw ");
     }
 }
 

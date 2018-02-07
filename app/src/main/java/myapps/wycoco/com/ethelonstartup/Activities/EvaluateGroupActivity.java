@@ -68,6 +68,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
             window.setStatusBarColor(Color.parseColor("#8b0000"));
         }
 
+
         submit = (Button)findViewById(R.id.submitBtn);
         submit.setOnClickListener(this);
 
@@ -140,7 +141,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         fbProfilePicture = shared.getString("fbProfilePicture", "");
         profileId = shared.getString("profileId", "");
 
-        Intent n = new Intent(this, HomeActivity.class);
+        Intent n = new Intent(this, JoinActivitySuccess.class);
         n.putExtra("api_token", api_token);
         n.putExtra("volunteer_id", volunteer_id);
         n.putExtra("activity_id", activity_id);
@@ -148,6 +149,8 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         n.putExtra("fbProfilePicture", fbProfilePicture);
         n.putExtra("profileId", profileId);
         n.putExtra("profileId", email);
+        n.putExtra("message", "message");
+
         Log.e("SHITPREFERENCES", api_token+ volunteer_id + activity_id + fbProfileName +fbProfilePicture + "");
 
         startActivity(n);
@@ -262,7 +265,12 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
             badgeUpdateDialogFragment.show(fragmentManager,"Badge");
 
         }else{
+
+//            Intent i = new Intent(EvaluateGroupActivity.this, JoinActivitySuccess.class);
+//            i.putExtra("message", "message");
+
             //Ton butangig pina success diri
+
 
             starNextActivity();
 

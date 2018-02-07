@@ -54,6 +54,7 @@
                         android:id="@+id/profilePictureProfile"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
+
                         android:layout_marginStart="21dp"
                         android:scaleType="centerCrop"
                         app:civ_border_color="#fff"

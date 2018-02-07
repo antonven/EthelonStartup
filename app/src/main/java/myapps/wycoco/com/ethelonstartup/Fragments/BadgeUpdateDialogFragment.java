@@ -93,7 +93,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
 
             Log.e("PISTING YAWA","new star nisud");
 
-            Glide.with(getContext()).load(R.drawable.ic_heart_on)
+            Glide.with(getContext()).load(R.drawable.star)
                     .fitCenter().crossFade().into(badgeUpdate);
 
             updateBody.setText("You have earned a new star in your "+badge_name+" "+badge_rank +" badge");
