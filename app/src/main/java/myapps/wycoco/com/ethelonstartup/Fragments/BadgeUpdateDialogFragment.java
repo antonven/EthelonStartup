@@ -133,25 +133,25 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
                     }
                 });
 
-            }
+            }else{
 
-            BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("badge_rank", results.get(count).getBadge());
-            bundle.putString("image_url", results.get(count).getUrl());
-            bundle.putString("body", results.get(count).getBody());
-            bundle.putString("update",results.get(count).getUpdate());
-            bundle.putString("badge_name",results.get(count).getBadge_name());
-            bundle.putInt("count",count);
-            bundle.putInt("size",size);
-            //  results.remove(0);
+                BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("badge_rank", results.get(count).getBadge());
+                bundle.putString("image_url", results.get(count).getUrl());
+                bundle.putString("body", results.get(count).getBody());
+                bundle.putString("update",results.get(count).getUpdate());
+                bundle.putString("badge_name",results.get(count).getBadge_name());
+                bundle.putInt("count",count);
+                bundle.putInt("size",size);
+                //  results.remove(0);
 
-            bundle.putSerializable("array",results);
-            badgeUpdateDialogFragment.setArguments(bundle);
-            badgeUpdateDialogFragment.show(fragmentManager,"Badge");
-            confirmBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                bundle.putSerializable("array",results);
+                badgeUpdateDialogFragment.setArguments(bundle);
+                badgeUpdateDialogFragment.show(fragmentManager,"Badge");
+                confirmBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 //                    Intent i = new Intent(getContext(), ProfileActivity.class);
 //                    String api_token = getArguments().getString("api_token");
 //                    String volunteer_id =  getArguments().getString("volunteer_id");
@@ -161,9 +161,11 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
 //                    i.putExtra("message", "true");
 //                    getContext().startActivity(i);
 //                    starNextActivity();
-                    dismiss();
-                }
-            });
+                        dismiss();
+                    }
+                });
+            }
+
 
         }else{
 
