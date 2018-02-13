@@ -50,30 +50,28 @@
             android:text="You have earned a new BADGE!"/>
 
 
-        <!--<com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar-->
-            <!--android:id="@+id/badgeProgress"-->
-            <!--android:layout_width="150dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="80dp"-->
-            <!--android:layout_height="25dp"-->
-            <!--app:rcProgress="80"-->
-            <!--app:rcSecondaryProgress="100"-->
-            <!--app:rcReverse="false"-->
-            <!--app:rcMax="150"-->
-            <!--app:rcRadius="5dp"-->
-            <!--app:rcBackgroundPadding="2dp"-->
-            <!--app:rcProgressColor="@color/colorPrimary"-->
-            <!--app:rcSecondaryProgressColor="@color/transparent"-->
-            <!--app:rcBackgroundColor="@color/contentBadgeTitle"-->
-             <!--/>-->
-
-        <!--<ProgressBar-->
-            <!--android:id="@+id/startGauge"-->
-            <!--android:layout_width="150dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="87dp"/>-->
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/login_ethelon_bg_button_user"
+            android:text="Confirm"
+            android:visibility="visible"
+            android:textColor="#ffffff"
+            android:id="@+id/confirmBtn"
+            android:layout_marginBottom="12dp"
+            android:layout_gravity="bottom|center"
+            />
+        <!--<Button-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@drawable/login_ethelon_bg_button_user"-->
+            <!--android:text="Confirm"-->
+            <!--android:visibility="gone"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:id="@+id/nextBtn"-->
+            <!--android:layout_marginBottom="12dp"-->
+            <!--android:layout_gravity="bottom|center"-->
+            <!--/>-->
 
     </FrameLayout>
     

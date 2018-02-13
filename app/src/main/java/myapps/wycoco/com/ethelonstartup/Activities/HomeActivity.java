@@ -228,7 +228,7 @@ public class HomeActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("ZZZZZZZZZZZZZCCCCERRORccccccc",error.toString());
+                Log.e("ZZZZZZZZ",error.toString());
             }
         }
         );
@@ -243,8 +243,8 @@ public class HomeActivity extends AppCompatActivity
         String regId = pref.getString("regId", null);
         fcm_token = regId;
 
-        Log.e("fuck",FirebaseInstanceId.getInstance().getToken() + " ");
-        Log.e("fucker",fcm_token);
+//        Log.e("fuck",FirebaseInstanceId.getInstance().getToken() + " ");
+//        Log.e("fucker",fcm_token);
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
@@ -310,6 +310,7 @@ public class HomeActivity extends AppCompatActivity
             intent.putExtra("profileId", profileId);
             intent.putExtra("volunteer_id",volunteer_id);
             intent.putExtra("api_token", api_token);
+            intent.putExtra("message", "true");
 
 
             startActivity(intent);
@@ -397,16 +398,7 @@ public class HomeActivity extends AppCompatActivity
                         toolbarTitle.setText("Home");
                     }else{
                         toolbarTitle.setText("Leaderboard");
-//                    konfettiView.build()
-//                            .addColors(Color.RED, Color.parseColor("#B71C1C"), Color.parseColor("#C62828"))
-//                            .setDirection(0.0, 359.0)
-//                            .setSpeed(1f, 5f)
-//                            .setFadeOutEnabled(true)
-//                            .setTimeToLive(2000L)
-//                            .addShapes(Shape.RECT, Shape.CIRCLE)
-//                            .addSizes(new Size(12, 5f))
-//                            .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
-//                            .stream(300, 5000L);
+
                     }
                 }
 
@@ -437,9 +429,7 @@ public class HomeActivity extends AppCompatActivity
         badge = (NotificationBadge)v.findViewById(R.id.notifBadge);
 
         tabLayout.getTabAt(1).setCustomView(v);
-        // badge.setNumber(4);
-        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_notifications_black_24dp);
-//        tabLayout.getTabAt(1).setCustomView(R.layout.notification_kobe_layout);
+
 
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#c62828"));
 
@@ -519,12 +509,13 @@ public class HomeActivity extends AppCompatActivity
 //        ethelonUserImage = n.getStringExtra("image_url");
 //        newSignUpUsername = n.getStringExtra("newSignUpUsername");
 //        fbProfileName = n.getStringExtra("fbProfileName");
-//        email = n.getStringExtra("email");
+        email = n.getStringExtra("email");
 
 
         HashMap<String, String> userFb = session.getUserCredentials();
         fbProfilePicture = userFb.get(SessionManager.KEY_PICTURE);
         email = userFb.get(SessionManager.KEY_EMAIL);
+//        Log.e("EMAIL_SESSION", email);
         fbProfileName = userFb.get(SessionManager.KEY_NAME);
         profName = userFb.get(SessionManager.KEY_NAME);
 
@@ -542,7 +533,7 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-        Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName);
+        Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName + email);
 
         View view = navigationView.getHeaderView(0);
         profileName = (TextView) view.findViewById(R.id.profileName);

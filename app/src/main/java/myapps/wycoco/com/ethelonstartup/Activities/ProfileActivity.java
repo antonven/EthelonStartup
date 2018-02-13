@@ -66,6 +66,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String skillsUrl = "http://" + new Localhost().getLocalhost() + "getSkills";
     CollapsingToolbarLayout collapsingToolbarLayout = null;
     String id;
     String fbProfilePicture, fbProfileName;
@@ -124,14 +125,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         fbProfileName = n.getStringExtra("fbProfileName");
         id = n.getStringExtra("profileId");
         fbProfilePicture = n.getStringExtra("fbProfilePicture");
-       /* profileEmail.setText(userEmail);
-        Glide.with(this).load("https://graph.facebook.com/"+id+"/picture?height=500&width=500&migration_overrides=%7Boctober_2012%3Atrue%7D")
-                .centerCrop().crossFade().into(profilePicture);
-        profileName.setText(fbProfileName);*/
+
+
+//        profileEmail.setText(userEmail);
+//        Glide.with(this).load("https://graph.facebook.com/"+id+"/picture?height=500&width=500&migration_overrides=%7Boctober_2012%3Atrue%7D")
+//                .centerCrop().crossFade().into(profilePicture);
+//        profileName.setText(fbProfileName);
+
+        String msg = n.getStringExtra("message");
+        if(!msg.equals("null") && n.getStringExtra("message").equals("false")){
+            editProfileBtn.setVisibility(View.INVISIBLE);
+
+        }
 
        getDetails();
 
-        loadBadges();
+//        loadBadges();
         loadInterests();
 
 
@@ -239,47 +248,81 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public void loadBadges(){
-        gridViewBadges = (GridView)findViewById(R.id.gridViewBadges);
-
-        badges = new ArrayList<>();
-        badges.add(R.drawable.medicinebadge);
-        gridViewBadges.setAdapter(new BasicAdapter(badges, getApplicationContext()));
-    }
+//    public void loadBadges(){
+//        gridViewBadges = (GridView)findViewById(R.id.gridViewBadges);
+//
+//        badges = new ArrayList<>();
+//        badges.add(R.drawable.medicinebadge);
+//        gridViewBadges.setAdapter(new BasicAdapter(badges, getApplicationContext()));
+//    }
 
     public void loadInterests(){
 
         images = new ArrayList<>();
         gridView = (GridView)findViewById(R.id.gridView);
 
+        Intent intent = getIntent();
+        String volunteer_id = intent.getStringExtra("volunteer_id");
+        String api_token = intent.getStringExtra("api_token");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",volunteer_id);
+        params.put("api_token",api_token);
+
+        JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, skillsUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                for(int i = 0; i < response.length(); i++) {
+                    try {
+
+                        Log.e("NISUD_SKILLZ", response.toString());
+                        JSONArray arrayOfDetails = response.getJSONArray("name");
+                        String skill = arrayOfDetails.getString(i);
+
+                        if(skill.equals("environment"))
+                            images.add(R.drawable.environment_volunteer);
+                        else if(skill.equals("medical"))
+                            images.add(R.drawable.medical_volunteer);
+                        else if(skill.equals("livelihood"))
+                            images.add(R.drawable.livelihood_volunteer);
+                        else if(skill.equals("sports"))
+                            images.add(R.drawable.sports_volunteer);
+                        else if(skill.equals("culinary"))
+                            images.add(R.drawable.culinary_volunteer);
+                        else if(skill.equals("charity"))
+                            images.add(R.drawable.charity_volunteer);
+                        else if(skill.equals("arts"))
+                            images.add(R.drawable.arts_volunteer);
+                        else if(skill.equals("education"))
+                            images.add(R.drawable.education_volunteer);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.e("animal", e.toString());
+                    }
+                }
+                basicAdapter = new BasicAdapter(images, getApplicationContext());
+                gridView.setAdapter(basicAdapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ZZZZZZZZZZZZZCCCCERROR",error.toString());
+            }
+        }
+        );
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
+    }
+
+
+
 //        ArrayList<String> skills = activities.get(position).getAct_skills();
 //        SharedPreferences shared = getSharedPreferences("SKILLS_PREF", MODE_PRIVATE);
 //        Set<String> skills = shared.getStringSet("skills", null);
 //        Log.e("ProfileActivity skills", skills.toString());
-//        for(String skill : skills){
-//
-//            if(skill.equals("environment"))
-//                images.add(R.drawable.environment_volunteer);
-//            else if(skill.equals("medical"))
-//                images.add(R.drawable.medical_volunteer);
-//            else if(skill.equals("livelihood"))
-//                images.add(R.drawable.livelihood_volunteer);
-//            else if(skill.equals("sports"))
-//                images.add(R.drawable.sports_volunteer);
-//            else if(skill.equals("culinary"))
-//                images.add(R.drawable.culinary_volunteer);
-//            else if(skill.equals("charity"))
-//                images.add(R.drawable.charity_volunteer);
-//            else if(skill.equals("arts"))
-//                images.add(R.drawable.arts_volunteer);
-//            else if(skill.equals("education"))
-//                images.add(R.drawable.education_volunteer);
-//        }
-//        Log.e("IMAGESPROFILE skills", images.toString());
-//
-//        basicAdapter = new BasicAdapter(images, getApplicationContext());
-//        gridView.setAdapter(basicAdapter);
-    }
 
     public void getDetails(){
         String Url = "http://"+new Localhost().getLocalhost()+"profileDetails";
@@ -287,8 +330,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         String volunteer_id = intent.getStringExtra("volunteer_id");
         String api_token = intent.getStringExtra("api_token");
-        Map<String, String> params = new HashMap<String, String>();
 
+        Map<String, String> params = new HashMap<String, String>();
         params.put("volunteer_id",volunteer_id);
         params.put("api_token",api_token);
 

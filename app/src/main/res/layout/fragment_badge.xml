@@ -26,9 +26,10 @@
             <TextView
                 android:textColor="@color/transparent"
                 android:padding="8dp"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="You still have no badges earned."/>
+                android:text="No badges earned. Join an activity to earn different badges!"/>
         </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.RecyclerView

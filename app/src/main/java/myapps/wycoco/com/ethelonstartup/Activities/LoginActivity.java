@@ -476,7 +476,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (object.getString("email") != null) {
                             email = object.getString("email");
-
+                            Log.e("EMAIL_HOME", email);
                             SharedPreferences pref = getApplicationContext().getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putString("email", email);
@@ -527,6 +527,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 intent.putExtra("fbProfilePicture", profilePicture);
                                                 intent.putExtra("fbProfileName", profileName);
                                                 intent.putExtra("email", email);
+                                                Log.e("EMAIL_HOME_2", email);
+
                                                 startActivity(intent);
 
 
@@ -632,6 +634,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     intent.putExtra("fbProfilePicture", profilePicture);
                                                     intent.putExtra("fbProfileName", profileName);
                                                     intent.putExtra("email", email);
+                                                    Log.e("EMAIL_HOME", email);
+
                                                     startActivity(intent);
 
                                                 } else if (message.equals("Email already exists")) {

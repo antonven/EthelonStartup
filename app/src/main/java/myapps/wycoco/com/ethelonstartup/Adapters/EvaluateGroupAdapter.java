@@ -57,8 +57,15 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
 
     @Override
     public void onBindViewHolder(EvaluateGroupAdapter.ViewHolder holder, int position) {
-        Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
-                .centerCrop().crossFade().into(holder.volunteerImage);
+
+        String img = volunteers.get(position).getVolunteer_image();
+        if(!img.equals("null")) {
+            Glide.with(mContext).load(volunteers.get(position).getVolunteer_image())
+                    .centerCrop().crossFade().into(holder.volunteerImage);
+        }else{
+            holder.volunteerImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_person_black_24dp));
+
+        }
         holder.volunteerName.setText(volunteers.get(position).getVolunteer_name());
 
         Log.e("Status sa pag rate",  volunteers.get(position) + " " + volunteers.get(position).getStatus());
@@ -113,7 +120,7 @@ public class EvaluateGroupAdapter extends RecyclerView.Adapter<EvaluateGroupAdap
                     n.putString("activity_group_id", activity_group_id);
                     n.putString("volunteer_id_to_rate", volunteer_rate_id);
                     n.putString("api_token", api_token);
-                    n.putString("groupmateImage", groupmateImage);
+                    n.putString("group_mate_image", groupmateImage);
                     n.putInt("criteria_size", criterias.size());
                     n.putString("activity_id", activity_id);
                     n.putString("volunteer_id", volunteer_id);

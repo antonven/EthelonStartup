@@ -75,7 +75,7 @@ public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteers
                     intent.putExtra("fbProfilePicture", "");
                     intent.putExtra("fbProfileName", "");
                     intent.putExtra("profileId", "");
-
+                    intent.putExtra("message", "false");
                     intent.putExtra("volunteer_id",users.get(getAdapterPosition()).getUser_id());
                     intent.putExtra("api_token", users.get(getAdapterPosition()).getUser_token());
                     Log.e("FromLeaderboardAdapter",users.get(getAdapterPosition()).getUser_id());

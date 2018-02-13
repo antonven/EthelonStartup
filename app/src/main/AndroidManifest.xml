@@ -101,7 +101,8 @@
         <activity android:name=".Activities.EditProfileActivity" />
         <activity android:name=".Activities.LoginAsFoundationActivity" />
         <activity android:name=".Activities.FoundationHomeActivity" />
-        <activity android:name=".Activities.FoundationProfileActivity"></activity>
+        <activity android:name=".Activities.FoundationProfileActivity" />
+        <activity android:name=".Activities.CompleteActivitySuccess"></activity>
     </application>
 
 </manifest>

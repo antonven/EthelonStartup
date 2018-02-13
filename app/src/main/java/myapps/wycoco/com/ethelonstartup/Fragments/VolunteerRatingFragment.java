@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,6 +42,7 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
     EvaluateGroupAdapter evaluateGroupAdapter;
     RecyclerView volrec;
     CardView cardView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private static final String URL = "http://" + new Localhost().getLocalhost() + "groupmatestorate";
 
@@ -54,7 +57,12 @@ public class VolunteerRatingFragment extends Fragment implements RateVolunteerDi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_rate, container, false);
         cardView = (CardView)view.findViewById(R.id.grouType);
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeLayout);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0,0,0,0);
+        swipeRefreshLayout.setLayoutParams(layoutParams);
         cardView.setVisibility(View.GONE);
+
         volrec = (RecyclerView)view.findViewById(R.id.volRec);
         volunteers  = new ArrayList<>();
         final String activity_id = getArguments().getString("activity_id");

@@ -78,9 +78,10 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         onCompleteListener = (OnCompleteListener)getTargetFragment();
 
         String volunteer_name = getArguments().getString("volunteer_name");
-        String groupmateImage1 = getArguments().getString("groupmateImage");
-//        Glide.with(getApplicationContext()).load(groupmateImage1)
-//                .centerCrop().crossFade().into(groupmateImage);
+        String groupmateImage1 = getArguments().getString("group_mate_image");
+
+        Glide.with(getApplicationContext()).load(groupmateImage1)
+                .centerCrop().crossFade().into(groupmateImage);
 
         volunteerNameTxt = (TextView)view.findViewById(R.id.rateVolunteerName);
         recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);

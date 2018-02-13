@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,13 +48,20 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     @Override
     public void onBindViewHolder(LeaderBoardAdapter.ViewHolder holder, int position) {
 
-        Glide.with(mContext).load(users.get(position).getUserImage())
-                .centerCrop().crossFade().into(holder.leaderboardImage);
+        String img = users.get(position).getUserImage();
+        Log.e("position", position + " " + img );
+
+        if(!img.equals("null")) {
+            Glide.with(mContext).load(users.get(position).getUserImage())
+                    .centerCrop().crossFade().into(holder.leaderboardImage);
+        }else{
+            Log.e("BOGO_KA", "PISTENG SUD SA ELSE YAWA");
+            holder.leaderboardImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_person_black_24dp));
+        }
         holder.leaderboardName.setText(users.get(position).getUserFirstName());
         holder.leaderboardPosition.setText(position + 1 + "");
         holder.leaderboardPoints.setText(users.get(position).getUser_points() + " points");
 
-        Log.e("position", position + "");
 
     }
 
@@ -84,7 +92,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
                     intent.putExtra("fbProfilePicture", "");
                     intent.putExtra("fbProfileName", "");
                     intent.putExtra("profileId", "");
-
+                    intent.putExtra("message", "false");
                     intent.putExtra("volunteer_id",users.get(getAdapterPosition()).getUser_id());
                     intent.putExtra("api_token", users.get(getAdapterPosition()).getUser_token());
                     Log.e("FromLeaderboardAdapter",users.get(getAdapterPosition()).getUser_id());

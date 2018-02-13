@@ -1,5 +1,6 @@
 package myapps.wycoco.com.ethelonstartup.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,9 +66,18 @@ public class PortfolioActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            String volunteer_id = getIntent().getStringExtra("volunteer_id");
+            String api_token = getIntent().getStringExtra("api_token");
+            String activity_id = getIntent().getStringExtra("activity_id");
+            String profile_id = getIntent().getStringExtra("profileId");
             @Override
             public void onClick(View v) {
                 finish();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                intent.putExtra("volunteer_id", volunteer_id);
+                intent.putExtra("api_token", api_token);
+                intent.putExtra("activity_id", activity_id);
+                intent.putExtra("profileId", profile_id);
             }
         });
 

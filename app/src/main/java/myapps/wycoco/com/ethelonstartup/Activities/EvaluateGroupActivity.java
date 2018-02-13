@@ -141,7 +141,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         fbProfilePicture = shared.getString("fbProfilePicture", "");
         profileId = shared.getString("profileId", "");
 
-        Intent n = new Intent(this, JoinActivitySuccess.class);
+        Intent n = new Intent(this, CompleteActivitySuccess.class);
         n.putExtra("api_token", api_token);
         n.putExtra("volunteer_id", volunteer_id);
         n.putExtra("activity_id", activity_id);
@@ -243,6 +243,9 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
     private void badgeStart(int count) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        String api_token = getIntent().getStringExtra("api_token");
+        String activity_id = getIntent().getStringExtra("activity_id");
+        String volunteer_id = getIntent().getStringExtra("volunteer_id");
 
         if(results.size()>0){
 
@@ -255,6 +258,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
             bundle.putString("update",results.get(0).getUpdate());
             bundle.putString("badge_name",results.get(0).getBadge_name());
             bundle.putInt("count",0);
+
             count = count - 1;
             bundle.putInt("size",results.size());
 
@@ -266,10 +270,11 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
         }else{
 
-//            Intent i = new Intent(EvaluateGroupActivity.this, JoinActivitySuccess.class);
+            Intent i = new Intent(EvaluateGroupActivity.this, CompleteActivitySuccess.class);
 //            i.putExtra("message", "message");
 
             //Ton butangig pina success diri
+
 
 
             starNextActivity();

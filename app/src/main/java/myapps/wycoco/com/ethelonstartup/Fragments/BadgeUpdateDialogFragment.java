@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.HomeActivity;
+import myapps.wycoco.com.ethelonstartup.Activities.ProfileActivity;
 import myapps.wycoco.com.ethelonstartup.Models.BadgeUpdateModel;
 import myapps.wycoco.com.ethelonstartup.R;
 
@@ -35,7 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
+public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implements View.OnClickListener {
 
 
     ImageView badgeUpdate;
@@ -43,6 +45,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
     ProgressBar progressBar;
     String email, fbProfileName,fbProfilePicture,profileId, update, body, image_url,badge_rank, badge_name;
     int count, size;
+    Button confirmBtn;
     ArrayList<BadgeUpdateModel> results;
 
     public BadgeUpdateDialogFragment() {
@@ -57,6 +60,8 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_badge_update_dialog ,container,false);
 
+
+        confirmBtn = (Button)view.findViewById(R.id.confirmBtn);
         badgeUpdate = (ImageView)view.findViewById(R.id.badgeImage);
         updateBody = (TextView)view.findViewById(R.id.updateBody);
 //        progressBar = (ProgressBar)view.findViewById(R.id.badgeProgress);
@@ -87,7 +92,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
             Glide.with(getContext()).load(image_url)
                     .fitCenter().crossFade().into(badgeUpdate);
 
-            updateBody.setText("You have earned the "+ badge_name + " "+badge_rank + " badge !");
+            updateBody.setText("You have earned the "+badge_rank+ " " + badge_name + "!");
 
         }else if(update.equals("new star")){
 
@@ -96,38 +101,70 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
             Glide.with(getContext()).load(R.drawable.star)
                     .fitCenter().crossFade().into(badgeUpdate);
 
-            updateBody.setText("You have earned a new star in your "+badge_name+" "+badge_rank +" badge");
+            updateBody.setText("You have earned a new star in your "+badge_rank +" " +badge_name +"!");
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.myDialog);
-            builder.setMessage("You Earned a new star!").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    count++;
+//            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.myDialog);
+//            builder.setMessage("You Earned a new star!").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int id) {
+//
+//
+//                }
+//            });
+//
+//            AlertDialog alert = builder.create();
+//            alert.show();
+            FragmentManager fragmentManager = getFragmentManager();
+            count++;
 
-                    if(count == size){
+            if(count == size){
+//                confirmBtn.setVisibility(View.VISIBLE);
+                confirmBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getContext(), ProfileActivity.class);
+                        String api_token = getArguments().getString("api_token");
+                        String volunteer_id =  getArguments().getString("volunteer_id");
+                        String activity_id=  getArguments().getString("activity_id");
+                        i.putExtra("api_token", api_token);
+                        i.putExtra("volunteer_id", volunteer_id);
+                        i.putExtra("message", "true");
+                        getContext().startActivity(i);
                         starNextActivity();
                     }
+                });
 
-                    BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("badge_rank", results.get(count).getBadge());
-                    bundle.putString("image_url", results.get(count).getUrl());
-                    bundle.putString("body", results.get(count).getBody());
-                    bundle.putString("update",results.get(count).getUpdate());
-                    bundle.putString("badge_name",results.get(count).getBadge_name());
-                    bundle.putInt("count",count);
-                    bundle.putInt("size",size);
-                  //  results.remove(0);
+            }
 
-                        bundle.putSerializable("array",results);
-                        badgeUpdateDialogFragment.setArguments(bundle);
-                        badgeUpdateDialogFragment.show(fragmentManager,"Badge");
+            BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("badge_rank", results.get(count).getBadge());
+            bundle.putString("image_url", results.get(count).getUrl());
+            bundle.putString("body", results.get(count).getBody());
+            bundle.putString("update",results.get(count).getUpdate());
+            bundle.putString("badge_name",results.get(count).getBadge_name());
+            bundle.putInt("count",count);
+            bundle.putInt("size",size);
+            //  results.remove(0);
 
+            bundle.putSerializable("array",results);
+            badgeUpdateDialogFragment.setArguments(bundle);
+            badgeUpdateDialogFragment.show(fragmentManager,"Badge");
+            confirmBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    Intent i = new Intent(getContext(), ProfileActivity.class);
+//                    String api_token = getArguments().getString("api_token");
+//                    String volunteer_id =  getArguments().getString("volunteer_id");
+//                    String activity_id=  getArguments().getString("activity_id");
+//                    i.putExtra("api_token", api_token);
+//                    i.putExtra("volunteer_id", volunteer_id);
+//                    i.putExtra("message", "true");
+//                    getContext().startActivity(i);
+//                    starNextActivity();
+                    dismiss();
                 }
             });
 
-            AlertDialog alert = builder.create();
-            alert.show();
         }else{
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -136,7 +173,21 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
 
             if(count == size){
 
-                starNextActivity();
+//                confirmBtn.setVisibility(View.VISIBLE);
+                confirmBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getContext(), ProfileActivity.class);
+                        String api_token = getArguments().getString("api_token");
+                        String volunteer_id =  getArguments().getString("volunteer_id");
+                        String activity_id=  getArguments().getString("activity_id");
+                        i.putExtra("api_token", api_token);
+                        i.putExtra("volunteer_id", volunteer_id);
+                        i.putExtra("message", "true");
+                        getContext().startActivity(i);
+                        starNextActivity();
+                    }
+                });
                 return null;
             }else{
                 BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
@@ -153,10 +204,18 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
                 bundle.putSerializable("array",results);
                 badgeUpdateDialogFragment.setArguments(bundle);
                 badgeUpdateDialogFragment.show(fragmentManager,"Badge");
+                confirmBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                       dismiss();
+                    }
+                });
 
             }
 
         }
+
+
 
 
         badgeUpdate.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +225,20 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
                 count++;
 
                 if(count == size){
-                    starNextActivity();
+                    confirmBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent i = new Intent(getContext(), ProfileActivity.class);
+                            String api_token = getArguments().getString("api_token");
+                            String volunteer_id =  getArguments().getString("volunteer_id");
+                            String activity_id=  getArguments().getString("activity_id");
+                            i.putExtra("api_token", api_token);
+                            i.putExtra("volunteer_id", volunteer_id);
+                            i.putExtra("message", "true");
+                            getContext().startActivity(i);
+                            starNextActivity();
+                        }
+                    });
                 }else{
 
                     Log.e("SIZEYAWA","size ="+size+" count = "+count);
@@ -189,11 +261,18 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
                         bundle.putSerializable("array",results);
                         badgeUpdateDialogFragment.setArguments(bundle);
                         badgeUpdateDialogFragment.show(fragmentManager,"Badge");
+                    confirmBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                           dismiss();
+                        }
+                    });
 
                 }
 
             }
         });
+
 
         return view;
     }
@@ -210,7 +289,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
         fbProfilePicture = shared.getString("fbProfilePicture", "");
         profileId = shared.getString("profileId", "");
 
-        Intent n = new Intent(getContext(), HomeActivity.class);
+        Intent n = new Intent(getContext(), ProfileActivity.class);
         n.putExtra("api_token", api_token);
         n.putExtra("volunteer_id", volunteer_id);
         n.putExtra("activity_id", activity_id);
@@ -218,6 +297,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
         n.putExtra("fbProfilePicture", fbProfilePicture);
         n.putExtra("profileId", profileId);
         n.putExtra("profileId", email);
+        n.putExtra("message", "true");
         Log.e("SHITPREFERENCES", api_token+ volunteer_id + activity_id + fbProfileName +fbProfilePicture + "");
 
         startActivity(n);
@@ -242,4 +322,8 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment {
     }
 
 
+    @Override
+    public void onClick(View view) {
+
+    }
 }
