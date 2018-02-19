@@ -230,13 +230,13 @@ public class SkillsActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.medicine:
                 if(count7%2==0) {
                     medicineCheck.setVisibility(View.VISIBLE);
-                    skillSet.add("medicine");
+                    skillSet.add("medical");
                     count7++;
                 }
                 else if (count7%2!=0) {
                     medicineCheck.setVisibility(View.GONE);
                     for(int i = 0; i < skillSet.size(); i++){
-                        if(skillSet.get(i).equals("medicine")) {
+                        if(skillSet.get(i).equals("medical")) {
                             skillSet.remove(i);
                             break;
                         }

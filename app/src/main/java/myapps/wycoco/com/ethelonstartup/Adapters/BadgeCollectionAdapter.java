@@ -86,7 +86,7 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
         holder.badgeName.setText(skillBadgesModels.get(position).getBadgeName());
         Log.i("GAUGE_EXP_ADAPTER",  skillBadgesModels.get(position).getGaugeExp() + " anton " + skillBadgesModels.get(position).getBadgeName());
 
-        Glide.with(mContext).load(skillBadgesModels.get(position).getBadgeImage())
+        Glide.with(mContext).load(skillBadgesModels.get(position).getBadgeImage()).dontAnimate()
                 .fitCenter().crossFade().into(holder.badgeImage);
 
         float divider = 0;

@@ -13,28 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="5dp">
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp">
     <LinearLayout
         android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="5dp"
         android:weightSum="2"
         android:id="@+id/funnyContainer">
 
         <LinearLayout
             android:visibility="visible"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/calendarLabel"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
+                android:layout_marginRight="6dp"
                 android:src="@drawable/calendar_ic"
                 />
 
@@ -52,15 +55,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="6dp"
                 android:src="@drawable/clock_ic"
                  />
 
@@ -81,25 +86,26 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="5dp"
         android:weightSum="2"
         android:id="@+id/funnyContainer2">
 
         <LinearLayout
             android:visibility="visible"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_weight="1">
 
             <ImageView
+                android:layout_marginRight="6dp"
                 android:layout_gravity="center"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/location_ic"
                 />
 
@@ -111,23 +117,25 @@
                 android:layout_gravity="center"
                 android:paddingTop="5dp"
                 android:id="@+id/eventLocation"
-                android:gravity="center"/>
+                />
         </LinearLayout>
 
         <LinearLayout
             android:visibility="visible"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:layout_weight="1">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="6dp"
                 android:src="@drawable/contacts_ic"
                 />
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Anton Wycoco / 09420170888"
                 android:textColor="#000"
@@ -141,25 +149,26 @@
 
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="5dp"
         android:weightSum="2"
         android:id="@+id/funnyContainer3">
 
         <LinearLayout
         android:visibility="visible"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_weight="1">
         <ImageView
         android:layout_gravity="center"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/skills_ic"
+            android:layout_marginRight="6dp"
         />
 
         <TextView

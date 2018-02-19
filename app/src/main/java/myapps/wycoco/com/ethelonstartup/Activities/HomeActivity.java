@@ -328,7 +328,7 @@ public class HomeActivity extends AppCompatActivity
 //            Log.e("SKILL_SET SA THIRD", userSkills.toString() + bundle.toString());
             Intent intent = new Intent(this, SkillPreferenceActivity.class);
 //            intent.putStringArrayListExtra("skill_set", userSkills);
-            intent.putExtra("id",volunteer_id);
+            intent.putExtra("volunteer_id",volunteer_id);
             intent.putExtra("api_token",api_token);
             startActivity(intent);
         }else if (id == R.id.logOutButton){

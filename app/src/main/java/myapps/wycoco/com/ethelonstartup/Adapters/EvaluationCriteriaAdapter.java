@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,14 +60,14 @@ public class EvaluationCriteriaAdapter extends RecyclerView.Adapter<EvaluationCr
 
         TextView criteriaName;
         RatingBar criteriaRating;
-        LinearLayout linearLayout;
+        CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             criteriaName = (TextView)itemView.findViewById(R.id.criteriaTxt);
             criteriaRating = (RatingBar)itemView.findViewById(R.id.criteriaRating);
-            linearLayout = (LinearLayout)itemView.findViewById(R.id.linear);
+            cardView = (CardView) itemView.findViewById(R.id.linear);
 
 
             criteriaRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

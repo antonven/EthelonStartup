@@ -30,6 +30,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
@@ -269,60 +270,65 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         params.put("volunteer_id",volunteer_id);
         params.put("api_token",api_token);
 
-        JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, skillsUrl, new JSONObject(params), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                for(int i = 0; i < response.length(); i++) {
-                    try {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, skillsUrl, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for(int i = 0; i < response.length(); i++) {
+                            try {
 
-                        Log.e("NISUD_SKILLZ", response.toString());
-                        JSONArray arrayOfDetails = response.getJSONArray("name");
-                        String skill = arrayOfDetails.getString(i);
+                                Log.e("NISUD_SKILLZ", response.toString());
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String skill = jsonObject.getString("name");
 
-                        if(skill.equals("environment"))
-                            images.add(R.drawable.environment_volunteer);
-                        else if(skill.equals("medical"))
-                            images.add(R.drawable.medical_volunteer);
-                        else if(skill.equals("livelihood"))
-                            images.add(R.drawable.livelihood_volunteer);
-                        else if(skill.equals("sports"))
-                            images.add(R.drawable.sports_volunteer);
-                        else if(skill.equals("culinary"))
-                            images.add(R.drawable.culinary_volunteer);
-                        else if(skill.equals("charity"))
-                            images.add(R.drawable.charity_volunteer);
-                        else if(skill.equals("arts"))
-                            images.add(R.drawable.arts_volunteer);
-                        else if(skill.equals("education"))
-                            images.add(R.drawable.education_volunteer);
+                                switch (skill) {
+                                    case "environment":
+                                        images.add(R.drawable.environment_volunteer);
+                                        break;
+                                    case "medical":
+                                        images.add(R.drawable.medical_volunteer);
+                                        break;
+                                    case "livelihood":
+                                        images.add(R.drawable.livelihood_volunteer);
+                                        break;
+                                    case "sports":
+                                        images.add(R.drawable.sports_volunteer);
+                                        break;
+                                    case "culinary":
+                                        images.add(R.drawable.culinary_volunteer);
+                                        break;
+                                    case "charity":
+                                        images.add(R.drawable.charity_volunteer);
+                                        break;
+                                    case "arts":
+                                        images.add(R.drawable.arts_volunteer);
+                                        break;
+                                    case "education":
+                                        images.add(R.drawable.education_volunteer);
+                                        break;
+                                }
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Log.e("animal", e.toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("animal", e.toString());
+                            }
+                        }
+                        basicAdapter = new BasicAdapter(images, getApplicationContext());
+                        gridView.setAdapter(basicAdapter);
+
                     }
-                }
-                basicAdapter = new BasicAdapter(images, getApplicationContext());
-                gridView.setAdapter(basicAdapter);
-            }
-        }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("ZZZZZZZZZZZZZCCCCERROR",error.toString());
+
             }
-        }
-        );
+        });
 
         RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-        request.add(jsonrequest);
+        request.add(jsonArrayRequest);
     }
 
-
-
-//        ArrayList<String> skills = activities.get(position).getAct_skills();
-//        SharedPreferences shared = getSharedPreferences("SKILLS_PREF", MODE_PRIVATE);
-//        Set<String> skills = shared.getStringSet("skills", null);
-//        Log.e("ProfileActivity skills", skills.toString());
 
     public void getDetails(){
         String Url = "http://"+new Localhost().getLocalhost()+"profileDetails";

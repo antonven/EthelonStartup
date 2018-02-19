@@ -216,7 +216,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                 public void onClick(View view) {
                     String activity_id = activities.get(getAdapterPosition()).getActivityId();
                    //** Log.i("Volunteer_id", "PortAdapter" + volunteer_id + activity_id);
-
+//
 //                    Intent n = new Intent(mContext, AttendanceScanner.class);
 //                    n.putExtra("activity_id", activity_id);
 //                    n.putExtra("api_token", api_token);

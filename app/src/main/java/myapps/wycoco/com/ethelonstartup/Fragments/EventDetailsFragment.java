@@ -37,7 +37,7 @@ public class EventDetailsFragment extends Fragment {
         String eventLocation = getArguments().getString("eventLocation");
         String contactNo = getArguments().getString("contactNo");
         String contactPerson = getArguments().getString("contactPerson");
-        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Roboto-Black.ttf");
+//        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Roboto-Black.ttf");
 
         eventDate1 = (TextView)view.findViewById(R.id.eventDate);
 
@@ -45,18 +45,18 @@ public class EventDetailsFragment extends Fragment {
         eventLocation1 = (TextView)view.findViewById(R.id.eventLocation);
         eventSkills1 = (TextView)view.findViewById(R.id.eventSkills);
         eventContact1 = (TextView)view.findViewById(R.id.eventContact);
-        eventDate1.setTypeface(typeface);
-        eventLocation1.setTypeface(typeface);
-        eventSkills1.setTypeface(typeface);
-        eventContact1.setTypeface(typeface);
-        eventDate1.setTypeface(typeface);
-        eventTimeStart1.setTypeface(typeface);
+//        eventDate1.setTypeface(typeface);
+//        eventLocation1.setTypeface(typeface);
+//        eventSkills1.setTypeface(typeface);
+//        eventContact1.setTypeface(typeface);
+//        eventDate1.setTypeface(typeface);
+//        eventTimeStart1.setTypeface(typeface);
 
-        eventDate1.setText(eventDate);
-        eventTimeStart1.setText(eventTimeStart);
-        eventLocation1.setText(eventLocation);
-        eventSkills1.setText(eventSkills);
-        eventContact1.setText(contactPerson + "/ " + contactNo);
+        eventDate1.setText("Date: " + eventDate);
+        eventTimeStart1.setText("Time start: "  +eventTimeStart);
+        eventLocation1.setText("Location: " + eventLocation);
+        eventSkills1.setText("Skills needed: " + eventSkills);
+        eventContact1.setText("Contact: " + contactPerson + "/ " + contactNo);
 
         return view;
     }

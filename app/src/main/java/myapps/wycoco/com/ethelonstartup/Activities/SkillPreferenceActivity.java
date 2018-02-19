@@ -15,16 +15,32 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import myapps.wycoco.com.ethelonstartup.Adapters.BasicAdapter;
+import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 import myapps.wycoco.com.ethelonstartup.Service.SessionManager;
 
 public class SkillPreferenceActivity extends AppCompatActivity {
+
+    private static final String skillsUrl = "http://" + new Localhost().getLocalhost() + "getSkills";
 
     Button doneButton;
     ImageView environmentCheck, livelihoodCheck, culinaryCheck, charityCheck, sportsCheck, educationalCheck, medicineCheck, artsCheck;
@@ -96,45 +112,71 @@ public class SkillPreferenceActivity extends AppCompatActivity {
 
 
     public void fetchSkillPreference(){
-        SharedPreferences shared = getSharedPreferences("SKILLS_PREF", MODE_PRIVATE);
-        Set<String> skill_set = shared.getStringSet("skills", null);
-//        Set<String> skill_set = sessionManager.getUserSkillSet();
-//        Intent n = getIntent();
-//        skill_set = n.getStringArrayListExtra("skill_set");
-//        Log.e("SKILL_SET ARRAY", "" +skill_set.size());
-        if(skill_set!=null) {
-            for (String skill : skill_set) {
-                skillz.add(skill);
-            }
-            Log.e("skill_SetPREF", skillz.toString());
+        Intent intent = getIntent();
+        String volunteer_id = intent.getStringExtra("volunteer_id");
+        String api_token = intent.getStringExtra("api_token");
 
-            if(skill_set.contains("environment")){
-                environmentCheck.setVisibility(View.VISIBLE);
-            }
-            if(skill_set.contains("medicine")){
-                medicineCheck.setVisibility(View.VISIBLE);
-            }
-            if(skill_set.contains("arts")){
-                artsCheck.setVisibility(View.VISIBLE);
-            }
-            if(skill_set.contains("sports")){
-                sportsCheck.setVisibility(View.VISIBLE);
-            }
-            if(skill_set.contains("livelihood")){
-                livelihood.setVisibility(View.VISIBLE);
-            }
-            if(skill_set.contains("culinary")){
-                culinaryCheck.setVisibility(View.VISIBLE);
-            }
-            if(skill_set.contains("charity")){
-                charityCheck.setVisibility(View.VISIBLE);
-            }
-            if(skill_set.contains("education")){
-                educationalCheck.setVisibility(View.VISIBLE);
-            }
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",volunteer_id);
+        params.put("api_token",api_token);
 
-        }
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, skillsUrl, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for(int i = 0; i < response.length(); i++) {
+                            try {
+
+                                Log.e("NISUD_SKILLZ", response.toString());
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String skill = jsonObject.getString("name");
+
+                                if(skill.equals("environment")){
+                                    environmentCheck.setVisibility(View.VISIBLE);
+                                }
+                                if(skill.equals("medical")){
+                                    medicineCheck.setVisibility(View.VISIBLE);
+                                }
+                                if(skill.equals("arts")){
+                                    artsCheck.setVisibility(View.VISIBLE);
+                                }
+                                if(skill.equals("sports")){
+                                    sportsCheck.setVisibility(View.VISIBLE);
+                                }
+                                if(skill.equals("livelihood")){
+                                    livelihood.setVisibility(View.VISIBLE);
+                                }
+                                if(skill.equals("culinary")){
+                                    culinaryCheck.setVisibility(View.VISIBLE);
+                                }
+                                if(skill.equals("charity")){
+                                    charityCheck.setVisibility(View.VISIBLE);
+                                }
+                                if(skill.equals("education")){
+                                    educationalCheck.setVisibility(View.VISIBLE);
+
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("animal", e.toString());
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("animalsss", error.toString());
+
+            }
+        });
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonArrayRequest);
 
 
     }
+
+
 }

@@ -2,6 +2,7 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -60,6 +61,8 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         }
         holder.leaderboardName.setText(users.get(position).getUserFirstName());
         holder.leaderboardPosition.setText(position + 1 + "");
+        Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
+        holder.leaderboardPosition.setTypeface(typeface);
         holder.leaderboardPoints.setText(users.get(position).getUser_points() + " points");
 
 

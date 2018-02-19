@@ -80,8 +80,16 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
         String volunteer_name = getArguments().getString("volunteer_name");
         String groupmateImage1 = getArguments().getString("group_mate_image");
 
-        Glide.with(getApplicationContext()).load(groupmateImage1)
-                .centerCrop().crossFade().into(groupmateImage);
+
+
+        if(!groupmateImage1.equals("null")) {
+            Glide.with(getApplicationContext()).load(groupmateImage1)
+                    .centerCrop().crossFade().into(groupmateImage);
+        }else{
+            Log.e("BOGO_KA", "PISTENG SUD SA ELSE YAWA");
+            groupmateImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.ic_person_black_24dp));
+        }
+
 
         volunteerNameTxt = (TextView)view.findViewById(R.id.rateVolunteerName);
         recyclerCriteria = (RecyclerView)view.findViewById(R.id.criteriaRec);
@@ -101,7 +109,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         return dialog;
     }
 
@@ -111,7 +119,7 @@ public class RateVolunteerDialogFragment extends AppCompatDialogFragment impleme
 
         Dialog dialog = getDialog();
         if (dialog != null) {
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
 

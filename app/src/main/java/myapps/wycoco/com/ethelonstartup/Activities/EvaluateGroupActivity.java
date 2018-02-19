@@ -258,6 +258,8 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
             bundle.putString("update",results.get(0).getUpdate());
             bundle.putString("badge_name",results.get(0).getBadge_name());
             bundle.putInt("count",0);
+            bundle.putString("api_token", api_token);
+            bundle.putString("volunteer_id", volunteer_id);
 
             count = count - 1;
             bundle.putInt("size",results.size());
@@ -269,16 +271,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
             badgeUpdateDialogFragment.show(fragmentManager,"Badge");
 
         }else{
-
-            Intent i = new Intent(EvaluateGroupActivity.this, CompleteActivitySuccess.class);
-//            i.putExtra("message", "message");
-
-            //Ton butangig pina success diri
-
-
-
             starNextActivity();
-
         }
 
 

@@ -42,9 +42,18 @@ public class GoingVolunteersAdapter extends RecyclerView.Adapter<GoingVolunteers
 
     @Override
     public void onBindViewHolder(GoingVolunteersAdapter.ViewHolder holder, int position) {
-        Glide.with(mContext).load(users.get(position).getUserImage())
-                .centerCrop().crossFade().into(holder.volunteerImage);
         holder.volunteerFirstName.setText(users.get(position).getUserFirstName());
+//        Glide.with(mContext).load(users.get(position).getUserImage())
+//                .centerCrop().crossFade().into(holder.volunteerImage);
+        String img = users.get(position).getUserImage();
+
+        if(!img.equals("null")) {
+            Glide.with(mContext).load(users.get(position).getUserImage())
+                    .centerCrop().crossFade().into(holder.volunteerImage);
+        }else{
+            Log.e("BOGO_KA", "PISTENG SUD SA ELSE YAWA");
+            holder.volunteerImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_person_black_24dp));
+        }
     }
 
     @Override

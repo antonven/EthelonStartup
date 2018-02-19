@@ -28,7 +28,7 @@
             android:id="@+id/badgeImage"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="70dp"
             android:layout_gravity="center"
             android:src="@drawable/medicine_newbie"/>
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/updateBody"
             android:layout_gravity="center"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:textColor="#000000"
             android:textStyle="bold"
             android:text="You have earned a new BADGE!"/>
@@ -58,7 +58,7 @@
             android:visibility="visible"
             android:textColor="#ffffff"
             android:id="@+id/confirmBtn"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="24dp"
             android:layout_gravity="bottom|center"
             />
         <!--<Button-->

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/linear"
+    android:layout_marginBottom="2dp"
+    app:cardBackgroundColor="#f8f8f8"
+    app:cardElevation="0dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,17 +14,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:layout_marginBottom="0dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-
             android:text="Productivity"
             style="@style/TextViewBlue"
             android:id="@+id/criteriaTxt"
             android:layout_weight="1"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_marginRight="20dp"
             />
 
@@ -37,4 +40,4 @@
             />
     </LinearLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>
