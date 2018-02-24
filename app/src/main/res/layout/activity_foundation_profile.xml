@@ -1,9 +1,148 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="myapps.wycoco.com.ethelonstartup.Activities.FoundationProfileActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f8f8f8"
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/collapse1"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            >
+
+
+
+            <LinearLayout
+                android:id="@+id/collapse2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#fff"
+                android:paddingBottom="8dp"
+                app:layout_collapseMode="parallax"
+                android:layout_marginTop="40dp"
+                app:layout_collapseParallaxMultiplier="0.9"
+                android:layout_marginBottom="15dp"
+                android:clipToPadding="false">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/foundationName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22sp"
+                        android:textColor="#000"
+                        android:layout_below="@id/coverPhoto"
+                        android:layout_marginStart="24dp"
+                        android:text="@string/profile_name"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginLeft="24dp" />
+
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#808080"
+                        android:layout_below="@+id/foundationName"
+                        android:id="@+id/foundationEmail"
+                        android:layout_marginStart="24dp"
+                        android:text="@string/profile_email"
+                        android:layout_marginLeft="24dp" />
+
+                    <ImageView
+                        android:fitsSystemWindows="true"
+                        android:id="@+id/coverPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="145dp"
+                        android:background="#c62828"
+                        app:layout_collapseMode="parallax"
+                        android:scaleType="centerCrop" />
+
+
+                    <Button
+                        android:layout_width="120dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="3dp"
+                        android:id="@+id/editProfileBtn"
+                        android:textStyle="bold"
+                        android:textColor="#c62828"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/edit_profile_btn"
+                        android:text="@string/edit_profile"
+                        android:layout_below="@id/coverPhoto"
+                        android:layout_marginRight="8dp"
+                        android:layout_alignParentRight="true" />
+                </RelativeLayout>
+
+
+
+
+
+                <!--<TextView-->
+                <!--android:layout_marginTop="4dp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="24dp"-->
+                <!--android:text="Interested"-->
+                <!--android:paddingBottom="10dp"-->
+                <!--android:layout_below="@+id/textView6"-->
+                <!--android:id="@+id/tex" />-->
+
+
+
+            </LinearLayout>
+            <include
+                android:id="@+id/nav_toolbar"
+                layout="@layout/toolbar_custom_layout" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <TextView
+        android:layout_marginTop="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#808080"
+        android:layout_gravity="center|start"
+        android:id="@+id/foundationLocation"
+        android:layout_marginStart="24dp"
+        android:text="CEBU CITY"
+        android:layout_marginLeft="24dp" />
+
+    <FrameLayout
+        android:background="#f8f8f8"
+        android:id="@+id/mapFrame"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </FrameLayout>
+
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>

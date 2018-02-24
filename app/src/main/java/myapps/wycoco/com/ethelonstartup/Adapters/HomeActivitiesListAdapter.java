@@ -25,6 +25,7 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 
 import myapps.wycoco.com.ethelonstartup.Activities.EventDetailsActivity;
+import myapps.wycoco.com.ethelonstartup.Activities.FoundationProfileActivity;
 import myapps.wycoco.com.ethelonstartup.Fragments.GoingVolunteersFragment;
 import myapps.wycoco.com.ethelonstartup.Fragments.HomeGoingVolunteersFragment;
 import myapps.wycoco.com.ethelonstartup.Models.ActivityModel;
@@ -174,25 +175,17 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
                 }
             });
 
+
             viewActivity.setOnClickListener(this);
-//
-//            HomeGoingVolunteersFragment goingVolunteersFragment = new HomeGoingVolunteersFragment();
-//            Bundle b = new Bundle();
-//            b.putString("activity_id", activities.get(getAdapterPosition()).getActivityId());
-//            b.putString("api_token", api_token);
-//            Log.e("HOME ADAPTERanton", activity_id + " " + api_token);
-//            goingVolunteersFragment.setArguments(b);
-
-//            FragmentManager fragmentManager = suppFragment;
-//            fragmentManager
-//                    .beginTransaction()
-//                    .replace(R.id.volFrame, goingVolunteersFragment)
-//                    .commit();
-
+            eventHost.setOnClickListener(this);
+            clickedEventHost.setOnClickListener(this);
+            clickedFoundationImage.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
+
+            Intent n;
             String eventName = activities.get(getAdapterPosition()).getActivityName();
             String eventHost = activities.get(getAdapterPosition()).getFoundationName();
             String eventDate = activities.get(getAdapterPosition()).getActivityDate();
@@ -205,26 +198,58 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             String eventSkills = activities.get(getAdapterPosition()).getActivityPoints();
             String volunteerStatus = activities.get(getAdapterPosition()).getVolunteerStatus();
             String foundation_image = activities.get(getAdapterPosition()).getFoundationImage();
+            String foundation_id = activities.get(getAdapterPosition()).getFoundationId();
 
-            Intent in = new Intent(mContext, EventDetailsActivity.class);
-            in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            in.putExtra("eventImage", eventImage);
-            in.putExtra("eventName", eventName);
-            in.putExtra("eventHost", eventHost);
-            in.putExtra("eventDate", eventDate);
-            in.putExtra("eventTimeStart", eventTimeStart);
-            in.putExtra("eventLocation", eventLocation);
-            in.putExtra("contactNo", eventContactNo);
-            in.putExtra("contactPerson", eventContactPerson);
-            in.putExtra("eventPoints", eventSkills);
-            in.putExtra("id", id);
-            in.putExtra("activity_id", activity_id);
-            in.putExtra("api_token", api_token);
-            in.putExtra("profileId", profile_id);
-            in.putExtra("volunteerStatus", volunteerStatus);
-            in.putExtra("foundationImage", foundation_image);
+            switch (view.getId()) {
+                case R.id.viewActivityDetailsBtn:
 
-            mContext.startActivity(in);
+                    n = new Intent(mContext, EventDetailsActivity.class);
+                    n.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    n.putExtra("eventImage", eventImage);
+                    n.putExtra("eventName", eventName);
+                    n.putExtra("eventHost", eventHost);
+                    n.putExtra("eventDate", eventDate);
+                    n.putExtra("eventTimeStart", eventTimeStart);
+                    n.putExtra("eventLocation", eventLocation);
+                    n.putExtra("contactNo", eventContactNo);
+                    n.putExtra("contactPerson", eventContactPerson);
+                    n.putExtra("eventPoints", eventSkills);
+                    n.putExtra("id", id);
+                    n.putExtra("activity_id", activity_id);
+                    n.putExtra("api_token", api_token);
+                    n.putExtra("profileId", profile_id);
+                    n.putExtra("volunteerStatus", volunteerStatus);
+                    n.putExtra("foundationImage", foundation_image);
+                    n.putExtra("foundation_id", foundation_id);
+                    mContext.startActivity(n);
+                    break;
+
+                case R.id.eventHost:
+                    n = new Intent(mContext, FoundationProfileActivity.class);
+                    n.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    n.putExtra("foundation_id", foundation_id);
+                    n.putExtra("foundation_name", eventHost);
+                    mContext.startActivity(n);
+                    break;
+
+
+                case R.id.clickedEventHost:
+                    n = new Intent(mContext, FoundationProfileActivity.class);
+                    n.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    n.putExtra("foundation_id", foundation_id);
+                    n.putExtra("foundation_name", eventHost);
+                    mContext.startActivity(n);
+                    break;
+
+                case R.id.foundation_img:
+                    n = new Intent(mContext, FoundationProfileActivity.class);
+                    n.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    n.putExtra("foundation_id", foundation_id);
+                    n.putExtra("foundation_name", eventHost);
+                    mContext.startActivity(n);
+                    break;
+
+            }
         }
     }
 }

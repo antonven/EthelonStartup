@@ -40,7 +40,7 @@ import myapps.wycoco.com.ethelonstartup.Fragments.ReviewsFragment;
 import myapps.wycoco.com.ethelonstartup.Models.Localhost;
 import myapps.wycoco.com.ethelonstartup.R;
 
-public class EventDetailsActivity extends AppCompatActivity {
+public class EventDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -99,20 +99,19 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         Glide.with(this).load(eventImage).centerCrop().crossFade().into(eventDetailsImage);
         eventName1.setText(eventName);
-        eventHost1.setText(eventHost);
 
 
-        joinActivityBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fetchDetails();
-                joinActivityBtn.setVisibility(View.GONE);
-                unjoinActivityBtn.setVisibility(View.VISIBLE);
-
-            }
-        });
-
+//        joinActivityBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//            }
+//        });
+        joinActivityBtn.setOnClickListener(this);
+        eventHost1.setOnClickListener(this);
         insTabs();
+
     }
 
 
@@ -230,4 +229,25 @@ public class EventDetailsActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
+    @Override
+    public void onClick(View view) {
+        String foundation_id = getIntent().getStringExtra("foundation_id");
+        Intent n;
+        switch (view.getId()){
+
+            case R.id.joinActivityBtn:
+                fetchDetails();
+                joinActivityBtn.setVisibility(View.GONE);
+                unjoinActivityBtn.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.eventHost:
+                n = new Intent(getApplicationContext(), FoundationProfileActivity.class);
+                n.putExtra("foundation_id", foundation_id);
+                n.putExtra("foundation_name", eventHost);
+                getApplicationContext().startActivity(n);
+                break;
+
+        }
+    }
 }

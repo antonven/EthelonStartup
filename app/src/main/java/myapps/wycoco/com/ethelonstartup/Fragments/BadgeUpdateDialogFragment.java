@@ -272,9 +272,6 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
         return view;
     }
 
-    private void clickToConfirm(){
-
-    }
 
     private void starNextActivity() {
         final String api_token = getArguments().getString("api_token");
