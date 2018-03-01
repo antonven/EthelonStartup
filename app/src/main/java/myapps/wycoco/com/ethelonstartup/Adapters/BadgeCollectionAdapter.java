@@ -89,44 +89,42 @@ public class BadgeCollectionAdapter extends RecyclerView.Adapter<BadgeCollection
         Glide.with(mContext).load(skillBadgesModels.get(position).getBadgeImage()).dontAnimate()
                 .fitCenter().crossFade().into(holder.badgeImage);
 
-        float divider = 0;
+        int divider = 0;
         String lvl = skillBadgesModels.get(position).getBadgeRank();
-
+        float gaugeExp = (float) skillBadgesModels.get(position).getGaugeExp();
         switch (lvl){
             case "Newbie": divider = 100;
                 holder.roundCornerProgressBar.setProgressColor(Color.parseColor("#4E342E")) ;
                 holder.roundCornerProgressBar.setMax(100);
                 holder.badgeName.setTextColor(Color.parseColor("#4E342E"));
-
+                holder.badgePercentage.setText(String.valueOf(String.format("%.0f", gaugeExp) + " /" + divider));
                 break;
-            case "Explorer": divider = 200;
+                case "Explorer": divider = 200;
                 holder.roundCornerProgressBar.setProgressColor(Color.parseColor("#cd7f32")) ;
                 holder.roundCornerProgressBar.setMax(200);
                 holder.badgeName.setTextColor(Color.parseColor("#cd7f32"));
-
-
+                holder.badgePercentage.setText(String.valueOf(String.format("%.0f", gaugeExp) + " /" + divider));
                 break;
             case "Expert": divider = 300;
                 holder.roundCornerProgressBar.setProgressColor(Color.parseColor("#BDBDBD")) ;
                 holder.roundCornerProgressBar.setMax(300);
                 holder.badgeName.setTextColor(Color.parseColor("#BDBDBD"));
-
+                holder.badgePercentage.setText(String.valueOf(String.format("%.0f", gaugeExp) + " /" + divider));
 
                 break;
             case "Legend": divider = 400;
                 holder.roundCornerProgressBar.setProgressColor(Color.parseColor("#FFD700")) ;
                 holder.roundCornerProgressBar.setMax(400);
                 holder.badgeName.setTextColor(Color.parseColor("#FFD700"));
-
-
+                holder.badgePercentage.setText(String.valueOf(String.format("%.0f", gaugeExp) + " /" + divider));
                 break;
 
 
         }
 //        float gaugeExp = skillBadgesModels.get(position).getGaugeExp() / divider * 100;
-        float gaugeExp = (float) skillBadgesModels.get(position).getGaugeExp();
+
         holder.roundCornerProgressBar.setProgress((float)skillBadgesModels.get(position).getGaugeExp());
-        holder.badgePercentage.setText(String.valueOf(String.format("%.0f", (float)skillBadgesModels.get(position).getBadgePercentage()) + "% complete"));
+//        holder.badgePercentage.setText(String.valueOf(String.format("%.0f", (float)skillBadgesModels.get(position).getBadgePercentage()) + " /" + divider));
         holder.colorRatingBar.setRating((float) skillBadgesModels.get(position).getStar());
 
 

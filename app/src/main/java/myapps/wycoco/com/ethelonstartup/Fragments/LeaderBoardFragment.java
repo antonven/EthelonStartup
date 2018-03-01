@@ -43,7 +43,9 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
 
     private static final String URL = "http://"+new Localhost().getLocalhost()+"leaderboard";
     ArrayList<UserModel> userLeaders ;
-    RecyclerView featuredRecyclerView;
+    ArrayList<UserModel> myRank ;
+
+    RecyclerView featuredRecyclerView, userLeadView;
     SwipeRefreshLayout swipeRefreshLayout;
     LeaderBoardAdapter leaderBoardAdapter;
     UserModel userModel;
@@ -56,6 +58,7 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
 //        createDummyDataList();
 
         featuredRecyclerView = (RecyclerView) v.findViewById(R.id.featured_recycler_view);
+        userLeadView= (RecyclerView) v.findViewById(R.id.user_lead);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         featuredRecyclerView.setLayoutManager(layoutManager);
         swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swipeLayout);
@@ -76,14 +79,17 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
     private void fetchLeaderBoard(){
 
         swipeRefreshLayout.setRefreshing(true);
+        final String my_volunteer_id = getArguments().getString("id");
 
         userLeaders = new ArrayList<>();
+        myRank = new ArrayList<>();
+
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-
+                        Log.e("order_leaders", response.toString());
                         if(response.length() > 0){
                             for(int i = 0; i < response.length(); i++){
                                 try {
@@ -91,8 +97,25 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
                                     String leaderboard_name = jsonObject.getString("name");
                                     String leaderboard_image = jsonObject.getString("image_url");
                                     int leaderboard_points = jsonObject.getInt("points");
+
                                     String vol_id = jsonObject.getString("volunteer_id");
                                     String api_token = jsonObject.getString("api_token");
+                                    if(my_volunteer_id.equals(vol_id)){
+                                        UserModel myModel = new UserModel();
+                                        myModel.setUserFirstName(leaderboard_name);
+                                        myModel.setUserImage(leaderboard_image);
+                                        myModel.setUser_points(leaderboard_points);
+                                        myModel.setUser_id(vol_id);
+                                        myModel.setUser_token(api_token);
+                                        myModel.setPosition(i + 1);
+                                        myRank.add(myModel);
+
+                                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                                        userLeadView.setLayoutManager(layoutManager);
+                                        leaderBoardAdapter = new LeaderBoardAdapter(getApplicationContext(), myRank, my_volunteer_id);
+                                        userLeadView.setItemAnimator(new DefaultItemAnimator());
+                                        userLeadView.setAdapter(leaderBoardAdapter);
+                                    }
                                     if(leaderboard_points != 0) {
 
                                         userModel = new UserModel();
@@ -101,6 +124,7 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
                                         userModel.setUser_points(leaderboard_points);
                                         userModel.setUser_id(vol_id);
                                         userModel.setUser_token(api_token);
+                                        userModel.setPosition(i + 1);
                                         userLeaders.add(userModel);
                                         Log.e("leadboardfrag", "array size :" + userLeaders.size());
                                     }
@@ -109,9 +133,11 @@ public class LeaderBoardFragment extends Fragment implements SwipeRefreshLayout.
                                     e.printStackTrace();
                                 }
 
+
+
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                                 featuredRecyclerView.setLayoutManager(layoutManager);
-                                leaderBoardAdapter = new LeaderBoardAdapter(getApplicationContext(), userLeaders);
+                                leaderBoardAdapter = new LeaderBoardAdapter(getApplicationContext(), userLeaders, my_volunteer_id);
                                 featuredRecyclerView.setItemAnimator(new DefaultItemAnimator());
                                 featuredRecyclerView.setAdapter(leaderBoardAdapter);
                             }

@@ -140,6 +140,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                     String volunteerStatus = activityObject.getString("joined");
                                     String foundationName = activityObject.getString("foundtion_name");
                                     int points = activityObject.getInt("points");
+                                    int timeIn = activityObject.getInt("volunteerTimedIn");
                                     int volunteer_count = activityObject.getInt("volunteer_count");
                                     String foundationImage = activityObject.getString("foundation_img");
                                     JSONArray act_skills = activityObject.getJSONArray("activity_skills");
@@ -183,7 +184,7 @@ public class PortfolioFragment extends Fragment implements SwipeRefreshLayout.On
                                             points,
                                             volunteer_count,
                                             foundationImage,
-                                            final_skills);
+                                            final_skills, timeIn);
 
                                     //Log.e("PortfolioActivities", response.toString());
                                     activities.add(portfolioModel);

@@ -256,26 +256,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/content_deadline_badge"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:text="Event type"
-                    android:layout_alignParentLeft="true" />
 
-                <TextView
-                    android:id="@+id/clickedEventSkills"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/content_deadline_badge"
-                    android:layout_below="@id/content_deadline_badge"
-                    android:text="Free for all"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_alignLeft="@id/content_deadline_badge" />
+
 
             </RelativeLayout>
 

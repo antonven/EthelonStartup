@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -157,6 +158,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         String eventLocation = n.getStringExtra("eventLocation");
         String contactNo = n.getStringExtra("contactNo");
         String contactPerson = n.getStringExtra("contactPerson");
+        ArrayList<String> skills = n.getStringArrayListExtra("skills");
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -167,6 +169,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         in.putString("eventLocation", eventLocation);
         in.putString("contactNo", contactNo);
         in.putString("contactPerson", contactPerson);
+        in.putStringArrayList("skills", skills);
         eventDetailsFragment.setArguments(in);
 
         GoingVolunteersFragment goingVolunteersFragment = new GoingVolunteersFragment();

@@ -179,6 +179,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 finish();
+                Intent in = new Intent(ProfileActivity.this, HomeActivity.class);
+                startActivity(in);
             }
         });
 

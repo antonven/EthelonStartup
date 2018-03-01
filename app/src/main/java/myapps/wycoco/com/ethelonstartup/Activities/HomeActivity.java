@@ -48,6 +48,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nex3z.notificationbadge.NotificationBadge;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -475,9 +476,12 @@ public class HomeActivity extends AppCompatActivity
         NotificationsFragment notificationsFragment = new NotificationsFragment();
         notificationsFragment.setArguments(bundle);
 
+        LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
+        leaderBoardFragment.setArguments(bundle);
+
         adapter.addFrag(homeActivitiesFragment,"Home");
         adapter.addFrag(notificationsFragment, "Notifications");
-        adapter.addFrag(new LeaderBoardFragment(), "Leaderboard");
+        adapter.addFrag(leaderBoardFragment, "Leaderboard");
         viewPager.setAdapter(adapter);
     }
 
@@ -500,15 +504,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent n = getIntent();
-//        Log.e("VID", n.getStringExtra("volunteer_id"));
-//        profName = n.getStringExtra("profileName");
-//        fbProfilePicture = n.getStringExtra("fbProfilePicture");
-//        profileId = n.getStringExtra("profileId");
-//        cov_photo = n.getStringExtra("cover_photo");
-//        ethelonUserName = n.getStringExtra("userName");
-//        ethelonUserImage = n.getStringExtra("image_url");
-//        newSignUpUsername = n.getStringExtra("newSignUpUsername");
-//        fbProfileName = n.getStringExtra("fbProfileName");
+
         email = n.getStringExtra("email");
 
 
@@ -530,9 +526,6 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-
-
-
         Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName + email);
 
         View view = navigationView.getHeaderView(0);
@@ -544,7 +537,7 @@ public class HomeActivity extends AppCompatActivity
             profileName.setText(fbProfileName);
             Glide.with(getApplicationContext()).load(fbProfilePicture)
                     .centerCrop().crossFade().into(profilePicture);
-            profileEmail.setText(email);
+            getDetails();
 
         }else if(newSignUpUsername != null){
             profileName.setText(newSignUpUsername);
@@ -570,6 +563,48 @@ public class HomeActivity extends AppCompatActivity
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
 
+
+    }
+
+    public void getDetails(){
+        String Url = "http://"+new Localhost().getLocalhost()+"profileDetails";
+
+        Intent intent = getIntent();
+        String volunteer_id = intent.getStringExtra("volunteer_id");
+        String api_token = intent.getStringExtra("api_token");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("volunteer_id",volunteer_id);
+        params.put("api_token",api_token);
+
+        JsonRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, Url, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONArray arrayOfDetails = response.getJSONArray("details");
+                    JSONObject jsonObject = arrayOfDetails.getJSONObject(0);
+
+                    final String email = jsonObject.getString("email");
+
+                    profileEmail.setText(email);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("animal",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ZZZZZZZZZZZZZCCCCERROR",error.toString());
+            }
+        }
+        );
+
+        RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        request.add(jsonrequest);
 
     }
 

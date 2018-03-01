@@ -13,8 +13,9 @@ public class UserModel {
     private String user_id;
     private String user_token;
     private int user_points;
+    private int position;
 
-    public UserModel(String userImage, String userFirstName, String userLastName, String userRole, String user_id, String user_token, int user_points) {
+    public UserModel(String userImage, String userFirstName, String userLastName, String userRole, String user_id, String user_token, int user_points, int position) {
         this.userImage = userImage;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
@@ -22,6 +23,7 @@ public class UserModel {
         this.user_id = user_id;
         this.user_token = user_token;
         this.user_points = user_points;
+        this.position = position;
     }
 
     public UserModel() {
@@ -82,5 +84,13 @@ public class UserModel {
 
     public void setUser_points(int user_points){
         this.user_points = user_points;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

@@ -115,8 +115,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
                             String notifUrl = "http://"+new Localhost().getLocalhost()+"notificationClicked";
 
-
-
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("volunteer_id",volunteer_id);
                             params.put("api_token",api_token);
@@ -131,7 +129,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
                                     try {
 
-                                        Log.e("PortfolioActivities", response.toString());
+                                        Log.e("PortfolioActivityNotif", response.toString());
 
                                         String activityName = response.getString("name");
                                         String foundationId = response.getString("foundation_id");
@@ -159,7 +157,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                                         String foundationImage = response.getString("foundation_img");
                                         JSONArray act_skills = response.getJSONArray("activity_skills");
                                         ArrayList<String> final_skills = new ArrayList<String>();
-
+//                                        int timeIn = response.getInt("volunteerTimedIn");
 
                                         for(int x = 0; x<act_skills.length(); x++){
                                             JSONObject obj = act_skills.getJSONObject(x);
@@ -199,7 +197,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                                                 points,
                                                 volunteer_count,
                                                 foundationImage,
-                                                final_skills);
+                                                final_skills, 0);
 
 
                                         Intent in = new Intent(mContext, PortfolioEventDetailsActivity.class);
@@ -207,8 +205,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                                         in.putExtra("eventImage", activityImage);
                                         in.putExtra("eventName", activityName);
                                         in.putExtra("eventHost", foundationName);
-                                        in.putExtra("eventDate", activityDate);
-                                        in.putExtra("eventTimeStart", activityStart);
+                                        in.putExtra("eventDate", finalDate);
+                                        in.putExtra("eventTimeStart", finalTime);
                                         in.putExtra("eventLocation", activityLocation);
                                         in.putExtra("contactNo", activityContact);
                                         in.putExtra("contactPerson", contactPerson);
@@ -220,6 +218,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                                         in.putExtra("volunteer_id", volunteer_id);
                                         in.putExtra("points",points);
                                         in.putExtra("from","notification");
+                                        Log.e("MCONTEXT" ,mContext.toString() + " IN" + in.toString());
 
                                         mContext.startActivity(in);
                                         Log.e("adapter 218",response.toString());
@@ -228,7 +227,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                                         //Log.e("PortfolioActivities", response.toString());
 
                                     } catch (JSONException | ParseException e) {
-                                        e.printStackTrace();
+                                        Log.e("BOGO1", e.toString());
                                     }
                                 }
                             }, new Response.ErrorListener() {

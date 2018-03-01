@@ -2,8 +2,11 @@ package myapps.wycoco.com.ethelonstartup.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,10 +32,11 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     Context mContext;
     ArrayList<UserModel> users = new ArrayList<>();
     String api_token;
+    String my_id;
 
-    public LeaderBoardAdapter(Context mContext, ArrayList<UserModel> users) {
+    public LeaderBoardAdapter(Context mContext, ArrayList<UserModel> users, String my_id) {
         this.mContext = mContext;
-        ;
+        this.my_id = my_id;
         this.users = users;
         Log.e("leaderboard size :" , "piste ani" + users.size());
     }
@@ -52,6 +56,12 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         String img = users.get(position).getUserImage();
         Log.e("position", position + " " + img );
 
+        if(my_id.equals(users.get(position).getUser_id())){
+            holder.cardView.getBackground().setColorFilter(mContext.getResources().getColor(R.color.red_focused), PorterDuff.Mode.SRC_ATOP);
+            holder.leaderboardPosition.setTextColor(Color.parseColor("#ffffff"));
+            holder.leaderboardPoints.setTextColor(Color.parseColor("#ffffff"));
+        }
+
         if(!img.equals("null")) {
             Glide.with(mContext).load(users.get(position).getUserImage())
                     .centerCrop().crossFade().into(holder.leaderboardImage);
@@ -60,7 +70,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
             holder.leaderboardImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_person_black_24dp));
         }
         holder.leaderboardName.setText(users.get(position).getUserFirstName());
-        holder.leaderboardPosition.setText(position + 1 + "");
+        holder.leaderboardPosition.setText(users.get(position).getPosition() + "");
         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Black.ttf");
         holder.leaderboardPosition.setTypeface(typeface);
         holder.leaderboardPoints.setText(users.get(position).getUser_points() + " points");
@@ -77,10 +87,12 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
 
         TextView leaderboardPosition, leaderboardName, leaderboardPoints;
         ImageView leaderboardImage;
+        CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            cardView = (CardView)itemView.findViewById(R.id.cardView);
             leaderboardName = (TextView)itemView.findViewById(R.id.leaderboardName);
             leaderboardImage = (ImageView)itemView.findViewById(R.id.leaderboardImage);
             leaderboardPosition = (TextView)itemView.findViewById(R.id.leaderboardPosition);

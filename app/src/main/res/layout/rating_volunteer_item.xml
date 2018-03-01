@@ -37,25 +37,31 @@
             android:text="Anton Ven Wycoco"
             android:layout_marginStart="16dp" />
 
-            <RatingBar
+            <hyogeun.github.com.colorratingbarlib.ColorRatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rateVolunteerRate"
                 style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_marginLeft="16dp"/>
+                android:layout_marginLeft="16dp"
+                app:progress_color="#FFD700"
+                app:empty_color="#808080"
+                android:layout_marginStart="16dp" />
+
+
 
 
         </LinearLayout>
 
-        <ImageView
 
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:scaleType="centerInside"
-            android:id="@+id/rateVolunteerStatus"
-            app:srcCompat="@drawable/check_ic"
-            android:layout_gravity="center_horizontal"
-            />
 
     </LinearLayout>
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:scaleType="centerInside"
+        android:id="@+id/rateVolunteerStatus"
+        app:srcCompat="@drawable/check_ic"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp" />
 </android.support.v7.widget.CardView>

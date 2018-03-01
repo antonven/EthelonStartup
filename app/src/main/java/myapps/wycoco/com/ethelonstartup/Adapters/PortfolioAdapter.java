@@ -77,10 +77,18 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.joinCount.setText(activities.get(position).getVolunteer_count() + " have joined this activity");
         if(activities.get(position).getVolunteerStatus().equals("1")){
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon_done2));
-            holder.attendBtn.setVisibility(View.GONE);
+//            holder.attendBtn.setVisibility(View.GONE);
 
-        }else
+        }else {
             holder.status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ribbon2));
+            if(activities.get(position).getTimeIn() == 0){
+                holder.attendBtn.setVisibility(View.VISIBLE);
+            }else {
+                holder.attendBtn.setVisibility(View.GONE);
+                holder.timeOutBtn.setVisibility(View.VISIBLE);
+            }
+
+        }
 
 
         images = new ArrayList<>();
@@ -110,6 +118,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     }
 
+
     @Override
     public int getItemCount() {
         return activities.size();
@@ -121,7 +130,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         clickedEventHost, clickedEventDescription, clickedEventPoints, clickedEventVolunteers, clickedPoints,
         contactPerson, activityContact, clickedEventName, viewActivity, joinCount;
         ImageView status, clickedActivityImage, clickedFoundationImage;
-        Button attendBtn;
+        Button attendBtn, timeOutBtn;
         FoldingCell fc;
         GridView gridView;
         RecyclerView recyclerView;
@@ -131,6 +140,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
 //            recyclerView = (RecyclerView)itemView.findViewById(R.id.goingRecycler);
             attendBtn = (Button)itemView.findViewById(R.id.attendBtn);
+            timeOutBtn = (Button)itemView.findViewById(R.id.timeOut);
             fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
             eventName = (TextView)itemView.findViewById(R.id.eventName);
             eventHost = (TextView)itemView.findViewById(R.id.eventHost);
@@ -217,6 +227,31 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     String activity_id = activities.get(getAdapterPosition()).getActivityId();
                    //** Log.i("Volunteer_id", "PortAdapter" + volunteer_id + activity_id);
 //
+//                    Intent n = new Intent(mContext, AttendanceScanner.class);
+//                    n.putExtra("activity_id", activity_id);
+//                    n.putExtra("api_token", api_token);
+//                    n.putExtra("volunteer_id", volunteer_id);
+//                    n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    mContext.startActivity(n);
+
+
+
+//
+                    Intent n = new Intent(mContext, EvaluateGroupActivity.class);
+                    n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    n.putExtra("api_token", api_token);
+                    n.putExtra("activity_id", activity_id);
+                    n.putExtra("volunteer_id", volunteer_id);
+
+                    mContext.startActivity(n);
+                }
+            });
+
+            timeOutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String activity_id = activities.get(getAdapterPosition()).getActivityId();
+
                     Intent n = new Intent(mContext, AttendanceScanner.class);
                     n.putExtra("activity_id", activity_id);
                     n.putExtra("api_token", api_token);
@@ -224,15 +259,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(n);
 
-
-//
-//                    Intent n = new Intent(mContext, EvaluateGroupActivity.class);
-//                    n.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    n.putExtra("api_token", api_token);
-//                    n.putExtra("activity_id", activity_id);
-//                    n.putExtra("volunteer_id", volunteer_id);
-//
-//                    mContext.startActivity(n);
                 }
             });
 
@@ -246,6 +272,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
         }
     }
+
+
 
 
 }

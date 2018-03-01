@@ -79,5 +79,6 @@ dependencies {
     compile 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
     compile 'com.google.android.gms:play-services-maps:11.8.0'
     compile 'com.google.android.gms:play-services-location:11.8.0'
+    compile 'com.github.hotchemi:permissionsdispatcher:3.1.0'
     testCompile 'junit:junit:4.12'
 }

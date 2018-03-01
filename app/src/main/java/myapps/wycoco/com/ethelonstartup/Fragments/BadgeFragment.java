@@ -121,7 +121,7 @@ public class BadgeFragment extends Fragment {
                                     int star = currentBadge.getInt("star");
                                     String skill = currentBadge.getString("skill");
                                     int statuss = getBadgeStatus(currentBadgeRank);
-
+//                                    int points = badge.getInt("points");
                                     int percent = badge.getInt("percentCompleted");
 
                                     JSONArray badges = badge.getJSONArray("badges");
@@ -169,7 +169,7 @@ public class BadgeFragment extends Fragment {
                                     }
 
                                     Log.i("DETAILS_BADGE", currentBadgeName + currentBadgeImage + gaugeExp + star + currentBadgeRank);
-                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, currentBadgeRank, percent, currentBadgePoints, star,skill,statuss);
+                                    SkillBadgesModel model = new SkillBadgesModel(currentBadgeName, currentBadgeImage, currentBadgeRank, percent, currentBadgePoints, star,skill,statuss, 0);
 
                                     badgesModels.add(model);
 

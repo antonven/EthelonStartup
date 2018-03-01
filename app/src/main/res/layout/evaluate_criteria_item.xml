@@ -28,16 +28,19 @@
             android:layout_marginRight="20dp"
             />
 
-        <RatingBar
+
+
+        <hyogeun.github.com.colorratingbarlib.ColorRatingBar
             android:id="@+id/criteriaRating"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
+            app:empty_color="#808080"
+            app:progress_color="#FFD700"
             android:layout_weight="1"
             android:stepSize="1"
             android:theme="@style/RatingBar"
-            android:numStars="5"
-            />
+            android:numStars="5" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

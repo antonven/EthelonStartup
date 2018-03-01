@@ -49,6 +49,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
     Button submit;
     String email, fbProfileName,fbProfilePicture,profileId;
     ArrayList<BadgeUpdateModel>results;
+    ArrayList<String> badges;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
@@ -128,7 +129,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    private void starNextActivity() {
+    private void starNextActivity(int points, ArrayList<String> badges)  {
 
         final String api_token = getIntent().getStringExtra("api_token");
         final String volunteer_id =  getIntent().getStringExtra("volunteer_id");
@@ -150,6 +151,8 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
         n.putExtra("profileId", profileId);
         n.putExtra("profileId", email);
         n.putExtra("message", "message");
+        n.putStringArrayListExtra("badges", badges);
+        n.putExtra("points", points);
 
         Log.e("SHITPREFERENCES", api_token+ volunteer_id + activity_id + fbProfileName +fbProfilePicture + "");
 
@@ -158,6 +161,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
 
     public void submitAttendance(){
 
+        badges = new ArrayList<>();
         String api_token = getIntent().getStringExtra("api_token");
         String activity_id = getIntent().getStringExtra("activity_id");
         String volunteer_id = getIntent().getStringExtra("volunteer_id");
@@ -178,16 +182,17 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 String update = jsonObject.getString("update");
                                 String body = jsonObject.getString("body");
-
+                                int points = jsonObject.getInt("points");
 
                                 if(update.equals("nothing")){
+                                    JSONObject obj1 = jsonObject.getJSONObject("BadgeInfo");
 
-                                    String api_token = getIntent().getStringExtra("api_token");
-                                    String activity_id = getIntent().getStringExtra("activity_id");
-                                    String volunteer_id = getIntent().getStringExtra("volunteer_id");
+                                    String badge_name = obj1.getString("badge_name");
 
-                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,null,null,null);
-                                    //results.add(badgeUpdateModel);
+                                    badges.add(badge_name);
+
+                                    starNextActivity(points, badges);
+
 
                                 }else if(update.equals("new badge")){
 
@@ -196,7 +201,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
                                     String image_url = obj1.getString("url");
                                     String badge_name = obj1.getString("badge_name");
 
-                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,badge_rank,image_url,badge_name);
+                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,badge_rank,image_url,badge_name, points);
                                     results.add(badgeUpdateModel);
 
                                     Toast.makeText(EvaluateGroupActivity.this, "NAAY BAG.O BADGE", Toast.LENGTH_SHORT).show();
@@ -208,7 +213,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
                                     String image_url = obj1.getString("url");
                                     String badge_name = obj1.getString("badge_name");
 
-                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,badge_rank,image_url,badge_name);
+                                    BadgeUpdateModel badgeUpdateModel = new BadgeUpdateModel(update,body,badge_rank,image_url,badge_name, points);
                                     results.add(badgeUpdateModel);
 
                                     Log.e("PISTING YAWA","nisud sa new star");
@@ -217,10 +222,12 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
                                     Log.e("pisting yawa","kayata naa sa else");
                                 }
                             } catch (JSONException e) {
-                                e.printStackTrace();
+                                Log.e("response length",e.toString()+"");
+
                             }
 
                             if(i == response.length()-1){
+
                                 Log.e("response length",response.length()+"");
                                 badgeStart(response.length());
                             }
@@ -256,6 +263,7 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
             bundle.putString("image_url", results.get(0).getUrl());
             bundle.putString("body", results.get(0).getBody());
             bundle.putString("update",results.get(0).getUpdate());
+            bundle.putInt("points", results.get(0).getPoints());
             bundle.putString("badge_name",results.get(0).getBadge_name());
             bundle.putInt("count",0);
             bundle.putString("api_token", api_token);
@@ -270,9 +278,11 @@ public class EvaluateGroupActivity extends AppCompatActivity implements View.OnC
             badgeUpdateDialogFragment.setArguments(bundle);
             badgeUpdateDialogFragment.show(fragmentManager,"Badge");
 
-        }else{
-            starNextActivity();
         }
+// else{
+//            Log.e("BOOOGO", "bogo naabot dire");
+//            starNextActivity(0);
+//        }
 
 
 

@@ -44,7 +44,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
     TextView updateBody;
     ProgressBar progressBar;
     String email, fbProfileName,fbProfilePicture,profileId, update, body, image_url,badge_rank, badge_name;
-    int count, size;
+    int count, size, points;
     Button confirmBtn;
     ArrayList<BadgeUpdateModel> results;
 
@@ -76,6 +76,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
              body = getArguments().getString("body");
              update = getArguments().getString("update");
              badge_name = getArguments().getString("badge_name");
+            points = getArguments().getInt("points");
             Log.e("fuckzz",badge_name);
              count = getArguments().getInt("count");
              size = getArguments().getInt("size");
@@ -93,7 +94,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
             Glide.with(getContext()).load(image_url)
                     .fitCenter().crossFade().into(badgeUpdate);
 
-            updateBody.setText("You have earned the "+badge_rank+ " " + badge_name + "!");
+            updateBody.setText("You have earned " + points + " from the activity and earned the"+badge_rank+ " " + badge_name + "!");
 
         }else if(update.equals("new star")){
 
@@ -102,7 +103,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
             Glide.with(getContext()).load(R.drawable.star)
                     .fitCenter().crossFade().into(badgeUpdate);
 
-            updateBody.setText("You have earned a new star in your "+badge_rank +" " +badge_name +"!");
+            updateBody.setText("You have earned " + points + " from the activity and earned a new star in your "+badge_rank +" " +badge_name +"!");
 
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -113,14 +114,6 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
                 confirmBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        Intent i = new Intent(getContext(), ProfileActivity.class);
-//                        String api_token = getArguments().getString("api_token");
-//                        String volunteer_id =  getArguments().getString("volunteer_id");
-//                        String activity_id=  getArguments().getString("activity_id");
-//                        i.putExtra("api_token", api_token);
-//                        i.putExtra("volunteer_id", volunteer_id);
-//                        i.putExtra("message", "true");
-//                        getContext().startActivity(i);
                         starNextActivity();
                     }
                 });
@@ -144,15 +137,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
                 confirmBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                    Intent i = new Intent(getContext(), ProfileActivity.class);
-//                    String api_token = getArguments().getString("api_token");
-//                    String volunteer_id =  getArguments().getString("volunteer_id");
-//                    String activity_id=  getArguments().getString("activity_id");
-//                    i.putExtra("api_token", api_token);
-//                    i.putExtra("volunteer_id", volunteer_id);
-//                    i.putExtra("message", "true");
-//                    getContext().startActivity(i);
-//                    starNextActivity();
+
                         dismiss();
                     }
                 });
@@ -171,19 +156,13 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
                 confirmBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        Intent i = new Intent(getContext(), ProfileActivity.class);
-//                        String api_token = getArguments().getString("api_token");
-//                        String volunteer_id =  getArguments().getString("volunteer_id");
-//                        String activity_id=  getArguments().getString("activity_id");
-//                        i.putExtra("api_token", api_token);
-//                        i.putExtra("volunteer_id", volunteer_id);
-//                        i.putExtra("message", "true");
-//                        getContext().startActivity(i);
+
                         starNextActivity();
                     }
                 });
                 return null;
             }else{
+
                 BadgeUpdateDialogFragment badgeUpdateDialogFragment = new BadgeUpdateDialogFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("badge_rank", results.get(count).getBadge());
@@ -210,8 +189,6 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
         }
 
 
-
-
         badgeUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,15 +199,7 @@ public class BadgeUpdateDialogFragment extends AppCompatDialogFragment implement
                     confirmBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-//                            Intent i = new Intent(getContext(), ProfileActivity.class);
-//                            String api_token = getArguments().getString("api_token");
-//                            String volunteer_id =  getArguments().getString("volunteer_id");
-//                            String activity_id=  getArguments().getString("activity_id");
-//
-//                            i.putExtra("api_token", api_token);
-//                            i.putExtra("volunteer_id", volunteer_id);
-//                            i.putExtra("message", "true");
-//                            getContext().startActivity(i);
+
                             starNextActivity();
                         }
                     });

@@ -31,6 +31,7 @@ public class ActivityModel {
     private String volunteerStatus;
     private String foundationImage;
     private ArrayList<String> act_skills;
+    private int timeIn;
 
 
     public ActivityModel(String activityId, String foundationId, String activityName, String activityImage,
@@ -261,4 +262,6 @@ public class ActivityModel {
     public void setAct_skills(ArrayList<String> act_skills) {
         this.act_skills = act_skills;
     }
+
+
 }

@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import myapps.wycoco.com.ethelonstartup.R;
 
 public class JoinActivitySuccess extends AppCompatActivity {
@@ -28,9 +32,15 @@ public class JoinActivitySuccess extends AppCompatActivity {
         Snackbar.make(findViewById(R.id.successRelative) , "Press the check mark to proceed.", Snackbar.LENGTH_LONG).show();
 
         Intent i = getIntent();
-
-
-
+        Date currentTime = Calendar.getInstance().getTime();
+        if(i.getStringExtra("message")!= null) {
+            if (i.getStringExtra("message").equals("time_in")) {
+                SimpleDateFormat timeFormat1 = new SimpleDateFormat("hh:mm a");
+                String finalTime = timeFormat1.format(currentTime);
+                successTxt.setTextSize(22);
+                successTxt.setText("Time in: " + finalTime + "You can time out on the event once the foundation provides the second qr. Thanks!");
+            }
+        }
 
 
 

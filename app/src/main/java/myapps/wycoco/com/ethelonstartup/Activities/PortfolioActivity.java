@@ -62,7 +62,9 @@ public class PortfolioActivity extends AppCompatActivity {
 
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
+
         toolbar.setTitle("Portfolio");
+
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

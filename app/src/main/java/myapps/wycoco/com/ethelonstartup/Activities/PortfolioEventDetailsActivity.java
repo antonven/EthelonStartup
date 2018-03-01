@@ -152,7 +152,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setText("Details");
         tabLayout.getTabAt(1).setText("Volunteers");
-        tabLayout.getTabAt(2).setText("Group");
+        tabLayout.getTabAt(2).setText("Group mates");
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -193,7 +193,7 @@ public class PortfolioEventDetailsActivity extends AppCompatActivity {
 
         adapter.addFrag(eventDetailsFragment, "Details");
         adapter.addFrag(goingVolunteersFragment, "Volunteers");
-        adapter.addFrag(groupmatesFragment, "Group");
+        adapter.addFrag(groupmatesFragment, "Group mates");
         viewPager.setAdapter(adapter);
     }
 

@@ -12,6 +12,7 @@ public class BadgeUpdateModel implements Serializable {
     String badge;
     String url;
     String badge_name;
+    int points;
 
 
 
@@ -55,13 +56,22 @@ public class BadgeUpdateModel implements Serializable {
         this.badge_name = badge_name;
     }
 
-    public BadgeUpdateModel(String update, String body, String badge, String url, String badge_name) {
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public BadgeUpdateModel(String update, String body, String badge, String url, String badge_name, int points) {
 
         this.update = update;
         this.body = body;
         this.badge = badge;
         this.url = url;
         this.badge_name = badge_name;
+        this.points = points;
 
     }
 }

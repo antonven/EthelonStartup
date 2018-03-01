@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import myapps.wycoco.com.ethelonstartup.R;
 
 /**
@@ -37,6 +40,7 @@ public class EventDetailsFragment extends Fragment {
         String eventLocation = getArguments().getString("eventLocation");
         String contactNo = getArguments().getString("contactNo");
         String contactPerson = getArguments().getString("contactPerson");
+        ArrayList<String> skills = getArguments().getStringArrayList("skills");
 //        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Roboto-Black.ttf");
 
         eventDate1 = (TextView)view.findViewById(R.id.eventDate);
@@ -55,9 +59,14 @@ public class EventDetailsFragment extends Fragment {
         eventDate1.setText("Date: " + eventDate);
         eventTimeStart1.setText("Time start: "  +eventTimeStart);
         eventLocation1.setText("Location: " + eventLocation);
-        eventSkills1.setText("Skills needed: " + eventSkills);
+        eventSkills1.setText("Skills needed: ");
         eventContact1.setText("Contact: " + contactPerson + "/ " + contactNo);
+        if(skills != null) {
+            for (String skill : skills) {
+                eventSkills1.append(skill + " ");
 
+            }
+        }
         return view;
     }
 

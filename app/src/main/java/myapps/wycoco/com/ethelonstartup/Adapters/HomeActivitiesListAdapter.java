@@ -83,8 +83,14 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         Glide.with(mContext).load(activities.get(position).getFoundationImage())
                 .centerCrop().crossFade().into(holder.clickedFoundationImage);
 
+
+
+
+
         images = new ArrayList<>();
         ArrayList<String> skills = activities.get(position).getAct_skills();
+
+
         Log.e("HOMEADAPTER skills", skills.toString());
         for(int i = 0; i<skills.size(); i++){
             String skill = skills.get(i);
@@ -122,10 +128,11 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
         FoldingCell fc;
         TextView eventName, eventHost, eventAddress, eventDate, eventTimeStart, eventVolunteers, eventPoints;
         TextView clickedEventName, clickedEventHost, clickedEventDescription,
-                clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact;
+                clickedEventVolunteers, clickedPoints, viewActivity, contactPerson, activityContact, activityType;
         RelativeLayout relativeLayout;
         GridView gridView;
         ImageView clickedActivityImage, clickedFoundationImage;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -134,6 +141,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             fc = (FoldingCell)itemView.findViewById(R.id.foldingCell);
             eventName = (TextView)itemView.findViewById(R.id.eventName);
             eventHost = (TextView)itemView.findViewById(R.id.eventHost);
+
             eventAddress = (TextView)itemView.findViewById(R.id.eventAddress);
             eventDate = (TextView)itemView.findViewById(R.id.eventDate);
             eventTimeStart = (TextView)itemView.findViewById(R.id.eventTimeStart);
@@ -168,6 +176,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             contactPerson.setTypeface(typeface);
             activityContact.setTypeface(typeface);
 
+
             fc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -199,6 +208,11 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
             String volunteerStatus = activities.get(getAdapterPosition()).getVolunteerStatus();
             String foundation_image = activities.get(getAdapterPosition()).getFoundationImage();
             String foundation_id = activities.get(getAdapterPosition()).getFoundationId();
+            ArrayList<String> skills_needed = new ArrayList<>();
+            ArrayList<String> skills = activities.get(getAdapterPosition()).getAct_skills();
+            skills_needed.addAll(skills);
+
+
 
             switch (view.getId()) {
                 case R.id.viewActivityDetailsBtn:
@@ -221,6 +235,7 @@ public class HomeActivitiesListAdapter extends RecyclerView.Adapter<HomeActiviti
                     n.putExtra("volunteerStatus", volunteerStatus);
                     n.putExtra("foundationImage", foundation_image);
                     n.putExtra("foundation_id", foundation_id);
+                    n.putStringArrayListExtra("skills", skills_needed);
                     mContext.startActivity(n);
                     break;
 

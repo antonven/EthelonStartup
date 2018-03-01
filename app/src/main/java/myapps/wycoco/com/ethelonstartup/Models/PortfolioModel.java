@@ -33,6 +33,7 @@ public class PortfolioModel {
     private int volunteer_count;
     private String foundationImage;
     private ArrayList<String> act_skills;
+    private int timeIn;
 
 
     public int getPoints() {
@@ -49,7 +50,7 @@ public class PortfolioModel {
                           String activityLat,
                           String activityPoints, String activityStatus, String activityCreated, String activityUpdated, String contactPerson,
                           String activityContact, String volunteerStatus, String foundationName, int points, int volunteer_count, String foundationImage,
-                          ArrayList<String> act_skills) {
+                          ArrayList<String> act_skills, int timeIn) {
         this.activityId = activityId;
         this.foundationId = foundationId;
         this.activityName = activityName;
@@ -75,6 +76,7 @@ public class PortfolioModel {
         this.volunteer_count = volunteer_count;
         this.foundationImage = foundationImage;
         this.act_skills = act_skills;
+        this.timeIn = timeIn;
     }
 
 
@@ -275,5 +277,13 @@ public class PortfolioModel {
 
     public void setAct_skills(ArrayList<String> act_skills) {
         this.act_skills = act_skills;
+    }
+
+    public int getTimeIn() {
+        return timeIn;
+    }
+
+    public void setTimeIn(int timeIn) {
+        this.timeIn = timeIn;
     }
 }
