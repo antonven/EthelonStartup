@@ -40,6 +40,8 @@ public class SessionManager {
     public static final String KEY_API_TOKEN = "api_token";
     public static final String KEY_SKILL_SET = "skills";
     public static final String KEY_USER_NAME = "username";
+    public static final String KEY_BIRTHDAY = "birthday";
+
 
 
 
@@ -50,7 +52,7 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    public void createLoginSession(String email, String fbProfileName, String fbProfilePicture, String profileId, String first_name, String last_name, String volunteer_id, String api_token){
+    public void createLoginSession(String email, String fbProfileName, String fbProfilePicture, String profileId, String first_name, String last_name, String volunteer_id, String api_token, String birthday){
 
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_EMAIL, email);
@@ -62,7 +64,8 @@ public class SessionManager {
         editor.putString(KEY_LAST_NAME, last_name);
         editor.putString(KEY_VOLUNTEER_ID, volunteer_id);
         editor.putString(KEY_API_TOKEN, api_token);
-        Log.e("ANTON GWAPO", email);
+        editor.putString(KEY_BIRTHDAY, birthday);
+        Log.e("ANTON GWAPO", email + birthday);
         editor.commit();
     }
 
@@ -108,6 +111,8 @@ public class SessionManager {
         user.put(KEY_LAST_NAME, pref.getString(KEY_LAST_NAME, null));
         user.put(KEY_VOLUNTEER_ID, pref.getString(KEY_VOLUNTEER_ID, null));
         user.put(KEY_API_TOKEN, pref.getString(KEY_API_TOKEN, null));
+        user.put(KEY_BIRTHDAY, pref.getString(KEY_BIRTHDAY, null));
+
 
         return user;
     }

@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity
     TextView profileName, profileEmail, toolbarTitle;
     ImageView profilePicture;
     String profName, image, newSignUpUsername, profileId, cov_photo,  ethelonUserName, ethelonUserImage;
-    String fbProfilePicture, fbProfileName, api_token, email, volunteer_id;
+    String fbProfilePicture, fbProfileName, api_token, email, volunteer_id, birthday;
     ViewPager viewPager;
     Toolbar toolbar;
     TabLayout tabLayout;
@@ -514,7 +514,7 @@ public class HomeActivity extends AppCompatActivity
 //        Log.e("EMAIL_SESSION", email);
         fbProfileName = userFb.get(SessionManager.KEY_NAME);
         profName = userFb.get(SessionManager.KEY_NAME);
-
+        birthday = userFb.get(SessionManager.KEY_BIRTHDAY);
         HashMap<String, String> userEthelon = session.getUserCredentialsEthelon();
         newSignUpUsername = userEthelon.get(SessionManager.KEY_USER_NAME);
         String ethelonEmail = userEthelon.get(SessionManager.KEY_EMAIL);
@@ -526,7 +526,7 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-        Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName + email);
+        Log.e("HOME ACTIVITY", "facebook_id " + profileId + image + ethelonUserImage + profileName + email + "birt :" + birthday);
 
         View view = navigationView.getHeaderView(0);
         profileName = (TextView) view.findViewById(R.id.profileName);

@@ -291,6 +291,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+
         android:weightSum="2">
 
         <LinearLayout
@@ -383,7 +384,7 @@
         android:layout_marginBottom="30dp"
         android:id="@+id/doneButton"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/line"
+
 
         />
 

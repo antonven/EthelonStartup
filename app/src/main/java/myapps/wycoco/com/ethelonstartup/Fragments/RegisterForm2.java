@@ -44,12 +44,13 @@ public class RegisterForm2 extends Fragment {
 
     ArrayList<String> roles = new ArrayList<>();
     Spinner inputRole;
-    EditText inputName;
+    EditText inputName, inputAge;
     Button doneBtn;
     ProgressBar progressBar;
     private String URL = "http://"+new Localhost().getLocalhost()+"register";
     String role;
     SessionManager sessionManager;
+    int age;
 
     public RegisterForm2() {
         // Required empty public constructor
@@ -68,7 +69,7 @@ public class RegisterForm2 extends Fragment {
         inputRole = (Spinner)v.findViewById(R.id.inputRole);
         doneBtn = (Button)v.findViewById(R.id.doneBtn);
         progressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
-
+        inputAge = (EditText)v.findViewById(R.id.inputAge);
         ArrayAdapter<String> roleAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, roles);
         roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inputRole.setAdapter(roleAdapter);
@@ -98,6 +99,7 @@ public class RegisterForm2 extends Fragment {
                 final String email = getArguments().getString("email");
                 final String password = getArguments().getString("password");
                 final String name = inputName.getText().toString();
+                final int age = Integer.parseInt(inputAge.getText().toString());
                 Log.e("kobe","id "+ email + password + name + role);
                 Toast.makeText(getContext(), "" + name, Toast.LENGTH_SHORT).show();
 
@@ -107,6 +109,7 @@ public class RegisterForm2 extends Fragment {
                 params.put("password", password);
                 params.put("name", name);
                 params.put("role", "Volunteer");
+                params.put("age", String.valueOf(age));
                 params.put("fcm_token", FirebaseInstanceId.getInstance().getToken());
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),

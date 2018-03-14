@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ViewPager vp;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     LoginViewPagerAdapter viewPager;
-    String name, facebook_id, email, profile_id, profilePicture;
+    String name, facebook_id, email, profile_id, profilePicture, birthday, gender;
     String volunteer_id;
     String message, api_token;
     TextView text, loginText;
@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ArrayList<UserModel> emails = new ArrayList<>();
     SessionManager session;
     ArrayList<String> roles = new ArrayList<>();
+    AccessToken tok;
 
     private static final String NOTIFURL = "http://" + new Localhost().getLocalhost() + "checkNotif";
     private static  final String URL = "http://"+new Localhost().getLocalhost()+"loginwithfb";
@@ -105,13 +106,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseApp.initializeApp(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
+        FirebaseApp.initializeApp(this);
+
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
         setTitle("");
 
-        callbackManager = CallbackManager.Factory.create();
         buttonSignup = (Button)findViewById(R.id.buttonEthelonSignUp);
         inputEmail = (EditText)findViewById(R.id.inputEmail);
         inputPassword = (EditText)findViewById(R.id.inputPassword);
@@ -210,20 +213,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         profileTracker.startTracking();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(callbackManager.onActivityResult(requestCode, resultCode, data)){
-            return;
-        }
-    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        AppEventsLogger.activateApp(this);
         profile = Profile.getCurrentProfile();
-
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.REGISTRATION_COMPLETE));
@@ -236,17 +232,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
 
+//        pushFacebookCred(tok, profile);
         if(profile!=null) {
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("facebook_id", profile.getId());
+
             if(fcm_token != null){
                 params.put("fcm_token",fcm_token);
             }else{
                 params.put("fcm_token",FirebaseInstanceId.getInstance().getToken());
             }
 
-            Log.e("LOGIN ACTIVITY","facebook_id "+profile.getId());
+            Log.e("LOGIN ACTIVITY","facebook_id "+facebook_id);
 
             JsonObjectRequest string = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
@@ -306,14 +304,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     }else{
                                         BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                         Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
-                                        nextActivity(profile);
+                                        nextActivity(profile, "", email);
                                     }
 
 
                                 }catch (Exception e){
                                     BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
                                     Log.e("BUS STATION", "CREDENTIALS" + BusStation.getBus());
-                                    nextActivity(profile);
+                                    nextActivity(profile, "", email);
                                 }
 
                             }
@@ -340,6 +338,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override
@@ -368,17 +367,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void nextActivity(Profile profile){
+    private void nextActivity(Profile profile, String birthday, String email){
         if(profile!= null){
             SharedPreferences shared = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
-            String email = shared.getString("email", "");
+//            String email = shared.getString("email", "");
             String fbProfileName = profile.getName();
             String fbProfilePicture = profile.getProfilePictureUri(500,500).toString();
             String profileId = profile.getId();
             String first_name = profile.getFirstName();
             String last_name = profile.getLastName();
 
-            session.createLoginSession(email, fbProfileName, fbProfilePicture, profileId, first_name, last_name, volunteer_id, api_token);
+            session.createLoginSession(email, fbProfileName, fbProfilePicture, profileId, first_name, last_name, volunteer_id, api_token, birthday);
 
 
 //            SharedPreferences pref = getApplicationContext().getSharedPreferences("HOME_INFO", MODE_PRIVATE);
@@ -396,8 +395,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.putExtra("volunteer_id",volunteer_id);
             i.putExtra("api_token",api_token);
             i.putExtra("email", email);
-            Log.e("NEXT ACT","EMAIL" + email + volunteer_id);
+            i.putExtra("birthday", birthday);
+            Log.e("NEXT ACT","EMAIL" + email + volunteer_id + "birthday: " + birthday);
             startActivity(i);
+
+            finish();
         }
     }
 
@@ -419,6 +421,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
+                        String token = loginResult.getAccessToken().getToken();
+                        Log.e("ANTON_TOKEN",token );
                         if(Profile.getCurrentProfile() == null){
                             profileTracker = new ProfileTracker() {
                                 @Override
@@ -427,8 +431,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                     name = currentProfile.getFirstName() +" "+ currentProfile.getMiddleName() + " " + currentProfile.getLastName();
                                     profileTracker.stopTracking();
+                                    String token = loginResult.getAccessToken().getToken();
+                                    Log.e("ANTON_TOKEN",token );
+                                    tok = loginResult.getAccessToken();
                                     pushFacebookCred(loginResult.getAccessToken(),currentProfile);
-                                    finish();
+//                                    finish();
                                     progressBar.setVisibility(View.GONE);
                                 }
                             };
@@ -468,15 +475,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
+
                 if(response!=null) {
                     try {
                         facebook_id = object.getString("id");
                         email = " ";
+
                         profilePicture = profile.getProfilePictureUri(500, 500).toString();
+                        Log.e("KIRSTEN_REP", birthday + object.toString() + "  " +  response.toString());
 
                         if (object.getString("email") != null) {
                             email = object.getString("email");
-                            Log.e("EMAIL_HOME", email);
+                            Log.e("EMAIL_HOME", email + birthday);
                             SharedPreferences pref = getApplicationContext().getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putString("email", email);
@@ -488,6 +498,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             email = "email not avaiable " + facebook_id;
                         }
 
+                        if (object.has("birthday"))
+                            birthday = object.getString("birthday");
+                        if (object.has("gender"))
+                            gender = object.getString("gender");
+
 //                        progressBar.setVisibility(View.VISIBLE);
 
                         Map<String, String> params = new HashMap<String, String>();
@@ -496,6 +511,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         params.put("name", name);
                         params.put("role", "volunteer");
                         params.put("image_url", profilePicture);
+
                         if(fcm_token != null){
                             params.put("fcm_token",fcm_token);
                         }else{
@@ -515,7 +531,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 String profilePicture = profile.getProfilePictureUri(500, 500).toString();
                                                 String profile_id = profile.getId();
                                                 String profileName = profile.getName();
-                                                session.createLoginSession(email, profileName, profilePicture, profile_id, profile.getFirstName(), profile.getLastName(), volunteer_id, api_token);
+                                                session.createLoginSession(email, profileName, profilePicture, profile_id, profile.getFirstName(), profile.getLastName(), volunteer_id, api_token, birthday);
                                                 Intent intent = new Intent(LoginActivity.this, SkillsActivity.class);
 
                                                 volunteer_id = response.getString("volunteer_id");
@@ -527,9 +543,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 intent.putExtra("fbProfilePicture", profilePicture);
                                                 intent.putExtra("fbProfileName", profileName);
                                                 intent.putExtra("email", email);
+                                                intent.putExtra("birthday", birthday);
+
                                                 Log.e("EMAIL_HOME_2", email);
 
                                                 startActivity(intent);
+                                                finish();
 
 
                                             } else if (message.equals("Email already exists")) {
@@ -551,7 +570,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                                 try {
                                                                     msg = response.getString("message");
                                                                     if (msg.equals("good")) {
-                                                                        nextActivity(profile);
+                                                                        nextActivity(profile, birthday, email);
                                                                     }
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
@@ -600,7 +619,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } catch (JSONException e) {
                         e.printStackTrace();
 
+                        try {
+
+
                         if (e.toString().equals("org.json.JSONException: No value for email")) {
+                            birthday = object.getString("birthday");
                             profilePicture = profile.getProfilePictureUri(500, 500).toString();
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("email", "Email Not Available" + facebook_id);
@@ -634,6 +657,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     intent.putExtra("fbProfilePicture", profilePicture);
                                                     intent.putExtra("fbProfileName", profileName);
                                                     intent.putExtra("email", email);
+                                                    intent.putExtra("birthday", birthday);
                                                     Log.e("EMAIL_HOME", email);
 
                                                     startActivity(intent);
@@ -645,7 +669,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     volunteer_id = response.getString("volunteer_id");
                                                     api_token = response.getString("api_token");
                                                     BusStation.getBus().post(new UserCredentials(api_token, volunteer_id));
-                                                    nextActivity(profile);
+                                                    nextActivity(profile, birthday, email);
                                                 }
 
 
@@ -669,6 +693,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             request.add(string);
 
                         }
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 }
 //                progressBar.setVisibility(View.GONE);
@@ -676,9 +703,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }//on completed
         });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
+        parameters.putString("fields", "id, first_name, last_name, email, gender, birthday, location");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
