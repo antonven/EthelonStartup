@@ -70,24 +70,24 @@ public class RegisterForm2 extends Fragment {
         doneBtn = (Button)v.findViewById(R.id.doneBtn);
         progressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
         inputAge = (EditText)v.findViewById(R.id.inputAge);
-        ArrayAdapter<String> roleAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, roles);
-        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        inputRole.setAdapter(roleAdapter);
+//        ArrayAdapter<String> roleAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, roles);
+//        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        inputRole.setAdapter(roleAdapter);
 
         sessionManager = new SessionManager(getContext());
 
 
-        inputRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                role = inputRole.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        inputRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//                role = inputRole.getItemAtPosition(position).toString();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
 
