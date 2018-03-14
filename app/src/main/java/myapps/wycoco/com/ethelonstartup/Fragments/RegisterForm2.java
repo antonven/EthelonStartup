@@ -66,7 +66,7 @@ public class RegisterForm2 extends Fragment {
         roles.add("Foundation");
 
         inputName = (EditText)v.findViewById(R.id.inputName);
-        inputRole = (Spinner)v.findViewById(R.id.inputRole);
+//        inputRole = (Spinner)v.findViewById(R.id.inputRole);
         doneBtn = (Button)v.findViewById(R.id.doneBtn);
         progressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
         inputAge = (EditText)v.findViewById(R.id.inputAge);
